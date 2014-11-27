@@ -37,7 +37,7 @@ public class QueryCommand extends InteriorCommand {
 	@Override
 	public void execute() throws ValidatorException {
 		// TODO Auto-generated method stub
-		addValidator(new QueryCommandValidator(parameter.toString(),buffer.getCard()));
+		addValidator(new QueryCommandValidator(parameter.toString(),buffer));
 		super.execute();
 		
 		IGround ground = player.getGround();
