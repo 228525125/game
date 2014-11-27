@@ -1,0 +1,184 @@
+package org.cx.game.widget;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.IActiveSkill;
+import org.cx.game.card.skill.ISkill;
+import org.cx.game.core.IPlayer;
+import org.cx.game.out.JsonOut;
+
+public class GroundDecorator extends ContainerDecorator implements IGround {
+	
+	private IGround ground;
+	
+	public GroundDecorator(IGround lifeGround) {
+		// TODO Auto-generated constructor stub
+		super(lifeGround);
+		this.ground = lifeGround;
+	}
+	
+	@Override
+	public LifeCard getCard(Integer position) {
+		// TODO Auto-generated method stub
+		return ground.getCard(position);
+	}
+	
+	@Override
+	public void add(Integer position, ICard card) {
+		// TODO Auto-generated method stub
+		super.add(position, card);
+	}
+	
+	@Override
+	public Integer getSize() {
+		// TODO Auto-generated method stub
+		return ground.getSize();
+	}
+
+
+	@Override
+	public Integer distance(Integer start, Integer stop) {
+		// TODO Auto-generated method stub
+		return ground.distance(start, stop);
+	}
+
+	@Override
+	public IPlace getPlace(Integer position) {
+		// TODO Auto-generated method stub
+		return ground.getPlace(position);
+	}
+
+	@Override
+	public List<Integer> areaForDistance(Integer position, Integer step,
+			Integer type) {
+		// TODO Auto-generated method stub
+		return ground.areaForDistance(position, step, type);
+	}
+
+	@Override
+	public void addCamp(ICamp camp) {
+		// TODO Auto-generated method stub
+		ground.addCamp(camp);
+	}
+
+	@Override
+	public List<Integer> getCampPosition(IPlayer player) {
+		// TODO Auto-generated method stub
+		return ground.getCampPosition(player);
+	}
+
+	@Override
+	public List<Integer> queryRange(ICard card, String action) {
+		// TODO Auto-generated method stub
+		return ground.queryRange(card, action);
+	}
+
+	@Override
+	public List<Integer> queryRange(ISkill skill, String action) {
+		// TODO Auto-generated method stub
+		return ground.queryRange(skill, action);
+	}
+	
+	@Override
+	public void move(LifeCard life, Integer position, Integer type) {
+		// TODO Auto-generated method stub
+		ground.move(life, position,type);
+	}
+
+	@Override
+	public Integer easyDistance(Integer start, Integer stop) {
+		// TODO Auto-generated method stub
+		return ground.easyDistance(start, stop);
+	}
+
+	@Override
+	public List<Integer> easyAreaForDistance(Integer position, Integer step,
+			Integer type) {
+		// TODO Auto-generated method stub
+		return ground.easyAreaForDistance(position, step, type);
+	}
+
+	@Override
+	public List<Integer> route(Integer start, Integer stop) {
+		// TODO Auto-generated method stub
+		return ground.route(start, stop);
+	}
+
+	@Override
+	public List<Integer> easyRoute(Integer start, Integer stop) {
+		// TODO Auto-generated method stub
+		return ground.easyRoute(start, stop);
+	}
+
+	@Override
+	public List<Integer> easyAreaForDistanceDiagonal(Integer position,
+			Integer step, Integer type) {
+		// TODO Auto-generated method stub
+		return ground.easyAreaForDistanceDiagonal(position, step, type);
+	}
+
+	@Override
+	public Integer easyDistanceDiagonal(Integer start, Integer stop) {
+		// TODO Auto-generated method stub
+		return ground.easyDistanceDiagonal(start, stop);
+	}
+
+	@Override
+	public List<Integer> arc(Integer attack, Integer defend,
+			Integer range) {
+		// TODO Auto-generated method stub
+		return ground.arc(attack, defend, range);
+	}
+	
+	@Override
+	public Integer queryDirection(Integer stand, Integer target) {
+		// TODO Auto-generated method stub
+		return ground.queryDirection(stand, target);
+	}
+
+	@Override
+	public List<Integer> twoFlanks(Integer stand, Integer target) {
+		// TODO Auto-generated method stub
+		return ground.twoFlanks(stand, target);
+	}
+
+	@Override
+	public List<Integer> line(Integer stand, Integer orientation, Integer range) {
+		// TODO Auto-generated method stub
+		return ground.line(stand, orientation, range);
+	}
+
+	@Override
+	public void setBorder(Integer xMax, Integer yMax) {
+		// TODO Auto-generated method stub
+		ground.setBorder(xMax, yMax);
+	}
+
+	@Override
+	public Integer getXMax() {
+		// TODO Auto-generated method stub
+		return ground.getXMax();
+	}
+
+	@Override
+	public Integer getYMax() {
+		// TODO Auto-generated method stub
+		return ground.getYMax();
+	}
+
+	@Override
+	public void addPlace(IPlace place) {
+		// TODO Auto-generated method stub
+		ground.addPlace(place);
+	}
+
+	@Override
+	public Integer easyOuDistance(Integer start, Integer stop) {
+		// TODO Auto-generated method stub
+		return ground.easyOuDistance(start, stop);
+	}
+}

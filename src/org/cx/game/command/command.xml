@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<game>
+	<types> <!-- 类型定义 -->
+		<type name = "player">
+			<item>own</item>
+			<item>other</item>
+		</type>
+		<type name = "container">
+			<item>group</item>  <!-- 这里的text必须与CommandBuffer一致 -->
+			<item>use</item>
+			<item>ground</item>
+		</type>
+		<type name = "place">
+			<item>place</item>
+		</type>
+		<type name = "cemetery">
+			<item>cemetery</item>
+		</type>
+		<type name = "tricklist">
+			<item>tricklist</item>
+		</type>
+		<type name = "card">
+			<item>card</item>
+		</type>		
+		<type name = "skill">
+			<item>skill</item>
+		</type>
+		<type name = "trick">
+			<item>trick</item>
+		</type>
+		<type name = "action">
+			<item>attack</item>
+			<item>call</item>
+			<item>conjure</item>
+			<item>move</item>
+			<item>swap</item>
+		</type>
+	</types>	
+	<commands>
+		<!-- 命令拆分例子：select ground place100001 card = select ground; select place100001; select card; -->
+		<command name='select' class='org.cx.game.command.SelectCommand' parameter='request'>			
+			<description>选择</description>			
+			<parameter>
+				<option>player</option>
+				<option>container</option>
+				<option>place</option>
+				<option>cemetery</option>
+				<option>tricklist</option>
+				<option>card</option>			
+				<option>skill</option>
+				<option>trick</option>
+			</parameter>
+		</command>
+		<!-- 命令转换例子：show ground 1 = select ground 1;show = select ground;select 1;show -->
+		<command name='show' class='org.cx.game.command.ShowCommand' parameter='no'>
+			<description>显示</description>			
+		</command>
+		<command name='call' class='org.cx.game.command.CallCommand' parameter='request'>
+			<description>召唤</description>
+			<parameter>
+				<option>place</option>
+			</parameter>			
+		</command>
+		<command name='swap' class='org.cx.game.command.SwapCommand' parameter='request'>
+			<description>交换</description>
+			<parameter>
+				<option>card</option>
+			</parameter>			
+		</command>
+		<command name='move' class='org.cx.game.command.MoveCommand' parameter='request'>
+			<description>移动</description>
+			<parameter>
+				<option>place</option>
+			</parameter>
+		</command>
+		<command name='attack' class='org.cx.game.command.AttackCommand' parameter='request'>
+			<description>攻击</description>
+			<parameter>
+				<option>card</option>
+			</parameter>
+		</command>
+		<command name='conjure' class='org.cx.game.command.ConjureCommand' parameter='request'>
+			<description>施法</description>
+			<parameter>
+				<option>place</option>
+				<option>card</option>
+			</parameter>
+		</command>
+		<command name='skill' class='org.cx.game.command.AttackCommand' parameter='request'>
+		</command>
+		<!-- 命令转换例子：setup 1 = select group 1;setup = select group;select 1;setup -->
+		<command name='setup' class='org.cx.game.command.SetupCommand' parameter='request'>
+			<description>放置</description>
+			<parameter>
+				<option>place</option>
+			</parameter>			
+		</command>
+		<command name='chuck' class='org.cx.game.command.ChuckCommand' parameter='no'>
+			<description>丢弃</description>
+		</command>
+		<command name='done' class='org.cx.game.command.DoneCommand' parameter='no'>
+			<description>结束回合</description>
+		</command>
+		<command name='start' class='org.cx.game.command.StartCommand' parameter='no'>
+			<description>比赛开始</description>		
+		</command>
+		<command name='query' class='org.cx.game.command.QueryCommand' parameter='request'>
+			<description>查询</description>	
+			<parameter>
+				<option>action</option>
+			</parameter>	
+		</command>		
+		<command name='create' class='org.cx.game.command.OutsideCommand' parameter='request'>
+			<description>创建比赛</description>	
+			<parameter>
+				<option>custom</option><!-- 创建主机名称 -->
+			</parameter>	
+		</command>
+		<command name='join' class='org.cx.game.command.OutsideCommand' parameter='request'>
+			<description>加入比赛</description>	
+			<parameter>
+				<option>custom</option><!-- 加入主机名称 -->
+			</parameter>	
+		</command>
+		<command name='finish' class='org.cx.game.command.OutsideCommand' parameter='no'>
+			<description>结束比赛</description>		
+		</command>
+		<command name='reload' class='org.cx.game.command.ReloadCommand' parameter='no'>
+			<description>前台重新加载后台数据</description>		
+		</command>
+	</commands>
+</game>

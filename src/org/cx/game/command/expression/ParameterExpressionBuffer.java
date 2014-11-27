@@ -1,0 +1,187 @@
+package org.cx.game.command.expression;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.cx.game.action.IDeath;
+import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
+import org.cx.game.card.TrickCard;
+import org.cx.game.card.skill.ISkill;
+import org.cx.game.card.skill.ITrick;
+import org.cx.game.command.CommandBuffer;
+import org.cx.game.core.IPlayer;
+import org.cx.game.widget.ICardGroup;
+import org.cx.game.widget.ICemetery;
+import org.cx.game.widget.IContainer;
+import org.cx.game.widget.IGround;
+import org.cx.game.widget.IPlace;
+import org.cx.game.widget.ITrickList;
+import org.cx.game.widget.IUseCard;
+
+public class ParameterExpressionBuffer {
+
+	private Map<String,Object> bufferMap = new HashMap<String,Object>();
+	
+	private IPlayer player;
+	
+	public ParameterExpressionBuffer(IPlayer player) {
+		// TODO Auto-generated constructor stub
+		this.player = player;
+	}
+	
+	public IPlayer getPlayer(){
+		if(null==bufferMap.get(CommandBuffer.PLAYER))
+			return player;
+		else
+			return (IPlayer) bufferMap.get(CommandBuffer.PLAYER);
+	}
+	
+	public IContainer getContainer(){
+		return (IContainer) bufferMap.get(CommandBuffer.CONTAINER);
+	}
+	
+	public IGround getGround(){
+		IContainer container = getContainer(); 
+		if (container instanceof IGround) {
+			return (IGround) container;
+		}else{
+			return null;
+		}
+	}
+	
+	public IUseCard getUseCard(){
+		IContainer container = getContainer(); 
+		if (container instanceof IUseCard) {
+			return (IUseCard) container;
+		}else{
+			return null;
+		}
+	}
+	
+	public ICardGroup getCardGroup(){
+		IContainer container = getContainer(); 
+		if (container instanceof ICardGroup) {
+			return (ICardGroup) container;
+		}else{
+			return null;
+		}
+	}
+	
+	public IPlace getPlace(){
+		return (IPlace) bufferMap.get(CommandBuffer.PLACE);
+	}
+	
+	public ICemetery getCemetery(){
+		return (ICemetery) bufferMap.get(CommandBuffer.CEMETERY);
+	}
+	
+	public ITrickList getTrickList(){
+		return (ITrickList) bufferMap.get(CommandBuffer.TRICKLIST);
+	}
+	
+	public ICard getCard(){
+		return (ICard)bufferMap.get(CommandBuffer.CARD);
+	}
+	
+	public ISkill getSkill(){
+		return (ISkill) bufferMap.get(CommandBuffer.SKILL);
+	}
+	
+	public ITrick getTrick(){
+		return (ITrick) bufferMap.get(CommandBuffer.TRICK);
+	}
+	
+	public void clear(){
+		bufferMap.clear();
+	}
+	
+	public void setPlayer(IPlayer player){
+		if(null!=player){
+			bufferMap.remove(CommandBuffer.CONTAINER);
+			bufferMap.remove(CommandBuffer.PLACE);
+			bufferMap.remove(CommandBuffer.CEMETERY);
+			bufferMap.remove(CommandBuffer.TRICKLIST);
+			bufferMap.remove(CommandBuffer.CARD);
+			bufferMap.remove(CommandBuffer.SKILL);
+			bufferMap.remove(CommandBuffer.TRICK);
+			
+			bufferMap.put(CommandBuffer.PLAYER, player);
+		}
+	}
+	
+	public void setContainer(IContainer container){
+		if(null!=container){
+			IPlayer player = container.getPlayer();;
+			if (container instanceof IGround) {
+				player = getPlayer();
+			}
+			setPlayer(player);
+			
+			bufferMap.put(CommandBuffer.CONTAINER, container);
+		}
+	}
+	
+	public void setPlace(IPlace place){
+		if(null!=place){
+			setContainer(place.getContainer());
+			
+			bufferMap.put(CommandBuffer.PLACE, place);
+		}
+	}
+	
+	public void setCemetery(ICemetery cemetery){
+		if(null!=cemetery){
+			setPlace(cemetery.getPlace());
+			
+			bufferMap.put(CommandBuffer.CEMETERY, cemetery);
+		}
+	}
+	
+	public void setTrickList(ITrickList tricklist){
+		if(null!=tricklist){
+			setPlace(tricklist.getPlace());
+			
+			bufferMap.put(CommandBuffer.TRICKLIST, tricklist);
+		}
+		
+	}
+	
+	public void setCard(ICard card){
+		if(null!=card){
+			setContainer(card.getContainer());
+			
+			if (card.getContainer() instanceof IGround) {
+				IGround ground = (IGround) card.getContainer();
+				
+				IPlace place = ground.getPlace(ground.getPosition(card));
+				setPlace(place);
+				
+				if (card instanceof LifeCard) {
+					LifeCard life = (LifeCard) card;
+					if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
+						setCemetery(place.getCemetery());
+					}
+				}
+			}
+
+			bufferMap.put(CommandBuffer.CARD, card);
+		}		
+	}
+	
+	public void setSkill(ISkill skill){
+		if(null!=skill){
+			setCard(skill.getOwner());
+			
+			bufferMap.put(CommandBuffer.SKILL, skill);
+		}
+	}
+	
+	public void setTrick(ITrick trick){
+		if(null!=trick){
+			setTrickList(trick.getOwner());
+			
+			bufferMap.put(CommandBuffer.TRICK, trick);
+		}
+	}
+}
