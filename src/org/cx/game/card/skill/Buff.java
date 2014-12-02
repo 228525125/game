@@ -27,7 +27,7 @@ import org.cx.game.tools.I18n;
  */
 public abstract class Buff extends Observable implements IBuff {
 
-	private String name;
+	private String name = null;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
@@ -71,8 +71,11 @@ public abstract class Buff extends Observable implements IBuff {
 	
 	public String getName() {
 		// TODO Auto-generated method stub
-		if(null==name)
-			name = I18n.getMessage(this, "name");
+		if(null==name){
+			String clazz = this.getClass().getName();
+			if(-1!=clazz.indexOf("buff"))
+				name = I18n.getMessage(clazz.substring(0, clazz.indexOf("buff"))+".name");
+		}
 		return name;
 	}
 	

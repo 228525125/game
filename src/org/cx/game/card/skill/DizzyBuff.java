@@ -5,6 +5,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.tools.I18n;
 import org.cx.game.widget.IControlQueue;
 
 /**
@@ -14,6 +15,8 @@ import org.cx.game.widget.IControlQueue;
  */
 public class DizzyBuff extends Buff {
 
+	private String name = null;
+	
 	public DizzyBuff(Integer bout, LifeCard life) {
 		super(bout, IMagic.Style_physical, IBuff.Type_Harm, IMagic.Func_Astrict, life);
 		// TODO Auto-generated constructor stub
@@ -46,5 +49,13 @@ public class DizzyBuff extends Buff {
 		getOwner().getAttack().setSpeedChance(speed-getBout()*IControlQueue.consume);
 		
 		super.affect(objects);
+	}
+	
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		if(null==name)
+			name = I18n.getMessage(this, "name");
+		return name;
 	}
 }

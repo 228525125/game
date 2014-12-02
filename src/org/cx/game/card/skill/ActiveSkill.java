@@ -25,7 +25,7 @@ import org.cx.game.validator.ParameterTypeValidator;
 
 public abstract class ActiveSkill extends Observable implements IActiveSkill {
 
-	private String name;
+	private String name = null;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private String action = null;

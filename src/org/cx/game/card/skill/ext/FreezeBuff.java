@@ -5,6 +5,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.SimpleBuff;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.tools.I18n;
 import org.cx.game.widget.IControlQueue;
 
 /**
@@ -14,6 +15,7 @@ import org.cx.game.widget.IControlQueue;
  */
 public class FreezeBuff extends SimpleBuff {
      
+	private String name = null;
 	private Integer energyDownScale;  
 	private Integer speedDownScale;
 	private Integer damage; 
@@ -65,6 +67,14 @@ public class FreezeBuff extends SimpleBuff {
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		if(null==name)
+			name = I18n.getMessage(this, "name");
+		return name;
 	}
 
 }

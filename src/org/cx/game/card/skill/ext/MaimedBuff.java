@@ -4,6 +4,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.SimpleBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.tools.I18n;
 
 /**
  * 残废
@@ -12,6 +13,7 @@ import org.cx.game.observer.NotifyInfo;
  */
 public class MaimedBuff extends SimpleBuff {
 	
+	private String name = null;
 	private Integer downEnergyScale;
 
 	public MaimedBuff(Integer bout, Integer style, Integer type, Integer func, Integer downEnergyScale,
@@ -35,6 +37,14 @@ public class MaimedBuff extends SimpleBuff {
 		addToKeepEnergy(-downEnergyValue);
 		
 		super.affect(objects);
+	}
+	
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		if(null==name)
+			name = I18n.getMessage(this, "name");
+		return name;
 	}
 
 }
