@@ -15,7 +15,7 @@ import org.cx.game.widget.IPlace;
 public class Move extends Action implements IMove{
 
 	private Integer energy = 0;
-	private Integer consume = IMove.Consume;
+	private Integer consume = IMove.Consume;        //移动一格的消耗
 	private Integer type = Type_Walk;
 	private Boolean moveable = false;   //是否能移动，回合内只能移动一次
 	

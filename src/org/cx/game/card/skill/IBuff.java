@@ -13,6 +13,8 @@ import org.cx.game.observer.Observable;
  */
 public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRecover{
 	
+	public String getName();
+	
 	/**
 	 * 持续回合
 	 * @return

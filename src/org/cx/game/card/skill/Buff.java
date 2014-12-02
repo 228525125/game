@@ -14,6 +14,7 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.tools.I18n;
 
 /**
  * buff持续回合数计算方式：1、buff第一次影响单位的回合开始计算；
@@ -26,6 +27,7 @@ import org.cx.game.observer.NotifyInfo;
  */
 public abstract class Buff extends Observable implements IBuff {
 
+	private String name;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
@@ -65,6 +67,13 @@ public abstract class Buff extends Observable implements IBuff {
 
 	public LifeCard getOwner() {
 		return owner;
+	}
+	
+	public String getName() {
+		// TODO Auto-generated method stub
+		if(null==name)
+			name = I18n.getMessage(this, "name");
+		return name;
 	}
 	
 	@Override
