@@ -34,7 +34,7 @@ public class Aid extends ActiveSkill {
 		super.affect(objects);
 		
 		this.aidObj = (LifeCard) objects[0];
-		new AidBuff(bout,getStyle(), IBuff.Type_Benefit, getFunc(), getOwner(),aidObj);
+		new AidBuff(bout,getStyle(), IBuff.Type_Benefit, getFunc(), getOwner(),aidObj).effect();
 	}
 	
 	@Override

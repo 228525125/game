@@ -73,8 +73,8 @@ public abstract class Buff extends Observable implements IBuff {
 		// TODO Auto-generated method stub
 		if(null==name){
 			String clazz = this.getClass().getName();
-			if(-1!=clazz.indexOf("buff"))
-				name = I18n.getMessage(clazz.substring(0, clazz.indexOf("buff"))+".name");
+			if(-1!=clazz.indexOf("Buff"))
+				name = I18n.getMessage(clazz.substring(0, clazz.indexOf("Buff"))+".name");
 		}
 		return name;
 	}
