@@ -24,6 +24,7 @@ import org.cx.game.action.ISwap;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.SwapDecorator;
 import org.cx.game.card.skill.Accurate;
+import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.AttackBack;
 import org.cx.game.card.skill.Dodge;
 import org.cx.game.card.skill.IActiveSkill;
@@ -443,15 +444,15 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 技能
 	 */
-	private List skillList = new ArrayList<ISkill>();
+	private List<ISkill> skillList = new ArrayList<ISkill>();
 
-	public List getSkillList() {
+	public List<ISkill> getSkillList() {
 		return skillList;
 	}
 	
-	public void setSkillList(List skillList) {
-		for(Object skill : skillList)
-			((ISkill)skill).setOwner(this);
+	public void setSkillList(List<ISkill> skillList) {
+		for(ISkill skill : skillList)
+			skill.setOwner(this);
 		this.skillList = skillList;
 	}
 
@@ -742,6 +743,13 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		setHide(false);
 		
 		clearBuff();
+		
+		for(ISkill skill : skillList){            //刷新技能冷却时间
+			if (skill instanceof ActiveSkill) {
+				ActiveSkill as = (ActiveSkill) skill;
+				as.setCooldownBout(0);
+			}
+		}
 	}
 	
 	@Override

@@ -34,7 +34,8 @@ public class JsonOut extends Response implements Observer {
 			"cards","password","context","decks","cardGroup","cemetery","ground","useCard","commandBuffer",       //User
 			"near","trickList",                  //Place
 			//"place",                 //Camp
-			"appendCardList","skillList","hashCode",        //LifeCard
+			"appendCardList","hashCode",        //LifeCard
+			"affectedList",                  //Skill
 			"owner","intercepterList","validators","errors"                    //系统的
 		});
 		return JSONObject.fromObject(resp,config);

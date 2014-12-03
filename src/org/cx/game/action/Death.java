@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.ActiveSkill;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
@@ -150,6 +152,14 @@ public class Death extends Action implements IDeath {
 		IPlace place = ground.getPlace(getOwner().getContainerPosition());
 		place.out();
 		place.addCorpse(getOwner());         //进入墓地
+		
+		LifeCard life = (LifeCard) getOwner();            //停止计算技能冷却时间
+		for(ISkill skill : life.getSkillList()){
+			if (skill instanceof ActiveSkill) {
+				ActiveSkill as = (ActiveSkill) skill;
+				life.getPlayer().getContext().deleteIntercepter(as.getCooldownBoutIntercepter());
+			}
+		}
 	}
 	
 	public void resetIntercepter() {

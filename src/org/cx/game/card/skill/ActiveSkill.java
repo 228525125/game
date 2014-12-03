@@ -32,6 +32,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	private String code = "";
 	private Integer consume = 0;              //消耗能量
 	private Integer cooldown = 0;             //冷却回合
+	private Integer cooldownBout = 0;         //冷却剩余回合数
 	private Integer velocity = 0;             //瞬发/蓄力
 	private Integer style = 0;                //魔法/物理
 	private Integer func = IMagic.Func_Other; //限制/直接伤害/其他
@@ -41,7 +42,13 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	
 	private Class[] parameterTypeValidator = new Class[]{};      //用于参数的验证
 	
-	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>(); 
+	private IIntercepter cooldownBoutIntercepter = new Intercepter("addBout") {      //当回合数变化时，计算冷却时间
+		@Override
+		public void after(Object[] args) {
+			// TODO Auto-generated method stub
+			cooldownBout = cooldownBout>0 ? --cooldownBout : 0;
+		}
+	};
 	
 	/**
 	 * 
@@ -58,6 +65,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		this.velocity = velocity;
 		this.style = style;
 		this.func = func;
+		
 		addObserver(new JsonOut());
 		
 		String allName = this.getClass().getName();
@@ -66,6 +74,10 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		setAction("Skill_"+name);
 	}
 	
+	public IIntercepter getCooldownBoutIntercepter() {
+		return cooldownBoutIntercepter;
+	}
+
 	@Override
 	public void affect(Object... objects)  throws RuleValidatorException {
 		// TODO Auto-generated method stub
@@ -87,6 +99,8 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		
 		if(hasError())
 			throw new RuleValidatorException(getErrors().getMessage());
+		
+		cooldownBout = cooldown;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", owner.getPlayer());
@@ -127,6 +141,14 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		this.cooldown = cooldown;
 	}
 	
+	public Integer getCooldownBout() {
+		return cooldownBout;
+	}
+
+	public void setCooldownBout(Integer cooldownBout) {
+		this.cooldownBout = cooldownBout;
+	}
+
 	public Integer getFunc() {
 		return func;
 	}

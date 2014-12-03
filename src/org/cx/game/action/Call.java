@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.ActiveSkill;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -54,6 +56,14 @@ public class Call extends Action implements ICall {
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Call,map);
 		super.notifyObservers(info);           //通知所有卡片对象，召唤事件
+		
+		LifeCard life = (LifeCard) getOwner();        //启动技能冷却时间的计算
+		for(ISkill skill : life.getSkillList()){
+			if (skill instanceof ActiveSkill) {
+				ActiveSkill as = (ActiveSkill) skill;
+				life.getPlayer().getContext().addIntercepter(as.getCooldownBoutIntercepter());
+			}
+		}
 	}
 
 	@Override

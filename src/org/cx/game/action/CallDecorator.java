@@ -1,7 +1,11 @@
 package org.cx.game.action;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.ActiveSkill;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.intercepter.Intercepter;
 import org.cx.game.validator.CallConsumeValidator;
 import org.cx.game.validator.CallRangeValidator;
 import org.cx.game.widget.IPlace;
