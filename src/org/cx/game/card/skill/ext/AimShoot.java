@@ -35,6 +35,7 @@ public class AimShoot extends SimplePassiveSkill {
 			Double d = 1-Util.format(getOwner().getMove().getEnergy().doubleValue()/life.getMove().getEnergy().doubleValue(), "0.00");
 			Integer upAtkValue = Util.convertInteger(d * getOwner().getAttack().getAtk() * upScale/100);
 			addToEruptAtk(upAtkValue);
+			affect();
 		}
 	}
 

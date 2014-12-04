@@ -46,6 +46,7 @@ public class Sprint extends SimplePassiveSkill {
 				Integer step = getOwner().getPlayer().getGround().distance(begin, end);
 				Integer upAtkValue = step*Sprint.this.upAtkScale/100;
 				addToEruptAtk(upAtkValue);
+				affect();
 			}
 
 			@Override

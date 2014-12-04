@@ -1,5 +1,6 @@
 package org.cx.game.tools;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +53,70 @@ public class Util {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(date);
 	}
+	
+	public final static int Precision = 2;
+	
+	/**
+	 * 设置double精度
+	 * @param value 
+	 * @param scale 精度，舍入模式：四舍五入 - ROUND_HALF_UP
+	 * @return
+	 */
+	public static Double round(Double value, int scale) {   
+       BigDecimal bd = new BigDecimal(value);   
+       bd = bd.setScale(scale, BigDecimal.ROUND_HALF_UP);   
+       Double d = bd.doubleValue();   
+       return d;
+    }
+	
+	/**
+	 * double类型相加，因为直接相加会导致小数点很多
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public static Double sum(Double d1,Double d2){
+		BigDecimal bd1 = new BigDecimal(Double.toString(d1)); 
+        BigDecimal bd2 = new BigDecimal(Double.toString(d2)); 
+        return bd1.add(bd2).doubleValue(); 
+	}
+	
+	/**
+	 * double类型相减
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public static Double sub(Double d1,Double d2){ 
+        BigDecimal bd1 = new BigDecimal(Double.toString(d1)); 
+        BigDecimal bd2 = new BigDecimal(Double.toString(d2)); 
+        return bd1.subtract(bd2).doubleValue(); 
+    }
+	
+	/**
+	 * double类型相乘
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public Double mul(Double d1,Double d2){ 
+        BigDecimal bd1 = new BigDecimal(Double.toString(d1)); 
+        BigDecimal bd2 = new BigDecimal(Double.toString(d2)); 
+        return bd1.multiply(bd2).doubleValue(); 
+    }
+	
+	/**
+	 * double类型相除
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */
+	public Double div(Double d1,Double d2){
+        BigDecimal bd1 = new BigDecimal(Double.toString(d1)); 
+        BigDecimal bd2 = new BigDecimal(Double.toString(d2)); 
+        return bd1.divide 
+               (bd2,Precision,BigDecimal.ROUND_HALF_UP).doubleValue(); 
+    }
 	
 	/**
 	 * 过滤出数字

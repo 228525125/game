@@ -32,11 +32,19 @@ public class WarnAureoleBuff extends SimpleBuff {
 	}
 	
 	@Override
+	public void effect() {
+		// TODO Auto-generated method stub
+		super.effect();
+		
+		affect();
+	}
+	
+	@Override
 	public void affect(Object... objects) {
 		// TODO Auto-generated method stub
-		super.affect(objects);
-		
 		addToKeepImmuneDamageRatio(immuneDamageRatio.doubleValue()/100);
+		
+		super.affect(objects);
 	}
 
 }

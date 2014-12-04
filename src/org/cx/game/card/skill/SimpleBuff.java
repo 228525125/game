@@ -2,6 +2,7 @@ package org.cx.game.card.skill;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.tools.Util;
 
 /**
  * 能力值可能发生改变的Buff
@@ -38,7 +39,7 @@ public abstract class SimpleBuff extends Buff {
 		}
 		
 		if(0!=keepImmuneDamageRatioNewValue){
-			getOwner().getAttacked().addToImmuneDamageRatio(keepImmuneDamageRatioNewValue - keepImmuneDamageRatioOldValue);
+			getOwner().getAttacked().addToImmuneDamageRatio(Util.sub(keepImmuneDamageRatioNewValue, keepImmuneDamageRatioOldValue));
 			keepImmuneDamageRatioOldValue = keepImmuneDamageRatioNewValue;
 		}
 		
@@ -101,7 +102,7 @@ public abstract class SimpleBuff extends Buff {
 	}
 
 	public void addToKeepImmuneDamageRatio(Double ImmuneDamageRatio) {
-		this.keepImmuneDamageRatioNewValue = ImmuneDamageRatio;
+		this.keepImmuneDamageRatioNewValue = Util.round(ImmuneDamageRatio, Util.Precision);
 	}
 
 	public void addToKeepDodgeChance(Integer keepDodgeChance) {

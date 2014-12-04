@@ -2,6 +2,7 @@ package org.cx.game.card.skill;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.tools.Util;
 
 /**
  * 能力值可能发生改变的被动技能
@@ -39,7 +40,7 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		
 		if(0!=eruptImmuneDamageRatio){
 			Double damageChance = getOwner().getAttacked().getImmuneDamageRatio();
-			getOwner().getAttacked().setImmuneDamageRatio(damageChance + eruptImmuneDamageRatio);
+			getOwner().getAttacked().setImmuneDamageRatio(Util.sum(damageChance, eruptImmuneDamageRatio));
 			addToEruptImmuneDamageRatio(0d);
 		}
 		
@@ -73,11 +74,11 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		
 		if(0!=eruptImmuneDamageRatio){
 			Double immuneDamageRatio = getOwner().getAttacked().getImmuneDamageRatio();
-			getOwner().getAttacked().setImmuneDamageRatio(immuneDamageRatio + eruptImmuneDamageRatio);
+			getOwner().getAttacked().setImmuneDamageRatio(Util.sum(immuneDamageRatio, eruptImmuneDamageRatio));
 		}
 		
 		if(0!=keepImmuneDamageRatioNewValue){
-			getOwner().getAttacked().addToImmuneDamageRatio(keepImmuneDamageRatioNewValue - keepImmuneDamageRatioOldValue);
+			getOwner().getAttacked().addToImmuneDamageRatio(Util.sub(keepImmuneDamageRatioNewValue, keepImmuneDamageRatioOldValue));
 			keepImmuneDamageRatioOldValue = keepImmuneDamageRatioNewValue;
 		}
 		
@@ -119,11 +120,11 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 	}
 
 	public void addToEruptImmuneDamageRatio(Double eruptImmuneDamageRatio) {
-		this.eruptImmuneDamageRatio = eruptImmuneDamageRatio;
+		this.eruptImmuneDamageRatio = Util.round(eruptImmuneDamageRatio, Util.Precision);
 	}
 
 	public void addToKeepImmuneDamageRatio(Double ImmuneDamageRatio) {
-		this.keepImmuneDamageRatioNewValue = ImmuneDamageRatio;
+		this.keepImmuneDamageRatioNewValue = Util.round(ImmuneDamageRatio, Util.Precision);
 	}
 
 	public void addToEruptDodgeChance(Integer eruptDodgeChance) {

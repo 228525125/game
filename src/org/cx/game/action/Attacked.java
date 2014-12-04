@@ -82,7 +82,7 @@ public class Attacked extends Action implements IAttacked {
 	}
 	
 	public void addToImmuneDamageRatio(Double damageChance){
-		this.immuneDamageRatio += damageChance;
+		this.immuneDamageRatio = Util.sum(immuneDamageRatio, Util.round(damageChance, Util.Precision));
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -90,12 +90,12 @@ public class Attacked extends Action implements IAttacked {
 		map.put("card", getOwner());
 		map.put("change", damageChance);
 		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_DamageChance,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_ImmuneDamageRatio,map);
 		super.notifyObservers(info); 
 	}
 
 	public void setImmuneDamageRatio(Double damageChance) {
-		this.immuneDamageRatio = damageChance;
+		this.immuneDamageRatio = Util.round(damageChance, Util.Precision);
 	}
 
 	@Override

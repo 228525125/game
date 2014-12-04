@@ -44,7 +44,7 @@ public class WarnAureole extends Aureole {
 		super.affect(objects);
 		LifeCard life = (LifeCard) objects[0];
 		
-		new WarnAureoleBuff(MaxBout, immuneDamageRatio, getStyle(), IBuff.Type_Neutral, getFunc(), life).effect();
+		new WarnAureoleBuff(MaxBout, getStyle(), IBuff.Type_Benefit, getFunc(), immuneDamageRatio, life).effect();
 	}
 
 }
