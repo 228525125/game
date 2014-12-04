@@ -9,6 +9,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.widget.IControlQueue;
 
@@ -149,5 +150,8 @@ public class Attack extends Action implements IAttack {
 		super.notifyObservers(info);  
 		
 		attacked.attacked(getOwner());         //比赛规则在attacked中实现的
+		
+		if(!Debug.isDebug)
+			getOwner().getPlayer().getContext().done();
 	}
 }

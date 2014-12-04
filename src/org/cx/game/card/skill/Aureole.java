@@ -31,15 +31,16 @@ public abstract class Aureole extends PassiveSkill {
 		
 		life.getCall().addIntercepter(new Intercepter("action"){
 			@Override
-			public void finish(Object[] args) {
+			public void after(Object[] args) {
 				// TODO Auto-generated method stub
+				refurbish();
 				getOwner().getPlayer().getContext().addIntercepter(this);
 			}
 		});
 		
 		life.getDeath().addIntercepter(new Intercepter("action"){
 			@Override
-			public void finish(Object[] args) {
+			public void after(Object[] args) {
 				// TODO Auto-generated method stub
 				getOwner().getPlayer().getContext().deleteIntercepter(this);
 			}

@@ -15,7 +15,7 @@ public class WarnAureole extends Aureole {
 	private Integer immuneDamageRatio = 0;
 	
 	public WarnAureole(Integer style, Integer range, Integer immuneDamageRatio) {
-		super(range, style);
+		super(style, range);
 		// TODO Auto-generated constructor stub
 		this.immuneDamageRatio = immuneDamageRatio;
 	}

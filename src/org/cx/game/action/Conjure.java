@@ -1,8 +1,8 @@
 package org.cx.game.action;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.tools.Debug;
 
 /**
  * 施法
@@ -24,16 +24,9 @@ public class Conjure extends Action implements IConjure {
 		Object [] parameter = (Object[]) objects[1];
 
 		skill.useSkill(parameter);
-	}
-	
-	public static void test(Object...objects){
-		for(Object o : objects){
-			System.out.println(o);
-		}
-	}
-	
-	public static void main(String[] args) {
-		test(1,new Integer[]{2,4});
+		
+		if(!Debug.isDebug)
+			getOwner().getPlayer().getContext().done();
 	}
 
 }
