@@ -101,6 +101,11 @@ public class ControlQueue extends Observable implements IControlQueue {
 		for(int i=0;i<other.size();i++)
 			other.get(i).loadSpeed();
 		Collections.sort(other, new PlaceComparator());
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("queue", toListMap());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Refurbish,map);
+		notifyObservers(info);
 	}
 	
 	private void swapQueue(){

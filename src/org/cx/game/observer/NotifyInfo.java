@@ -149,6 +149,7 @@ public class NotifyInfo {
 	public final static String Context_Finish = "Context_Finish";	
 	public final static String Context_ControlQueue_Remove = "Context_ControlQueue_Remove";
 	public final static String Context_ControlQueue_Insert = "Context_ControlQueue_Insert";
+	public final static String Context_ControlQueue_Refurbish = "Context_ControlQueue_Refurbish";
 	
 	private String type;
 	private Object info;

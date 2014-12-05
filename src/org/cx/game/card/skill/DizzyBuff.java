@@ -43,15 +43,6 @@ public class DizzyBuff extends Buff {
 	}
 	
 	@Override
-	public void affect(Object... objects) {
-		// TODO Auto-generated method stub
-		Integer speed = getOwner().getAttack().getSpeedChance();
-		getOwner().getAttack().setSpeedChance(speed-getBout()*IControlQueue.consume);
-		
-		super.affect(objects);
-	}
-	
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		if(null==name)

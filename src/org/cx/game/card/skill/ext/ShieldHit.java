@@ -1,9 +1,11 @@
 package org.cx.game.card.skill.ext;
 
+import org.cx.game.action.IAttack;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.DizzyBuff;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.widget.IControlQueue;
 
 /**
  * 盾击
@@ -28,6 +30,7 @@ public class ShieldHit extends ActiveSkill {
 		super(consume, cooldown, velocity, style, func);
 		// TODO Auto-generated constructor stub
 		this.atkScale = atkScale;
+		this.bout = bout;
 		setParameterTypeValidator(new Class[]{LifeCard.class});
 	}
 
@@ -43,8 +46,12 @@ public class ShieldHit extends ActiveSkill {
 		super.affect(objects);
 		
 		LifeCard life = (LifeCard) objects[0];
-		Integer atk = getOwner().getAttack().getAtk();
+		IAttack attack = life.getAttack();
+		Integer atk = attack.getAtk();
 		life.getDeath().magicToHp(-atk*atkScale/100);
+		
+		Integer speed = attack.getSpeedChance();
+		attack.setSpeedChance(speed-bout*IControlQueue.consume);
 		
 		new DizzyBuff(bout, life).effect();
 	}
@@ -56,7 +63,6 @@ public class ShieldHit extends ActiveSkill {
 		
 		LifeCard life = (LifeCard) objects[0];
 		life.affected(this);
-		
 	}
 	
 
