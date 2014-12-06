@@ -10,4 +10,16 @@ public class ConjureDecorator extends ActionDecorator implements IConjure {
 		this.conjure = conjure;
 	}
 
+	@Override
+	public Integer getPower() {
+		// TODO Auto-generated method stub
+		return this.conjure.getPower();
+	}
+
+	@Override
+	public void setPower(Integer power) {
+		// TODO Auto-generated method stub
+		this.conjure.setPower(power);
+	}
+
 }

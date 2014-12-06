@@ -1,5 +1,6 @@
 package org.cx.game.command;
 
+import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
@@ -30,8 +31,9 @@ public class ConjureCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 		
+		LifeCard life = (LifeCard) buffer.getCard();		
 		IActiveSkill skill = (IActiveSkill) buffer.getSkill();
-		skill.useSkill(parameter);
+		life.conjure(skill, new Object[]{parameter});
 		
 		if(!Debug.isDebug)
 			player.getContext().done();         //结束本回合

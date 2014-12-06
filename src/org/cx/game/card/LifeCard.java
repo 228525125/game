@@ -132,6 +132,19 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setEnergy(Integer energy) {
 		this.energy = energy;
 	}
+	
+	/**
+	 * 能量
+	 */
+	private Integer power = Debug.isDebug ? IConjure.Max_Power : 0;
+
+	public Integer getPower() {
+		return power;
+	}
+
+	public void setPower(Integer power) {
+		this.power = power;
+	}
 
 	/**
 	 * 激活
@@ -734,6 +747,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attacked.setAttackBackChance(attackBackChance);
 		this.attacked.setDodgeChance(dodgeChance);
 		this.attacked.setParryChance(parryChance);
+		
+		this.conjure.setPower(power);
 		
 		this.move.setEnergy(energy);
 		

@@ -9,4 +9,13 @@ import org.cx.game.card.skill.IActiveSkill;
  */
 public interface IConjure extends IAction {
 	
+	public final static Integer Max_Power = 100;
+	
+	/**
+	 * 法力值
+	 * @return
+	 */
+	public Integer getPower();
+	
+	public void setPower(Integer power);
 }
