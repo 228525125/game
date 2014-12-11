@@ -11,6 +11,6 @@ public class SyntaxValidatorException extends ValidatorException {
 	
 	public SyntaxValidatorException(String description) {
 		// TODO Auto-generated constructor stub
-		super(I18n.getMessage("org.cx.game.exception.SyntaxValidatorException")+description);
+		super(I18n.getMessage("org.cx.game.exception.SyntaxValidatorException")+I18n.getMessage(description));
 	}
 }

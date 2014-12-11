@@ -12,7 +12,7 @@ public class I18n {
 
 	private static Map<Locale, ResourceBundle> bundles = new java.util.HashMap<Locale, ResourceBundle>();
 	private static I18n singleton = new I18n();
-	private static Locale locale = Locale.getDefault();
+	private static Locale locale = Locale.ENGLISH;
 
 	public static I18n getInstance() {
 		return singleton;

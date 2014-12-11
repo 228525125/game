@@ -36,7 +36,8 @@ public class Calculator {
 		return null;
 	}
 	
-	private InteriorCommand parse(Element root, IPlayer player, String cmd) throws SyntaxValidatorException {
+	public InteriorCommand parseForCommand(IPlayer player, String cmd) throws SyntaxValidatorException {
+		Element root = getRoot();
 		InteriorCommand command = null;
 		
 		InteriorCommandExpression commandExpriession = new InteriorCommandExpression(player, cmd, root);   //默认第一个字段为command
@@ -50,7 +51,8 @@ public class Calculator {
 		return command;
 	}
 	
-	private OutsideCommand parse(Element root, String cmd, IExternalCommand external) throws SyntaxValidatorException {
+	public OutsideCommand parseForCommand(String cmd, IExternalCommand external) throws SyntaxValidatorException {		
+		Element root = getRoot();
 		OutsideCommand command = null;
 		
 		OutsideCommandExpression commandExpriession = new OutsideCommandExpression(cmd, root);   //默认第一个字段为command
@@ -71,24 +73,35 @@ public class Calculator {
 	}
 	
 	/**
-	 * 解析命令
+	 * 存在语句顺序问题，不推荐使用
+	 * @param player
+	 * @param cmd
+	 * @return
+	 * @throws SyntaxValidatorException
 	 */
-	public List<InteriorCommand> parse(IPlayer player,String cmd) throws SyntaxValidatorException {			
+	public List<InteriorCommand> parseForList(IPlayer player,String cmd) throws SyntaxValidatorException {			
 		intergrityValidate(cmd);      //完整性验证
 		
 		List<InteriorCommand> list = new ArrayList<InteriorCommand>();
 		for(String c : cmd.split(";")){
-			list.add(parse(getRoot(),player,c));
+			list.add(parseForCommand(player,c));
 		}
 		return list;
 	}
 	
-	public List<OutsideCommand> parse(String cmd, IExternalCommand external) throws SyntaxValidatorException {			
+	/**
+	 * 存在语句顺序问题，不推荐使用
+	 * @param cmd
+	 * @param external
+	 * @return
+	 * @throws SyntaxValidatorException
+	 */
+	public List<OutsideCommand> parseForList(String cmd, IExternalCommand external) throws SyntaxValidatorException {			
 		intergrityValidate(cmd);      //完整性验证
 		
 		List<OutsideCommand> list = new ArrayList<OutsideCommand>();
 		for(String c : cmd.split(";")){
-			list.add(parse(getRoot(),c, external));
+			list.add(parseForCommand(c, external));
 		}
 		return list;
 	}

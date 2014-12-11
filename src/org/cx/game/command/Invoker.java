@@ -1,12 +1,9 @@
 package org.cx.game.command;
 
-import java.util.List;
-
+import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.IPlayer;
-import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.exception.ValidatorException;
-import org.cx.game.out.JsonOut;
 import org.cx.game.out.Response;
 
 public class Invoker {
@@ -30,20 +27,29 @@ public class Invoker {
 		return response;
 	}
 	
+	private void intergrityValidate(String cmd) throws SyntaxValidatorException {
+		String[] cs = cmd.split(Calculator.SPACE);
+		if(cs.length==0)
+			throw new SyntaxValidatorException("org.cx.game.command.Invoker.intergrityValidate");
+	}
+	
 	public String receiveCommand(IPlayer player,String cmd) throws ValidatorException {
-		List<InteriorCommand> list = CommandFactory.createCommands(player,cmd);
-		for(Command command : list){
+		intergrityValidate(cmd);    //验证命令完整性
+		
+		for(String c : cmd.split(";")){
+			InteriorCommand command = CommandFactory.createCommand(player,c);
 			setCommand(command);
 			action();
 		}
-				
+		
 		return response();
 	}
 	
 	public String receiveCommand(String cmd, IExternalCommand external) throws ValidatorException {
-		List<OutsideCommand> list = CommandFactory.createCommands(cmd, external);
-		for(OutsideCommand command : list){
-			command.setExternal(external);
+		intergrityValidate(cmd);    //验证命令完整性
+		
+		for(String c : cmd.split(";")){
+			OutsideCommand command = CommandFactory.createCommand(c, external);
 			setCommand(command);
 			action();
 		}
