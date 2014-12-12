@@ -51,7 +51,7 @@ public class Calculator {
 		return command;
 	}
 	
-	public OutsideCommand parseForCommand(String cmd, IExternalCommand external) throws SyntaxValidatorException {		
+	public OutsideCommand parseForCommand(String cmd) throws SyntaxValidatorException {		
 		Element root = getRoot();
 		OutsideCommand command = null;
 		
@@ -101,7 +101,7 @@ public class Calculator {
 		
 		List<OutsideCommand> list = new ArrayList<OutsideCommand>();
 		for(String c : cmd.split(";")){
-			list.add(parseForCommand(c, external));
+			list.add(parseForCommand(c));
 		}
 		return list;
 	}

@@ -24,7 +24,7 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 
 	private IAttacked attacked = null;
 	
-	private static String filePath = "/org/cx/game/rule/attack.xml";
+	private static String filePath = "/org/cx/game/action/attack.xml";
 	
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
@@ -43,10 +43,10 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		Element type = getRoot().element("attacktype");
 		for(Iterator it = type.elementIterator("attack");it.hasNext();){
 			Element attack = (Element) it.next();
-			if(atkType.equals(attack.attribute("type").getText())){
+			if(atkType.equals(Integer.valueOf(attack.attribute("type").getText()))){
 				for(Iterator itr = attack.elementIterator("armour");it.hasNext();){
 					Element armour = (Element) itr.next();
-					if(armourType.equals(armour.attribute("type").getText()))
+					if(armourType.equals(Integer.valueOf(armour.attribute("type").getText())))
 						return Double.valueOf(armour.getText())/100;
 				}
 			}else

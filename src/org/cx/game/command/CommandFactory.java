@@ -14,6 +14,11 @@ public class CommandFactory {
 		return helper.parseForCommand(player, cmd);
 	}
 	
+	public static OutsideCommand createCommand(String cmd) throws SyntaxValidatorException{
+		Calculator helper = new Calculator();
+		return helper.parseForCommand(cmd);
+	}
+	
 	/**
 	 * 存在语句顺序问题，不推荐使用
 	 * @param player
@@ -26,12 +31,7 @@ public class CommandFactory {
 		List<InteriorCommand> list = new ArrayList<InteriorCommand>();
 		list = helper.parseForList(player, cmd);
 		return list;
-	}
-	
-	public static OutsideCommand createCommand(String cmd, IExternalCommand external) throws SyntaxValidatorException{
-		Calculator helper = new Calculator();
-		return helper.parseForCommand(cmd, external);
-	}
+	}	
 	
 	/**
 	 * 存在语句顺序问题，不推荐使用

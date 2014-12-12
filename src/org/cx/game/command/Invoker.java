@@ -49,7 +49,8 @@ public class Invoker {
 		intergrityValidate(cmd);    //验证命令完整性
 		
 		for(String c : cmd.split(";")){
-			OutsideCommand command = CommandFactory.createCommand(c, external);
+			OutsideCommand command = CommandFactory.createCommand(c);
+			command.setExternal(external);
 			setCommand(command);
 			action();
 		}
