@@ -183,6 +183,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			Place place = this.queue.get(i);
 			map.put("position",indexOf(place));
 			map.put("unit", place.getObject());
+			map.put("count", place.getCount());
 			list.add(map);
 		}
 		
@@ -191,6 +192,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			Place place  = otherQueue(this.queue).get(i);
 			map.put("position",indexOf(place));
 			map.put("unit", place.getObject());
+			map.put("count", place.getCount());
 			list.add(map);
 		}
 		return list;
