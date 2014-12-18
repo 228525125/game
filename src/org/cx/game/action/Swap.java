@@ -38,7 +38,8 @@ public class Swap extends Action implements ISwap {
 		// TODO Auto-generated method stub
 		super.action(objects);
 		
-		LifeCard swaped = (LifeCard) objects[0];
+		LifeCard swaped = (LifeCard) objects[0];		
+		
 		Map<String,Object> entry = new HashMap<String,Object>();
 		entry.put("player", getOwner().getPlayer());
 		entry.put("swap", getOwner());
@@ -55,6 +56,8 @@ public class Swap extends Action implements ISwap {
 		ground.remove(swaped);
 		
 		swaped.initState();
+		swaped.getDeath().setStatus(IDeath.Status_Exist);
+		
 		ICardGroup group = getOwner().getPlayer().getCardGroup();
 		Integer p = (int)(Math.random()*group.getSize());    //随机插入group
 		group.add(p, swaped);

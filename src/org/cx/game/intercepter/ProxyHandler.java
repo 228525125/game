@@ -36,7 +36,7 @@ public class ProxyHandler implements InvocationHandler {
 				/*
 				 * after
 				 */
-				Collections.sort(intercepters, new IntercepterDescComparator());   //反序
+				Collections.sort(intercepters, new IntercepterAscComparator());   //反序
 				for(IIntercepter intercepter : intercepters){
 					intercepter.after(args);
 				}

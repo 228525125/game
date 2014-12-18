@@ -49,7 +49,7 @@
 				<id type="int">1130001</id>
 			</parameter>
 			<hp type="int">480</hp>
-			<atk type="int">50</atk>
+			<atk type="int">950</atk>
 			<range type="int">1</range>
 			<immuneDamageRatio type="double">0.42</immuneDamageRatio>
 			<star type="int">3</star>

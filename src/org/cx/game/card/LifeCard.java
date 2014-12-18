@@ -396,7 +396,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	public void clearBuff(){
-		for(IBuff buff : buffList){
+		List<IBuff> buffs = new ArrayList<IBuff>();
+		buffs.addAll(buffList);
+		for(IBuff buff : buffs){
 			buff.invalid();
 		}
 	}
@@ -753,7 +755,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.move.setEnergy(energy);
 		
 		this.death.setHp(hp);
-		this.death.setStatus(IDeath.Status_Live);
 		
 		setHide(false);
 		

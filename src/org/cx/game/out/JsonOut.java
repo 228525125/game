@@ -1,7 +1,5 @@
 package org.cx.game.out;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,7 +7,6 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.widget.UseCard;
 
 public class JsonOut extends Response implements Observer {
 	

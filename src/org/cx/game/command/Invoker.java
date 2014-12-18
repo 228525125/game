@@ -9,6 +9,7 @@ import org.cx.game.out.Response;
 public class Invoker {
 
 	private Command command;
+	private String response = "";
 
 	private void setCommand(Command command) {
 		this.command = command;
@@ -18,13 +19,16 @@ public class Invoker {
 		this.command.execute();
 	}
 	
+	public String getResponse() {
+		return response;
+	}
+
 	/*
 	 * 把执行中观察的结果反馈给前台
 	 */
-	private String response(){
-		String response = Response.process.get().toString();
+	private void response(){
+		response = Response.process.get().toString();
 		Response.process.get().delete(0, Response.process.get().length());
-		return response;
 	}
 	
 	private void intergrityValidate(String cmd) throws SyntaxValidatorException {
@@ -33,28 +37,38 @@ public class Invoker {
 			throw new SyntaxValidatorException("org.cx.game.command.Invoker.intergrityValidate");
 	}
 	
-	public String receiveCommand(IPlayer player,String cmd) throws ValidatorException {
-		intergrityValidate(cmd);    //验证命令完整性
-		
-		for(String c : cmd.split(";")){
-			InteriorCommand command = CommandFactory.createCommand(player,c);
-			setCommand(command);
-			action();
+	public void receiveCommand(IPlayer player,String cmd) throws ValidatorException {
+		try {
+			intergrityValidate(cmd);    //验证命令完整性
+			
+			for(String c : cmd.split(";")){
+				InteriorCommand command = CommandFactory.createCommand(player,c);
+				setCommand(command);
+				action();
+			}
+		} catch (ValidatorException e) {
+			// TODO: handle exception
+			throw e;
+		} finally {
+			response();
 		}
-		
-		return response();
 	}
 	
-	public String receiveCommand(String cmd, IExternalCommand external) throws ValidatorException {
-		intergrityValidate(cmd);    //验证命令完整性
+	public void receiveCommand(String cmd, IExternalCommand external) throws ValidatorException {
+		try {
+			intergrityValidate(cmd);    //验证命令完整性
 		
-		for(String c : cmd.split(";")){
-			OutsideCommand command = CommandFactory.createCommand(c);
-			command.setExternal(external);
-			setCommand(command);
-			action();
+			for(String c : cmd.split(";")){
+				OutsideCommand command = CommandFactory.createCommand(c);
+				command.setExternal(external);
+				setCommand(command);
+				action();
+			}
+		} catch (ValidatorException e) {
+			// TODO: handle exception
+			throw e;
+		} finally {
+			response();
 		}
-		
-		return response();
 	}
 }

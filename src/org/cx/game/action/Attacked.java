@@ -108,7 +108,6 @@ public class Attacked extends Action implements IAttacked {
 		Double damageChance = 1d-getOwner().getAttacked().getImmuneDamageRatio();
 		
 		Double damage = atk*damageChance;
-		getOwner().getDeath().attackToDamage(-damage.intValue());
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -118,6 +117,10 @@ public class Attacked extends Action implements IAttacked {
 		map.put("damage", damage);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
 		super.notifyObservers(info);           //通知所有卡片对象，攻击事件
+		
+		getOwner().getDeath().attackToDamage(-damage.intValue());
+		
+		
 	}
 
 }

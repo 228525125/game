@@ -77,12 +77,9 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 			}
 			
 			@Override
-			public void finish(Object[] args) {
+			public void after(Object[] args) {
 				// TODO Auto-generated method stub
-				LifeCard attack = (LifeCard) ((Object[]) args[0])[0];
 				LifeCard attacked = (LifeCard) getOwner();
-				
-				attack.getAttack().setAtk(atk);
 				
 				if (attacked.getDeath().getHp()<1) {
 					try {
@@ -92,6 +89,20 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 						e.printStackTrace();
 					}
 				}
+			}
+			
+			@Override
+			public void finish(Object[] args) {
+				// TODO Auto-generated method stub
+				LifeCard attack = (LifeCard) ((Object[]) args[0])[0];
+				
+				attack.getAttack().setAtk(atk);
+			}
+			
+			@Override
+			public Integer getOrder() {
+				// TODO Auto-generated method stub
+				return Intercepter.Order_Default - 10;          //对死亡的判断应该优先与反击的判断
 			}
 			
 			@Override

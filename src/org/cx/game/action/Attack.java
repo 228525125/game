@@ -86,14 +86,16 @@ public class Attack extends Action implements IAttack {
 	@Override
 	public void setSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
-		this.speedChance = speedChance;
-		
-		/*
-		 * 初始化时，owner为null
-		 */
-		if(null!=getOwner()){
-			IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
-			queue.refurbish();        //刷新控制列表
+		if(this.speedChance!=speedChance){
+			this.speedChance = speedChance;
+			
+			/*
+			 * 初始化时，owner为null
+			 */
+			if(null!=getOwner()){
+				IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
+				queue.refurbish();        //刷新控制列表
+			}
 		}
 	}
 	

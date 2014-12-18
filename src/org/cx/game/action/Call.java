@@ -37,7 +37,8 @@ public class Call extends Action implements ICall {
 		super.action(objects);
 		
 		IPlace place = (IPlace) objects[0];
-		getOwner().initState();
+		getOwner().initState();		
+		getOwner().getDeath().setStatus(IDeath.Status_Live);
 		
 		IPlayer player = getOwner().getPlayer();
 		Integer power = player.getResource();
