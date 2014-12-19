@@ -303,13 +303,17 @@ public class Ground extends Container implements IGround
 	}
 	
 	/**
-	 * 只能查找战场上的生物位置，不包含墓地和陷阱
+	 * 只能查找战场上的生物位置，包含墓地
 	 */
 	public Integer getPosition(ICard card) {
 		// TODO Auto-generated method stub
+		LifeCard life = (LifeCard) card;
 		for(Entry<Integer, IPlace> entry : ground.entrySet()){
-			if(card.equals(entry.getValue().getLife()))
+			if(life.equals(entry.getValue().getLife())){
 				return entry.getKey();
+			}else if(entry.getValue().getCemetery().contains(life)){
+				return entry.getKey();
+			}
 		}
 		return null;
 	}

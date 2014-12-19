@@ -141,7 +141,7 @@ public class Death extends Action implements IDeath {
 		map.put("card", getOwner());
 		map.put("position", getOwner().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Death,map);
-		super.notifyObservers(info);           //通知所有卡片对象，死亡事件
+		super.notifyObservers(info);           //通知所有卡片对象，死亡事件		
 		
 		getOwner().initState();                //初始化
 		
