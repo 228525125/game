@@ -75,7 +75,7 @@ public class TrickList extends Observable implements ITrickList {
 	}
 
 	@Override
-	public IPlace getPlace() {
+	public IPlace getOwner() {
 		// TODO Auto-generated method stub
 		return place;
 	}
@@ -126,4 +126,9 @@ public class TrickList extends Observable implements ITrickList {
 		super.setChanged();
 		super.notifyObservers(arg0);
 	}
+
+	public List<ITrick> getList() {
+		return trickList;
+	}
+	
 }

@@ -108,9 +108,9 @@ public class TrickListDecorator implements ITrickList {
 	}
 
 	@Override
-	public IPlace getPlace() {
+	public IPlace getOwner() {
 		// TODO Auto-generated method stub
-		return trickList.getPlace();
+		return trickList.getOwner();
 	}
 
 	@Override

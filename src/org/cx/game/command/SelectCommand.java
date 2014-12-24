@@ -34,12 +34,12 @@ public class SelectCommand extends InteriorCommand {
 		
 		if(null!=buffer.getCemetery()){
 			map.put("cemetery", buffer.getCemetery());
-			map.put("position", buffer.getCemetery().getPlace().getPosition());
+			map.put("position", buffer.getCemetery().getOwner().getPosition());
 		}
 		
 		if(null!=buffer.getTrickList()){
 			map.put("tricklist", buffer.getTrickList());
-			map.put("position", buffer.getTrickList().getPlace().getPosition());
+			map.put("position", buffer.getTrickList().getOwner().getPosition());
 		}
 		
 		if(null!=buffer.getCard()){

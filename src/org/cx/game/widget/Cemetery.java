@@ -57,7 +57,7 @@ public class Cemetery extends Observable implements ICemetery {
 	}
 	
 	@Override
-	public IPlace getPlace() {
+	public IPlace getOwner() {
 		// TODO Auto-generated method stub
 		return place;
 	}
@@ -131,5 +131,9 @@ public class Cemetery extends Observable implements ICemetery {
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg0);
+	}
+
+	public List<LifeCard> getList() {
+		return lifeList;
 	}
 } 

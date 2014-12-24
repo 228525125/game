@@ -108,9 +108,9 @@ public class CemeteryDecorator implements ICemetery{
 	}
 
 	@Override
-	public IPlace getPlace() {
+	public IPlace getOwner() {
 		// TODO Auto-generated method stub
-		return cemetery.getPlace();
+		return cemetery.getOwner();
 	}
 
 	@Override

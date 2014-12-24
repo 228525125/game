@@ -46,7 +46,7 @@ public interface ICemetery extends IInterceptable, Observable {
 	 * 
 	 * @return 返回place
 	 */
-	public IPlace getPlace();
+	public IPlace getOwner();
 	
 	/**
 	 * 因为Cemetery的getPosition(ICard)返回Cemetery所在ground的position

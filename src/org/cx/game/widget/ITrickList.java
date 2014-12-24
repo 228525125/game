@@ -41,7 +41,7 @@ public interface ITrickList extends IInterceptable, Observable {
 	 * 
 	 * @return 返回place
 	 */
-	public IPlace getPlace();
+	public IPlace getOwner();
 	
 	/**
 	 * 因为TrickList的getPosition(ICard)返回TrickList所在ground的position

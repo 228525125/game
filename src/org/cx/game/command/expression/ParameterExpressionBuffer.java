@@ -132,7 +132,7 @@ public class ParameterExpressionBuffer {
 	
 	public void setCemetery(ICemetery cemetery){
 		if(null!=cemetery){
-			setPlace(cemetery.getPlace());
+			setPlace(cemetery.getOwner());
 			
 			bufferMap.put(CommandBuffer.CEMETERY, cemetery);
 		}
@@ -140,7 +140,7 @@ public class ParameterExpressionBuffer {
 	
 	public void setTrickList(ITrickList tricklist){
 		if(null!=tricklist){
-			setPlace(tricklist.getPlace());
+			setPlace(tricklist.getOwner());
 			
 			bufferMap.put(CommandBuffer.TRICKLIST, tricklist);
 		}

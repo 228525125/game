@@ -28,8 +28,8 @@ public class JsonOut extends Response implements Observer {
 		// TODO Auto-generated method stub
 		JsonConfig config = new JsonConfig();
 		config.setExcludes(new String[]{
-			"cards","password","context","decks","cardGroup","cemetery","ground","useCard","commandBuffer",       //User
-			"near","trickList",                  //Place
+			"cards","password","context","decks","cardGroup","ground","useCard","commandBuffer",       //User
+			"near",                  //Place
 			//"place",                 //Camp
 			"appendCardList","hashCode",        //LifeCard
 			"affectedList",                  //Skill

@@ -241,7 +241,7 @@ public class CommandBuffer {
 	
 	public void setCemetery(ICemetery cemetery){
 		if(null!=cemetery){
-			setPlace(cemetery.getPlace());
+			setPlace(cemetery.getOwner());
 			
 			bufferMap.put(CEMETERY, cemetery);
 		}
@@ -249,7 +249,7 @@ public class CommandBuffer {
 	
 	public void setTrickList(ITrickList tricklist){
 		if(null!=tricklist){
-			setPlace(tricklist.getPlace());
+			setPlace(tricklist.getOwner());
 			
 			bufferMap.put(TRICKLIST, tricklist);
 		}
