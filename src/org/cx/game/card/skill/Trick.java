@@ -13,6 +13,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
+import org.cx.game.tools.I18n;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
 
@@ -23,6 +24,7 @@ import org.cx.game.widget.ITrickList;
  */
 public abstract class Trick extends Observable implements ITrick {
 
+	private String name = null;
 	private ITrickList owner;
 	private IPlayer player;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
@@ -69,6 +71,12 @@ public abstract class Trick extends Observable implements ITrick {
 			}
 		};
 		recordIntercepter(getOwner(), placeIn);
+	}
+	
+	public String getName() {
+		if(null==name)
+			name = I18n.getMessage(this, "name");
+		return name;
 	}
 	
 	@Override

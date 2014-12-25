@@ -19,6 +19,8 @@ public interface ITrick extends IInterceptable,Observable,IIntercepter,IMagic,IR
 	
 	public final static Integer Setup_Bout = 10;
 	
+	public String getName();
+	
 	/**
 	 * 安装
 	 */
@@ -37,5 +39,5 @@ public interface ITrick extends IInterceptable,Observable,IIntercepter,IMagic,IR
 	
 	public void setBout(Integer bout);
 	
-	public String getAction();
+	public String getAction();	
 }
