@@ -47,4 +47,9 @@ public class WarnAureole extends Aureole {
 		new WarnAureoleBuff(MaxBout, getStyle(), IBuff.Type_Benefit, getFunc(), immuneDamageRatio, life).effect();
 	}
 
+	@Override
+	public Class getBuffClass() {
+		// TODO Auto-generated method stub
+		return WarnAureoleBuff.class;
+	}
 }

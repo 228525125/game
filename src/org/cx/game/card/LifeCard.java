@@ -382,6 +382,10 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	private static final String Invalid = "_Invalid";
 	
+	/**
+	 * 该方法仅用于Buff.invalid
+	 * @param buff
+	 */
 	public void removeBuff(IBuff buff){	
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getPlayer());
@@ -393,6 +397,15 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		notifyObservers(info);
 
 		this.buffList.remove(buff);
+	}
+	
+	public IBuff getBuff(Class clazz){
+		List<IBuff> buffs = new ArrayList<IBuff>();
+		buffs.addAll(buffList);
+		for(IBuff buff : buffs)
+			if(buff.getClass().equals(clazz))
+				return buff;
+		return null;
 	}
 	
 	public void clearBuff(){

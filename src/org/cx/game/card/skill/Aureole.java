@@ -43,6 +43,11 @@ public abstract class Aureole extends PassiveSkill {
 			public void after(Object[] args) {
 				// TODO Auto-generated method stub
 				getOwner().getPlayer().getContext().deleteIntercepter(this);
+				for(LifeCard life : affectedList){
+					IBuff buff = life.getBuff(getBuffClass());
+					if(null!=buff)
+						buff.invalid();
+				}
 			}
 		});
 	}
@@ -64,6 +69,7 @@ public abstract class Aureole extends PassiveSkill {
 	}
 	
 	public abstract void leave(LifeCard life);
+	public abstract Class getBuffClass();
 	
 	public void into(LifeCard life){
 		try {
