@@ -7,13 +7,13 @@
 				<id type="int">1110004</id>                                                                                     <!-- 卡片id 唯一编码 -->
 			</parameter>
 			<hp type="int">110</hp>                                                                                            <!-- 生命值 -->
-			<atk type="int">1945</atk>                                                                                           <!-- 攻击力 -->
+			<atk type="int">45</atk>                                                                                           <!-- 攻击力 -->
 			<range type="int">1</range>                                                                                        <!-- 攻击距离 -->
 			<immuneDamageRatio type="double">0.2</immuneDamageRatio>                                                               <!-- 免伤比 -->
 			<star type="int">1</star>                                                                                          <!-- 等级 -->
 			<energy type="int">3</energy>                                                                                      <!-- 精力，这个跟移动范围有关，范围=精力/单格消耗，单格消耗统一为1 -->
-			<parryChance type="int">0</parryChance>                                                                         <!-- 格挡 -->
-			<dodgeChance type="int">100</dodgeChance>                                                                         <!-- 躲闪 -->
+			<parryChance type="int">100</parryChance>                                                                         <!-- 格挡 -->
+			<dodgeChance type="int">0</dodgeChance>                                                                         <!-- 躲闪 -->
 			<speedChance type="int">100</speedChance>                                                                          <!-- 速度 -->
 			<accurateChance type="int">100</accurateChance>                                                                 <!-- 准确 -->
 			<thumpChance type="int">0</thumpChance>                                                                         <!-- 重击 -->
@@ -49,7 +49,7 @@
 				<id type="int">1130001</id>
 			</parameter>
 			<hp type="int">480</hp>
-			<atk type="int">950</atk>
+			<atk type="int">50</atk>
 			<range type="int">1</range>
 			<immuneDamageRatio type="double">0.42</immuneDamageRatio>
 			<star type="int">3</star>

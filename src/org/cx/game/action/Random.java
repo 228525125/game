@@ -12,7 +12,7 @@ public class Random {
 		Integer p = Integer.parseInt(new java.text.DecimalFormat("0").format(chance*precision));
 		java.util.Random r = new java.util.Random();
 		Integer rand = r.nextInt(100*precision);
-		if(rand<=p)
+		if(rand<=--p)
 			return true;
 		else
 			return false;
@@ -26,7 +26,7 @@ public class Random {
 	public static Boolean isTrigger(Integer chance){
 		java.util.Random r = new java.util.Random();
 		Integer rand = r.nextInt(100);
-		if(rand<=chance)
+		if(rand<=--chance)
 			return true;
 		else
 			return false;
@@ -34,11 +34,13 @@ public class Random {
 
 	public static void main(String[] args) {
 		/*for(int i=0;i<50;i++)
-			System.out.println((int)(Math.random()*21));*/
+			System.out.println((int)(Math.random()*21));
 		Double d = 100*0.958;
 		Integer i=0;
 		i+=d.intValue();
-		System.out.println(i);
-		
+		System.out.println(i);*/
+		Integer i1 = 10;
+		Integer i2 = 10;
+		System.out.println(i1<=--i2);
 	}
 }

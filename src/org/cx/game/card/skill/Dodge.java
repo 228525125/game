@@ -69,6 +69,12 @@ public class Dodge extends PassiveSkill {
 	}
 	
 	@Override
+	public void finish(Object[] args) {
+		// TODO Auto-generated method stub
+		invoke = true;
+	}
+	
+	@Override
 	public Boolean isInvoke() {
 		// TODO Auto-generated method stub
 		return invoke;
