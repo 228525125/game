@@ -53,9 +53,15 @@ public class NotifyInfo {
 	
 	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";		
 	
-	public final static String Card_LifeCard_Skill_Dodge = "Card_LifeCard_Skill_Dodge";
-	public final static String Card_LifeCard_Skill_Accurate = "Card_LifeCard_Skill_Accurate";
-	public final static String Card_LifeCard_Skill_AttackBack = "Card_LifeCard_Skill_AttackBack";
+	public final static String Skill_AttackBack = "Skill_AttackBack";
+	public final static String Buff_ImmuneBuff = "Buff_ImmuneBuff";
+	
+	/*
+	 * skill = "Skill_"+class.name; buff = "Buff_"+class.name;
+	 */
+	/*public final static String Card_LifeCard_Skill_Dodge = "Card_LifeCard_Skill_Dodge";
+	public final static String Card_LifeCard_Skill_Accurate = "Card_LifeCard_Skill_Accurate";	
+	public final static String Card_LifeCard_Skill_AttackLock = "Card_LifeCard_Skill_AttackLock";
 	public final static String Card_LifeCard_Skill_AttackDizzy = "Card_LifeCard_Skill_AttackDizzy";
 	public final static String Card_LifeCard_Skill_Deadly = "Card_LifeCard_Skill_Deadly";
 	public final static String Card_LifeCard_Skill_Disarm = "Card_LifeCard_Skill_Disarm";
@@ -130,7 +136,7 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Skill_Buff_TransmitBackBuff = "Card_LifeCard_Skill_Buff_TransmitBackBuff";
 	
 	public final static String Card_LifeCard_Skill_Trick_FreezeTrick = "Card_LifeCard_Skill_Trick_FreezeTrick";
-	public final static String Card_LifeCard_Skill_Trick_PrickTrick = "Card_LifeCard_Skill_Trick_PrickTrick";
+	public final static String Card_LifeCard_Skill_Trick_PrickTrick = "Card_LifeCard_Skill_Trick_PrickTrick";*/
 	
 	public final static String Command_Error = "Command_Error";
 	public final static String Command_Select = "Command_Select";

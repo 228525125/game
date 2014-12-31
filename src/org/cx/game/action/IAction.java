@@ -1,6 +1,7 @@
 package org.cx.game.action;
 
 import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
@@ -18,5 +19,10 @@ public interface IAction extends IInterceptable, Observable, IValidatable {
 	
 	public void setOwner(ICard card);
 	
+	/**
+	 * 由具体子类提供实现
+	 * @param objects 由于objects是数组，因此在拦截器的写法如：LifeCard attacked = (LifeCard) ((Object[]) args[0])[0];
+	 * @throws RuleValidatorException
+	 */
 	public void action(Object...objects) throws RuleValidatorException;
 }

@@ -21,6 +21,7 @@ public class Attack extends Action implements IAttack {
 	private Integer accurateChance = 0;
 	private Integer thumpChance = 0;
 	private Integer speedChance = 0;
+	private Integer lockChance = 0;
 	private Integer atk = 0;
 	
 	public Attack(Integer mode, Integer type) {
@@ -120,6 +121,18 @@ public class Attack extends Action implements IAttack {
 
 	public void setAtk(Integer atk) {
 		this.atk = atk;
+	}
+	
+	@Override
+	public Integer getLockChance() {
+		// TODO Auto-generated method stub
+		return lockChance;
+	}
+
+	@Override
+	public void setLockChance(Integer lockChance) {
+		// TODO Auto-generated method stub
+		this.lockChance = lockChance;
 	}
 	
 	@Override

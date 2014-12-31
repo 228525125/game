@@ -18,6 +18,7 @@ public class Move extends Action implements IMove{
 	private Integer consume = IMove.Consume;        //移动一格的消耗
 	private Integer type = Type_Walk;
 	private Boolean moveable = false;   //是否能移动，回合内只能移动一次
+	private Integer fleeChance = 0;         //逃离成功率
 	
 	public Move(Integer type) {
 		// TODO Auto-generated constructor stub
@@ -54,6 +55,18 @@ public class Move extends Action implements IMove{
 
 	public void setEnergy(Integer energy) {
 		this.energy = energy;
+	}
+	
+	@Override
+	public Integer getFleeChance() {
+		// TODO Auto-generated method stub
+		return fleeChance;
+	}
+	
+	@Override
+	public void setFleeChance(Integer fleeChance) {
+		// TODO Auto-generated method stub
+		this.fleeChance = fleeChance;
 	}
 	
 	@Override

@@ -19,7 +19,6 @@ public class Deadly extends SimplePassiveSkill {
 	public Deadly(Integer style, Integer chance, Integer upAtkScale) {
 		// TODO Auto-generated constructor stub
 		super(style);
-		setAction(NotifyInfo.Card_LifeCard_Skill_Deadly);
 		this.chance = chance;
 		this.upAtkScale = upAtkScale;
 	}

@@ -24,7 +24,6 @@ public class Snipe extends PassiveSkill {
 	public Snipe(Integer style, Integer step, Integer elevateScale) {
 		super(style);
 		// TODO Auto-generated constructor stub
-		setAction(NotifyInfo.Card_LifeCard_Skill_Snipe);
 		this.step = step;
 		this.elevateScale = elevateScale;
 	}

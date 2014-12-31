@@ -66,5 +66,9 @@ public interface IAttack extends IAction {
 
 	public void setAtk(Integer atk);
 	
+	public Integer getLockChance();
+	
+	public void setLockChance(Integer lockChance);
+	
 	public void addToAtk(Integer atk);
 }

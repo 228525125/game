@@ -36,6 +36,14 @@ public interface IMove extends IAction{
 
 	public void setEnergy(Integer energy);
 	
+	/**
+	 * 逃离成功率
+	 * @return
+	 */
+	public Integer getFleeChance();
+	
+	public void setFleeChance(Integer fleeChance);
+	
 	public void addToEnergy(Integer energy);
 
 }

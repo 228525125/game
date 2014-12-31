@@ -14,6 +14,7 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.out.JsonOut;
 import org.cx.game.tools.I18n;
 
 /**
@@ -46,6 +47,8 @@ public abstract class Buff extends Observable implements IBuff {
 		this.style = style;
 		this.type = type;
 		recordIntercepter(life.getPlayer().getContext(), this);
+		
+		addObserver(new JsonOut());
 		
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
@@ -91,9 +94,20 @@ public abstract class Buff extends Observable implements IBuff {
 		
 	}
 	
+	private static final String Affect = "_Affect";
+	
 	@Override
 	public void affect(Object...objects) {
 		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("buff", this);
+		map.put("position", getOwner().getContainerPosition());
+		NotifyInfo info = new NotifyInfo(getAction()+Affect,map);
+		notifyObservers(info);
+		
 		if(0==beginBout)
 			beginBout = getOwner().getPlayer().getContext().getBout();
 	}
@@ -130,6 +144,7 @@ public abstract class Buff extends Observable implements IBuff {
 	}
 	
 	public void recordIntercepter(IInterceptable interceptable, IIntercepter intercepter){
+		interceptable.addIntercepter(intercepter);
 		Map entry = new HashMap<IInterceptable, IIntercepter>();
 		entry.put(interceptable, intercepter);
 		resetList.add(entry);

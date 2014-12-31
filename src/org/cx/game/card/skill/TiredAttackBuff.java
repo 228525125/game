@@ -27,7 +27,6 @@ public class TiredAttackBuff extends SimpleBuff {
 		super(bout, style, type, func, life);
 		// TODO Auto-generated constructor stub
 		this.atkDownScale = atkDownScale;
-		setAction(NotifyInfo.Card_LifeCard_Skill_Buff_TiredAttackBuff);
 	}
 	
 	@Override

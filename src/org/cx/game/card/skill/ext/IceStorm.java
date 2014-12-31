@@ -23,7 +23,6 @@ public class IceStorm extends ActiveSkill {
 	public IceStorm(Integer consume, Integer cooldown, Integer velocity, Integer style, Integer func, Integer damage, Integer freezeChance) {
 		super(consume, cooldown, velocity, style, func);
 		// TODO Auto-generated constructor stub
-		setAction(NotifyInfo.Card_LifeCard_Skill_IceStorm);
 		this.damage = damage;
 		this.freezeChance = freezeChance;
 	}

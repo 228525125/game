@@ -26,6 +26,7 @@ import org.cx.game.action.SwapDecorator;
 import org.cx.game.card.skill.Accurate;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.AttackBack;
+import org.cx.game.card.skill.AttackLock;
 import org.cx.game.card.skill.Dodge;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.IBuff;
@@ -355,6 +356,32 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 逃脱几率
+	 */
+	private Integer fleeChance = 0;
+	
+	public Integer getFleeChance() {
+		return fleeChance;
+	}
+
+	public void setFleeChance(Integer fleeChance) {
+		this.fleeChance = fleeChance;
+	}
+	
+	/**
+	 * 锁定几率
+	 */
+	private Integer lockChance = 0;
+
+	public Integer getLockChance() {
+		return lockChance;
+	}
+
+	public void setLockChance(Integer lockChance) {
+		this.lockChance = lockChance;
+	}
+
+	/**
 	 * 状态
 	 */
 	private List<IBuff> buffList = new ArrayList<IBuff>();
@@ -362,6 +389,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public List<IBuff> getBuffList() {
 		return buffList;
 	}
+	
+	private static final String Effect = "_Effect";
 
 	public void addBuff(IBuff buff){
 		for(IBuff b : this.buffList)     //当添加一个已有的buff,并且不能叠加时，要先删除之前的buff
@@ -376,7 +405,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		map.put("card", this);
 		map.put("buff", buff);
 		map.put("position", getContainerPosition());
-		NotifyInfo info = new NotifyInfo(buff.getAction(),map);
+		NotifyInfo info = new NotifyInfo(buff.getAction()+Effect,map);
 		notifyObservers(info);
 	}
 	
@@ -544,11 +573,13 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setAttack(IAttack attack) {
 		attack.addIntercepter(new Accurate(IMagic.Style_physical, this));
 		attack.addIntercepter(new Thump(IMagic.Style_physical, 150, this));
+		attack.addIntercepter(new AttackLock(IMagic.Style_physical, this));
 		attack.setAccurateChance(accurateChance);
 		attack.setAtk(atk);
 		attack.setRange(range);
 		attack.setSpeedChance(speedChance);
 		attack.setThumpChance(thumpChance);
+		attack.setLockChance(lockChance);
 		attack.setOwner(this);
 		this.attack = new AttackDecorator(attack);
 	}
@@ -613,6 +644,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setMove(IMove move) {
 		move.setEnergy(energy);
+		move.setFleeChance(fleeChance);
 		move.setOwner(this);
 		this.move = new MoveDecorator(move);
 	}
@@ -757,6 +789,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attack.setAccurateChance(accurateChance);
 		this.attack.setThumpChance(thumpChance);
 		this.attack.setSpeedChance(speedChance);
+		this.attack.setLockChance(lockChance);
 		
 		this.attacked.setImmuneDamageRatio(immuneDamageRatio);
 		this.attacked.setAttackBackChance(attackBackChance);
@@ -766,6 +799,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.conjure.setPower(power);
 		
 		this.move.setEnergy(energy);
+		this.move.setFleeChance(fleeChance);
 		
 		this.death.setHp(hp);
 		

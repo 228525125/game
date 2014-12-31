@@ -20,7 +20,6 @@ public class Thump extends SimplePassiveSkill {
 		// TODO Auto-generated constructor stub
 		super(style);
 		setOwner(life);
-		setAction(NotifyInfo.Card_LifeCard_Skill_Thump);
 		this.upAtkScale = upAtkScale;
 	}
 

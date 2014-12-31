@@ -19,7 +19,6 @@ public class Accurate extends PassiveSkill {
 		// TODO Auto-generated constructor stub
 		super(style);
 		setOwner(life);
-		setAction(NotifyInfo.Card_LifeCard_Skill_Accurate);
 	}
 	
 	@Override

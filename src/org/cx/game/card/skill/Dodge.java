@@ -23,7 +23,6 @@ public class Dodge extends PassiveSkill {
 		// TODO Auto-generated constructor stub
 		super(style);
 		setOwner(life);
-		setAction(NotifyInfo.Card_LifeCard_Skill_Dodge);
 	}
 	
 	@Override
@@ -42,7 +41,7 @@ public class Dodge extends PassiveSkill {
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Skill_AttackBack,map);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Skill_AttackBack,map);
 			notifyObservers(info);
 			
 			Integer attackBackChance = attack.getAttacked().getAttackBackChance();

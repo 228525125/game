@@ -25,7 +25,7 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private String action = null;
 	private Integer style = IMagic.Style_physical;
-	private Integer func = 0;
+	private Integer func = 0;	
 	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	

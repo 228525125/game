@@ -29,7 +29,7 @@ public class CureTiredBuff extends Buff {
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Skill_Buff_ImmuneBuff,map);
+		NotifyInfo info = new NotifyInfo(getAction(),map);
 		notifyObservers(info);	
 	}
 	

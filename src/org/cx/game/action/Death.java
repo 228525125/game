@@ -181,6 +181,7 @@ public class Death extends Action implements IDeath {
 	}
 	
 	public void recordIntercepter(IInterceptable interceptable, IIntercepter intercepter){
+		interceptable.addIntercepter(intercepter);
 		Map entry = new HashMap<IInterceptable, IIntercepter>();
 		entry.put(interceptable, intercepter);
 		resetList.add(entry);

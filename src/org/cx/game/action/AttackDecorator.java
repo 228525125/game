@@ -143,4 +143,16 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated method stub
 		attack.addToSpeedChance(speedChance);
 	}
+
+	@Override
+	public Integer getLockChance() {
+		// TODO Auto-generated method stub
+		return attack.getLockChance();
+	}
+
+	@Override
+	public void setLockChance(Integer lockChance) {
+		// TODO Auto-generated method stub
+		attack.setLockChance(lockChance);
+	}
 }

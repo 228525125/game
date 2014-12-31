@@ -109,4 +109,16 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 		super.action(objects);
 	}
 
+	@Override
+	public Integer getFleeChance() {
+		// TODO Auto-generated method stub
+		return move.getFleeChance();
+	}
+
+	@Override
+	public void setFleeChance(Integer fleeChance) {
+		// TODO Auto-generated method stub
+		move.setFleeChance(fleeChance);
+	}
+
 }

@@ -12,11 +12,13 @@
 			<immuneDamageRatio type="double">0.2</immuneDamageRatio>                                                               <!-- 免伤比 -->
 			<star type="int">1</star>                                                                                          <!-- 等级 -->
 			<energy type="int">3</energy>                                                                                      <!-- 精力，这个跟移动范围有关，范围=精力/单格消耗，单格消耗统一为1 -->
-			<parryChance type="int">100</parryChance>                                                                         <!-- 格挡 -->
+			<parryChance type="int">0</parryChance>                                                                         <!-- 格挡 -->
 			<dodgeChance type="int">0</dodgeChance>                                                                         <!-- 躲闪 -->
 			<speedChance type="int">100</speedChance>                                                                          <!-- 速度 -->
 			<accurateChance type="int">100</accurateChance>                                                                 <!-- 准确 -->
-			<thumpChance type="int">0</thumpChance>                                                                         <!-- 重击 -->
+			<thumpChance type="int">0</thumpChance>                                                                          <!-- 重击 -->
+			<lockChance type="int">100</lockChance>                                                                          <!-- 锁定 -->
+			<fleeChance type="int">0</fleeChance>                                                                            <!-- 逃脱 -->
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">                                   <!-- 带interface属性表示使用接口赋值 -->
 				<parameter>
 					<mode type="int">0</mode>                                                                                  <!-- 攻击模式，0：近；1：远 -->
@@ -59,6 +61,8 @@
 			<speedChance type="int">80</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">0</mode>
@@ -131,6 +135,8 @@
 			<speedChance type="int">80</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">0</mode>
@@ -186,6 +192,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">0</mode>
@@ -261,6 +269,8 @@
 			<speedChance type="int">90</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">0</mode>
@@ -324,6 +334,8 @@
 			<speedChance type="int">110</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">0</mode>
@@ -394,6 +406,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -467,6 +481,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -533,6 +549,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -612,6 +630,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -654,6 +674,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -747,6 +769,8 @@
 			<speedChance type="int">100</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -812,6 +836,8 @@
 			<speedChance type="int">120</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -871,6 +897,8 @@
 			<speedChance type="int">120</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -948,6 +976,8 @@
 			<speedChance type="int">120</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -990,6 +1020,8 @@
 			<speedChance type="int">160</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>
@@ -1066,6 +1098,8 @@
 			<speedChance type="int">80</speedChance>
 			<accurateChance type="int">100</accurateChance>
 			<thumpChance type="int">0</thumpChance>
+			<lockChance type="int">100</lockChance>
+			<fleeChance type="int">0</fleeChance>
 			<attack type="org.cx.game.action.Attack" interface="org.cx.game.action.IAttack">
 				<parameter>
 					<mode type="int">1</mode>

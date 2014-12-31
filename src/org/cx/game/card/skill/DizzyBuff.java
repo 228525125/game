@@ -20,7 +20,6 @@ public class DizzyBuff extends Buff {
 	public DizzyBuff(Integer bout, LifeCard life) {
 		super(bout, IMagic.Style_physical, IBuff.Type_Harm, IMagic.Func_Astrict, life);
 		// TODO Auto-generated constructor stub
-		setAction(NotifyInfo.Card_LifeCard_Skill_Buff_DizzyBuff);
 	}
 
 	@Override

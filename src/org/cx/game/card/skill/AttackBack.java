@@ -20,7 +20,6 @@ public class AttackBack extends PassiveSkill {
 		// TODO Auto-generated constructor stub
 		super(style);
 		setOwner(life);
-		setAction(NotifyInfo.Card_LifeCard_Skill_AttackBack);
 	}
 	
 	@Override
