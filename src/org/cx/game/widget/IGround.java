@@ -125,16 +125,9 @@ public interface IGround extends IContainer{
 	 */
 	public void addPlace(IPlace place);
 	
-	/**
-	 * 设置地图边界
-	 * @param xMax
-	 * @param yMax
-	 */
-	public void setBorder(Integer xMax, Integer yMax);
+	public Integer getXBorder();
 	
-	public Integer getXMax();
-	
-	public Integer getYMax();
+	public Integer getYBorder();
 	
 	/**
 	 * 查询卡片操作范围

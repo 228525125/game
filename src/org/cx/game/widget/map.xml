@@ -1,0 +1,32 @@
+<maps>
+	<map type="org.cx.game.widget.Ground" id="1">
+		<description>测试专用图</description>
+		<parameter>
+			<xMax>15</xMax>
+			<yMax>15</yMax>
+			<imagePath></imagePath>
+		</parameter>
+		<campList type="java.util.ArrayList" interface="java.util.List" collection="true">
+			<camp type="org.cx.game.widget.Camp" interface="org.cx.game.widget.ICamp">
+				<parameter>
+					<hp>8000</hp>
+					<immuneDamageRatio>1</immuneDamageRatio>
+					<position>110018</position>
+				</parameter>
+			</camp>
+			<camp type="org.cx.game.widget.Camp" interface="org.cx.game.widget.ICamp">
+				<parameter>
+					<hp>8000</hp>
+					<immuneDamageRatio>1</immuneDamageRatio>
+					<position>1510018</position>
+				</parameter>
+			</camp>
+		</campList>
+		<layout>
+						
+		</layout>
+		<item>
+			<card type="org.cx.game.card.LifeCard" cardID="1130001" position="510018"></card>
+		</item>
+	</map>
+</maps>

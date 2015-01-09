@@ -25,19 +25,32 @@ import org.cx.game.tools.Util;
 
 public class Ground extends Container implements IGround
 {
-	private Integer xMax = 15;
-	private Integer yMax = 15;
+	private Integer xBorder = 15;
+	private Integer yBorder = 15;
+	private String imagePath = "";
 	private static String space = "1001";
 	private Map<Integer,IPlace> ground = new HashMap<Integer,IPlace>();
-	private Map<Integer,ICamp> camp = new HashMap<Integer,ICamp>();
-	private int [][] MAP = new int[xMax+2][yMax+2];   //用于查询路线
+	private List<ICamp> campList = new ArrayList<ICamp>();
+	private int [][] MAP = new int[xBorder+2][yBorder+2];   //用于查询路线
 	private int[] hit = new int []{1};                //1表示障碍物
 
-	public Ground() {
+	public Ground(Integer xBorder, Integer yBorder, String imagePath) {
 		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());		
-		for(int i=0;i<xMax+2;i++)
-			for(int j=0;j<yMax+2;j++)
+		this.xBorder = xBorder;
+		this.yBorder = yBorder;
+		this.imagePath = imagePath;
+		
+		for(int i=1;i<xBorder+1;i++){
+			for(int j=1;j<yBorder+1;j++){
+				Integer curPos = Integer.valueOf(""+i+space+j);
+				IPlace place = new Place(this, curPos);
+				addPlace(place);
+			}
+		}
+		
+		addObserver(new JsonOut());
+		for(int i=0;i<xBorder+2;i++)
+			for(int j=0;j<yBorder+2;j++)
 				MAP[i][j] = 1;
 	}
 
@@ -95,14 +108,7 @@ public class Ground extends Container implements IGround
 		Integer [] starts = integerToPoint(start);
 		Integer [] stops = integerToPoint(stop);
 		return Util.convertInteger(Math.sqrt(Math.pow(starts[0].doubleValue()-stops[0].doubleValue(),2)+Math.pow(starts[1].doubleValue()-stops[1].doubleValue(),2)));
-	}
-	
-	public static void main(String[] args) {
-		Integer x1=1,y1=1,x2=2,y2=2;
-		System.out.println(Util.convertInteger(Math.sqrt(Math.pow(x1.doubleValue()-x2.doubleValue(),2)+Math.pow(y1.doubleValue()-y2.doubleValue(),2))));
-		
-		System.out.println(Math.abs(x1-x2)+Math.abs(y1-y2)) ;
-	}
+	}	
 	
 	@Override
 	public Integer easyDistanceDiagonal(Integer start, Integer stop) {
@@ -123,8 +129,8 @@ public class Ground extends Container implements IGround
 	public List<Integer> easyAreaForDistance(Integer position, Integer step, Integer type) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i=1;i<xMax+1;i++){
-			for(int j=1;j<yMax+1;j++){
+		for(int i=1;i<xBorder+1;i++){
+			for(int j=1;j<yBorder+1;j++){
 				Integer curPos = Integer.valueOf(""+i+space+j);
 				switch (type) {
 				case 0:
@@ -151,8 +157,8 @@ public class Ground extends Container implements IGround
 			Integer step, Integer type) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i=1;i<xMax+1;i++){
-			for(int j=1;j<yMax+1;j++){
+		for(int i=1;i<xBorder+1;i++){
+			for(int j=1;j<yBorder+1;j++){
 				Integer curPos = Integer.valueOf(""+i+space+j);
 				switch (type) {
 				case 0:
@@ -179,8 +185,8 @@ public class Ground extends Container implements IGround
 			Integer type) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i=1;i<xMax+1;i++){
-			for(int j=1;j<yMax+1;j++){
+		for(int i=1;i<xBorder+1;i++){
+			for(int j=1;j<yBorder+1;j++){
 				Integer curPos = Integer.valueOf(i+space+j);
 				switch (type) {
 				case 0:
@@ -210,15 +216,25 @@ public class Ground extends Container implements IGround
 		// TODO Auto-generated method stub
 		return ground.get(position);
 	}
-	
+
+	public List<ICamp> getCampList() {
+		return campList;
+	}
+
+	public void setCampList(List<ICamp> campList) {
+		for(ICamp camp : campList)
+			camp.setOwner(getPlace(camp.getPosition()));
+		
+		this.campList = campList;
+	}
+
 	@Override
 	public List<Integer> getCampPosition(IPlayer player) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(Integer pos : camp.keySet()){
-			IPlace place = getPlace(pos);
-			if(place.getCamp().getPlayer().equals(player))
-				list.add(pos);
+		for(ICamp camp : campList){
+			if(camp.getPlayer().equals(player))
+				list.add(camp.getPosition());
 		}
 		
 		return list;
@@ -227,7 +243,7 @@ public class Ground extends Container implements IGround
 	@Override
 	public void addCamp(ICamp camp) {
 		// TODO Auto-generated method stub
-		this.camp.put(camp.getOwner().getPosition(), camp);
+		campList.add(camp);
 	}
 	
 	@Override
@@ -288,18 +304,12 @@ public class Ground extends Container implements IGround
 		return positionList;
 	}
 
-	public Integer getXMax() {
-		return xMax;
+	public Integer getXBorder() {
+		return xBorder;
 	}
 
-	public Integer getYMax() {
-		return yMax;
-	}
-	
-	public void setBorder(Integer xMax, Integer yMax) {
-		// TODO Auto-generated method stub
-		this.xMax = xMax;
-		this.yMax = yMax;
+	public Integer getYBorder() {
+		return yBorder;
 	}
 	
 	/**
@@ -341,7 +351,7 @@ public class Ground extends Container implements IGround
 	}
 	
 	public List<Integer> route(Integer start, Integer stop){
-		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xMax+space+yMax));
+		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
 		
 		
 		IPlace place = getPlace(stop);
@@ -382,7 +392,7 @@ public class Ground extends Container implements IGround
 	@Override
 	public List<Integer> easyRoute(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
-		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xMax+space+yMax));
+		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
 		
 		for(Integer i : m){
 			String [] is = i.toString().split(space);
@@ -520,9 +530,9 @@ public class Ground extends Container implements IGround
 	 */
 	private Boolean isOver(Integer position){
 		Integer [] ps = integerToPoint(position);
-		if(ps[0]<1||ps[0]>xMax)
+		if(ps[0]<1||ps[0]>xBorder)
 			return true;
-		if(ps[1]<1||ps[1]>yMax)
+		if(ps[1]<1||ps[1]>yBorder)
 			return true;
 		return false;
 	}
@@ -661,5 +671,12 @@ public class Ground extends Container implements IGround
 		}
 
 		return list;
+	}
+	
+	public static void main(String[] args) {
+		Integer x1=1,y1=1,x2=2,y2=2;
+		System.out.println(Util.convertInteger(Math.sqrt(Math.pow(x1.doubleValue()-x2.doubleValue(),2)+Math.pow(y1.doubleValue()-y2.doubleValue(),2))));
+		
+		System.out.println(Math.abs(x1-x2)+Math.abs(y1-y2)) ;
 	}
 }

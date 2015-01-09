@@ -153,21 +153,15 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public void setBorder(Integer xMax, Integer yMax) {
+	public Integer getXBorder() {
 		// TODO Auto-generated method stub
-		ground.setBorder(xMax, yMax);
+		return ground.getXBorder();
 	}
 
 	@Override
-	public Integer getXMax() {
+	public Integer getYBorder() {
 		// TODO Auto-generated method stub
-		return ground.getXMax();
-	}
-
-	@Override
-	public Integer getYMax() {
-		// TODO Auto-generated method stub
-		return ground.getYMax();
+		return ground.getYBorder();
 	}
 
 	@Override

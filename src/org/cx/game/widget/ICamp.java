@@ -11,13 +11,17 @@ public interface ICamp {
 
 	public final static Integer Call_Range = 3;
 	
-	public Integer getLife();
+	public Integer getHp();
 	
-	public Integer getDef();
+	public Double getImmuneDamageRatio();
 	
 	public IPlace getOwner();
+	
+	public Integer getPosition();
 	
 	public IPlayer getPlayer();
 	
 	public void setPlayer(IPlayer player);
+	
+	public void setOwner(IPlace place);
 }
