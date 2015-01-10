@@ -2,7 +2,12 @@ package org.cx.game.widget;
 
 import java.io.InputStream;
 
+import org.cx.game.builder.ObjectTypeBuilder;
+import org.cx.game.builder.ObjectTypeParse;
 import org.cx.game.card.CardFactory;
+import org.cx.game.card.ICard;
+import org.cx.game.exception.BuilderException;
+import org.cx.game.exception.ParseException;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -26,7 +31,17 @@ public class GroundFactory {
 	}
 	
 	public static IGround getInstance(Element mapEl){
-		
+		ObjectTypeBuilder otb = new ObjectTypeBuilder();
+		try {
+			new ObjectTypeParse(otb).parse(mapEl);
+			return (IGround) otb.builder();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BuilderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

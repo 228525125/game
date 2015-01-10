@@ -2,9 +2,9 @@
 	<map type="org.cx.game.widget.Ground" id="1">
 		<description>测试专用图</description>
 		<parameter>
-			<xMax>15</xMax>
-			<yMax>15</yMax>
-			<imagePath></imagePath>
+			<xMax type="int">15</xMax>
+			<yMax type="int">15</yMax>
+			<imagePath type="string"></imagePath>
 		</parameter>
 		<campList type="java.util.ArrayList" interface="java.util.List" collection="true">
 			<camp type="org.cx.game.widget.Camp" interface="org.cx.game.widget.ICamp">
@@ -22,11 +22,20 @@
 				</parameter>
 			</camp>
 		</campList>
-		<layout>
-						
-		</layout>
-		<item>
-			<card type="org.cx.game.card.LifeCard" cardID="1130001" position="510018"></card>
-		</item>
+		<disableList type="java.util.ArrayList" interface="java.util.List" collection="true">
+			<position type="int">510018</position>
+		</disableList>
+		<strongHoldList>
+			<StrongHold type="org.cx.game.widget.LifeCardStrongHold" interface="org.cx.game.widget.IStrongHold">
+				<parameter>
+					<position type="int">810018</position>
+					<range>2</range>
+					<bout>2</bout>
+				</parameter>
+				<cardIDList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<cardID type="int">1110004</cardID>
+				</cardIDList>
+			</StrongHold>
+		</strongHoldList>
 	</map>
 </maps>

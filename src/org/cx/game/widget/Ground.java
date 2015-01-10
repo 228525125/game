@@ -25,14 +25,16 @@ import org.cx.game.tools.Util;
 
 public class Ground extends Container implements IGround
 {
-	private Integer xBorder = 15;
-	private Integer yBorder = 15;
-	private String imagePath = "";
-	private static String space = "1001";
+	private Integer xBorder = 15;                                       //边界x轴长度
+	private Integer yBorder = 15;                                       //边界y轴长度
+	private String imagePath = "";                                      //背景图片
+	private static String space = "1001";                               //位置坐标间隔符
 	private Map<Integer,IPlace> ground = new HashMap<Integer,IPlace>();
-	private List<ICamp> campList = new ArrayList<ICamp>();
-	private int [][] MAP = new int[xBorder+2][yBorder+2];   //用于查询路线
-	private int[] hit = new int []{1};                //1表示障碍物
+	private List<ICamp> campList = new ArrayList<ICamp>();              //营地
+	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格
+	private List<IStrongHold> strongHoldList = new ArrayList<IStrongHold>();           //据点
+	private int [][] MAP = new int[xBorder+2][yBorder+2];               //用于查询路线
+	private int[] hit = new int []{1};                                  //1表示障碍物
 
 	public Ground(Integer xBorder, Integer yBorder, String imagePath) {
 		// TODO Auto-generated constructor stub
@@ -226,6 +228,22 @@ public class Ground extends Container implements IGround
 			camp.setOwner(getPlace(camp.getPosition()));
 		
 		this.campList = campList;
+	}
+
+	public List<Integer> getDisableList() {
+		return disableList;
+	}
+
+	public void setDisableList(List<Integer> disableList) {
+		this.disableList = disableList;
+	}
+
+	public List<IStrongHold> getStrongHoldList() {
+		return strongHoldList;
+	}
+
+	public void setStrongHoldList(List<IStrongHold> strongHoldList) {
+		this.strongHoldList = strongHoldList;
 	}
 
 	@Override

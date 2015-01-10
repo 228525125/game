@@ -21,4 +21,9 @@ public class BasicTypeParse implements IParse {
 		String value = el.getText();
 		builder.setValue(value);
 	}
+	
+	public static void main(String[] args) {
+		String [] str = new String[]{};
+		System.out.println(str.getClass());
+	}
 }
