@@ -25,6 +25,33 @@ public class ObjectTypeParse implements IParse {
 		builder.setClassName(className);
 		
 		/*
+		 * 使用工厂方法创建对象
+		 */
+		Attribute factory = objEl.attribute("factory");
+		if(null!=factory){
+			Class factoryClass = getType(factory.getText());
+			builder.setFactoryClass(factoryClass);
+			
+			Element param = objEl.element("factoryMethodParameter");
+			if(null!=param){
+				for(Iterator it = param.elementIterator();it.hasNext();){
+					Element el = (Element) it.next();
+					
+					Class cls = getType(el.attribute("type").getText());
+					
+					if(Util.isWrapClass(cls)){  //工厂方法参数是基本类型
+						BasicTypeBuilder btb = new BasicTypeBuilder();
+						new BasicTypeParse(btb).parse(el);
+						builder.setFactoryParameter(cls, btb.builder());
+					}else{
+						throw new ParseException("工厂方法参数只能是基本类型！");
+					}
+				}
+			}
+		}
+		
+		/*
+		 * 使用类的构造函数创建对象
 		 * 获取构造参数
 		 */
 		Element param = objEl.element("parameter");
@@ -39,7 +66,7 @@ public class ObjectTypeParse implements IParse {
 					new BasicTypeParse(btb).parse(el);
 					builder.setConstructParameter(cls, btb.builder());
 				}else{
-					throw new ParseException("Card构造参数只能是基本类型！");
+					throw new ParseException("构造参数只能是基本类型！");
 				}
 			}
 		}

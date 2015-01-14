@@ -1,37 +1,43 @@
 <maps>
-	<map type="org.cx.game.widget.Ground" id="1">
+	<map type="org.cx.game.widget.Ground" id="test">
 		<description>测试专用图</description>
 		<parameter>
-			<xMax type="int">15</xMax>
-			<yMax type="int">15</yMax>
+			<xBorder type="int">15</xBorder>
+			<yBorder type="int">15</yBorder>
 			<imagePath type="string"></imagePath>
 		</parameter>
 		<campList type="java.util.ArrayList" interface="java.util.List" collection="true">
 			<camp type="org.cx.game.widget.Camp" interface="org.cx.game.widget.ICamp">
 				<parameter>
-					<hp>8000</hp>
-					<immuneDamageRatio>1</immuneDamageRatio>
-					<position>110018</position>
+					<hp type="int">8000</hp>
+					<immuneDamageRatio type="double">1</immuneDamageRatio>
+					<position type="int">110018</position>
 				</parameter>
 			</camp>
 			<camp type="org.cx.game.widget.Camp" interface="org.cx.game.widget.ICamp">
 				<parameter>
-					<hp>8000</hp>
-					<immuneDamageRatio>1</immuneDamageRatio>
-					<position>1510018</position>
+					<hp type="int">8000</hp>
+					<immuneDamageRatio type="double">1</immuneDamageRatio>
+					<position type="int">1510018</position>
 				</parameter>
 			</camp>
 		</campList>
 		<disableList type="java.util.ArrayList" interface="java.util.List" collection="true">
 			<position type="int">510018</position>
 		</disableList>
-		<strongHoldList>
+		<strongHoldList type="java.util.ArrayList" interface="java.util.List" collection="true">
 			<StrongHold type="org.cx.game.widget.LifeCardStrongHold" interface="org.cx.game.widget.IStrongHold">
 				<parameter>
 					<position type="int">810018</position>
-					<range>2</range>
-					<bout>2</bout>
+					<range type="int">2</range>
+					<bout type="int">2</bout>					
 				</parameter>
+				<player type="org.cx.game.npc.Faction" interface="org.cx.game.core.IPlayer" factory="org.cx.game.npc.FactionFactory">
+					<factoryMethodParameter>
+						<id type="int">10</id>
+						<name type="string">中立</name>					
+					</factoryMethodParameter>
+				</player>
 				<cardIDList type="java.util.ArrayList" interface="java.util.List" collection="true">
 					<cardID type="int">1110004</cardID>
 				</cardIDList>

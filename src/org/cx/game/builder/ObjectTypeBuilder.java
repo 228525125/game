@@ -19,7 +19,12 @@ public class ObjectTypeBuilder implements IBuilder {
 	private List propertyValueList = new ArrayList();
 	private List<Class> constructParameterClassList = new ArrayList<Class>();
 	private List<Object> constructParameterList = new ArrayList<Object>();
+	private Class factoryClass = null;
+	private List<Class> factoryParameterClassList = new ArrayList<Class>();
+	private List<Object> factoryParameterList = new ArrayList<Object>();
 	private String className = null;
+	
+	private static String factoryMethod = "getInstance";
 	
 	@Override
 	public Object builder() throws BuilderException {
@@ -36,11 +41,17 @@ public class ObjectTypeBuilder implements IBuilder {
 		/*
 		 * 创建对象
 		 */
-		Class[] classArray = new Class[constructParameterClassList.size()]; 
-		Constructor con;
 		try {
-			con = clazz.getConstructor(constructParameterClassList.toArray(classArray));
-			result = con.newInstance(constructParameterList.toArray());			
+			Class[] classArray;			
+			if(null!=factoryClass){				
+				classArray = new Class[factoryParameterClassList.size()];
+				Method method = factoryClass.getMethod(factoryMethod, factoryParameterClassList.toArray(classArray));
+				result = method.invoke(factoryClass, factoryParameterList.toArray());
+			}else{
+				classArray = new Class[constructParameterClassList.size()]; 
+				Constructor con = clazz.getConstructor(constructParameterClassList.toArray(classArray));
+				result = con.newInstance(constructParameterList.toArray());			
+			}
 		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			throw new BuilderException("“"+className+"”对象,在构造时发生异常！"+e.getMessage());
@@ -60,6 +71,7 @@ public class ObjectTypeBuilder implements IBuilder {
 			// TODO Auto-generated catch block
 			throw new BuilderException("“"+className+"”对象,在构造时发生异常！"+e.getMessage());
 		}
+		
 		
 		/*
 		 * 属性赋值
@@ -99,6 +111,10 @@ public class ObjectTypeBuilder implements IBuilder {
 		this.className = className;
 	}
 	
+	public void setFactoryClass(Class factoryClass) {
+		this.factoryClass = factoryClass;
+	}
+
 	public void set(String method, Class clazz, Object property){
 		Map<String, Class> map = new HashMap<String, Class>();
 		map.put(method, clazz);
@@ -110,4 +126,10 @@ public class ObjectTypeBuilder implements IBuilder {
 		constructParameterClassList.add(clazz);
 		constructParameterList.add(parameter);
 	}
+
+	public void setFactoryParameter(Class clazz, Object parameter) {
+		factoryParameterClassList.add(clazz);
+		factoryParameterList.add(parameter);
+	}
+	
 }

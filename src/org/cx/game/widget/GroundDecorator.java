@@ -163,6 +163,18 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		return ground.getYBorder();
 	}
+	
+	@Override
+	public void setPlayerToCamp(Integer campIndex, IPlayer player) {
+		// TODO Auto-generated method stub
+		ground.setPlayerToCamp(campIndex, player);
+	}
+	
+	@Override
+	public List<IStrongHold> getStrongHoldList() {
+		// TODO Auto-generated method stub
+		return ground.getStrongHoldList();
+	}
 
 	@Override
 	public void addPlace(IPlace place) {

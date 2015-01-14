@@ -229,6 +229,12 @@ public class Ground extends Container implements IGround
 		
 		this.campList = campList;
 	}
+	
+	@Override
+	public void setPlayerToCamp(Integer campIndex, IPlayer player) {
+		// TODO Auto-generated method stub
+		campList.get(campIndex).setPlayer(player);
+	}
 
 	public List<Integer> getDisableList() {
 		return disableList;

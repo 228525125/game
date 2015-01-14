@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.core.Context;
+import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.Intercepter;
 
 public abstract class StrongHold implements IStrongHold {
@@ -12,7 +13,7 @@ public abstract class StrongHold implements IStrongHold {
 	private Integer range = 1;
 	private Integer bout = 1;
 	private Integer boutCount = 0;
-	private Context context = null;
+	private IPlayer player = null;
 	private IGround ground = null;
 	private List<Integer> area = new ArrayList<Integer>();
 	
@@ -31,21 +32,14 @@ public abstract class StrongHold implements IStrongHold {
 	}
 
 	@Override
-	public void setContext(Context context) {
-		this.context = context;
-		
-		context.addIntercepter(new Intercepter("addBout"){
-			
-			@Override
-			public void after(Object[] args) {
-				// TODO Auto-generated method stub
-				if(bout==boutCount){					
-					refurbish();
-					boutCount = 0;
-				}else
-					boutCount++;
-			}
-		});
+	public void setPlayer(IPlayer player) {
+		this.player = player;
+	}
+	
+	@Override
+	public IPlayer getPlayer() {
+		// TODO Auto-generated method stub
+		return player;
 	}
 
 	public void setGround(IGround ground) {
@@ -76,5 +70,15 @@ public abstract class StrongHold implements IStrongHold {
 				return place;
 		}
 		return null;
+	}
+	
+	protected Boolean isRefurbish(){
+		if(getBout()==boutCount){
+			boutCount = 0;
+			return true;
+		}else{
+			boutCount++;
+			return false;
+		}
 	}
 }

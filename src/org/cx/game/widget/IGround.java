@@ -130,6 +130,19 @@ public interface IGround extends IContainer{
 	public Integer getYBorder();
 	
 	/**
+	 * 玩家选择营地
+	 * @param campIndex
+	 * @param player
+	 */
+	public void setPlayerToCamp(Integer campIndex, IPlayer player);
+	
+	/**
+	 * 据点
+	 * @return
+	 */
+	public List<IStrongHold> getStrongHoldList();
+	
+	/**
 	 * 查询卡片操作范围
 	 * @param card
 	 * @param action

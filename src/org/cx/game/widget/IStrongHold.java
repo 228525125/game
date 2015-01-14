@@ -1,6 +1,6 @@
 package org.cx.game.widget;
 
-import org.cx.game.core.Context;
+import org.cx.game.core.IPlayer;
 
 /**
  *  据点
@@ -9,7 +9,9 @@ import org.cx.game.core.Context;
  */
 public interface IStrongHold {
 
-	public void setContext(Context context);
+	public void setPlayer(IPlayer player);
+	
+	public IPlayer getPlayer();
 
 	public Integer getPosition();
 

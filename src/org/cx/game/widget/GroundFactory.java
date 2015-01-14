@@ -1,6 +1,7 @@
 package org.cx.game.widget;
 
 import java.io.InputStream;
+import java.util.Iterator;
 
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
@@ -30,17 +31,26 @@ public class GroundFactory {
 		return null;
 	}
 	
-	public static IGround getInstance(Element mapEl){
-		ObjectTypeBuilder otb = new ObjectTypeBuilder();
-		try {
-			new ObjectTypeParse(otb).parse(mapEl);
-			return (IGround) otb.builder();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BuilderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public static IGround getInstance(String mapId){
+		Element mapEl = null;
+		for(Iterator it = getRoot().elementIterator();it.hasNext();){
+			Element el = (Element) it.next();
+			if(mapId.equals(el.attribute("id").getText()))
+				mapEl = el;
+		}
+		
+		if(null!=mapEl){
+			ObjectTypeBuilder otb = new ObjectTypeBuilder();
+			try {
+				new ObjectTypeParse(otb).parse(mapEl);
+				return (IGround) otb.builder();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BuilderException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
