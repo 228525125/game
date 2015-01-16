@@ -39,7 +39,7 @@ public class DeployState extends PlayState {
 	public void done() {
 		// TODO Auto-generated method stub
 		//操作完毕
-		context.setPlayState(Context.doneState);
+		context.setPlayState(IContext.doneState);
 		context.done();
 	}
 
@@ -47,7 +47,7 @@ public class DeployState extends PlayState {
 	public void finish() {
 		// TODO Auto-generated method stub
 		//操作中比赛随时可能结束
-		context.setPlayState(Context.finishState);
+		context.setPlayState(IContext.finishState);
 		context.finish();
 	}
 

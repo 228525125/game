@@ -22,7 +22,7 @@ public class StartState extends PlayState {
 	@Override
 	public void deploy() {
 		// TODO Auto-generated method stub
-		context.setPlayState(Context.deployState);
+		context.setPlayState(IContext.deployState);
 		context.deploy();
 	}
 
@@ -59,7 +59,7 @@ public class StartState extends PlayState {
 		}
 		
 		context.switchControl();
-		context.setPlayState(Context.deployState);
+		context.setPlayState(IContext.deployState);
 		context.deploy();
 	}
 }

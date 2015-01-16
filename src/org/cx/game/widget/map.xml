@@ -34,8 +34,7 @@
 				</parameter>
 				<player type="org.cx.game.npc.Faction" interface="org.cx.game.core.IPlayer" factory="org.cx.game.npc.FactionFactory">
 					<factoryMethodParameter>
-						<id type="int">10</id>
-						<name type="string">中立</name>					
+						<id type="int">101</id>			
 					</factoryMethodParameter>
 				</player>
 				<cardIDList type="java.util.ArrayList" interface="java.util.List" collection="true">

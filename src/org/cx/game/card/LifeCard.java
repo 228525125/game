@@ -20,8 +20,10 @@ import org.cx.game.action.IChuck;
 import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
+import org.cx.game.action.IRenew;
 import org.cx.game.action.ISwap;
 import org.cx.game.action.MoveDecorator;
+import org.cx.game.action.RenewDecorator;
 import org.cx.game.action.SwapDecorator;
 import org.cx.game.card.skill.Accurate;
 import org.cx.game.card.skill.ActiveSkill;
@@ -44,6 +46,7 @@ import org.cx.game.out.JsonOut;
 import org.cx.game.tools.Debug;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
+import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
 /**
@@ -190,14 +193,19 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setHide(Boolean hide) {
 		this.hide = hide;
 		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getPlayer());
-		map.put("container", getContainer());
-		map.put("card", this);
-		map.put("position", getContainerPosition());
-		map.put("hide", hide);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
-		notifyObservers(info);
+		/*
+		 * 隐身状态的改变在战场上才有意义
+		 */
+		if (getContainer() instanceof IGround) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getPlayer());
+			map.put("container", getContainer());
+			map.put("card", this);
+			map.put("position", getContainerPosition());
+			map.put("hide", hide);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
+			notifyObservers(info);
+		}
 	}
 	
 	/**
@@ -678,6 +686,20 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 刷新
+	 */
+	private IRenew renew = null;
+	
+	public IRenew getRenew(){
+		return renew;
+	}
+	
+	public void setRenew(IRenew renew){
+		renew.setOwner(this);
+		this.renew = new RenewDecorator(renew);
+	}
+	
+	/**
 	 * 死亡
 	 */
 	private IDeath death = null;
@@ -753,6 +775,15 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	public void call(IPlace place) throws RuleValidatorException {
 		call.action(place);
+	}
+	
+	/**
+	 * 刷新
+	 * @param place
+	 * @throws RuleValidatorException
+	 */
+	public void renew(IPlace place) throws RuleValidatorException {
+		renew.action(place);
 	}
 
 	/**

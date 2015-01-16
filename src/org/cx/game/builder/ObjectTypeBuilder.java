@@ -87,20 +87,20 @@ public class ObjectTypeBuilder implements IBuilder {
 				method = result.getClass().getDeclaredMethod(methodName,clz);
 				method.invoke(result, paramValue);
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				throw new BuilderException("“"+className+"”对象,在对属性赋值时异常！"+e.getMessage());
+				// TODO Auto-generated catch block				
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
 			} catch (SecurityException e) {
 				// TODO Auto-generated catch block
-				throw new BuilderException("“"+className+"”对象,在对属性赋值时异常！"+e.getMessage());
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
-				throw new BuilderException("“"+className+"”对象,在对属性赋值时异常！"+e.getMessage());
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
-				throw new BuilderException("“"+className+"”对象,在对属性赋值时异常！"+e.getMessage());
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
 			} catch (InvocationTargetException e) {
 				// TODO Auto-generated catch block
-				throw new BuilderException("“"+className+"”对象,在对属性赋值时异常！"+e.getMessage());
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
 			}			
 		}
 		

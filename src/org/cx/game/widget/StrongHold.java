@@ -36,16 +36,17 @@ public abstract class StrongHold implements IStrongHold {
 		this.player = player;
 	}
 	
+	public void setGround(IGround ground){
+		this.ground = ground;
+		this.player.setGround(ground);
+		
+		this.area = ground.areaForDistance(position, range, IGround.Contain);
+	}
+	
 	@Override
 	public IPlayer getPlayer() {
 		// TODO Auto-generated method stub
 		return player;
-	}
-
-	public void setGround(IGround ground) {
-		this.ground = ground;
-		
-		this.area = ground.areaForDistance(position, range, IGround.Contain);
 	}
 
 	@Override

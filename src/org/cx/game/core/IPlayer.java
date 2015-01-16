@@ -21,9 +21,9 @@ public interface IPlayer
 	
 	public void setId(Integer id);
 	
-	public Context getContext();
+	public IContext getContext();
 	
-	public void setContext(Context context);
+	public void setContext(IContext context);
 	
 	public ICardGroup getCardGroup();
 	

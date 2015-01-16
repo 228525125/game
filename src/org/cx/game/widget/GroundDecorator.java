@@ -15,10 +15,31 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	
 	private IGround ground;
 	
-	public GroundDecorator(IGround lifeGround) {
+	public GroundDecorator(IGround ground) {
 		// TODO Auto-generated constructor stub
-		super(lifeGround);
-		this.ground = lifeGround;
+		super(ground);
+		this.ground = ground;
+		
+		/*
+		 * new Place 需要用到Decorator对象的this
+		 */
+		for(int i=1;i<ground.getXBorder()+1;i++){
+			for(int j=1;j<ground.getYBorder()+1;j++){
+				Integer curPos = Integer.valueOf(""+i+Ground.space+j);
+				IPlace place = new Place(this, curPos);
+				ground.addPlace(place);
+			}
+		}
+		
+		/*
+		 * getPlace 需要初始化 Place
+		 */
+		for(ICamp camp : ground.getCampList())
+			camp.setOwner(getPlace(camp.getPosition()));
+		
+		for(IStrongHold strongHold : ground.getStrongHoldList())
+			strongHold.setGround(this);
+		
 	}
 	
 	@Override
@@ -186,5 +207,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public Integer easyOuDistance(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
 		return ground.easyOuDistance(start, stop);
+	}
+
+	@Override
+	public List<ICamp> getCampList() {
+		// TODO Auto-generated method stub
+		return ground.getCampList();
 	}
 }

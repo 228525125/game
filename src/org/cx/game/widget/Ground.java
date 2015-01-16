@@ -28,7 +28,7 @@ public class Ground extends Container implements IGround
 	private Integer xBorder = 15;                                       //边界x轴长度
 	private Integer yBorder = 15;                                       //边界y轴长度
 	private String imagePath = "";                                      //背景图片
-	private static String space = "1001";                               //位置坐标间隔符
+	public static String space = "1001";                               //位置坐标间隔符
 	private Map<Integer,IPlace> ground = new HashMap<Integer,IPlace>();
 	private List<ICamp> campList = new ArrayList<ICamp>();              //营地
 	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格
@@ -41,14 +41,6 @@ public class Ground extends Container implements IGround
 		this.xBorder = xBorder;
 		this.yBorder = yBorder;
 		this.imagePath = imagePath;
-		
-		for(int i=1;i<xBorder+1;i++){
-			for(int j=1;j<yBorder+1;j++){
-				Integer curPos = Integer.valueOf(""+i+space+j);
-				IPlace place = new Place(this, curPos);
-				addPlace(place);
-			}
-		}
 		
 		addObserver(new JsonOut());
 		for(int i=0;i<xBorder+2;i++)
@@ -224,9 +216,6 @@ public class Ground extends Container implements IGround
 	}
 
 	public void setCampList(List<ICamp> campList) {
-		for(ICamp camp : campList)
-			camp.setOwner(getPlace(camp.getPosition()));
-		
 		this.campList = campList;
 	}
 	

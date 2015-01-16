@@ -113,6 +113,12 @@ public interface IGround extends IContainer{
 	public List<Integer> getCampPosition(IPlayer player);
 	
 	/**
+	 * 获取营地
+	 * @return
+	 */
+	public List<ICamp> getCampList();
+	
+	/**
 	 * 增加一个营地
 	 * @param position
 	 * @param camp

@@ -11,6 +11,8 @@ public interface IStrongHold {
 
 	public void setPlayer(IPlayer player);
 	
+	public void setGround(IGround ground);
+	
 	public IPlayer getPlayer();
 
 	public Integer getPosition();

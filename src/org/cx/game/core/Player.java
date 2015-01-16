@@ -84,16 +84,16 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		return commandBuffer;
 	}
 	
-	private Context context;
+	private IContext context;
 
 	@Override
-	public Context getContext() {
+	public IContext getContext() {
 		// TODO Auto-generated method stub
 		return context;
 	}
 	
 	@Override
-	public void setContext(Context context) {
+	public void setContext(IContext context) {
 		// TODO Auto-generated method stub
 		addObserver(new JsonOut());
 		

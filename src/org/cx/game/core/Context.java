@@ -23,11 +23,14 @@ import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
 
-public class Context extends Observable implements IInterceptable, org.cx.game.observer.Observable
+public class Context extends Observable implements IContext
 {	
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private String playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
 	private IControlQueue queue = new ControlQueue();
+	private Long newCardPlayId = 1l;
+	
+	private ContextDecorator decorator = null; 
 	
 	public Context(IPlayer player1, IPlayer player2) {
 		// TODO Auto-generated constructor stub
@@ -41,6 +44,10 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 		queue.insert(player2);
 	}
 	
+	public void setDecorator(ContextDecorator decorator) {
+		this.decorator = decorator;
+	}
+
 	public IControlQueue getQueue() {
 		return queue;
 	}
@@ -49,52 +56,29 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 		this.queue = queue;
 	}
 
-	public final static StartState startState = new StartState();
-	public final static DeployState deployState = new DeployState();
-	public final static DoneState doneState = new DoneState();
-	public final static FinishState finishState = new FinishState();
-	
 	/**
 	 * 比赛的各个状态（阶段）
 	 */
 	private PlayState playState;
-	
-	public PlayState getPlayState() {
-		return playState;
-	}
 
 	public void setPlayState(PlayState playState) {
 		this.playState = playState;
 		this.playState.setContext(this);
 	}
 
-	/**
-	 * 比赛开始
-	 */
 	public void start(){
 		setPlayState(startState);
 		this.playState.start();
 	}
 	
-	/**
-	 *  玩家部署
-	 *
-	 */
 	public void deploy(){
 		this.playState.deploy();
 	}
 	
-	/**
-	 *  回合结束
-	 *
-	 */
 	public void done(){
 		this.playState.done();
 	}
 	
-	/**
-	 * 比赛结束
-	 */
 	public void finish(){
 		this.playState.finish();
 	}
@@ -118,10 +102,6 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 		return bout;
 	}
 	
-	/**
-	 * 当玩家开始部署时，回合数加1
-	 *
-	 */
 	public void addBout(){
 		bout++;
 	}
@@ -164,11 +144,6 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 		notifyObservers(info);
 	}
 	
-	/**
-	 * 得到对方比赛者对象
-	 * @param player
-	 * @return
-	 */
 	public IPlayer getOtherPlayer(IPlayer player){
 		if(player.getId()==player1.getId())
 			return player2;
@@ -190,7 +165,7 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 			
 			boutCount += 1;
 			if(boutCount/playerNumber==1){
-				addBout();                        //增加回合
+				decorator.addBout();                        //增加回合
 				boutCount = 0;
 			}
 			Integer power = getControlPlayer().getResource();
@@ -211,15 +186,11 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 		}
 	}
 	
-	/**
-	 * 交换比赛控制权
-	 */
 	public void switchControl(){
 		Object object = queue.out();
 		setControl(object);
 	}
 	
-	@Override
 	public void addIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
 		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
@@ -262,5 +233,11 @@ public class Context extends Observable implements IInterceptable, org.cx.game.o
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg0);
+	}
+
+	@Override
+	public Long newCardPlayId() {
+		// TODO Auto-generated method stub
+		return newCardPlayId++;
 	}
 }

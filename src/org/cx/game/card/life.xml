@@ -30,21 +30,22 @@
 					<armourType type="int">3</armourType>                                                                      <!-- 防御类型，0：无；1：轻型；2：中型；3：重型；4：城墙 -->
 				</parameter>
 			</attacked>
-			<conjure type="org.cx.game.action.Conjure" interface="org.cx.game.action.IConjure"></conjure>   
-			<affected type="org.cx.game.action.Affected" interface="org.cx.game.action.IAffected"></affected> 
 			<call type="org.cx.game.action.Call" interface="org.cx.game.action.ICall">                                         <!-- 可选填，默认是1 -->
 				<parameter>
 					<consume type="int">100</consume>                                                                            <!-- 召唤时所消耗能量值 -->
 				</parameter>
-			</call>			
-			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>                                  <!-- 可选填，默认是1 -->
+			</call>					
 			<move type="org.cx.game.action.Move" interface="org.cx.game.action.IMove">
 				<parameter>
 					<type type="int">0</type>                                                                                  <!-- 移动类型，0：步行；1：飞行；2：瞬移 -->
 				</parameter>
 			</move>
+			<conjure type="org.cx.game.action.Conjure" interface="org.cx.game.action.IConjure"></conjure>   
+			<affected type="org.cx.game.action.Affected" interface="org.cx.game.action.IAffected"></affected>
+			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>                                  <!-- 可选填，默认是1 -->
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 		</card>
 		<card type="org.cx.game.card.LifeCard" cardID="1130001">
 			<parameter>
@@ -89,6 +90,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<ShieldHit type="org.cx.game.card.skill.ext.ShieldHit">
 					<parameter>
@@ -163,6 +165,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<ShieldHit type="org.cx.game.card.skill.ext.ShieldHit">
 					<parameter>
@@ -220,6 +223,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<Puncture type="org.cx.game.card.skill.ext.Puncture">
 					<parameter>
@@ -297,6 +301,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<DamageIncrease type="org.cx.game.card.skill.ext.DamageIncrease">
 					<parameter>
@@ -362,6 +367,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">				
 				<AssistAttack type="org.cx.game.card.skill.ext.AssistAttack">
 					<parameter>
@@ -434,6 +440,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<TransmitIn type="org.cx.game.card.skill.ext.TransmitIn">
 					<parameter>
@@ -509,6 +516,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<MagicShield type="org.cx.game.card.skill.ext.MagicShield">	
 					<parameter>
@@ -577,6 +585,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<IceArrow type="org.cx.game.card.skill.ext.IceArrow">
 					<parameter>
@@ -658,6 +667,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 		</card>
 		<card type="org.cx.game.card.LifeCard" cardID="1330012">
 			<parameter>
@@ -702,6 +712,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<WoundHealing type="org.cx.game.card.skill.ext.WoundHealing">
 					<parameter>
@@ -797,6 +808,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<Cure type="org.cx.game.card.skill.ext.Cure">
 					<parameter>
@@ -864,6 +876,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<AutomateAmmo type="org.cx.game.card.skill.ext.AutomateAmmo">
 					<parameter>
@@ -925,6 +938,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<HunterTab type="org.cx.game.card.skill.ext.HunterTab">
 					<parameter>
@@ -1004,6 +1018,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 		</card>
 		<card type="org.cx.game.card.LifeCard" cardID="1440019">
 			<parameter>
@@ -1048,6 +1063,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<Hide type="org.cx.game.card.skill.ext.Hide">
 					<parameter>
@@ -1126,6 +1142,7 @@
 			<swap type="org.cx.game.action.Swap" interface="org.cx.game.action.ISwap"></swap>
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
+			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<CrossbowLine type="org.cx.game.card.skill.ext.CrossbowLine">
 					<parameter>

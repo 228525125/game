@@ -73,6 +73,11 @@ public class I18n {
 		return getMessage(key);
 	}
 	
+	public static String getMessage(Object object, Object id, String property){
+		String key = object.getClass().getName()+"."+id+"."+property;
+		return getMessage(key);
+	}
+	
 	public static void main(String[] args) {
 		/*System.out.println(Locale.getDefault().getLanguage()+"_"+Locale.getDefault().getCountry());
 		Locale [] ls = Locale.getAvailableLocales();		

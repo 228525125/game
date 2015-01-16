@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.cx.game.card.ICard;
 import org.cx.game.core.Player;
+import org.cx.game.tools.I18n;
 
 public class Faction extends Player {
 
 	private String name = "";
 	
-	public Faction(Integer id, String name) {
+	public Faction(Integer id) {
 		// TODO Auto-generated constructor stub
 		setId(id);
-		this.name = name;
 	}
 	
 	@Override
@@ -25,6 +25,8 @@ public class Faction extends Player {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
+		if(null==name)
+			name = I18n.getMessage(this, getId(), "name");
 		return name;
 	}
 }

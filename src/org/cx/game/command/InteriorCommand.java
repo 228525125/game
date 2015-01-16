@@ -1,13 +1,13 @@
 package org.cx.game.command;
 
-import org.cx.game.core.Context;
+import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.validator.ControlPowerValidator;
 
 public class InteriorCommand extends Command {
 
 	protected IPlayer player;
-	protected Context context;	
+	protected IContext context;	
 	protected CommandBuffer buffer;
 	
 	public InteriorCommand(IPlayer player) {

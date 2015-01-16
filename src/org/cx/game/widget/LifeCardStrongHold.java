@@ -24,14 +24,18 @@ public class LifeCardStrongHold extends StrongHold {
 	public void refurbish() {
 		// TODO Auto-generated method stub
 		if(isRefurbish()){
-			List<Integer> list = this.cardIDList;
+			List<Integer> list = new ArrayList<Integer>();
+			list.addAll(cardIDList);
 			list.removeAll(existCardIDList);
 			for(ICard card : CardFactory.getInstances(list)){
 				LifeCard life = (LifeCard) card;
+				life.setPlayer(getPlayer());
+				life.setPlayId(getPlayer().getContext().newCardPlayId());
 				IPlace place = getUsablePlace();
 				if(null!=place){
 					try {
-						life.call(place);
+						life.renew(place);
+						lifeList.add(life);
 					} catch (RuleValidatorException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -47,12 +51,12 @@ public class LifeCardStrongHold extends StrongHold {
 
 	public void setCardIDList(List<Integer> cardIDList) {
 		this.cardIDList = cardIDList;
-		this.existCardIDList = cardIDList;
-		for(ICard card : CardFactory.getInstances(cardIDList)){
-			this.lifeList.add((LifeCard)card);
-		}
 	}
 	
+	public List<LifeCard> getLifeList() {
+		return lifeList;
+	}
+
 	@Override
 	public void setPlayer(IPlayer player) {
 		// TODO Auto-generated method stub

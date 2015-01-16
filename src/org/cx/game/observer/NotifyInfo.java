@@ -34,6 +34,7 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Action_Attacked = "Card_LifeCard_Action_Attacked";
 	
 	public final static String Card_LifeCard_Action_Call = "Card_LifeCard_Action_Call";
+	public final static String Card_LifeCard_Action_Renew = "Card_LifeCard_Action_Renew";
 	public final static String Card_LifeCard_Action_Death = "Card_LifeCard_Action_Death";
 	public final static String Card_LifeCard_Mirage_Action_Death = "Card_LifeCard_Mirage_Action_Death";
 	public final static String Card_LifeCard_Action_Upgrade = "Card_LifeCard_Action_Upgrade";
