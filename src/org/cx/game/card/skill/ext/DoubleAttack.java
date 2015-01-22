@@ -51,4 +51,12 @@ public class DoubleAttack extends PassiveSkill {
 			affect();
 		}
 	}
+	
+	@Override
+	public void setOwner(LifeCard life) {
+		// TODO Auto-generated method stub
+		super.setOwner(life);
+		
+		life.getAttack().addIntercepter(this);
+	}
 }

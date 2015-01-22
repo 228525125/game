@@ -11,7 +11,6 @@ import java.util.Observable;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
-import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 
@@ -35,6 +34,20 @@ public class ControlQueue extends Observable implements IControlQueue {
 	}
 	
 	@Override
+	public void add(Object object) {
+		// TODO Auto-generated method stub
+		Place place = new Place(object);
+		insert(place);
+	}
+	
+	@Override
+	public void remove(Object object) {
+		// TODO Auto-generated method stub
+		Place place = new Place(object);
+		takeOut(place);
+	}
+	
+	@Override
 	public Object out() {
 		// TODO Auto-generated method stub
 		Object object = null;
@@ -43,7 +56,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			swapQueue();
 		
 		Place place = queue.get(0);  //返回最前面的一个place
-		remove(place.getObject());
+		takeOut(place);
 		
 		place.setCount(place.getCount() - consume); //swapQueue方法确保当前queue内的place始终大于消耗，因此这里不用判断，直接 减掉消耗，并获得一次控制机会
 		object = place.getObject();
@@ -53,42 +66,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			insertOtherQueue(place); //如果小于额定消耗，则进入下一个queue
 		
 		return object; 
-	}
-
-	@Override
-	public void insert(Object object) {
-		// TODO Auto-generated method stub
-		Place place = new Place(object);
-		queue.add(place);
-		Collections.sort(queue, new PlaceComparator());
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("unit", place.getObject());
-		map.put("position", indexOf(place));
-		map.put("queue", toListMap());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Insert,map);
-		notifyObservers(info);
-	}
-	
-	@Override
-	public void remove(Object object) {
-		// TODO Auto-generated method stub
-		Place place = new Place(object);
-		Integer position = this.queue1.indexOf(place);
-		if(0<=position){
-			this.queue1.remove(place);
-		}else{
-			position = this.queue2.indexOf(place);
-			this.queue2.remove(place);
-		}
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("unit", place.getObject());
-		map.put("position", position);
-		map.put("queue", toListMap());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Remove,map);
-		notifyObservers(info);
-	}
+	}	
 	
 	@Override
 	public void refurbish() {
@@ -105,6 +83,40 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("queue", toListMap());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Refurbish,map);
+		notifyObservers(info);
+	}
+	
+	/**
+	 * 插入队列
+	 * @param place
+	 */
+	private void insert(Place place) {
+		// TODO Auto-generated method stub
+		queue.add(place);
+		Collections.sort(queue, new PlaceComparator());
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("unit", place.getObject());
+		map.put("position", indexOf(place));
+		map.put("queue", toListMap());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Insert,map);
+		notifyObservers(info);
+	}
+	
+	/**
+	 * 从队列中取出
+	 * @param place
+	 */
+	private void takeOut(Place place){
+		Integer position = indexOf(place);
+		if(!this.queue1.remove(place))
+			this.queue2.remove(place);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("unit", place.getObject());
+		map.put("position", position);
+		map.put("queue", toListMap());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Remove,map);
 		notifyObservers(info);
 	}
 	

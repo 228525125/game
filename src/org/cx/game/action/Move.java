@@ -28,6 +28,12 @@ public class Move extends Action implements IMove{
 	}
 	
 	@Override
+	public MoveDecorator getDecorator() {
+		// TODO Auto-generated method stub
+		return (MoveDecorator) super.getDecorator();
+	}
+	
+	@Override
 	public Integer getType() {
 		// TODO Auto-generated method stub
 		return this.type;
@@ -115,7 +121,7 @@ public class Move extends Action implements IMove{
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Move,map);
 		super.notifyObservers(info);
 		
-		setMoveable(false);     //一个回合只能移动一次
+		getDecorator().setMoveable(false);     //一个回合只能移动一次
 	}
 	
 }

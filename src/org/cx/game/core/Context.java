@@ -40,8 +40,8 @@ public class Context extends Observable implements IContext
 		addObserver(new JsonOut());
 		
 		queue = new ControlQueueDecorator(this.queue);
-		queue.insert(player1);
-		queue.insert(player2);
+		queue.add(player1);
+		queue.add(player2);
 	}
 	
 	public void setDecorator(ContextDecorator decorator) {

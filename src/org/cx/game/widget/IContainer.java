@@ -77,5 +77,7 @@ public interface IContainer extends IInterceptable, Observable
 	 * @param decorator 装饰
 	 */
 	public void setDecorator(ContainerDecorator decorator);
+	
+	public ContainerDecorator getDecorator();
 
 }

@@ -39,7 +39,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		
 		for(IStrongHold strongHold : ground.getStrongHoldList())
 			strongHold.setGround(this);
-		
 	}
 	
 	@Override

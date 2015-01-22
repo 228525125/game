@@ -26,7 +26,9 @@ public class Cemetery extends Observable implements ICemetery {
 	}
 	
 	
-	@Override
+	/**
+	 * 进入墓地
+	 */
 	public void add(LifeCard life) {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();

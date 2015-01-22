@@ -11,10 +11,10 @@ import org.cx.game.observer.Observable;
 public interface IControlQueue extends Observable, IInterceptable{
 	
 	/**
-	 * 将一个元素插入进队列，插入时不用考虑位置
-	 * @param object life 或者 player
+	 * 将一个元素加入到控制列表中，插入时不用考虑位置
+	 * @param object
 	 */
-	public void insert(Object object);
+	public void add(Object object);
 	
 	/**
 	 * 

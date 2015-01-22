@@ -228,7 +228,7 @@
 				<Puncture type="org.cx.game.card.skill.ext.Puncture">
 					<parameter>
 						<style type="int">1</style>
-						<chance type="int">30</chance>
+						<chance type="int">100</chance>
 						<downImmuneDamageRatio type="int">100</downImmuneDamageRatio>
 					</parameter>
 				</Puncture>
@@ -238,12 +238,14 @@
 						<atkScale type="int">100</atkScale>
 					</parameter>
 				</SpearLine>
+				<!-- 
 				<SpearInfeed type="org.cx.game.card.skill.ext.SpearInfeed">
 					<parameter>
 						<style type="int">1</style>
 						<atkScale type="int">100</atkScale>
 					</parameter>
 				</SpearInfeed>
+				 -->
 				<Bump type="org.cx.game.card.skill.ext.Bump">
 					<parameter>
 						<consume type="int">100</consume>

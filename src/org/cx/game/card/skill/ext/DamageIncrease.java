@@ -41,5 +41,13 @@ public class DamageIncrease extends PassiveSkill {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	@Override
+	public void setOwner(LifeCard life) {
+		// TODO Auto-generated method stub
+		super.setOwner(life);
+		
+		life.getAttack().addIntercepter(this);
+	}
 
 }

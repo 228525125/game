@@ -158,5 +158,11 @@ public class ContainerDecorator implements IContainer {
 		// TODO Auto-generated method stub
 		original.setDecorator(decorator);
 	}
+
+	@Override
+	public ContainerDecorator getDecorator() {
+		// TODO Auto-generated method stub
+		return original.getDecorator();
+	}
 	
 }

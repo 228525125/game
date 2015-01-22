@@ -47,6 +47,7 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		map.put("player", owner.getPlayer());
 		map.put("container", owner.getContainer());
 		map.put("card", owner);
+		map.put("skill", this);
 		map.put("position", owner.getContainerPosition());
 		NotifyInfo info = new NotifyInfo(action,map);
 		notifyObservers(info);
@@ -65,7 +66,7 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 	@Override
 	public void setOwner(LifeCard life) {
 		// TODO Auto-generated method stub
-		this.owner = life;
+		this.owner = life;		
 	}
 	
 

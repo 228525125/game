@@ -17,10 +17,10 @@ public class ControlQueueDecorator implements IControlQueue {
 	}
 	
 	@Override
-	public void insert(Object object) {
+	public void add(Object object) {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(original);
-		((IControlQueue)proxy).insert(object);
+		((IControlQueue)proxy).add(object);
 	}
 
 	@Override

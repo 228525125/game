@@ -35,7 +35,7 @@ public class Death extends Action implements IDeath {
 		// TODO Auto-generated method stub
 		return (LifeCard) super.getOwner();
 	}
-
+	
 	public Integer getHp() {
 		return hp;
 	}

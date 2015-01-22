@@ -1,17 +1,14 @@
 package org.cx.game.action;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
 import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
-import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.out.JsonOut;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
@@ -26,6 +23,16 @@ public abstract class Action extends Observable implements IAction {
 	
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
 	
+	private ActionDecorator decorator = null;
+	
+	public ActionDecorator getDecorator() {
+		return decorator;
+	}
+
+	public void setDecorator(ActionDecorator decorator) {
+		this.decorator = decorator;
+	}
+
 	public Action() {
 		// TODO Auto-generated constructor stub
 		addObserver(new JsonOut());

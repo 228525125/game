@@ -56,8 +56,16 @@ public class Puncture extends PassiveSkill {
 	@Override
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
-		this.attacked = (LifeCard) args[1];
+		this.attacked = (LifeCard) ((Object[]) args[0])[0];
 		if(Random.isTrigger(chance))
 			affect();
+	}
+	
+	@Override
+	public void setOwner(LifeCard life) {
+		// TODO Auto-generated method stub
+		super.setOwner(life);
+		
+		life.getAttack().addIntercepter(this);
 	}
 }

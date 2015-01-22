@@ -32,6 +32,12 @@ public abstract class Container extends Observable implements IContainer {
 		this.decorator = decorator;
 	}
 
+	public ContainerDecorator getDecorator() {
+		return decorator;
+	}
+
+
+
 	public IPlayer getPlayer() {
 		return player;
 	}

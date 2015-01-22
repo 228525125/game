@@ -46,5 +46,13 @@ public abstract class Spurting extends PassiveSkill {
 			}
 		}
 	}
+	
+	@Override
+	public void setOwner(LifeCard life) {
+		// TODO Auto-generated method stub
+		super.setOwner(life);
+		
+		life.getAttack().addIntercepter(this);
+	}
 
 }

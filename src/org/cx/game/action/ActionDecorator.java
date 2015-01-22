@@ -18,6 +18,20 @@ public abstract class ActionDecorator implements IAction {
 	public ActionDecorator(IAction action) {
 		// TODO Auto-generated constructor stub
 		this.original = action;
+		
+		action.setDecorator(this);
+	}
+	
+	@Override
+	public ActionDecorator getDecorator() {
+		// TODO Auto-generated method stub
+		return original.getDecorator();
+	}
+	
+	@Override
+	public void setDecorator(ActionDecorator decorator) {
+		// TODO Auto-generated method stub
+		original.setDecorator(decorator);
 	}
 	
 	@Override

@@ -19,6 +19,10 @@ public interface IAction extends IInterceptable, Observable, IValidatable {
 	
 	public void setOwner(ICard card);
 	
+	public void setDecorator(ActionDecorator decorator);
+	
+	public ActionDecorator getDecorator();
+	
 	/**
 	 * 由具体子类提供实现
 	 * @param objects 由于objects是数组，因此在拦截器的写法如：LifeCard attacked = (LifeCard) ((Object[]) args[0])[0];

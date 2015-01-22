@@ -106,6 +106,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		map.put("player", owner.getPlayer());
 		map.put("container", owner.getContainer());
 		map.put("card", owner);
+		map.put("skill", this);
 		map.put("position", owner.getContainerPosition());
 		NotifyInfo info = new NotifyInfo(action,map);
 		notifyObservers(info);           //通知所有卡片对象，被动技能发动		

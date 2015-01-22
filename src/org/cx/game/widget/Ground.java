@@ -652,7 +652,7 @@ public class Ground extends Container implements IGround
 		List<Integer> list = new ArrayList<Integer>();
 		Integer [] p = integerToPoint(stand);
 		if(IGround.Relative_Top==direction){
-			for(int i=1;i<range;i++){
+			for(int i=1;i<=range;i++){
 				Integer position = pointToInteger(p[0], p[1]-i);
 				if(!isOver(position))
 					list.add(position);
@@ -660,7 +660,7 @@ public class Ground extends Container implements IGround
 		}
 		
 		if(IGround.Relative_Left==direction){
-			for(int i=1;i<range;i++){
+			for(int i=1;i<=range;i++){
 				Integer position = pointToInteger(p[0]-i, p[1]);
 				if(!isOver(position))
 					list.add(position);
@@ -668,7 +668,7 @@ public class Ground extends Container implements IGround
 		}
 		
 		if(IGround.Relative_Bottom==direction){
-			for(int i=1;i<range;i++){
+			for(int i=1;i<=range;i++){
 				Integer position = pointToInteger(p[0], p[1]+i);
 				if(!isOver(position))
 					list.add(position);
@@ -676,7 +676,7 @@ public class Ground extends Container implements IGround
 		}
 		
 		if(IGround.Relative_Right==direction){
-			for(int i=1;i<range;i++){
+			for(int i=1;i<=range;i++){
 				Integer position = pointToInteger(p[0]+i, p[1]);
 				if(!isOver(position))
 					list.add(position);

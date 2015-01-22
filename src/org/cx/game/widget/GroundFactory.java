@@ -20,7 +20,7 @@ public class GroundFactory {
 	
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
-		InputStream is=CardFactory.class.getResourceAsStream(filePath); 
+		InputStream is=GroundFactory.class.getResourceAsStream(filePath);
 		try {
 			Document document = saxReader.read(is);
 			return document.getRootElement();

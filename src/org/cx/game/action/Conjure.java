@@ -28,6 +28,12 @@ public class Conjure extends Action implements IConjure {
 	public void setPower(Integer power) {
 		this.power = power;
 	}
+	
+	@Override
+	public ConjureDecorator getDecorator() {
+		// TODO Auto-generated method stub
+		return (ConjureDecorator) super.getDecorator();
+	}
 
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
@@ -39,7 +45,7 @@ public class Conjure extends Action implements IConjure {
 		
 		doValidator();
 		
-		setPower(power-skill.getConsume());
+		getDecorator().setPower(power-skill.getConsume());
 		
 		Object [] parameter = (Object[]) objects[1];
 		skill.useSkill(parameter);
