@@ -8,6 +8,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.npc.IFormula;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 
@@ -192,5 +193,11 @@ public abstract class ActionDecorator implements IAction {
 	public void setPri(int pri) {
 		// TODO Auto-generated method stub
 		original.setPri(pri);
+	}
+	
+	@Override
+	public void setFormulaList(List<IFormula> formulaList) {
+		// TODO Auto-generated method stub
+		original.setFormulaList(formulaList);
 	}
 }

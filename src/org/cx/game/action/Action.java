@@ -9,6 +9,7 @@ import java.util.Observable;
 import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.npc.IFormula;
 import org.cx.game.npc.IPolicy;
 import org.cx.game.out.JsonOut;
 import org.cx.game.validator.Errors;
@@ -164,6 +165,12 @@ public abstract class Action extends Observable implements IAction {
 	public void makePri() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private List<IFormula> formulaList = new ArrayList<IFormula>();
+
+	public void setFormulaList(List<IFormula> formulaList) {
+		this.formulaList = formulaList;
 	}
 
 }
