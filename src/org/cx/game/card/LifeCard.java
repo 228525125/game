@@ -40,6 +40,9 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.npc.ICardPolicy;
+import org.cx.game.npc.IGroundPolicy;
+import org.cx.game.npc.ILifeCardPolicy;
+import org.cx.game.npc.IUseCardPolicy;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
@@ -56,7 +59,7 @@ import org.cx.game.widget.IPlace;
  * @author cx
  *
  */
-public class LifeCard extends java.util.Observable implements ICard, Observable
+public class LifeCard extends java.util.Observable implements ICard, ILifeCardPolicy, Observable
 {
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	
@@ -860,12 +863,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	@Override
-	public ICardPolicy getCardPolicy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void addIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
 		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
@@ -898,4 +895,17 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated method stub
 		return intercepterList;
 	}
+
+	@Override
+	public IUseCardPolicy getUseCardPolicy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IGroundPolicy getGroundPolicy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

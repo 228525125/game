@@ -177,4 +177,20 @@ public abstract class ActionDecorator implements IAction {
 		return original.hasError();
 	}
 
+	@Override
+	public Integer getPri() {
+		// TODO Auto-generated method stub
+		return original.getPri();
+	}
+	
+	@Override
+	public void makePri() {
+		// TODO Auto-generated method stub
+		original.makePri();
+	}
+	@Override
+	public void setPri(int pri) {
+		// TODO Auto-generated method stub
+		original.setPri(pri);
+	}
 }

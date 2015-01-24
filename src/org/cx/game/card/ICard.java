@@ -8,7 +8,7 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.npc.ICardPolicy;
 import org.cx.game.widget.IContainer;
 
-public interface ICard extends IInterceptable
+public interface ICard extends IInterceptable, ICardPolicy
 {
 	
 	public String getName();
@@ -46,8 +46,6 @@ public interface ICard extends IInterceptable
 	 *
 	 */
 	public void chuck() throws RuleValidatorException;
-	
-	public ICardPolicy getCardPolicy();
 	
 	/**
 	 * 非比赛环境时，卡片的编号

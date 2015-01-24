@@ -1,12 +1,8 @@
 package org.cx.game.npc;
 
-public interface IPlayerPolicy {
+import org.cx.game.card.ICard;
 
-	/**
-	 * 比赛前置策略
-	 *
-	 */
-	public void prefixPolicy();
+public interface IPlayerPolicy {
 	
 	/**
 	 * 调用部署策略
@@ -15,20 +11,16 @@ public interface IPlayerPolicy {
 	public void deployPolicy();
 	
 	/**
-	 * 调用攻击策略
-	 *
+	 * 当手牌满了，需要丢弃时该方法被调用
+	 * @param card 与当前卡片比较的卡片
+	 * @return 返回要丢弃的卡片
 	 */
-	public void attackPolicy();
+	public ICard chuckPolicy(ICard dest, ICard source);
 	
 	/**
-	 * 调用防守策略
-	 *
+	 * 遍历手牌时，选出要出的牌
+	 * @param card 与当前卡片比较的卡片
+	 * @return 返回要出的卡片
 	 */
-	public void defendPolicy();
-	
-	/**
-	 * 比赛回合结束时调用
-	 *
-	 */
-	public void finishPolicy();
+	public ICard pushPolicy(ICard dest, ICard source);
 }

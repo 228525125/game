@@ -9,6 +9,7 @@ import java.util.Observable;
 import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.npc.IPolicy;
 import org.cx.game.out.JsonOut;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
@@ -145,6 +146,24 @@ public abstract class Action extends Observable implements IAction {
 	public Boolean hasError() {
 		// TODO Auto-generated method stub
 		return errors.hasError();
+	}
+	
+	@Override
+	public Integer getPri() {
+		// TODO Auto-generated method stub
+		return IPolicy.PRI_Default;
+	}
+	
+	@Override
+	public void setPri(int pri) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void makePri() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,8 +1,5 @@
 package org.cx.game.npc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.domain.PlayInfo;

@@ -4,6 +4,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
+import org.cx.game.npc.IActionPolicy;
 import org.cx.game.observer.Observable;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
@@ -13,7 +14,7 @@ import org.cx.game.validator.IValidator;
  * @author jiuhuan
  *
  */
-public interface IAction extends IInterceptable, Observable, IValidatable {
+public interface IAction extends IInterceptable, Observable, IValidatable, IActionPolicy {
 
 	public ICard getOwner();
 	
