@@ -8,7 +8,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
-import org.cx.game.npc.IFormula;
+import org.cx.game.policy.IFormula;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 

@@ -1,4 +1,4 @@
-package org.cx.game.npc;
+package org.cx.game.policy;
 
 /**
  * 等待策略

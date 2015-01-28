@@ -4,8 +4,8 @@ import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.npc.IActionPolicy;
 import org.cx.game.observer.Observable;
+import org.cx.game.policy.IActionPolicy;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.cx.game.card.ICard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.policy.IPlayerPolicy;
 import org.cx.game.widget.ICamp;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.ICemetery;
@@ -15,7 +16,7 @@ import org.cx.game.widget.IUseCard;
  * @author chenxian
  *
  */
-public interface IPlayer
+public interface IPlayer extends IPlayerPolicy
 {		
 	public Integer getId();
 	

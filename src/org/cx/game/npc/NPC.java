@@ -3,6 +3,7 @@ package org.cx.game.npc;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.domain.PlayInfo;
+import org.cx.game.policy.IPlayerPolicy;
 
 /**
  * NPC实际上是IPlayer的装饰类

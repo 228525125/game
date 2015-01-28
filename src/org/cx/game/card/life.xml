@@ -6,8 +6,8 @@
 			<parameter>                                                                                                        <!-- parameter表示构造参数，参数名可以不跟程序参数名一致，但顺序必须一致 -->
 				<id type="int">1110004</id>                                                                                     <!-- 卡片id 唯一编码 -->
 			</parameter>
-			<hp type="int">110</hp>                                                                                            <!-- 生命值 -->
-			<atk type="int">45</atk>                                                                                           <!-- 攻击力 -->
+			<hp type="int">240</hp>                                                                                            <!-- 生命值 -->
+			<atk type="int">60</atk>                                                                                           <!-- 攻击力 -->
 			<range type="int">1</range>                                                                                        <!-- 攻击距离 -->
 			<immuneDamageRatio type="double">0.2</immuneDamageRatio>                                                               <!-- 免伤比 -->
 			<star type="int">1</star>                                                                                          <!-- 等级 -->

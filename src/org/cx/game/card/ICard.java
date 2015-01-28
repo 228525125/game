@@ -1,11 +1,9 @@
 package org.cx.game.card;
 
-import java.util.Map;
-
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.npc.ICardPolicy;
+import org.cx.game.policy.ICardPolicy;
 import org.cx.game.widget.IContainer;
 
 public interface ICard extends IInterceptable, ICardPolicy

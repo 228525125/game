@@ -2,6 +2,7 @@ package org.cx.game.core;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
+import org.cx.game.policy.UseCardPolicyDescComparator;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.CardGroup;
 import org.cx.game.widget.CardGroupDecorator;
@@ -154,5 +156,29 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 			return player.getId().equals(getId());
 		}
 		return super.equals(arg0);
+	}
+	
+	@Override
+	public void deployPolicy() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public ICard chuckPolicy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public ICard pushPolicy() {
+		// TODO Auto-generated method stub
+		List<ICard> list = new ArrayList<ICard>();
+		list.addAll(getUseCard().list());
+		Collections.sort(list, new UseCardPolicyDescComparator());
+		if(list.isEmpty())
+			return null;
+		else
+			return list.get(0);
 	}
 }
