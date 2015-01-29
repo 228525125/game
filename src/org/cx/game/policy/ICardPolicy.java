@@ -5,7 +5,6 @@ package org.cx.game.policy;
  * @author chenxian
  *
  */
-public interface ICardPolicy extends IPolicy {
-
-	public IUseCardPolicy getUseCardPolicy();
+public interface ICardPolicy extends IPolicy, IPriority {
+	
 }

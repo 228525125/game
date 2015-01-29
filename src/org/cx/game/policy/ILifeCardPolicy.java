@@ -1,6 +1,8 @@
 package org.cx.game.policy;
 
-public interface ILifeCardPolicy extends ICardPolicy {
+public interface ILifeCardPolicy {
 
-	public IGroundPolicy getGroundPolicy();
+	public IActionPolicy getActionPolicy();
+	
+	public Boolean hasNext();
 }

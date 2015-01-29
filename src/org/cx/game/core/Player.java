@@ -14,6 +14,7 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
+import org.cx.game.policy.ICardPolicy;
 import org.cx.game.policy.UseCardPolicyDescComparator;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.CardGroup;
@@ -159,26 +160,20 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	}
 	
 	@Override
-	public void deployPolicy() {
+	public ICardPolicy getCardPolicy() {
 		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public ICard chuckPolicy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public ICard pushPolicy() {
-		// TODO Auto-generated method stub
-		List<ICard> list = new ArrayList<ICard>();
+		List<ICardPolicy> list = new ArrayList<ICardPolicy>();
 		list.addAll(getUseCard().list());
 		Collections.sort(list, new UseCardPolicyDescComparator());
 		if(list.isEmpty())
 			return null;
 		else
 			return list.get(0);
+	}
+	
+	@Override
+	public Boolean hasNext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

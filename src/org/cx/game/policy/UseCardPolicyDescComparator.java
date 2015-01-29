@@ -4,12 +4,12 @@ import java.util.Comparator;
 
 import org.cx.game.card.ICard;
 
-public class UseCardPolicyDescComparator implements Comparator<ICard> {
+public class UseCardPolicyDescComparator implements Comparator<ICardPolicy> {
 
 	@Override
-	public int compare(ICard o1, ICard o2) {
+	public int compare(ICardPolicy o1, ICardPolicy o2) {
 		// TODO Auto-generated method stub
-		return o2.getUseCardPolicy().getPri().compareTo(o1.getUseCardPolicy().getPri());
+		return o2.getPri().compareTo(o1.getPri());
 	}
 
 }

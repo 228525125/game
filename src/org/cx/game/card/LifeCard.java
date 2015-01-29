@@ -42,10 +42,11 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
+import org.cx.game.policy.IActionPolicy;
 import org.cx.game.policy.ICardPolicy;
-import org.cx.game.policy.IGroundPolicy;
+import org.cx.game.policy.IFormula;
 import org.cx.game.policy.ILifeCardPolicy;
-import org.cx.game.policy.IUseCardPolicy;
+import org.cx.game.policy.IPolicy;
 import org.cx.game.tools.Debug;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
@@ -895,17 +896,41 @@ public class LifeCard extends java.util.Observable implements ICard, ILifeCardPo
 		// TODO Auto-generated method stub
 		return intercepterList;
 	}
-
+	
 	@Override
-	public IUseCardPolicy getUseCardPolicy() {
+	public IActionPolicy getActionPolicy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Boolean hasNext() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public IGroundPolicy getGroundPolicy() {
+	public void makePri() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer getPri() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setPri(int pri) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFormulaList(List<IFormula> formulaList) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -29,10 +29,6 @@ public class DeployState extends PlayState {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Deploy,map);
 		super.notifyObservers(info);
 		
-		if (curPlayer instanceof NPC) {
-			NPC npc = (NPC) curPlayer;
-			npc.getPlayerPolicy().deployPolicy();
-		}
 	}
 
 	@Override

@@ -14,5 +14,5 @@ public interface IPolicy {
 	public final static Integer PRI_Default = 100;
 	public final static Integer PRI_Low = 50;
 	public final static Integer PRI_Bottom = 20;
-	public final static Integer PRI_Min = 0;	
+	public final static Integer PRI_Min = 0;
 }
