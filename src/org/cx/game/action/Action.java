@@ -10,6 +10,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.out.JsonOut;
+import org.cx.game.policy.IActionPolicy;
 import org.cx.game.policy.IFormula;
 import org.cx.game.policy.IPolicy;
 import org.cx.game.validator.Errors;
@@ -149,28 +150,18 @@ public abstract class Action extends Observable implements IAction {
 		return errors.hasError();
 	}
 	
+	private IActionPolicy policy = null;
+	
 	@Override
-	public Integer getPri() {
+	public IActionPolicy getPolicy() {
 		// TODO Auto-generated method stub
-		return IPolicy.PRI_Default;
+		return this.policy;
 	}
 	
 	@Override
-	public void setPri(int pri) {
+	public void setPolicy(IActionPolicy actionPolicy) {
 		// TODO Auto-generated method stub
-		
+		actionPolicy.setOwner(this);
+		this.policy = actionPolicy;
 	}
-	
-	@Override
-	public void makePri() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private List<IFormula> formulaList = new ArrayList<IFormula>();
-
-	public void setFormulaList(List<IFormula> formulaList) {
-		this.formulaList = formulaList;
-	}
-
 }

@@ -32,9 +32,10 @@ public class JsonOut extends Response implements Observer {
 			"near",                  //Place
 			//"place",                 //Camp
 			"strongHoldList",        //Ground
-			"appendCardList","hashCode","containerPosition",        //LifeCard
+			"appendCardList","hashCode","containerPosition","useCardPolicy","policy",        //LifeCard
 			"affectedList",                  //Skill
 			"cardIDList","lifeList",                             //StrongHold
+			"pri",                                              //Priority
 			"owner","intercepterList","validators","errors","decorator"                    //系统的
 		});
 		return JSONObject.fromObject(resp,config);

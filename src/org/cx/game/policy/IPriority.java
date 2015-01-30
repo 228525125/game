@@ -7,7 +7,7 @@ public interface IPriority {
 	/**
 	 * 计算PRI(优先级)
 	 */
-	public void makePri();
+	public void refreshPri();
 	
 	public Integer getPri();
 	

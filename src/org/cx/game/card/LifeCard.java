@@ -42,11 +42,9 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.IActionPolicy;
-import org.cx.game.policy.ICardPolicy;
-import org.cx.game.policy.IFormula;
 import org.cx.game.policy.ILifeCardPolicy;
-import org.cx.game.policy.IPolicy;
+import org.cx.game.policy.IUseCardPolicy;
+import org.cx.game.policy.LifeCardPolicy;
 import org.cx.game.tools.Debug;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
@@ -60,7 +58,7 @@ import org.cx.game.widget.IPlace;
  * @author cx
  *
  */
-public class LifeCard extends java.util.Observable implements ICard, ILifeCardPolicy, Observable
+public class LifeCard extends java.util.Observable implements ICard, Observable
 {
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	
@@ -897,40 +895,25 @@ public class LifeCard extends java.util.Observable implements ICard, ILifeCardPo
 		return intercepterList;
 	}
 	
+	private IUseCardPolicy useCardPolicy = null;
+	
 	@Override
-	public IActionPolicy getActionPolicy() {
+	public IUseCardPolicy getUseCardPolicy() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.useCardPolicy;
 	}
 	
 	@Override
-	public Boolean hasNext() {
+	public void setUseCardPolicy(IUseCardPolicy useCardPolicy) {
 		// TODO Auto-generated method stub
-		return null;
+		useCardPolicy.setOwner(this);
+		this.useCardPolicy = useCardPolicy;
 	}
-
-	@Override
-	public void makePri() {
-		// TODO Auto-generated method stub
-		
+	
+	private ILifeCardPolicy policy = new LifeCardPolicy();
+	
+	public ILifeCardPolicy getPolicy() {
+		return policy;
 	}
-
-	@Override
-	public Integer getPri() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setPri(int pri) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setFormulaList(List<IFormula> formulaList) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

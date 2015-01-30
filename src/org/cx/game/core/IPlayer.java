@@ -16,7 +16,7 @@ import org.cx.game.widget.IUseCard;
  * @author chenxian
  *
  */
-public interface IPlayer extends IPlayerPolicy
+public interface IPlayer
 {		
 	public Integer getId();
 	
@@ -45,5 +45,7 @@ public interface IPlayer extends IPlayerPolicy
 	public List<ICard> getDecks();
 	
 	public String getName();
+	
+	public IPlayerPolicy getPolicy();
 
 }

@@ -14,7 +14,7 @@ import org.cx.game.validator.IValidator;
  * @author jiuhuan
  *
  */
-public interface IAction extends IInterceptable, Observable, IValidatable, IActionPolicy {
+public interface IAction extends IInterceptable, Observable, IValidatable{
 
 	public ICard getOwner();
 	
@@ -30,4 +30,12 @@ public interface IAction extends IInterceptable, Observable, IValidatable, IActi
 	 * @throws RuleValidatorException
 	 */
 	public void action(Object...objects) throws RuleValidatorException;
+	
+	/**
+	 * 操作策略
+	 * @return
+	 */
+	public IActionPolicy getPolicy();
+	
+	public void setPolicy(IActionPolicy actionPolicy);
 }

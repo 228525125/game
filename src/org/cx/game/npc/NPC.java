@@ -15,7 +15,7 @@ public abstract class NPC implements IPlayer {
 	private IPlayerPolicy playerPolicy = null;   //有的NPC可以比赛，所以有一个比赛策略属性
 	private IContext context = null;
 
-	public IPlayerPolicy getPlayerPolicy() {
+	public IPlayerPolicy getPolicy() {
 		return playerPolicy;
 	}
 

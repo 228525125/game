@@ -16,7 +16,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.out.JsonOut;
 import org.cx.game.out.Response;
-import org.cx.game.policy.ICardPolicy;
+import org.cx.game.policy.IUseCardPolicy;
 import org.cx.game.widget.IContainer;
 
 public abstract class MagicCard implements ICard {
