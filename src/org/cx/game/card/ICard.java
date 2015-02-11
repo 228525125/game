@@ -60,6 +60,22 @@ public interface ICard extends IInterceptable
 	public void setPlayId(Long playId);
 	
 	/**
+	 * 星表示级别
+	 * @return
+	 */
+	public Integer getStar();
+	
+	public void setStar(Integer star);
+	
+	/**
+	 * 消耗
+	 * @return
+	 */
+	public Integer getConsume();
+	
+	public void setConsume(Integer consume);
+	
+	/**
 	 * 
 	 * @return 放回该卡所在的容器
 	 */

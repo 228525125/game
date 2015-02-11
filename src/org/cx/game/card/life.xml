@@ -46,6 +46,12 @@
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
 			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
+			<useCardPolicy type="org.cx.game.policy.UseCardPolicy" interface="org.cx.game.policy.IUseCardPolicy">
+				<formulaList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<LevelFormula type="org.cx.game.policy.LevelFormula" interface="org.cx.game.policy.IFormula"></LevelFormula>
+					<NotEnoughResourceFormula type="org.cx.game.policy.NotEnoughResourceFormula" interface="org.cx.game.policy.IFormula"></NotEnoughResourceFormula>
+				</formulaList>
+			</useCardPolicy>
 		</card>
 		<card type="org.cx.game.card.LifeCard" cardID="1130001">
 			<parameter>
@@ -91,6 +97,12 @@
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
 			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
+			<useCardPolicy type="org.cx.game.policy.UseCardPolicy" interface="org.cx.game.policy.IUseCardPolicy">
+				<formulaList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<LevelFormula type="org.cx.game.policy.LevelFormula" interface="org.cx.game.policy.IFormula"></LevelFormula>
+					<NotEnoughResourceFormula type="org.cx.game.policy.NotEnoughResourceFormula" interface="org.cx.game.policy.IFormula"></NotEnoughResourceFormula>
+				</formulaList>
+			</useCardPolicy>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<ShieldHit type="org.cx.game.card.skill.ext.ShieldHit">
 					<parameter>
@@ -166,6 +178,12 @@
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
 			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
+			<useCardPolicy type="org.cx.game.policy.UseCardPolicy" interface="org.cx.game.policy.IUseCardPolicy">
+				<formulaList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<LevelFormula type="org.cx.game.policy.LevelFormula" interface="org.cx.game.policy.IFormula"></LevelFormula>
+					<NotEnoughResourceFormula type="org.cx.game.policy.NotEnoughResourceFormula" interface="org.cx.game.policy.IFormula"></NotEnoughResourceFormula>
+				</formulaList>
+			</useCardPolicy>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<ShieldHit type="org.cx.game.card.skill.ext.ShieldHit">
 					<parameter>
@@ -224,6 +242,12 @@
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
 			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
+			<useCardPolicy type="org.cx.game.policy.UseCardPolicy" interface="org.cx.game.policy.IUseCardPolicy">
+				<formulaList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<LevelFormula type="org.cx.game.policy.LevelFormula" interface="org.cx.game.policy.IFormula"></LevelFormula>
+					<NotEnoughResourceFormula type="org.cx.game.policy.NotEnoughResourceFormula" interface="org.cx.game.policy.IFormula"></NotEnoughResourceFormula>
+				</formulaList>
+			</useCardPolicy>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<Puncture type="org.cx.game.card.skill.ext.Puncture">
 					<parameter>
@@ -304,6 +328,12 @@
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
 			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
+			<useCardPolicy type="org.cx.game.policy.UseCardPolicy" interface="org.cx.game.policy.IUseCardPolicy">
+				<formulaList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<LevelFormula type="org.cx.game.policy.LevelFormula" interface="org.cx.game.policy.IFormula"></LevelFormula>
+					<NotEnoughResourceFormula type="org.cx.game.policy.NotEnoughResourceFormula" interface="org.cx.game.policy.IFormula"></NotEnoughResourceFormula>
+				</formulaList>
+			</useCardPolicy>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">
 				<DamageIncrease type="org.cx.game.card.skill.ext.DamageIncrease">
 					<parameter>
@@ -370,6 +400,12 @@
 			<death type="org.cx.game.action.Death" interface="org.cx.game.action.IDeath"></death>
 			<chuck type="org.cx.game.action.Chuck" interface="org.cx.game.action.IChuck"></chuck>
 			<renew type="org.cx.game.action.Renew" interface="org.cx.game.action.IRenew"></renew>
+			<useCardPolicy type="org.cx.game.policy.UseCardPolicy" interface="org.cx.game.policy.IUseCardPolicy">
+				<formulaList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<LevelFormula type="org.cx.game.policy.LevelFormula" interface="org.cx.game.policy.IFormula"></LevelFormula>
+					<NotEnoughResourceFormula type="org.cx.game.policy.NotEnoughResourceFormula" interface="org.cx.game.policy.IFormula"></NotEnoughResourceFormula>
+				</formulaList>
+			</useCardPolicy>
 			<skillList type="java.util.ArrayList" interface="java.util.List" collection="true">				
 				<AssistAttack type="org.cx.game.card.skill.ext.AssistAttack">
 					<parameter>

@@ -37,6 +37,8 @@ public class UseCardPolicy implements IUseCardPolicy {
 	public void setFormulaList(List<IFormula> formulaList) {
 		// TODO Auto-generated method stub
 		this.formulaList = formulaList;
+		for(IFormula formula : formulaList)
+			formula.setPriority(this);
 	}
 	
 	private ICard owner = null;

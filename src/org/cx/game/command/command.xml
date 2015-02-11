@@ -126,6 +126,9 @@
 		<command name='finish' class='org.cx.game.command.OutsideCommand' parameter='no'>
 			<description>结束比赛</description>		
 		</command>
+		<command name='auto' class='org.cx.game.command.AutoCommand' parameter='no'>
+			<description>电脑托管</description>
+		</command>
 		<command name='reload' class='org.cx.game.command.ReloadCommand' parameter='no'>
 			<description>前台重新加载后台数据</description>		
 		</command>

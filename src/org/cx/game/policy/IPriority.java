@@ -2,8 +2,17 @@ package org.cx.game.policy;
 
 import java.util.List;
 
+/**
+ * 优先级
+ * @author chenxian
+ *
+ */
 public interface IPriority {
 
+	public Object getOwner();
+	
+	public void setOwner(Object owner);
+	
 	/**
 	 * 计算PRI(优先级)
 	 */

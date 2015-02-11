@@ -5,11 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 import org.cx.game.core.IPlayer;
+import org.cx.game.tools.Debug;
 
 public class PlayerPolicy implements IPlayerPolicy {
 
 	private IPlayer owner = null;
 	private IUseCardPolicy useCardPolicy = null;
+	
+	public PlayerPolicy(IPlayer player) {
+		// TODO Auto-generated constructor stub
+		this.owner = player;
+	}
 	
 	@Override
 	public IPlayer getOwner() {
@@ -48,8 +54,11 @@ public class PlayerPolicy implements IPlayerPolicy {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		while(this.hasNext())
+		// TODO Auto-generated method stub		
+		while(this.hasNext()){
 			this.getUseCardPolicy().execute();
+			if(Debug.isDebug)
+				break;
+		}
 	}
 }

@@ -161,7 +161,7 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		return super.equals(arg0);
 	}
 	
-	private IPlayerPolicy policy = new PlayerPolicy(); 
+	private IPlayerPolicy policy = new PlayerPolicy(this); 
 	
 	@Override
 	public IPlayerPolicy getPolicy() {

@@ -476,6 +476,21 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 消耗
+	 */
+	private Integer consume = 0;
+	
+	public Integer getConsume() {
+		// TODO Auto-generated method stub
+		return consume;
+	}
+	
+	public void setConsume(Integer consume) {
+		// TODO Auto-generated method stub
+		this.consume = consume;
+	}
+	
+	/**
 	 * 人类
 	 */
 	public final static Integer Race_Human = 1;
@@ -830,6 +845,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attacked.setParryChance(parryChance);
 		
 		this.conjure.setPower(power);
+		
+		this.call.setConsume(consume);
 		
 		this.move.setEnergy(energy);
 		this.move.setFleeChance(fleeChance);
