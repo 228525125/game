@@ -213,4 +213,10 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		return ground.getCampList();
 	}
+	
+	@Override
+	public Integer getRandomEntry(IPlayer player) {
+		// TODO Auto-generated method stub
+		return ground.getRandomEntry(player);
+	}
 }

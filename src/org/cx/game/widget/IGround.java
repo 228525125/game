@@ -113,6 +113,12 @@ public interface IGround extends IContainer{
 	public List<Integer> getCampPosition(IPlayer player);
 	
 	/**
+	 * 获得一个随机的入口
+	 * @return
+	 */
+	public Integer getRandomEntry(IPlayer player);
+	
+	/**
 	 * 获取营地
 	 * @return
 	 */

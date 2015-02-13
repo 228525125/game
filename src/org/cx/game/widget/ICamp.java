@@ -1,5 +1,7 @@
 package org.cx.game.widget;
 
+import java.util.List;
+
 import org.cx.game.core.IPlayer;
 
 /**
@@ -24,4 +26,8 @@ public interface ICamp {
 	public void setPlayer(IPlayer player);
 	
 	public void setOwner(IPlace place);
+	
+	public List<Integer> getEntryList();
+	
+	public void setEntryList(List<Integer> entryList);
 }

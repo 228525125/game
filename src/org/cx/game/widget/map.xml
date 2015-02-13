@@ -13,6 +13,13 @@
 					<immuneDamageRatio type="double">1</immuneDamageRatio>                                                                    <!-- 防御力 -->
 					<position type="int">810011</position>                                                                                    <!-- 位置 -->
 				</parameter>
+				<entryList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<entry type="int">710011</entry>
+					<entry type="int">710012</entry>
+					<entry type="int">810012</entry>
+					<entry type="int">910011</entry>
+					<entry type="int">910012</entry>
+				</entryList>
 			</camp>
 			<camp type="org.cx.game.widget.Camp" interface="org.cx.game.widget.ICamp">
 				<parameter>
@@ -20,6 +27,13 @@
 					<immuneDamageRatio type="double">1</immuneDamageRatio>
 					<position type="int">8100115</position>
 				</parameter>
+				<entryList type="java.util.ArrayList" interface="java.util.List" collection="true">
+					<entry type="int">7100115</entry>
+					<entry type="int">7100114</entry>
+					<entry type="int">8100114</entry>
+					<entry type="int">9100115</entry>
+					<entry type="int">9100114</entry>
+				</entryList>
 			</camp>
 		</campList>
 		<disableList type="java.util.ArrayList" interface="java.util.List" collection="true">                                                  <!-- 被占用位置的集合 -->

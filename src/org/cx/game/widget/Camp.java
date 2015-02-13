@@ -1,5 +1,8 @@
 package org.cx.game.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cx.game.core.IPlayer;
 
 public class Camp implements ICamp {
@@ -9,6 +12,7 @@ public class Camp implements ICamp {
 	private Integer position = 0;
 	private IPlace place = null;
 	private IPlayer player = null;
+	private List<Integer> entryList = new ArrayList<Integer>();
 	
 	public Camp(Integer hp, Double immuneDamageRatio, Integer position) {
 		// TODO Auto-generated constructor stub
@@ -56,5 +60,16 @@ public class Camp implements ICamp {
 		// TODO Auto-generated method stub
 		return position;
 	}
-
+	
+	@Override
+	public List<Integer> getEntryList() {
+		// TODO Auto-generated method stub
+		return this.entryList;
+	}
+	
+	@Override
+	public void setEntryList(List<Integer> entryList) {
+		// TODO Auto-generated method stub
+		this.entryList = entryList;
+	}
 }

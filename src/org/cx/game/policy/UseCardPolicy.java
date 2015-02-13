@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
+import org.cx.game.command.CallCommand;
+import org.cx.game.command.Command;
+import org.cx.game.command.Invoker;
+import org.cx.game.core.IPlayer;
+import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.exception.ValidatorException;
+import org.cx.game.widget.IUseCard;
 
 public class UseCardPolicy implements IUseCardPolicy {
 
@@ -57,5 +65,32 @@ public class UseCardPolicy implements IUseCardPolicy {
 	public void execute() {
 		// TODO Auto-generated method stub
 		//使用owner
+		String command = "";
+		if (this.owner instanceof LifeCard) {
+			LifeCard life = (LifeCard) this.owner;
+			IPlayer player = this.owner.getPlayer();
+			Integer entry = player.getGround().getRandomEntry(player);
+			if(null!=entry){
+				try {
+					life.call(player.getGround().getPlace(entry));
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private String selectUseCardToCommand(ICard card){
+		String command = "select use card";
+		IUseCard use = card.getPlayer().getUseCard();
+		Integer position = use.getPosition(card);
+		command += position+";";
+		return command;
+	}
+	
+	private String callToCommand(Integer position){
+		String command = "call ground place"+position+";";
+		return command;
 	}
 }

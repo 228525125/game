@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
 
 import org.cx.game.action.IMove;
@@ -251,6 +252,29 @@ public class Ground extends Container implements IGround
 		}
 		
 		return list;
+	}
+	
+	@Override
+	public Integer getRandomEntry(IPlayer player) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(ICamp camp : campList){
+			if(camp.getPlayer().equals(player)){
+				List<Integer> clist = camp.getEntryList();
+				for(Integer p : clist){
+					System.out.println(p);
+					if(!getPlace(p).isDisable())
+						list.add(p);
+				}
+				
+			}
+		}
+		if(list.isEmpty())
+			return null;
+		else{
+			Random r = new Random();
+			return list.get(r.nextInt(list.size()-1));
+		}
 	}
 	
 	@Override
@@ -687,9 +711,11 @@ public class Ground extends Container implements IGround
 	}
 	
 	public static void main(String[] args) {
-		Integer x1=1,y1=1,x2=2,y2=2;
+		/*Integer x1=1,y1=1,x2=2,y2=2;
 		System.out.println(Util.convertInteger(Math.sqrt(Math.pow(x1.doubleValue()-x2.doubleValue(),2)+Math.pow(y1.doubleValue()-y2.doubleValue(),2))));
 		
-		System.out.println(Math.abs(x1-x2)+Math.abs(y1-y2)) ;
+		System.out.println(Math.abs(x1-x2)+Math.abs(y1-y2)) ;*/
+		Random r = new Random();
+		System.out.println(r.nextInt(10));
 	}
 }
