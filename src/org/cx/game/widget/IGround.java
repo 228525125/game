@@ -119,6 +119,12 @@ public interface IGround extends IContainer{
 	public Integer getRandomEntry(IPlayer player);
 	
 	/**
+	 * 获取入口位置
+	 * @return
+	 */
+	public List<Integer> getEntryList(IPlayer player);
+	
+	/**
 	 * 获取营地
 	 * @return
 	 */

@@ -1,5 +1,7 @@
 package org.cx.game.validator;
 
+import java.util.List;
+
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IPlace;
@@ -24,12 +26,9 @@ public class CallRangeValidator extends Validator {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		Boolean ret = false;
-		for(Integer campPos : player.getGround().getCampPosition(player)){
-			if(3>=player.getGround().easyDistance(place.getPosition(), campPos)){
-				ret = true;
-				break;
-			}
-		}
+		List<Integer> entryList = player.getGround().getEntryList(player);
+		if(entryList.contains(place.getPosition()))
+			ret = true;
 		
 		if(!ret)
 			addMessage(I18n.getMessage(this));

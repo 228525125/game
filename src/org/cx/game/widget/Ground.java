@@ -262,7 +262,6 @@ public class Ground extends Container implements IGround
 			if(camp.getPlayer().equals(player)){
 				List<Integer> clist = camp.getEntryList();
 				for(Integer p : clist){
-					System.out.println(p);
 					if(!getPlace(p).isDisable())
 						list.add(p);
 				}
@@ -275,6 +274,19 @@ public class Ground extends Container implements IGround
 			Random r = new Random();
 			return list.get(r.nextInt(list.size()-1));
 		}
+	}
+	
+	@Override
+	public List<Integer> getEntryList(IPlayer player) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(ICamp camp : campList){
+			if(camp.getPlayer().equals(player)){
+				List<Integer> clist = camp.getEntryList();
+				list.addAll(clist);
+			}
+		}
+		return list;
 	}
 	
 	@Override
@@ -305,9 +317,7 @@ public class Ground extends Container implements IGround
 		}
 		if(NotifyInfo.Command_Query_Call == action && card instanceof LifeCard){
 			IPlayer player = card.getPlayer();
-			List<Integer> campPos = getCampPosition(player);
-			for(Integer p : campPos)
-				positionList.addAll(easyAreaForDistance(p, ICamp.Call_Range, Contain));
+			positionList.addAll(this.getEntryList(player));
 		}
 		if(NotifyInfo.Command_Query_Move == action && card instanceof LifeCard){
 			LifeCard life = (LifeCard) card;
