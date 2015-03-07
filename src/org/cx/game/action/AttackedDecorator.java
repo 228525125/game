@@ -1,5 +1,9 @@
 package org.cx.game.action;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
@@ -9,6 +13,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.Util;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -24,15 +29,20 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 
 	private IAttacked attacked = null;
 	
-	private static String filePath = "/org/cx/game/action/attack.xml";
-	
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
-		InputStream is=CardFactory.class.getResourceAsStream(filePath); 
 		try {
+			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("attack.path"))); 
+		
 			Document document = saxReader.read(is);
 			return document.getRootElement();
 		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

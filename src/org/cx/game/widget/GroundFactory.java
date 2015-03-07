@@ -1,7 +1,12 @@
 package org.cx.game.widget;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.Properties;
+import java.util.Set;
 
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
@@ -9,22 +14,24 @@ import org.cx.game.card.CardFactory;
 import org.cx.game.card.ICard;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
+import org.cx.game.tools.PropertiesUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 public class GroundFactory {
-
-	private static String filePath = "/org/cx/game/widget/map.xml";
 	
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
-		InputStream is=GroundFactory.class.getResourceAsStream(filePath);
 		try {
+			InputStream is = new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("map.path")));
 			Document document = saxReader.read(is);
 			return document.getRootElement();
 		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
