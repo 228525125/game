@@ -15,10 +15,6 @@ public abstract class Response {
 		}
 	};
 	
-	public Response() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	/**
 	 * 动作
 	 */

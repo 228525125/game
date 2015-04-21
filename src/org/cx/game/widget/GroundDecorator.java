@@ -39,6 +39,14 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		
 		for(IStrongHold strongHold : ground.getStrongHoldList())
 			strongHold.setGround(this);
+		
+		/*
+		 * 设置地形
+		 */
+		for(Integer disable : ground.getDisableList()){
+			ground.getPlace(disable).setDisable(true);
+		}
+			
 	}
 	
 	@Override
@@ -224,5 +232,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<Integer> getEntryList(IPlayer player) {
 		// TODO Auto-generated method stub
 		return ground.getEntryList(player);
+	}
+	
+	@Override
+	public List<Integer> getDisableList() {
+		// TODO Auto-generated method stub
+		return ground.getDisableList();
 	}
 }

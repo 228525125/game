@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import org.cx.game.core.Context;
-import org.cx.game.core.IPlayer;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.out.JsonOut;
-import org.cx.game.validator.ControlPowerValidator;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
@@ -22,7 +19,7 @@ public class Command extends Observable implements IValidatable{
 	
 	public Command() {
 		// TODO Auto-generated constructor stub
-		super.addObserver(new JsonOut());		
+		super.addObserver(new JsonOut());
 	}
 	
 	public void execute() throws ValidatorException {

@@ -125,6 +125,12 @@ public interface IGround extends IContainer{
 	public List<Integer> getEntryList(IPlayer player);
 	
 	/**
+	 * 受地形限制的区域
+	 * @return
+	 */
+	public List<Integer> getDisableList();
+	
+	/**
 	 * 获取营地
 	 * @return
 	 */
