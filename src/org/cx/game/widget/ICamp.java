@@ -3,6 +3,8 @@ package org.cx.game.widget;
 import java.util.List;
 
 import org.cx.game.core.IPlayer;
+import org.cx.game.intercepter.IInterceptable;
+import org.cx.game.observer.Observable;
 
 /**
  * 营地，等于战场的入口

@@ -18,6 +18,7 @@ public class StartCommand extends InteriorCommand {
 	@Override
 	public void execute() throws ValidatorException {
 		// TODO Auto-generated method stub
+		player.getGround().loadMap();
 		context.start();
 	}
 }

@@ -46,7 +46,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		for(Integer disable : ground.getDisableList()){
 			ground.getPlace(disable).setDisable(true);
 		}
-			
 	}
 	
 	@Override
@@ -238,5 +237,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<Integer> getDisableList() {
 		// TODO Auto-generated method stub
 		return ground.getDisableList();
+	}
+
+	@Override
+	public void loadMap() {
+		// TODO Auto-generated method stub
+		ground.loadMap();
 	}
 }

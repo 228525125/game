@@ -359,6 +359,21 @@ public class Ground extends Container implements IGround
 		return yBorder;
 	}
 	
+	@Override
+	public void loadMap() {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("xBorder", xBorder);
+		map.put("yBorder", yBorder);
+		map.put("imagePath", imagePath);
+		map.put("campList", campList);
+		map.put("disableList", disableList);
+		map.put("strongHoldList", strongHoldList);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,map);
+		
+		notifyObservers(info);    //通知观察者
+	}
+	
 	/**
 	 * 只能查找战场上的生物位置，包含墓地
 	 */

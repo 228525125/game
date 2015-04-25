@@ -1,9 +1,13 @@
 package org.cx.game.widget;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Observable;
 
 import org.cx.game.core.IPlayer;
+import org.cx.game.observer.NotifyInfo;
 
 public class Camp implements ICamp {
 
@@ -17,7 +21,7 @@ public class Camp implements ICamp {
 	public Camp(Integer hp, Double immuneDamageRatio, Integer position) {
 		// TODO Auto-generated constructor stub
 		this.hp = hp;
-		this.immuneDamageRatio = immuneDamageRatio;		
+		this.immuneDamageRatio = immuneDamageRatio;
 		this.position = position;
 	}
 	

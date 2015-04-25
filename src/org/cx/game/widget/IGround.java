@@ -154,6 +154,11 @@ public interface IGround extends IContainer{
 	public Integer getYBorder();
 	
 	/**
+	 * 以JSON格式，把map信息发送给前台
+	 */
+	public void loadMap();
+	
+	/**
 	 * 玩家选择营地
 	 * @param campIndex
 	 * @param player

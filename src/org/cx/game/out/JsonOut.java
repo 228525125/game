@@ -31,7 +31,7 @@ public class JsonOut extends Response implements Observer {
 			"cards","password","context","decks","cardGroup","ground","useCard","commandBuffer",       //User
 			"near",                  //Place
 			//"place",                 //Camp
-			"strongHoldList","randomEntry","entryList",        //Ground
+			"strongHoldList","randomEntry",        //Ground
 			"appendCardList","hashCode","containerPosition","useCardPolicy","policy",        //LifeCard
 			"affectedList",                  //Skill
 			"cardIDList","lifeList",                             //StrongHold

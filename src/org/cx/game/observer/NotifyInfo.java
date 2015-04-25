@@ -27,6 +27,8 @@ public class NotifyInfo {
 	
 	public final static String Container_Ground_Add = "Container_Ground_Add";
 	public final static String Container_Ground_Remove = "Container_Ground_Remove";
+	public final static String Container_Ground_LoadMap = "Container_Ground_LoadMap";
+	
 	public final static String Container_Place_In = "Container_Place_In";
 	public final static String Container_Place_Out = "Container_Place_Out";
 	
