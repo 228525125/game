@@ -13,11 +13,11 @@ public class NotifyInfo {
 	public final static String Container_Remove = "Container_Remove";
 	public final static String Container_Add = "Container_Add";
 	
-	public final static String Container_Cemetery_Add = "Container_Cemetery_Add";
-	public final static String Container_Cemetery_Remove = "Container_Cemetery_Remove";
+	public final static String Container_Ground_Place_Cemetery_Add = "Container_Ground_Place_Cemetery_Add";
+	public final static String Container_Ground_Place_Cemetery_Remove = "Container_Ground_Place_Cemetery_Remove";
 	
-	public final static String Container_TrickList_Add = "Container_TrickList_Add";
-	public final static String Container_TrickList_Remove = "Container_TrickList_Remove";
+	public final static String Container_Ground_Place_TrickList_Add = "Container_Ground_Place_TrickList_Add";
+	public final static String Container_Ground_Place_TrickList_Remove = "Container_Ground_Place_TrickList_Remove";
 	
 	public final static String Container_UseCard_Add = "Container_UseCard_Add";
 	public final static String Container_UseCard_Remove = "Container_UseCard_Remove";

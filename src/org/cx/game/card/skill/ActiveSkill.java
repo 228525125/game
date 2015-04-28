@@ -68,10 +68,11 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		
 		addObserver(new JsonOut());
 		
+		/* 取类名
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
-		String name = allName.substring(packageName.length()+1);
-		setAction("Skill_"+name);
+		String name = allName.substring(packageName.length()+1);*/
+		setAction("Skill");
 	}
 	
 	public IIntercepter getCooldownBoutIntercepter() {
@@ -84,6 +85,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		
 	}
 	
+	private final static String UseSkill = "_UseSkill";
 	private ParameterTypeValidator parameterValidator = null;
 	
 	public void useSkill(Object...objects) throws RuleValidatorException {
@@ -108,7 +110,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		map.put("card", owner);
 		map.put("skill", this);
 		map.put("position", owner.getContainerPosition());
-		NotifyInfo info = new NotifyInfo(action,map);
+		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
 		notifyObservers(info);           //通知所有卡片对象，被动技能发动		
 	}
 	

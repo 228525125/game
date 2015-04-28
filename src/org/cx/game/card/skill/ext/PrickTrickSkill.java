@@ -45,7 +45,8 @@ public class PrickTrickSkill extends ActiveSkill {
 		super.affect(objects);
 		
 		IPlace place = (IPlace) objects[0];
-		place.addTrick(new PrickTrick(ITrick.Setup_Bout,getStyle(),IBuff.Type_Harm,getFunc(),maimedBout,downMoveScale,place,getOwner().getPlayer()));
+		ITrick trick = new PrickTrick(ITrick.Setup_Bout,getStyle(),IBuff.Type_Harm,getFunc(),maimedBout,downMoveScale,place,getOwner().getPlayer());
+		trick.setup();
 	}
 
 }

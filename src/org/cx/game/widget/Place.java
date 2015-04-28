@@ -36,38 +36,6 @@ public class Place extends Observable implements IPlace {
 	public IContainer getContainer(){
 		return ground;
 	}
-	
-	@Override
-	public void addTrick(ITrick trick) {
-		// TODO Auto-generated method stub
-		this.trickList.add(trick);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", trick.getPlayer());
-		map.put("container", ground);
-		map.put("trick", trick);
-		map.put("position", position);
-		NotifyInfo info = new NotifyInfo(trick.getAction(),map);
-		notifyObservers(info);
-		
-		if (trick instanceof TrickCard) {
-			TrickCard trickCard = (TrickCard) trick;
-			getContainer().add(position, trickCard);     //没有实际作用，仅仅将card保存到ground
-		}
-	}
-	
-	@Override
-	public void addCorpse(LifeCard life) {
-		// TODO Auto-generated method stub
-		this.cemetery.add(life);
-		this.disable = false;
-	}
-	
-	@Override
-	public void removeCorpse(LifeCard life) {
-		// TODO Auto-generated method stub
-		this.cemetery.remove(life);
-	}
 
 	@Override
 	public LifeCard getLife() {
@@ -85,23 +53,6 @@ public class Place extends Observable implements IPlace {
 	public ITrickList getTrickList() {
 		// TODO Auto-generated method stub
 		return trickList;
-	}
-	
-	private static final String Invalid = "_Invalid";
-	
-	@Override
-	public void removeTrick(ITrick trick) {
-		// TODO Auto-generated method stub
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", trick.getPlayer());
-		map.put("container", ground);
-		map.put("trick", trick);
-		map.put("position", position);
-		NotifyInfo info = new NotifyInfo(trick.getAction()+Invalid,map);
-		notifyObservers(info);
-		
-		trickList.remove(trick);
 	}
 	
 	@Override

@@ -39,6 +39,8 @@ public abstract class Buff extends Observable implements IBuff {
 	private Integer beginBout = 0;
 	private Boolean duplication = false;  //是否可以叠加
 	private Integer func = IMagic.Func_Damage;      //功能类型
+	
+	protected final static String Affect = "_Affect";
 
 	public Buff(Integer bout, Integer style, Integer type, Integer func, LifeCard life) {
 		// TODO Auto-generated constructor stub
@@ -53,7 +55,7 @@ public abstract class Buff extends Observable implements IBuff {
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
 		String name = allName.substring(packageName.length()+1);
-		setAction("Buff_"+name);
+		setAction("Buff");
 	}
 	
 	@Override
@@ -93,8 +95,6 @@ public abstract class Buff extends Observable implements IBuff {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	private static final String Affect = "_Affect";
 	
 	@Override
 	public void affect(Object...objects) {

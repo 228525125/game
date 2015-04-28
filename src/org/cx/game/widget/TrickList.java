@@ -35,8 +35,8 @@ public class TrickList extends Observable implements ITrickList {
 		map.put("container", trick.getPlayer().getGround());
 		map.put("trick", trick);
 		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_TrickList_Add,map);
-		notifyObservers(info);    //通知观察者
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_TrickList_Add,map);
+		notifyObservers(info);
 	}
 	
 	@Override
@@ -48,7 +48,7 @@ public class TrickList extends Observable implements ITrickList {
 		map.put("container", trick.getPlayer().getGround());
 		map.put("trick", trick);
 		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_TrickList_Remove,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_TrickList_Remove,map);
 		notifyObservers(info);    //通知观察者
 		
 	}

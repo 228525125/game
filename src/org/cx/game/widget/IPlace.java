@@ -29,19 +29,7 @@ public interface IPlace extends IInterceptable, Observable{
 	
 	public ICemetery getCemetery();
 	
-	/**
-	 * 添加尸体
-	 * @param life
-	 */
-	public void addCorpse(LifeCard life);
-	
-	public void removeCorpse(LifeCard life);
-	
 	public ITrickList getTrickList();
-	
-	public void addTrick(ITrick trick);
-	
-	public void removeTrick(ITrick trick);
 	
 	/**
 	 * 坐标系位置

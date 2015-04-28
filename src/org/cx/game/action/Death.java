@@ -151,7 +151,7 @@ public class Death extends Action implements IDeath {
 		IGround ground = (IGround)getOwner().getContainer();     //只有在战场上才会死亡
 		IPlace place = ground.getPlace(getOwner().getContainerPosition());
 		place.out();
-		place.addCorpse(getOwner());         //进入墓地
+		place.getCemetery().add(getOwner());         //进入墓地
 		
 		LifeCard life = (LifeCard) getOwner();            //停止计算技能冷却时间
 		for(ISkill skill : life.getSkillList()){

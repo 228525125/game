@@ -28,8 +28,9 @@ public class CureTiredBuff extends Buff {
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
+		map.put("buff", this);
 		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(getAction(),map);
+		NotifyInfo info = new NotifyInfo(getAction()+Affect,map);
 		notifyObservers(info);	
 	}
 	

@@ -34,12 +34,13 @@ public class Cemetery extends Observable implements ICemetery {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", life.getPlayer());
 		map.put("container", life.getPlayer().getGround());
-		map.put("life", life);
+		map.put("corpse", life);
 		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Cemetery_Add,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_Cemetery_Add,map);
 		notifyObservers(info);    //通知观察者
 
 		lifeList.add(life); 
+		getOwner().setDisable(false);
 	}
 	
 	/**
@@ -52,9 +53,9 @@ public class Cemetery extends Observable implements ICemetery {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", life.getPlayer());
 		map.put("container", life.getPlayer().getGround());
-		map.put("life", life);
+		map.put("corpse", life);
 		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Cemetery_Remove,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_Cemetery_Remove,map);
 		notifyObservers(info);    //通知观察者
 	}
 	

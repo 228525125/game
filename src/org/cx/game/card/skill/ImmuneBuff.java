@@ -25,16 +25,6 @@ public class ImmuneBuff extends Buff {
 		super(bout, style, type, func, life);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void immune(){
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(getAction(),map);
-		notifyObservers(info);	
-	}
 
 	public Boolean getPhysical() {
 		return physical;
@@ -58,6 +48,17 @@ public class ImmuneBuff extends Buff {
 
 	public void setAstrict(Boolean astrict) {
 		this.astrict = astrict;
+	}
+	
+	public void immune(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("buff", this);
+		map.put("position", getOwner().getContainerPosition());
+		NotifyInfo info = new NotifyInfo(getAction()+Affect,map);
+		notifyObservers(info);
 	}
 	
 	@Override
@@ -119,13 +120,13 @@ public class ImmuneBuff extends Buff {
 			IIntercepter affectedIn = new Intercepter(){
 
 				private boolean invoke = true;
-				
+
 				@Override
 				public void finish(Object[] args) {
 					// TODO Auto-generated method stub
 					immune();
 				}
-
+				
 				@Override
 				public void before(Object[] args) {
 					// TODO Auto-generated method stub

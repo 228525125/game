@@ -35,7 +35,7 @@ public class Setup extends Action implements ISetup {
 		
 		IPlayer player = getOwner().getPlayer();
 		player.getUseCard().remove(getOwner());      //出牌
-		place.addTrick(getOwner());
+		place.getTrickList().add(getOwner());
 			
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", player);

@@ -13,6 +13,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
+import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
@@ -49,7 +50,7 @@ public abstract class Trick extends Observable implements ITrick {
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
 		String name = allName.substring(packageName.length()+1);
-		setAction("Trick_"+name);
+		setAction("Trick");
 	}
 	
 	@Override
@@ -70,7 +71,7 @@ public abstract class Trick extends Observable implements ITrick {
 				}
 			}
 		};
-		recordIntercepter(getOwner(), placeIn);
+		recordIntercepter(getOwner().getOwner(), placeIn);
 	}
 	
 	public String getName() {
@@ -107,11 +108,21 @@ public abstract class Trick extends Observable implements ITrick {
 		
 	}
 	
+	private final static String Affect = "_Affect";
+	
 	@Override
 	public void affect(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		if(0==beginBout)
 			beginBout = getPlayer().getContext().getBout();
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getPlayer());
+		map.put("container", getPlayer().getGround());
+		map.put("trick", this);
+		map.put("position", getOwner().getOwner().getPosition());
+		NotifyInfo info = new NotifyInfo(getAction()+Affect,map);
+		notifyObservers(info);
 	}
 	
 	@Override

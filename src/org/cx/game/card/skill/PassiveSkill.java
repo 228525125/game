@@ -34,11 +34,14 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		this.style = style;
 		addObserver(new JsonOut());
 		
+		/* 取类名
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
-		String name = allName.substring(packageName.length()+1);
-		setAction("Skill_"+name);
+		String name = allName.substring(packageName.length()+1);*/
+		setAction("Skill");
 	}
+	
+	private final static String UseSkill = "_UseSkill";
 	
 	@Override
 	public void affect(Object... objects) {
@@ -49,7 +52,7 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		map.put("card", owner);
 		map.put("skill", this);
 		map.put("position", owner.getContainerPosition());
-		NotifyInfo info = new NotifyInfo(action,map);
+		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
 		notifyObservers(info);
 	}
 	

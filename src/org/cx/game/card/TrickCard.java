@@ -16,8 +16,10 @@ import org.cx.game.out.JsonOut;
 import org.cx.game.out.Response;
 
 /**
- * 仅表示陷阱卡
- * @author 贤
+ * 仅表示陷阱卡，它与Trick有本质区别，陷阱卡只能放置在专用区域，作用范围是所有对象，而
+ * Trick可以放置在place上，并只对place相关区域进行作用，另外，TrickCard是卡片的一种，
+ * Trick不属于卡片，它是一种环境。
+ * @author chenxian
  *
  */
 public abstract class TrickCard implements ICard, ITrick {
