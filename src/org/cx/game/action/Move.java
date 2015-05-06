@@ -108,8 +108,6 @@ public class Move extends Action implements IMove{
 		
 		IPlace place = (IPlace) objects[0];
 		Integer begin = getOwner().getContainerPosition();
-		IGround ground = (IGround) getOwner().getContainer();
-		ground.move(getOwner(), place.getPosition(), type);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -120,6 +118,9 @@ public class Move extends Action implements IMove{
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Move,map);
 		super.notifyObservers(info);
+		
+		IGround ground = (IGround) getOwner().getContainer();
+		ground.move(getOwner(), place.getPosition(), type);
 		
 		getDecorator().setMoveable(false);     //一个回合只能移动一次
 	}
