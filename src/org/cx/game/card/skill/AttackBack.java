@@ -5,7 +5,6 @@ import org.cx.game.action.Random;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
-import org.cx.game.observer.NotifyInfo;
 
 /**
  * 反击
@@ -38,11 +37,11 @@ public class AttackBack extends PassiveSkill {
 			e.printStackTrace();
 		} finally {
 			attack.getAttacked().setAttackBackChance(attackBackChance);
-		}		
+		}
 	}
 	
 	@Override
-	public void after(Object[] args) {
+	public void finish(Object[] args) {
 		// TODO Auto-generated method stub		
 		attack = (LifeCard) ((Object[]) args[0])[0];
 		if(IDeath.Status_Live==getOwner().getDeath().getStatus() && Random.isTrigger(getOwner().getAttacked().getAttackBackChance())){			

@@ -1,8 +1,12 @@
 package org.cx.game.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.ConjurePowerValidator;
 
@@ -45,7 +49,16 @@ public class Conjure extends Action implements IConjure {
 		
 		doValidator();
 		
-		getDecorator().setPower(power-skill.getConsume());
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("position", getOwner().getContainerPosition());
+		map.put("skill", skill);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Conjure,map);
+		super.notifyObservers(info);
+		
+		getDecorator().setPower(power-skill.getConsume());		
 		
 		Object [] parameter = (Object[]) objects[1];
 		skill.useSkill(parameter);

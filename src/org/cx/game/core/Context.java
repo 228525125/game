@@ -140,6 +140,7 @@ public class Context extends Observable implements IContext
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("control", controlPlayer);
+		map.put("life", null);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Control,map);
 		notifyObservers(info);
 	}

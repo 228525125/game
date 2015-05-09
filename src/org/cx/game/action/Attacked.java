@@ -116,7 +116,7 @@ public class Attacked extends Action implements IAttacked {
 		map.put("position", getOwner().getContainerPosition());
 		map.put("damage", damage);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
-		super.notifyObservers(info);           //通知所有卡片对象，攻击事件
+		super.notifyObservers(info);
 		
 		getOwner().getDeath().attackToDamage(-damage.intValue());
 		

@@ -24,7 +24,7 @@ public class DeployState extends PlayState {
 		// TODO Auto-generated method stub
 		IPlayer curPlayer = context.getControlPlayer();
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", curPlayer);
+		map.put("control", curPlayer);
 		map.put("bout", context.getBout());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Deploy,map);
 		super.notifyObservers(info);

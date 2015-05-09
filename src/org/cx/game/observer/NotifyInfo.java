@@ -35,6 +35,9 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Action_Attack = "Card_LifeCard_Action_Attack";
 	public final static String Card_LifeCard_Action_Attacked = "Card_LifeCard_Action_Attacked";
 	
+	public final static String Card_LifeCard_Action_Conjure = "Card_LifeCard_Action_Conjure";
+	public final static String Card_LifeCard_Action_Affected = "Card_LifeCard_Action_Affected";
+	
 	public final static String Card_LifeCard_Action_Call = "Card_LifeCard_Action_Call";
 	public final static String Card_LifeCard_Action_Renew = "Card_LifeCard_Action_Renew";
 	public final static String Card_LifeCard_Action_Death = "Card_LifeCard_Action_Death";
@@ -55,9 +58,6 @@ public class NotifyInfo {
 	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";
 	
 	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";		
-	
-	public final static String Skill_AttackBack = "Skill_AttackBack";
-	public final static String Buff_ImmuneBuff = "Buff_ImmuneBuff";
 	
 	/*
 	 * skill = "Skill_"+class.name; buff = "Buff_"+class.name;

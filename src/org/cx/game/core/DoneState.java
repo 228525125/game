@@ -32,8 +32,8 @@ public class DoneState extends PlayState {
 		Integer bout = context.getBout();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", curPlayer);
-		map.put("bout", bout);
+		map.put("control", curPlayer);
+		map.put("life", life);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Done,map);
 		super.notifyObservers(info);
 

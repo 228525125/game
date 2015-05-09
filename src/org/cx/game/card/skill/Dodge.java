@@ -31,32 +31,6 @@ public class Dodge extends PassiveSkill {
 		this.invoke = false;
 		
 		super.affect(objects);
-		
-		/*
-		 * 闪避后仍然会反击
-		 */
-		if(Random.isTrigger(getOwner().getAttacked().getAttackBackChance())){   
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Skill_AttackBack,map);
-			notifyObservers(info);
-			
-			Integer attackBackChance = attack.getAttacked().getAttackBackChance();
-			attack.getAttacked().setAttackBackChance(0);              //被反击后，不会再次触发反击
-			
-			try {
-				getOwner().attack(attack);
-				getOwner().getAttacked().setAttackBackChance(0);         //每回合只有一次反击机会			
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				attack.getAttacked().setAttackBackChance(attackBackChance);
-			}
-		}
 	}
 
 	@Override
