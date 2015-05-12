@@ -25,6 +25,7 @@ import org.cx.game.validator.ParameterTypeValidator;
 
 public abstract class ActiveSkill extends Observable implements IActiveSkill {
 
+	private String sType = null;
 	private String name = null;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
@@ -68,10 +69,10 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		
 		addObserver(new JsonOut());
 		
-		/* 取类名
+		/* 取类名 */
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
-		String name = allName.substring(packageName.length()+1);*/
+		this.sType = allName.substring(packageName.length()+1);
 		setAction("Skill");
 	}
 	
@@ -182,6 +183,12 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		this.parameterTypeValidator = parameterTypeValidator;
 	}
 
+	@Override
+	public String getSType() {
+		// TODO Auto-generated method stub
+		return sType;
+	}
+	
 	@Override
 	public void addIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub

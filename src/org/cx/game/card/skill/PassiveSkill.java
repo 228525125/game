@@ -20,6 +20,7 @@ import org.cx.game.tools.I18n;
 
 public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 
+	private String sType;
 	private String name;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
@@ -34,10 +35,10 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		this.style = style;
 		addObserver(new JsonOut());
 		
-		/* 取类名
+		/* 取类名 */
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
-		String name = allName.substring(packageName.length()+1);*/
+		this.sType = allName.substring(packageName.length()+1);
 		setAction("Skill");
 	}
 	
@@ -54,6 +55,12 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		map.put("position", owner.getContainerPosition());
 		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
 		notifyObservers(info);
+	}
+	
+	@Override
+	public String getSType() {
+		// TODO Auto-generated method stub
+		return sType;
 	}
 	
 	public String getName() {
