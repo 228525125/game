@@ -5,7 +5,7 @@ import org.cx.game.card.LifeCard;
 
 public interface ISkill extends IMagic {
 	
-	public String getSType();
+	public String getCType();
 	
 	public String getName();
 	

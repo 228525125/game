@@ -28,6 +28,7 @@ import org.cx.game.tools.I18n;
  */
 public abstract class Buff extends Observable implements IBuff {
 
+	private String cType = null;
 	private String name = null;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
@@ -54,7 +55,7 @@ public abstract class Buff extends Observable implements IBuff {
 		
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
-		String name = allName.substring(packageName.length()+1);
+		this.cType = allName.substring(packageName.length()+1);
 		setAction("Buff");
 	}
 	
@@ -72,6 +73,12 @@ public abstract class Buff extends Observable implements IBuff {
 
 	public LifeCard getOwner() {
 		return owner;
+	}
+	
+	@Override
+	public String getCType() {
+		// TODO Auto-generated method stub
+		return cType;
 	}
 	
 	public String getName() {
