@@ -193,7 +193,7 @@ public interface IGround extends IContainer{
 	 * @param position 指定位置
 	 * @param type 移动类型
 	 */
-	public void move(LifeCard life, Integer position, Integer type);
+	public List<Integer> move(LifeCard life, Integer position, Integer type);
 	
 	/**
 	 * 查询stand相对于target站位的阴影部分

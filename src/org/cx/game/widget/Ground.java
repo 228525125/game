@@ -391,7 +391,7 @@ public class Ground extends Container implements IGround
 	}
 
 	@Override
-	public void move(LifeCard life, Integer position, Integer type) {
+	public List<Integer> move(LifeCard life, Integer position, Integer type) {
 		// TODO Auto-generated method stub
 		List<Integer> route = new ArrayList<Integer>();
 		if(IMove.Type_Walk.equals(type)){
@@ -410,6 +410,8 @@ public class Ground extends Container implements IGround
 				place.in(life);
 			}
 		}
+		
+		return route;
 	}
 	
 	public List<Integer> route(Integer start, Integer stop){

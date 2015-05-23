@@ -111,9 +111,9 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 	
 	@Override
-	public void move(LifeCard life, Integer position, Integer type) {
+	public List<Integer> move(LifeCard life, Integer position, Integer type) {
 		// TODO Auto-generated method stub
-		ground.move(life, position,type);
+		return ground.move(life, position,type);
 	}
 
 	@Override
