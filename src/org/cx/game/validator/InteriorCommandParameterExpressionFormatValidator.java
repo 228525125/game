@@ -70,6 +70,12 @@ public class InteriorCommandParameterExpressionFormatValidator extends Validator
 				break;
 			}
 			
+			if(CommandBuffer.TRICK.equals(type) && !Util.isInteger(position)){
+				addMessage(I18n.getMessage(this));
+				ret = false;
+				break;
+			}
+			
 			previou = item;
 		}
 		
