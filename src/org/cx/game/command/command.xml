@@ -96,6 +96,13 @@
 				<option>place</option>
 			</parameter>			
 		</command>
+		<command name='apply' class='org.cx.game.command.ApplyCommand' parameter='request'>
+			<description>使用魔法卡</description>
+			<parameter>
+				<option>place</option>
+				<option>card</option>
+			</parameter>
+		</command>
 		<command name='chuck' class='org.cx.game.command.ChuckCommand' parameter='no'>
 			<description>丢弃</description>
 		</command>

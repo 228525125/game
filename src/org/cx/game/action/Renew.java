@@ -27,7 +27,7 @@ public class Renew extends Action implements IRenew {
 		
 		IPlace place = (IPlace) objects[0];
 		getOwner().initState();		
-		getOwner().getDeath().setStatus(IDeath.Status_Live);
+		getOwner().getDeath().setStatus(Death.Status_Live);
 		
 		IPlayer player = getOwner().getPlayer();
 		IContainer ground = place.getContainer();
