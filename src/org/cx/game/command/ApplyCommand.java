@@ -22,6 +22,9 @@ public class ApplyCommand extends InteriorCommand {
 		
 		MagicCard magic = (MagicCard) buffer.getCard();
 		magic.apply(new Object[]{parameter});
+		
+		magic.chuck();
+		buffer.setCard(null);
 	}
 
 }

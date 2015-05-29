@@ -7,10 +7,8 @@ import java.util.Map;
 
 import org.cx.game.action.ApplyDecorator;
 import org.cx.game.action.ChuckDecorator;
-import org.cx.game.action.DeathDecorator;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
-import org.cx.game.action.IDeath;
 import org.cx.game.card.skill.IMagic;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
@@ -19,13 +17,22 @@ import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
 import org.cx.game.policy.IUseCardPolicy;
 import org.cx.game.tools.I18n;
+import org.cx.game.validator.Errors;
+import org.cx.game.validator.IValidatable;
+import org.cx.game.validator.IValidator;
+import org.cx.game.validator.ParameterTypeValidator;
 import org.cx.game.widget.IContainer;
 
-public abstract class MagicCard extends java.util.Observable implements ICard, IMagic, Observable {
+public abstract class MagicCard extends java.util.Observable implements ICard, IMagic, Observable, IValidatable {
 	
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private Integer style = 0;
 	private Integer func = 0;
+	
+	private List<IValidator> validatorList = new ArrayList<IValidator>();
+	private Errors errors = new Errors();
+	
+	private Class[] parameterTypeValidator = new Class[]{};      //用于参数的验证
 	
 	public MagicCard(Integer id, Integer consume, Integer style, Integer func) {
 		// TODO Auto-generated constructor stub
@@ -204,21 +211,29 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		this.chuck = new ChuckDecorator(chuck);
 	}
 	
-	private IDeath death = null;
+	private ParameterTypeValidator parameterValidator = null;
+
+	protected void setParameterTypeValidator(Class[] parameterTypeValidator) {
+		this.parameterTypeValidator = parameterTypeValidator;
+	}
 	
-	public IDeath getDeath() {
-		return death;
-	}
-
-	public void setDeath(IDeath death) {
-		death.setOwner(this);
-		this.death = new DeathDecorator(death);
-	}
-
 	/**
 	 * 使用
 	 */
 	public void apply(Object...objects) throws RuleValidatorException {
+
+		deleteValidator(parameterValidator);
+		this.parameterValidator = new ParameterTypeValidator(objects,parameterTypeValidator); 
+		addValidator(parameterValidator);
+		
+		/* 
+		 * 执行规则验证
+		 */
+		doValidator();
+		
+		if(hasError())
+			throw new RuleValidatorException(getErrors().getMessage());
+		
 		apply.action(objects);
 	}
 	
@@ -226,12 +241,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	public void chuck() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		chuck.action();
-	}
-	
-	@Override
-	public void death() throws RuleValidatorException {
-		// TODO Auto-generated method stub
-		death.action();
 	}
 	
 	@Override
@@ -281,4 +290,41 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		intercepterList.clear();
 	}
 	
+	@Override
+	public void addValidator(IValidator validator) {
+		// TODO Auto-generated method stub
+		validatorList.add(validator);
+	}
+
+	@Override
+	public void deleteValidator(IValidator validator) {
+		// TODO Auto-generated method stub
+		validatorList.remove(validator);
+	}
+
+	@Override
+	public List<IValidator> getValidators() {
+		// TODO Auto-generated method stub
+		return validatorList;
+	}
+	
+	@Override
+	public void doValidator() {
+		// TODO Auto-generated method stub
+		for(IValidator v : validatorList)
+			if(!v.validate())
+				errors.addError(v);
+	}
+	
+	@Override
+	public Errors getErrors() {
+		// TODO Auto-generated method stub
+		return errors;
+	}
+	
+	@Override
+	public Boolean hasError() {
+		// TODO Auto-generated method stub
+		return errors.hasError();
+	}
 }

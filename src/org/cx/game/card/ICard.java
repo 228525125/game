@@ -34,13 +34,7 @@ public interface ICard extends IInterceptable
 	public void setPlayer(IPlayer player);
 	
 	/**
-	 * 卡片从战场上送往墓地
-	 *
-	 */
-	public void death() throws RuleValidatorException;
-	
-	/**
-	 * 卡片被丢弃，即直接从手牌中放入墓地
+	 * 即直接从手牌丢弃一张卡片
 	 *
 	 */
 	public void chuck() throws RuleValidatorException;

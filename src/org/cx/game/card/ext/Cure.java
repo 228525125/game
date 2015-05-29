@@ -21,6 +21,8 @@ public class Cure extends MagicCard {
 		// TODO Auto-generated constructor stub
 		this.cureScale = cureScale;
 		this.tireBout = tireBout;
+		
+		setParameterTypeValidator(new Class[]{LifeCard.class});
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class Cure extends MagicCard {
 		
 		LifeCard life = (LifeCard) objects[0];
 		
-		Integer cureValue = life.getHp()*cureScale/100;  //保持下限 
+		Integer cureValue = life.getHp()*cureScale/100;  //保持下限
 		life.getDeath().magicToHp(cureValue);
 		new CureTiredBuff(tireBout,getStyle(),IBuff.Type_Benefit, getFunc(),life).effect();
 	}
