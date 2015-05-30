@@ -1,5 +1,7 @@
 package org.cx.game.card.ext;
 
+import org.cx.game.action.IApply;
+import org.cx.game.action.IChuck;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IBuff;
@@ -45,4 +47,15 @@ public class Cure extends MagicCard {
 		life.affected(this);
 	}
 	
+	@Override
+	public void setApply(IApply apply) {
+		// TODO Auto-generated method stub
+		super.setApply(apply);
+	}
+	
+	@Override
+	public void setChuck(IChuck chuck) {
+		// TODO Auto-generated method stub
+		super.setChuck(chuck);
+	}
 }

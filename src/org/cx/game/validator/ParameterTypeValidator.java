@@ -46,7 +46,8 @@ public class ParameterTypeValidator extends Validator {
 	
 	public static void main(String[] args) {
 		ShieldHit sh = new ShieldHit(0,0,0,0,0,0,0);
-		
-		System.out.println(IActiveSkill.class.isAssignableFrom(sh.getClass()));
+		System.out.println(new Object []{}.getClass());
+		System.out.println(new Object []{sh}.getClass());
+		System.out.println(Object.class.isAssignableFrom(String.class));
 	}
 }

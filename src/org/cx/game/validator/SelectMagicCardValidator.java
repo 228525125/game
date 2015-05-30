@@ -21,7 +21,7 @@ public class SelectMagicCardValidator extends SelectCardValidator {
 		Boolean ret = super.validate(); 
 		if(ret){
 			ICard card = getCard();
-			if (card instanceof LifeCard) {
+			if (card instanceof MagicCard) {
 				magic = (MagicCard) card;
 				ret = true;
 			}else{
