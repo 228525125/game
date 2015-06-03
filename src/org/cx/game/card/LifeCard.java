@@ -698,6 +698,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	public void setCall(ICall call) {
+		call.setConsume(consume);
 		call.setOwner(this);
 		this.call = new CallDecorator(call);
 	}

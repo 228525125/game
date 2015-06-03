@@ -18,10 +18,9 @@ public class Call extends Action implements ICall {
 	
 	private Integer consume = 1;
 	
-	public Call(Integer consume) {
+	public Call() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.consume = consume;
 		setParameterTypeValidator(new Class[]{IPlace.class});
 	}
 	

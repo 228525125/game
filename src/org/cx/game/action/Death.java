@@ -27,7 +27,7 @@ import org.cx.game.widget.IPlace;
 public class Death extends Action implements IDeath {
 	
 	private Integer hp = 0;
-	private Integer status = 0;
+	private Integer status = IDeath.Status_Exist;
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
 	@Override
