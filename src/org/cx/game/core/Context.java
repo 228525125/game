@@ -30,6 +30,8 @@ public class Context extends Observable implements IContext
 	private IControlQueue queue = new ControlQueue();
 	private Long newCardPlayId = 1l;
 	
+	private final static Integer Power_Add = 100;
+	
 	private ContextDecorator decorator = null; 
 	
 	public Context(IPlayer player1, IPlayer player2) {
@@ -122,6 +124,7 @@ public class Context extends Observable implements IContext
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("control", getControlPlayer());
 		map.put("life", getControlLife());
+		map.put("position", getControlLife().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Control,map);
 		notifyObservers(info);
 	}
@@ -170,7 +173,7 @@ public class Context extends Observable implements IContext
 				boutCount = 0;
 			}
 			Integer power = getControlPlayer().getResource();
-			getControlPlayer().setResource(++power);        //增加能量
+			getControlPlayer().setResource(power+Power_Add);        //增加能量
 			
 			ICardGroup cardGroup = getControlPlayer().getCardGroup();
 			ICard card = cardGroup.out();  //摸牌
