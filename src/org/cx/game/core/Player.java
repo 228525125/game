@@ -1,23 +1,14 @@
 package org.cx.game.core;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.ICard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
 import org.cx.game.policy.IPlayerPolicy;
-import org.cx.game.policy.IUseCardPolicy;
 import org.cx.game.policy.PlayerPolicy;
-import org.cx.game.policy.UseCardPolicyDescComparator;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.CardGroup;
 import org.cx.game.widget.CardGroupDecorator;
@@ -26,10 +17,6 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
 import org.cx.game.widget.UseCardDecorator;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 public abstract class Player extends java.util.Observable implements IPlayer ,Observable{
 	

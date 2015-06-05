@@ -17,7 +17,8 @@ public class DoneState extends PlayState {
 	@Override
 	public void deploy() {
 		// TODO Auto-generated method stub
-
+		context.setPlayState(IContext.deployState);
+		context.deploy();
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class DoneState extends PlayState {
 
 		context.switchControl();                   //转换控制权
 		
-		context.deploy();         //部署
+		deploy();         //部署
 	}
 
 	@Override

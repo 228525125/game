@@ -48,6 +48,7 @@ import org.cx.game.policy.LifeCardPolicy;
 import org.cx.game.tools.Debug;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
+import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
@@ -837,7 +838,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attack.setAtk(atk);
 		this.attack.setAccurateChance(accurateChance);
 		this.attack.setThumpChance(thumpChance);
-		this.attack.setSpeedChance(speedChance);
+		this.attack.setSpeedChance(IControlQueue.consume);
 		this.attack.setLockChance(lockChance);
 		
 		this.attacked.setImmuneDamageRatio(immuneDamageRatio);

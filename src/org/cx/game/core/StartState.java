@@ -59,7 +59,7 @@ public class StartState extends PlayState {
 		}
 		
 		context.switchControl();
-		context.setPlayState(IContext.deployState);
-		context.deploy();
+		
+		deploy();
 	}
 }
