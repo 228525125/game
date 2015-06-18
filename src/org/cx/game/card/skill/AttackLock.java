@@ -4,6 +4,11 @@ import org.cx.game.action.IDeath;
 import org.cx.game.card.LifeCard;
 import org.cx.game.observer.NotifyInfo;
 
+/**
+ * 锁定攻击目标，该动作发生在attack时，不管是否击中目标
+ * @author chenxian
+ *
+ */
 public class AttackLock extends PassiveSkill {
 
 	private LifeCard attacked = null;

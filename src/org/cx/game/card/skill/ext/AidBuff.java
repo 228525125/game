@@ -24,10 +24,13 @@ public class AidBuff extends Buff {
 	@Override
 	public void affect(Object... objects) {
 		// TODO Auto-generated method stub
-		LifeCard attack = (LifeCard) objects[0];
+		LifeCard attack = (LifeCard) ((Object[]) objects[0])[0];
 		
 		try {
+			Integer attackBackChance = aider.getAttacked().getAttackBackChance();
+			aider.getAttacked().setAttackBackChance(0);      //援助者不应该反击，而应该是被援助者反击
 			aider.attacked(attack);
+			aider.getAttacked().setAttackBackChance(attackBackChance);
 		} catch (RuleValidatorException e) {
 			// TODO Auto-generated catch block
 			//不会发生异常

@@ -7,7 +7,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 
 /**
- * 反击
+ * 反击，受到攻击后才发生，不管是否造成伤害
  * @author chenxian
  *
  */
