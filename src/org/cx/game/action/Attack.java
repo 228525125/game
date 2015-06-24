@@ -1,10 +1,13 @@
 package org.cx.game.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.AttackLockBuff;
+import org.cx.game.card.skill.IBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -12,6 +15,7 @@ import org.cx.game.out.JsonOut;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.widget.IControlQueue;
+import org.cx.game.widget.IGround;
 
 public class Attack extends Action implements IAttack {
 	
@@ -164,6 +168,24 @@ public class Attack extends Action implements IAttack {
 		map.put("position", getOwner().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attack,map);
 		super.notifyObservers(info);  
+		
+		List<IBuff> buffs = attacked.getBuff(AttackLockBuff.class);
+		Boolean exist = false;
+		for(IBuff buff : buffs){
+			if(getOwner().equals(buff.getOwner())){
+				exist = true;
+				break;
+			}
+		}
+		
+		IGround ground = getOwner().getPlayer().getGround();
+		Integer distance = ground.easyDistance(attacked.getContainerPosition(), getOwner().getContainerPosition());
+		if(IDeath.Status_Live == attacked.getDeath().getStatus()
+		&& 1==distance                                           //近身
+		&& !exist){                                               //判断是否被锁定过
+			new AttackLockBuff(2,getOwner(),attacked).effect();
+		}
+			
 		
 		attacked.attacked(getOwner());         //比赛规则在attacked中实现的
 		

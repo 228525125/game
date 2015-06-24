@@ -1,10 +1,13 @@
 package org.cx.game.card.skill;
 
+import java.util.List;
+
 import org.cx.game.action.IDeath;
 import org.cx.game.action.Random;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.widget.IGround;
 
 /**
  * 反击，受到攻击后才发生，不管是否造成伤害
@@ -44,7 +47,22 @@ public class AttackBack extends PassiveSkill {
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub		
 		attack = (LifeCard) ((Object[]) args[0])[0];
-		if(IDeath.Status_Live==getOwner().getDeath().getStatus() && Random.isTrigger(getOwner().getAttacked().getAttackBackChance())){			
+		
+		List<IBuff> buffs = getOwner().getBuff(AttackLockBuff.class);
+		Boolean lock = false;
+		for(IBuff buff : buffs){
+			if(attack.equals(((AttackLockBuff)buff).getAttack())){
+				lock = true;
+				break;
+			}
+		}
+		
+		IGround ground = getOwner().getPlayer().getGround();
+		Integer distance = ground.easyDistance(attack.getContainerPosition(), getOwner().getContainerPosition());
+		if(IDeath.Status_Live==getOwner().getDeath().getStatus() 
+		&& 1==distance                                                 //近身
+		&& Random.isTrigger(getOwner().getAttacked().getAttackBackChance())
+		&& lock){                                                     //被锁定后才能反击			
 			affect();
 		}
 	}

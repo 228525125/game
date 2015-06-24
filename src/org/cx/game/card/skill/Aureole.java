@@ -44,9 +44,9 @@ public abstract class Aureole extends PassiveSkill {
 				// TODO Auto-generated method stub
 				getOwner().getPlayer().getContext().deleteIntercepter(this);
 				for(LifeCard life : affectedList){
-					IBuff buff = life.getBuff(getBuffClass());
-					if(null!=buff)
-						buff.invalid();
+					List<IBuff> buffs = life.getBuff(getBuffClass());
+					if(buffs.isEmpty())
+						buffs.get(0).invalid();
 				}
 			}
 		});

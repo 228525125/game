@@ -439,13 +439,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.buffList.remove(buff);
 	}
 	
-	public IBuff getBuff(Class clazz){
+	public List<IBuff> getBuff(Class clazz){
+		List<IBuff> ret = new ArrayList<IBuff>();
 		List<IBuff> buffs = new ArrayList<IBuff>();
 		buffs.addAll(buffList);
 		for(IBuff buff : buffs)
 			if(buff.getClass().equals(clazz))
-				return buff;
-		return null;
+				ret.add(buff);
+		return ret;
 	}
 	
 	public void clearBuff(){

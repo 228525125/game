@@ -13,7 +13,8 @@ public class AttackLockBuff extends Buff {
 	public AttackLockBuff(Integer bout, LifeCard attack, LifeCard life) {
 		super(bout, IMagic.Style_physical, IBuff.Type_Harm, IMagic.Func_Astrict, life);
 		// TODO Auto-generated constructor stub
-		attack = this.attack;
+		this.attack = attack;
+		setDuplication(true);         //允许同时被多人锁定
 	}
 	
 	@Override
@@ -39,8 +40,8 @@ public class AttackLockBuff extends Buff {
 				// TODO Auto-generated method stub				
 				LifeCard attacked = (LifeCard) ((Object[]) args[0])[0];
 				
-				Integer chance = (100-attack.getAttack().getLockChance())*getOwner().getMove().getFleeChance()/100;
-				if(!attacked.equals(attack) && !Random.isTrigger(chance)){
+				Integer chance = attack.getAttack().getLockChance() - getOwner().getMove().getFleeChance();
+				if(!attacked.equals(attack) && Random.isTrigger(chance)){
 					invoke = false;
 					affect();
 				}
@@ -74,6 +75,10 @@ public class AttackLockBuff extends Buff {
 			}
 		};
 		recordIntercepter(getOwner().getMove(), moveIn);
+	}
+
+	public LifeCard getAttack() {
+		return attack;
 	}
 
 }

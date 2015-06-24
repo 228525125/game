@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
 
 /**
@@ -19,7 +20,7 @@ public class SpearLine extends Spurting {
 	 * @param life
 	 */
 	public SpearLine(Integer style, Integer atkScale) {
-		super(atkScale, style);
+		super(style, atkScale);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -31,7 +32,7 @@ public class SpearLine extends Spurting {
 		List<Integer> l = ground.line(getOwner().getContainerPosition(), ground.queryDirection(getOwner().getContainerPosition(), affected.getContainerPosition()), 2);
 		if(2==l.size()){
 			LifeCard life = ground.getCard(l.get(1));
-			if(null!=life&&!getOwner().getPlayer().equals(life.getPlayer()))   //判断敌友
+			if((null!=life && Debug.isDebug)  || (null!=life && !getOwner().getPlayer().equals(life.getPlayer())))   //判断敌友
 				list.add(life);
 		}
 		return list;
