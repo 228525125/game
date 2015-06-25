@@ -1,5 +1,7 @@
 package org.cx.game.card.skill;
 
+import java.util.List;
+
 import org.cx.game.action.Random;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IIntercepter;
@@ -40,8 +42,18 @@ public class AttackLockBuff extends Buff {
 				// TODO Auto-generated method stub				
 				LifeCard attacked = (LifeCard) ((Object[]) args[0])[0];
 				
+				Boolean locked = false;
+				List<IBuff> buffs = getOwner().getBuff(AttackLockBuff.class);
+				for(IBuff buff : buffs){
+					AttackLockBuff alb = (AttackLockBuff) buff;
+					if(attacked.equals(alb.getLocker())){
+						locked = true;
+						break;
+					}
+				}
+				
 				Integer chance = attack.getAttack().getLockChance() - getOwner().getMove().getFleeChance();
-				if(!attacked.equals(attack) && Random.isTrigger(chance)){
+				if(!locked && Random.isTrigger(chance)){
 					invoke = false;
 					affect();
 				}
@@ -77,7 +89,7 @@ public class AttackLockBuff extends Buff {
 		recordIntercepter(getOwner().getMove(), moveIn);
 	}
 
-	public LifeCard getAttack() {
+	public LifeCard getLocker() {
 		return attack;
 	}
 

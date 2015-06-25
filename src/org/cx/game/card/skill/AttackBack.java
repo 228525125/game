@@ -51,7 +51,7 @@ public class AttackBack extends PassiveSkill {
 		List<IBuff> buffs = getOwner().getBuff(AttackLockBuff.class);
 		Boolean lock = false;
 		for(IBuff buff : buffs){
-			if(attack.equals(((AttackLockBuff)buff).getAttack())){
+			if(attack.equals(((AttackLockBuff)buff).getLocker())){
 				lock = true;
 				break;
 			}

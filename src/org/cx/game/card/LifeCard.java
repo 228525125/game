@@ -404,9 +404,12 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private static final String Effect = "_Effect";
 
 	public void addBuff(IBuff buff){
-		for(IBuff b : this.buffList)     //当添加一个已有的buff,并且不能叠加时，要先删除之前的buff
-			if(b.getClass().equals(buff.getClass())&&!b.isDuplication())
+		for(IBuff b : this.buffList){     //当添加一个已有的buff,并且不能叠加时，要先删除之前的buff
+			if(b.getClass().equals(buff.getClass())&&!b.isDuplication()){
 				removeBuff(b);
+				break;
+			}
+		}
 		
 		this.buffList.add(buff);
 		
@@ -600,7 +603,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setAttack(IAttack attack) {
 		attack.addIntercepter(new Accurate(IMagic.Style_physical, this));
 		attack.addIntercepter(new Thump(IMagic.Style_physical, 150, this));
-		attack.addIntercepter(new AttackLock(IMagic.Style_physical, this));
+		//attack.addIntercepter(new AttackLock(IMagic.Style_physical, this));
 		attack.setAccurateChance(accurateChance);
 		attack.setAtk(atk);
 		attack.setRange(range);
