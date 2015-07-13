@@ -1,7 +1,5 @@
 package org.cx.game.card.skill;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.Util;
 
 /**
@@ -11,8 +9,8 @@ import org.cx.game.tools.Util;
  */
 public abstract class SimplePassiveSkill extends PassiveSkill {
 
-	private Integer eruptAtk = 0;
-	private Integer keepAtkNewValue = 0;
+	private Integer eruptAtk = 0;               //临时设置，当技能执行完毕，恢复原始值
+	private Integer keepAtkNewValue = 0;        //当技能执行完毕后，继续保持最新状态
 	private Integer keepAtkOldValue = 0;
 	private Integer eruptSpeedChance = 0;
 	private Integer keepSpeedChanceNewValue = 0;

@@ -23,12 +23,6 @@ public class Deadly extends SimplePassiveSkill {
 		this.upAtkScale = upAtkScale;
 	}
 
-	@Override
-	public String getIntercepterMethod() {
-		// TODO Auto-generated method stub
-		return "attack";
-	}
-	
 	public Integer getChance() {
 		return chance;
 	}
@@ -46,11 +40,4 @@ public class Deadly extends SimplePassiveSkill {
 			affect();
 		}
 	}
-
-	@Override
-	public Boolean isInvoke() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 }

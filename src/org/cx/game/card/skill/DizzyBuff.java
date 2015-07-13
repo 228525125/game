@@ -1,5 +1,7 @@
 package org.cx.game.card.skill;
 
+import java.util.List;
+
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
@@ -25,6 +27,13 @@ public class DizzyBuff extends Buff {
 	@Override
 	public void effect() {
 		// TODO Auto-generated method stub
+		/*
+		 * 被击晕后，锁定的目标全部取消
+		 */
+		List<IBuff> buffs = getOwner().getNexusBuff(AttackLockBuff.class);
+		for(IBuff buff : buffs)
+			buff.invalid();
+		
 		IIntercepter activateIn = new Intercepter("setActivate") {    //当activate状态为true时，表示从眩晕中恢复
 			
 			@Override

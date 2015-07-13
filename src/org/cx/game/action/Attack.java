@@ -183,6 +183,11 @@ public class Attack extends Action implements IAttack {
 		if(IDeath.Status_Live == attacked.getDeath().getStatus()
 		&& 1==distance                                           //近身
 		&& !exist){                                               //判断是否被锁定过
+			
+			List<IBuff> buffList = getOwner().getNexusBuff(AttackLockBuff.class);
+			for(IBuff buff : buffList)
+				buff.invalid();
+			
 			new AttackLockBuff(2,getOwner(),attacked).effect();
 		}
 			

@@ -28,6 +28,10 @@ public class AttackLock extends PassiveSkill {
 		// TODO Auto-generated method stub
 		super.affect(objects);
 		
+		List<IBuff> buffs = getOwner().getNexusBuff(AttackLockBuff.class);
+		for(IBuff buff : buffs)
+			buff.invalid();
+		
 		new AttackLockBuff(2,getOwner(),attacked).effect();
 	}
 	

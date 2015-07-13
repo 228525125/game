@@ -6,6 +6,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.SimplePassiveSkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.IGround;
 
 /**
  * 远程伤害减半
@@ -27,29 +28,15 @@ public class FarHarmHalve extends SimplePassiveSkill {
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
 		attack = (LifeCard) ((Object[]) args[0])[0];
-		if(IAttack.Mode_Far.equals(attack.getAttack().getMode())){
+		
+		IGround ground = getOwner().getPlayer().getGround();
+		Integer distance = ground.easyDistance(attack.getContainerPosition(), getOwner().getContainerPosition());
+		
+		if(IAttack.Mode_Far.equals(attack.getAttack().getMode()) && 1<distance){
 			Integer atk = attack.getAttack().getAtk();
 			Integer elevateValue = atk*elevateScale;
 			addToEruptAtk(elevateValue);
 			affect();
 		}
-	}
-
-	@Override
-	public String getIntercepterMethod() {
-		// TODO Auto-generated method stub
-		return "attacked";
-	}
-
-	@Override
-	public Boolean isInvoke() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public Integer getRange() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

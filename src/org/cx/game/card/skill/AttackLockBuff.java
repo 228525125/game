@@ -29,9 +29,19 @@ public class AttackLockBuff extends Buff {
 	}
 	
 	@Override
+	public void invalid() {
+		// TODO Auto-generated method stub
+		super.invalid();
+		
+		attack.removeNexusBuff(this);
+	}
+	
+	@Override
 	public void effect() {
 		// TODO Auto-generated method stub
 		super.effect();
+		
+		attack.addNexusBuff(this);
 		
 		IIntercepter attackIn = new Intercepter(){
 			

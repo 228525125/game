@@ -35,6 +35,7 @@ import org.cx.game.card.skill.IBuff;
 import org.cx.game.card.skill.IMagic;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.skill.Parry;
+import org.cx.game.card.skill.ShortRangeAmerce;
 import org.cx.game.card.skill.Thump;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
@@ -391,6 +392,37 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setLockChance(Integer lockChance) {
 		this.lockChance = lockChance;
 	}
+	
+	/**
+	 * 发起方状态
+	 */
+	private List<IBuff> nexusBuffList = new ArrayList<IBuff>();
+	
+	public void addNexusBuff(IBuff buff){
+		this.nexusBuffList.add(buff);
+	}
+	
+	public void removeNexusBuff(IBuff buff){	
+		this.nexusBuffList.remove(buff);
+	}
+	
+	public List<IBuff> getNexusBuff(Class clazz){
+		List<IBuff> ret = new ArrayList<IBuff>();
+		List<IBuff> buffs = new ArrayList<IBuff>();
+		buffs.addAll(nexusBuffList);
+		for(IBuff buff : buffs)
+			if(buff.getClass().equals(clazz))
+				ret.add(buff);
+		return ret;
+	}
+	
+	public void clearNexusBuff(){
+		List<IBuff> buffs = new ArrayList<IBuff>();
+		buffs.addAll(nexusBuffList);
+		for(IBuff buff : buffs){
+			buff.invalid();
+		}
+	}
 
 	/**
 	 * 状态
@@ -604,6 +636,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		attack.addIntercepter(new Accurate(IMagic.Style_physical, this));
 		attack.addIntercepter(new Thump(IMagic.Style_physical, 150, this));
 		//attack.addIntercepter(new AttackLock(IMagic.Style_physical, this));
+		attack.addIntercepter(new ShortRangeAmerce(IMagic.Style_physical, 50, this));
 		attack.setAccurateChance(accurateChance);
 		attack.setAtk(atk);
 		attack.setRange(range);

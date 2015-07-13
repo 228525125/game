@@ -65,22 +65,4 @@ public class Sprint extends SimplePassiveSkill {
 		life.getAttack().addIntercepter(moveIn);
 	}
 
-	@Override
-	public String getIntercepterMethod() {
-		// TODO Auto-generated method stub
-		return "attack";
-	}
-
-	@Override
-	public Boolean isInvoke() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public void before(Object[] args) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
