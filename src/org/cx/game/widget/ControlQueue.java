@@ -37,7 +37,13 @@ public class ControlQueue extends Observable implements IControlQueue {
 	public void add(Object object) {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
-		insert(place);
+		
+		if(consume<=place.getCount()){    //如果大于consume，则插入当前queue进行排序
+			insert(place);
+		}else{                            //如果小于额定消耗，则进入下一个queue
+			insertOtherQueue(place); 
+		}
+		
 	}
 	
 	@Override
@@ -60,10 +66,13 @@ public class ControlQueue extends Observable implements IControlQueue {
 		
 		place.setCount(place.getCount() - consume); //swapQueue方法确保当前queue内的place始终大于消耗，因此这里不用判断，直接 减掉消耗，并获得一次控制机会
 		object = place.getObject();
-		if(consume<=place.getCount())        //如果减掉消耗后仍大于consume，则继续插入当前queue进行排序
+		
+		if(consume<=place.getCount()){        //如果减去消耗后仍大于consume，则继续插入当前queue进行排序
 			insert(place);
-		else
+		}else{
 			insertOtherQueue(place); //如果小于额定消耗，则进入下一个queue
+		}
+		
 		
 		return object; 
 	}	
@@ -71,13 +80,16 @@ public class ControlQueue extends Observable implements IControlQueue {
 	@Override
 	public void refurbish() {
 		// TODO Auto-generated method stub
-		for(int i=0;i<queue.size();i++)
-			queue.get(i).loadSpeed();
+		for(int i=0;i<queue.size();i++){
+			Place place = queue.get(i);
+			if(consume>place.getCount()){
+				takeOut(place);
+				insertOtherQueue(place);
+			}
+		}
 		Collections.sort(queue, new PlaceComparator());
 		
 		List<Place> other = otherQueue(queue);
-		for(int i=0;i<other.size();i++)
-			other.get(i).loadSpeed();
 		Collections.sort(other, new PlaceComparator());
 		
 		Map<String,Object> map = new HashMap<String,Object>();

@@ -875,7 +875,10 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attack.setAtk(atk);
 		this.attack.setAccurateChance(accurateChance);
 		this.attack.setThumpChance(thumpChance);
-		this.attack.setSpeedChance(IControlQueue.consume);
+		if(Debug.isDebug)
+			this.attack.setSpeedChance(IControlQueue.consume);
+		else
+			this.attack.setSpeedChance(speedChance);
 		this.attack.setLockChance(lockChance);
 		
 		this.attacked.setImmuneDamageRatio(immuneDamageRatio);
