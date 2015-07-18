@@ -29,6 +29,7 @@ import org.cx.game.card.skill.Accurate;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.AttackBack;
 import org.cx.game.card.skill.AttackLock;
+import org.cx.game.card.skill.AttackLockBuff;
 import org.cx.game.card.skill.Dodge;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.IBuff;
@@ -180,6 +181,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(activate){
 			getMove().setMoveable(true);
 			getAttacked().setAttackBackChance(100); //恢复反击能力，每回合只有一次
+			List<IBuff> buffs = getNexusBuff(AttackLockBuff.class);  //清除锁定对象
+			for(IBuff buff : buffs)
+				removeNexusBuff(buff);
 		}else{
 			getMove().setMoveable(false);
 		}
