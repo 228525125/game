@@ -25,6 +25,7 @@ public class DamageIncreaseBuff extends Buff {
 		super(bout, style, type, func, life);
 		// TODO Auto-generated constructor stub
 		setDuplication(true);       //默认是false
+		this.scale = scale;
 	}
 	
 	private LifeCard attack = null;
@@ -64,7 +65,7 @@ public class DamageIncreaseBuff extends Buff {
 	public void affect(Object... objects) {
 		// TODO Auto-generated method stub
 		Integer d = (Integer) objects[0];
-		objects[0] = d*(1+scale/100);
+		objects[0] = d*(100+scale)/100;
 		
 		super.affect(objects);
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
 
 /**
@@ -26,7 +27,7 @@ public class SpearInfeed extends Spurting {
 		List<LifeCard> ret = new ArrayList<LifeCard>();
 		for(Integer p : list){
 			LifeCard life = ground.getCard(p);
-			if(null!=life&&!getOwner().getPlayer().equals(life.getPlayer()))   //判断敌友
+			if((null!=life && Debug.isDebug) || (null!=life && !getOwner().getPlayer().equals(life.getPlayer())))   //判断敌友
 				ret.add(life);
 		}
 		return ret;

@@ -27,8 +27,8 @@ public class DamageIncrease extends PassiveSkill {
 		// TODO Auto-generated method stub
 		super.affect(objects);
 		
-		LifeCard attacked = (LifeCard) objects[0];
-		attacked.addBuff(new DamageIncreaseBuff(bout, scale, getStyle(), IBuff.Type_Neutral, getFunc(), attacked));
+		LifeCard attacked = (LifeCard) ((Object[]) objects[0])[0];
+		new DamageIncreaseBuff(bout, getStyle(), IBuff.Type_Neutral, getFunc(), scale, attacked).effect();
 	}
 
 	@Override

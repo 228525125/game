@@ -53,7 +53,8 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 	@Override
 	public void attackToDamage(Integer hp) {
 		// TODO Auto-generated method stub
-		death.attackToDamage(hp);
+		Object proxy = ProxyFactory.getProxy(this.death);     
+		((IDeath)proxy).attackToDamage(hp);
 	}
 
 	@Override
