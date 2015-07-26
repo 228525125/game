@@ -47,12 +47,18 @@ public class Cure extends MagicCard {
 		life.affected(this);
 	}
 	
+	/**
+	 * 这个方法必须覆盖，利用反射创建这个对象时会用到
+	 */
 	@Override
 	public void setApply(IApply apply) {
 		// TODO Auto-generated method stub
 		super.setApply(apply);
 	}
 	
+	/**
+	 * 这个方法必须覆盖，利用反射创建这个对象时会用到
+	 */
 	@Override
 	public void setChuck(IChuck chuck) {
 		// TODO Auto-generated method stub

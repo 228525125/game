@@ -25,25 +25,20 @@ public interface IMagic {
 	public void affect(Object...objects) throws RuleValidatorException;		
 	
 	/**
-	 * 魔法buff
-	 */
-	public static final Integer Style_Magic = 0;
-	
-	/**
 	 * 物理buff
 	 */
 	public static final Integer Style_physical = 1;
+	
+	/**
+	 * 魔法buff
+	 */
+	public static final Integer Style_Magic = 2;
 	
 	/**
 	 * 风格，法术、物理
 	 * @return
 	 */
 	public Integer getStyle();
-	
-	/**
-	 * 其他功能
-	 */
-	public static final Integer Func_Other = 0;
 	
 	/**
 	 * 移动限制
@@ -58,7 +53,17 @@ public interface IMagic {
 	/**
 	 * 召唤
 	 */
-	public static final Integer Func_Call = 2;
+	public static final Integer Func_Call = 3;
+	
+	/**
+	 * 增益
+	 */
+	public static final Integer Func_Gain = 4;
+	
+	/**
+	 * 其他功能
+	 */
+	public static final Integer Func_Other = 5;
 	
 	/**
 	 * 功能类型

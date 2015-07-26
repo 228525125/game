@@ -173,7 +173,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	 * 所属对象
 	 * @return
 	 */
-	public Object getOwner(){
+	public IPlayer getOwner(){
 		return player;
 	}
 	
