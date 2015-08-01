@@ -1,6 +1,7 @@
 package org.cx.game.card.skill.ext;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.PassiveSkill;
 import org.cx.game.card.skill.SimplePassiveSkill;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
@@ -12,9 +13,14 @@ import org.cx.game.widget.IPlace;
  * @author chenxian
  *
  */
-public class Sprint extends SimplePassiveSkill {
+public class Sprint extends PassiveSkill {
 
 	private Integer upAtkScale;   //攻击提升比例
+	
+	private Integer begin = null;
+	private Integer end = null;
+	
+	private IIntercepter done = null;
 	
 	/**
 	 * 
@@ -27,6 +33,52 @@ public class Sprint extends SimplePassiveSkill {
 		super(style);
 		// TODO Auto-generated constructor stub
 		this.upAtkScale = atkScale;
+		
+		this.done = new Intercepter("done"){
+
+			@Override
+			public void finish(Object[] args) {
+				// TODO Auto-generated method stub
+				getOwner().getAttack().addToAtk(-upAtkValue);
+				upAtkValue = 0;
+			}
+		};
+	}
+	
+	private Boolean once = true;
+	
+	@Override
+	public void before(Object[] args) {
+		// TODO Auto-generated method stub
+		super.before(args);
+		
+		this.begin = getOwner().getContainerPosition();
+		this.end = ((IPlace)((Object[]) args[0])[0]).getPosition();
+		
+		if(once){
+			getOwner().getPlayer().getContext().addIntercepter(done);
+			once = false;
+		}
+	}
+	
+	@Override
+	public void after(Object[] args) {
+		// TODO Auto-generated method stub
+		super.after(args);
+		
+		affect();
+	}
+	
+	private Integer upAtkValue = 0;
+	
+	@Override
+	public void affect(Object... objects) {
+		// TODO Auto-generated method stub
+		Integer step = getOwner().getPlayer().getGround().distance(begin, end);
+		this.upAtkValue = step*Sprint.this.upAtkScale*Sprint.this.getOwner().getAtk()/100;
+		getOwner().getAttack().addToAtk(upAtkValue);
+		
+		super.affect(objects);
 	}
 	
 	@Override
@@ -34,35 +86,6 @@ public class Sprint extends SimplePassiveSkill {
 		// TODO Auto-generated method stub
 		super.setOwner(life);
 		
-		IIntercepter moveIn = new Intercepter(){
-
-			
-			private Integer begin = null;
-			private Integer end = null;
-			
-			@Override
-			public void finish(Object[] args) {
-				// TODO Auto-generated method stub
-				Integer step = getOwner().getPlayer().getGround().distance(begin, end);
-				Integer upAtkValue = step*Sprint.this.upAtkScale/100;
-				addToEruptAtk(upAtkValue);
-				affect();
-			}
-
-			@Override
-			public void before(Object[] args) {
-				// TODO Auto-generated method stub
-				this.begin = getOwner().getContainerPosition();
-				this.end = ((IPlace)((Object[]) args[0])[0]).getPosition();
-			}
-			
-			@Override
-			public Integer getLevel() {
-				// TODO Auto-generated method stub
-				return IIntercepter.Level_Rule;
-			}
-		};
-		life.getAttack().addIntercepter(moveIn);
+		life.getMove().addIntercepter(this);
 	}
-
 }

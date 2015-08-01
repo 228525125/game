@@ -107,19 +107,22 @@ public class ContextDecorator implements IContext {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		original.start();
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IContext)proxy).start();
 	}
 
 	@Override
 	public void deploy() {
 		// TODO Auto-generated method stub
-		original.deploy();
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IContext)proxy).deploy();
 	}
 
 	@Override
 	public void done() {
 		// TODO Auto-generated method stub
-		original.done();
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IContext)proxy).done();
 	}
 
 	@Override
