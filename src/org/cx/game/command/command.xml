@@ -35,6 +35,7 @@
 			<item>conjure</item>
 			<item>move</item>
 			<item>swap</item>
+			<item>apply</item>
 		</type>
 	</types>	
 	<commands>

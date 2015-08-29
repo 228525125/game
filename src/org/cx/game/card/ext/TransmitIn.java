@@ -1,28 +1,21 @@
 package org.cx.game.card.ext;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
+import org.cx.game.action.IMove;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
-import org.cx.game.card.skill.IBuff;
-import org.cx.game.card.skill.ext.CureTiredBuff;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.widget.IGround;
 
-/**
- * 治疗
- * @author chenxian
- *
- */
-public class Cure extends MagicCard {
+public class TransmitIn extends MagicCard {
 
-	private Integer cureScale;
-	private Integer tireBout;
-	
-	public Cure(Integer id, Integer consume, Integer style, Integer func, Integer cureScale, Integer tireBout) {
+	public TransmitIn(Integer id, Integer consume, Integer style, Integer func) {
 		super(id, consume, style, func);
 		// TODO Auto-generated constructor stub
-		this.cureScale = cureScale;
-		this.tireBout = tireBout;
 		
 		setParameterTypeValidator(new Class[]{LifeCard.class});
 	}
@@ -30,12 +23,21 @@ public class Cure extends MagicCard {
 	@Override
 	public void affect(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
+
 		LifeCard life = (LifeCard) objects[0];
 		
-		Integer cureValue = life.getHp()*cureScale/100;  //保持下限
-		life.getDeath().magicToHp(cureValue);
-		new CureTiredBuff(tireBout,getStyle(),IBuff.Type_Benefit, getFunc(),life).effect();
+		IGround ground = getOwner().getGround();
+		List<Integer> list = ground.easyAreaForDistance(getConjurer().getContainerPosition(), 1, IGround.Equal);
+		Collections.shuffle(list);
+		Integer position = null;
+		for(Integer pos : list){
+			if(null==ground.getCard(pos)){
+				position = pos;
+				break;
+			}
+		}
+		
+		ground.move(life, position, IMove.Type_Flash);
 	}
 	
 	@Override
@@ -68,6 +70,7 @@ public class Cure extends MagicCard {
 	@Override
 	public Boolean needConjurer() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
+
 }

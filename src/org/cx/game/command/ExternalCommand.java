@@ -64,4 +64,11 @@ public class ExternalCommand implements IExternalCommand, IValidatable {
 		return errors.hasError();
 	}
 
+	@Override
+	public void doValidator(IValidator validator) {
+		// TODO Auto-generated method stub
+		if(validator.validate())
+			errors.addError(validator);
+	}
+
 }

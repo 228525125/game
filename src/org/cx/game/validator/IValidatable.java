@@ -17,6 +17,8 @@ public interface IValidatable {
 	
 	public void doValidator();
 	
+	public void doValidator(IValidator validator);
+	
 	public Errors getErrors();
 	
 	public Boolean hasError();

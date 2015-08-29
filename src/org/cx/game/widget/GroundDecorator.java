@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
@@ -108,6 +109,12 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<Integer> queryRange(ISkill skill, String action) {
 		// TODO Auto-generated method stub
 		return ground.queryRange(skill, action);
+	}
+	
+	@Override
+	public List<Integer> queryRange(MagicCard magic, String action) {
+		// TODO Auto-generated method stub
+		return ground.queryRange(magic, action);
 	}
 	
 	@Override

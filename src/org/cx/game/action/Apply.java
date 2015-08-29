@@ -17,10 +17,9 @@ public class Apply extends Action implements IApply {
 
 	private Integer consume = 1;
 	
-	public Apply(Integer consume) {
+	public Apply() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.consume = consume;
 		setParameterTypeValidator(new Class[]{Object.class});
 	}
 	

@@ -2,6 +2,7 @@ package org.cx.game.validator;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.tools.I18n;
@@ -40,6 +41,13 @@ public class QueryCommandValidator extends Validator {
 		
 		if("conjure".equals(action)){
 			if(null!=skill)
+				return true;
+			else
+				addMessage(I18n.getMessage(this));
+		}
+		
+		if("apply".equals(action)){
+			if(card instanceof MagicCard && card.getContainer() instanceof IUseCard)
 				return true;
 			else
 				addMessage(I18n.getMessage(this));

@@ -149,6 +149,7 @@ public class NotifyInfo {
 	public final static String Command_Query_Attack = "Command_Query_Attack";
 	public final static String Command_Query_Conjure = "Command_Query_Conjure";
 	public final static String Command_Query_Swap = "Command_Query_Swap";
+	public final static String Command_Query_Apply = "Command_Query_Apply";
 	public final static String Command_Reload = "Command_Reload";
 	
 	public final static String Context_Control = "Context_Control";

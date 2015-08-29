@@ -74,6 +74,13 @@ public abstract class Expression implements IExpression, IValidatable {
 	}
 	
 	@Override
+	public void doValidator(IValidator validator) {
+		// TODO Auto-generated method stub
+		if(validator.validate())
+			errors.addError(validator);
+	}
+	
+	@Override
 	public Errors getErrors() {
 		// TODO Auto-generated method stub
 		return errors;

@@ -21,6 +21,7 @@ public class TransmitIn extends ActiveSkill {
 	public TransmitIn(Integer consume, Integer cooldown, Integer velocity, Integer style, Integer func) {
 		super(consume, cooldown, velocity, style, func);
 		// TODO Auto-generated constructor stub
+		//还需要效验参数是否
 		setParameterTypeValidator(new Class[]{LifeCard.class});		
 	}
 

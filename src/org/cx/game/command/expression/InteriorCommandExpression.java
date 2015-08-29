@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.cx.game.command.InteriorCommand;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
+import org.cx.game.validator.IValidator;
 import org.dom4j.Element;
 
 public class InteriorCommandExpression extends CommandExpression {

@@ -6,7 +6,7 @@ import org.cx.game.tools.I18n;
 
 public class SelectCardValidator extends Validator {
 
-	private CommandBuffer buffer = null;
+	protected CommandBuffer buffer = null;
 	private ICard card = null;
 	
 	public SelectCardValidator(CommandBuffer buffer) {

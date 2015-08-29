@@ -7,14 +7,17 @@ import java.util.Map;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.validator.LifeCardActivateValidator;
+import org.cx.game.validator.NeedConjurerValidator;
 import org.cx.game.validator.QueryCommandValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
+import org.cx.game.validator.SelectMagicCardValidator;
 import org.cx.game.widget.Ground;
 import org.cx.game.widget.IGround;
 
@@ -30,6 +33,7 @@ public class QueryCommand extends InteriorCommand {
 		map.put("move", NotifyInfo.Command_Query_Move);
 		map.put("conjure", NotifyInfo.Command_Query_Conjure);
 		map.put("swap", NotifyInfo.Command_Query_Swap);
+		map.put("apply", NotifyInfo.Command_Query_Apply);
 	}
 	
 	private List<Integer> positionList = new ArrayList<Integer>();
@@ -45,8 +49,17 @@ public class QueryCommand extends InteriorCommand {
 		if("conjure".equals(parameter)){
 			positionList = ground.queryRange(buffer.getSkill(), map.get(parameter));
 		}else if("attack".equals(parameter) || "call".equals(parameter) || "move".equals(parameter)){
-			LifeCard life = (LifeCard) buffer.getCard();           //暂时只有life
+			doValidator(new SelectLifeCardValidator(buffer));
+			LifeCard life = (LifeCard) buffer.getCard();           
 			positionList = ground.queryRange(life, map.get(parameter));   //这里需要计算
+		}else if("apply".equals(parameter)){
+			doValidator(new SelectMagicCardValidator(buffer));
+			MagicCard magic = (MagicCard) buffer.getCard();
+			doValidator(new NeedConjurerValidator(magic, buffer));
+			if(magic.needConjurer()){
+				magic.setConjurer((LifeCard) buffer.lastCard());
+				positionList = ground.queryRange(magic, map.get(parameter));
+			}
 		}
 	
 		Map<String,Object> bean = new HashMap<String,Object>();

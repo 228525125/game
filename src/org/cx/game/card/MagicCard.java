@@ -143,6 +143,14 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	public void setConsume(Integer consume) {
 		this.consume = consume;
 	}
+	
+	/**
+	 * 魔法使用范围
+	 * @return
+	 */
+	public Integer getConjureRange(){
+		return getConjurer().getAttack().getRange();
+	}
 
 	/**
 	 * 卡片类型
@@ -177,6 +185,22 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		return player;
 	}
 	
+	private LifeCard conjurer = null;
+	
+	/**
+	 * 使用魔法卡的生物
+	 * @return
+	 */
+	public LifeCard getConjurer() {
+		return conjurer;
+	}
+
+	public void setConjurer(LifeCard conjurer) {
+		this.conjurer = conjurer;
+	}
+	
+	public abstract Boolean needConjurer();
+
 	@Override
 	public void initState() {
 		// TODO Auto-generated method stub
@@ -193,6 +217,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	}
 
 	public void setApply(IApply apply) {
+		apply.setConsume(consume);
 		apply.setOwner(this);
 		this.apply = new ApplyDecorator(apply);
 	}
@@ -314,6 +339,13 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		for(IValidator v : validatorList)
 			if(!v.validate())
 				errors.addError(v);
+	}
+	
+	@Override
+	public void doValidator(IValidator validator) {
+		// TODO Auto-generated method stub
+		if(validator.validate())
+			errors.addError(validator);
 	}
 	
 	@Override

@@ -21,6 +21,5 @@ public class ChuckCommand extends InteriorCommand {
 		
 		ICard card = buffer.getCard();
 		card.chuck();
-		buffer.setCard(null);
 	}
 }

@@ -1,7 +1,11 @@
 package org.cx.game.command;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import org.cx.game.action.IDeath;
 import org.cx.game.card.ICard;
@@ -27,8 +31,10 @@ import org.cx.game.widget.IUseCard;
  *
  */
 public class CommandBuffer {
+	
+	private Queue<Map<String,Object>> bufferQueue = new LinkedList<Map<String,Object>>();
 
-	private Map<String,Object> bufferMap = new HashMap<String,Object>();
+	private Integer BufferQueue_Size = 2;
 	
 	public static final String PLAYER = "player";
 	
@@ -60,11 +66,16 @@ public class CommandBuffer {
 	
 	public static final String DOMAIN = "domain";
 	
-	private IPlayer player;
+	private IPlayer player;	
 	
 	public CommandBuffer(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
+		
+		for(int i=0;i<BufferQueue_Size;i++){
+			Map<String,Object> bufferMap = new HashMap<String,Object>();
+			bufferQueue.offer(bufferMap);
+		}
 	}
 	
 	/**
@@ -72,43 +83,49 @@ public class CommandBuffer {
 	 * @param object
 	 */
 	public void set(Object object){
+		Map<String, Object> bufferMap = new HashMap<String, Object>();
+		
 		String item = Calculator.itemToType(objectToItem(object));
 		
 		if(PLAYER.equals(item)){
-			setPlayer((IPlayer)object);
+			setPlayer((IPlayer)object, bufferMap);
 		}else if(CONTAINER.equals(item)){
 			IContainer container = (IContainer) object;
-			setContainer(container);
+			setContainer(container, bufferMap);
 		}else if(PLACE.equals(item)){
 			IPlace place = (IPlace) object;
-			setPlace(place);
+			setPlace(place, bufferMap);
 		}else if(CEMETERY.equals(item)){
 			ICemetery cemetery = (ICemetery) object;
-			setCemetery(cemetery);
+			setCemetery(cemetery, bufferMap);
 		}else if(TRICKLIST.equals(item)){
 			ITrickList trickList = (ITrickList) object;
-			setTrickList(trickList);
+			setTrickList(trickList, bufferMap);
 		}else if(CARD.equals(item)){
 			ICard card = (ICard) object;
-			setCard(card);
+			setCard(card, bufferMap);
 		}else if(SKILL.equals(item)){
 			ISkill skill = (ISkill) object;
-			setSkill(skill);
+			setSkill(skill, bufferMap);
 		}else if(TRICK.equals(item)){
 			ITrick trick = (ITrick) object;
-			setTrick(trick);
-		}			
+			setTrick(trick, bufferMap);
+		}		
+		
+		poll();
+		
+		offer(bufferMap);
 	}
 	
 	public IPlayer getPlayer(){
-		if(null==bufferMap.get(PLAYER))
+		if(null==element().get(PLAYER))
 			return player;
 		else
-			return (IPlayer) bufferMap.get(PLAYER);
+			return (IPlayer) element().get(PLAYER);
 	}
 	
 	public IContainer getContainer(){
-		return (IContainer) bufferMap.get(CONTAINER);
+		return (IContainer) element().get(CONTAINER);
 	}
 	
 	public IGround getGround(){
@@ -139,31 +156,35 @@ public class CommandBuffer {
 	}
 	
 	public IPlace getPlace(){
-		return (IPlace) bufferMap.get(PLACE);
+		return (IPlace) element().get(PLACE);
 	}
 	
 	public ICemetery getCemetery(){
-		return (ICemetery) bufferMap.get(CEMETERY);
+		return (ICemetery) element().get(CEMETERY);
 	}
 	
 	public ITrickList getTrickList(){
-		return (ITrickList) bufferMap.get(TRICKLIST);
+		return (ITrickList) element().get(TRICKLIST);
 	}
 	
 	public ICard getCard(){
-		return (ICard)bufferMap.get(CARD);
+		return (ICard) element().get(CARD);
 	}
 	
 	public ISkill getSkill(){
-		return (ISkill) bufferMap.get(SKILL);
+		return (ISkill) element().get(SKILL);
 	}
 	
 	public ITrick getTrick(){
-		return (ITrick) bufferMap.get(TRICK);
+		return (ITrick) element().get(TRICK);
 	}
 	
 	public void clear(){
-		bufferMap.clear();
+		element().clear();
+	}
+	
+	public ICard lastCard(){
+		return (ICard) last().get(CARD);
 	}
 	
 	/**
@@ -205,7 +226,7 @@ public class CommandBuffer {
 		return null;
 	}
 	
-	public void setPlayer(IPlayer player){
+	private void setPlayer(IPlayer player, Map<String, Object> bufferMap){
 		if(null!=player){
 			bufferMap.remove(CONTAINER);
 			bufferMap.remove(PLACE);
@@ -219,56 +240,56 @@ public class CommandBuffer {
 		}
 	}
 	
-	public void setContainer(IContainer container){
+	private void setContainer(IContainer container, Map<String, Object> bufferMap){
 		if(null!=container){
 			IPlayer player = container.getPlayer();;
 			if (container instanceof IGround) {
 				player = getPlayer();
 			}
-			setPlayer(player);
+			setPlayer(player, bufferMap);
 			
 			bufferMap.put(CONTAINER, container);
 		}
 	}
 	
-	public void setPlace(IPlace place){
+	private void setPlace(IPlace place, Map<String, Object> bufferMap){
 		if(null!=place){
-			setContainer(place.getContainer());
+			setContainer(place.getContainer(), bufferMap);
 			
 			bufferMap.put(PLACE, place);
 		}
 	}
 	
-	public void setCemetery(ICemetery cemetery){
+	private void setCemetery(ICemetery cemetery, Map<String, Object> bufferMap){
 		if(null!=cemetery){
-			setPlace(cemetery.getOwner());
+			setPlace(cemetery.getOwner(), bufferMap);
 			
 			bufferMap.put(CEMETERY, cemetery);
 		}
 	}
 	
-	public void setTrickList(ITrickList tricklist){
+	private void setTrickList(ITrickList tricklist, Map<String, Object> bufferMap){
 		if(null!=tricklist){
-			setPlace(tricklist.getOwner());
+			setPlace(tricklist.getOwner(), bufferMap);
 			
 			bufferMap.put(TRICKLIST, tricklist);
 		}
 	}
 	
-	public void setCard(ICard card){
+	private void setCard(ICard card, Map<String, Object> bufferMap){
 		if(null!=card){
-			setContainer(card.getContainer());
+			setContainer(card.getContainer(), bufferMap);
 			
 			if (card.getContainer() instanceof IGround) {
 				IGround ground = (IGround) card.getContainer();
 				
 				IPlace place = ground.getPlace(ground.getPosition(card));
-				setPlace(place);
+				setPlace(place, bufferMap);
 				
 				if (card instanceof LifeCard) {
 					LifeCard life = (LifeCard) card;
 					if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
-						setCemetery(place.getCemetery());
+						setCemetery(place.getCemetery(), bufferMap);
 					}
 				}
 			}
@@ -277,19 +298,39 @@ public class CommandBuffer {
 		}
 	}
 	
-	public void setSkill(ISkill skill){
+	private void setSkill(ISkill skill, Map<String, Object> bufferMap){
 		if(null!=skill){
-			setCard(skill.getOwner());
+			setCard(skill.getOwner(), bufferMap);
 			
 			bufferMap.put(SKILL, skill);
 		}
 	}
 	
-	public void setTrick(ITrick trick){
+	private void setTrick(ITrick trick, Map<String, Object> bufferMap){
 		if(null!=trick){
-			setTrickList(trick.getOwner());
+			setTrickList(trick.getOwner(), bufferMap);
 			
 			bufferMap.put(TRICK, trick);
 		}
+	}
+	
+	private Map<String, Object> element(){
+		Object [] array = bufferQueue.toArray();
+		Object bufferMap = array[BufferQueue_Size-1];
+		return (Map<String, Object>) bufferMap;
+	}
+	
+	private Map<String, Object> poll(){
+		return bufferQueue.poll();
+	}
+	
+	private void offer(Map<String, Object> bufferMap){
+		bufferQueue.offer(bufferMap);
+	}
+	
+	private Map<String, Object> last(){
+		Object [] array = bufferQueue.toArray();
+		Object bufferMap = array[BufferQueue_Size-2];
+		return (Map<String, Object>) bufferMap;
 	}
 }

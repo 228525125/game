@@ -162,6 +162,12 @@ public abstract class ActionDecorator implements IAction {
 	}
 	
 	@Override
+	public void doValidator(IValidator validator) {
+		// TODO Auto-generated method stub
+		original.doValidator(validator);
+	}
+	
+	@Override
 	public Errors getErrors() {
 		// TODO Auto-generated method stub
 		return original.getErrors();

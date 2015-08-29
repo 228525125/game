@@ -13,6 +13,7 @@ import java.util.Set;
 import org.cx.game.action.IMove;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.MagicCard;
 import org.cx.game.card.TrickCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
@@ -346,8 +347,17 @@ public class Ground extends Container implements IGround
 		if(NotifyInfo.Command_Query_Conjure == action && skill.getOwner() instanceof LifeCard){
 			LifeCard card = (LifeCard) skill.getOwner();
 			Integer position = card.getContainerPosition();
-			positionList = easyAreaForDistance(position, skill.getRange(), 1);
+			positionList = easyAreaForDistance(position, skill.getRange(), Contain);
 		}
+		return positionList;
+	}
+	
+	@Override
+	public List<Integer> queryRange(MagicCard magic, String action) {
+		// TODO Auto-generated method stub
+		List<Integer> positionList = new ArrayList<Integer>();
+		if(magic.needConjurer())
+			positionList = easyAreaForDistance(magic.getConjurer().getContainerPosition(), magic.getConjureRange(), Contain);
 		return positionList;
 	}
 

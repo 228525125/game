@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
@@ -186,6 +187,15 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<Integer> queryRange(ISkill skill, String action);
+	
+	/**
+	 * 查询魔法卡使用范围
+	 * @param magic
+	 * @param life
+	 * @param action
+	 * @return
+	 */
+	public List<Integer> queryRange(MagicCard magic, String action);
 	
 	/**
 	 * 移动到指定位置

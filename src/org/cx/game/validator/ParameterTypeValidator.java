@@ -8,7 +8,7 @@ import org.cx.game.card.skill.ext.ShieldHit;
 import org.cx.game.tools.I18n;
 
 /**
- * 技能被使用时，需要验证参数的类型是否与预设的一致
+ * 技能被使用时，需要验证参数的类型和个数是否与预设的一致
  * @author chenxian
  *
  */
@@ -39,6 +39,9 @@ public class ParameterTypeValidator extends Validator {
 					break;
 				}
 			}
+		}else{
+			addMessage(I18n.getMessage(this));
+			ret = false;
 		}
 		
 		return ret;
