@@ -6,10 +6,14 @@ import java.util.List;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
 import org.cx.game.action.IMove;
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
+import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.validator.ApplyRangeValidator;
 import org.cx.game.widget.IGround;
+import org.cx.game.widget.IPlace;
 
 public class TransmitIn extends MagicCard {
 
@@ -46,6 +50,11 @@ public class TransmitIn extends MagicCard {
 		super.apply(objects);
 		
 		LifeCard life = (LifeCard) objects[0];
+		
+		doValidator(new ApplyRangeValidator(this, life.getContainerPosition()));
+		if(hasError())
+			throw new RuleValidatorException(getErrors().getMessage());
+		
 		life.affected(this);
 	}
 	
