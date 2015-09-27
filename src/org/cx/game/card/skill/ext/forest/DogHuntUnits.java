@@ -1,6 +1,7 @@
 package org.cx.game.card.skill.ext.forest;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.IMagic;
 
 /**
  * 狗头人围猎
@@ -10,10 +11,10 @@ import org.cx.game.card.LifeCard;
 public class DogHuntUnits extends HuntUnits {
 
 	private Integer defScale = 0;
-	private Double upImmuneDamageRatio = 0d;
+	private Integer upImmuneDamageRatio = 0;
 	
-	public DogHuntUnits(Integer style, Integer range, Integer defScale) {
-		super(style, range);
+	public DogHuntUnits(Integer range, Integer defScale) {
+		super(IMagic.Style_physical, range);
 		// TODO Auto-generated constructor stub
 		this.defScale = defScale;
 	}
@@ -35,9 +36,11 @@ public class DogHuntUnits extends HuntUnits {
 		// TODO Auto-generated method stub
 		super.affect(objects);
 		
-		Double immuneDamageRatio = getOwner().getAttacked().getImmuneDamageRatio();
-		upImmuneDamageRatio = defScale.doubleValue()*getNumber() - upImmuneDamageRatio;
-		getOwner().getAttacked().setImmuneDamageRatio(immuneDamageRatio + upImmuneDamageRatio);
+		Integer immuneDamageRatio = getOwner().getAttacked().getImmuneDamageRatio();
+		getOwner().getAttacked().setImmuneDamageRatio(immuneDamageRatio - upImmuneDamageRatio);
+		
+		upImmuneDamageRatio = defScale*getUnitNumber();
+		getOwner().getAttacked().addToImmuneDamageRatio(upImmuneDamageRatio);
 	}
 	
 	@Override
@@ -45,7 +48,6 @@ public class DogHuntUnits extends HuntUnits {
 		// TODO Auto-generated method stub
 		super.setOwner(life);
 		
-		life.getCall().addIntercepter(this);
 		life.getAttacked().addIntercepter(this);
 		life.getMove().addIntercepter(this);
 	}

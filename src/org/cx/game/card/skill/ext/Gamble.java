@@ -20,10 +20,10 @@ public class Gamble extends ActiveSkill{
 
 	private Integer range = 1;       
 	private Integer maxTime = 5;     //最大连击次数
-	private Double downDef = 0d;     //受伤比升高
+	private Integer downDef = 0;     //受伤比升高
 	private Integer bout = 2;
 	
-	public Gamble(Integer consume, Integer cooldown, Integer velocity, Integer style, Integer func, Integer range, Integer maxTime, Double downDef, Integer bout) {
+	public Gamble(Integer consume, Integer cooldown, Integer velocity, Integer style, Integer func, Integer range, Integer maxTime, Integer downDef, Integer bout) {
 		super(consume, cooldown, velocity, style, func);
 		// TODO Auto-generated constructor stub
 		this.range = range;

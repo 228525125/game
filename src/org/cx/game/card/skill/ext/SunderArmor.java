@@ -36,7 +36,7 @@ public class SunderArmor extends PassiveSkill {
 	public void affect(Object... objects) {
 		// TODO Auto-generated method stub
 		if(attacked.getAttacked().getImmuneDamageRatio()>0){
-			Double immuneDamageRatio = attacked.getAttacked().getImmuneDamageRatio()*downScale/100;
+			Integer immuneDamageRatio = attacked.getAttacked().getImmuneDamageRatio()*downScale/100;
 			attacked.getAttacked().addToImmuneDamageRatio(-immuneDamageRatio);
 		}
 		super.affect(objects);

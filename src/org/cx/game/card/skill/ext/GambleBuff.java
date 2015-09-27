@@ -6,7 +6,7 @@ import org.cx.game.observer.NotifyInfo;
 
 public class GambleBuff extends SimpleBuff {
 	
-	private Double downImmuneDamageRatio = 0d;
+	private Integer downImmuneDamageRatio = 0;
 	private Integer speedChance = 0;
 	
 	/**
@@ -18,7 +18,7 @@ public class GambleBuff extends SimpleBuff {
 	 * @param downImmuneDamageRatio 免伤比降低值 
 	 * @param life
 	 */
-	public GambleBuff(Integer bout, Integer style, Integer type, Integer func, Double downImmuneDamageRatio, LifeCard life) {
+	public GambleBuff(Integer bout, Integer style, Integer type, Integer func, Integer downImmuneDamageRatio, LifeCard life) {
 		super(bout, style, type, func, life);
 		// TODO Auto-generated constructor stub
 		this.downImmuneDamageRatio = downImmuneDamageRatio;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IBuff;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.skill.PassiveSkill;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.widget.IGround;
@@ -36,15 +37,20 @@ public abstract class HuntUnits extends PassiveSkill {
 		return range;
 	}
 
-	public Integer getNumber() {
+	public Integer getUnitNumber() {
 		Integer number = 0;
 		
 		IGround ground = getOwner().getPlayer().getGround();
 		List<Integer> list = ground.easyAreaForDistance(getOwner().getContainerPosition(), getRange(), IGround.Contain);
+		list.remove(getOwner().getContainerPosition());
 		for(Integer position : list){
 			LifeCard life = ground.getCard(position);
-			if(null!=life && life.getSkillList().contains(this)){
-				number++;
+			if(null!=life){
+				Class clazz = this.getClass();
+				List<ISkill> skList = life.getSkillList();
+				for(ISkill skill : skList)
+					if(clazz.isAssignableFrom(skill.getClass()))
+						number++;
 			}
 		}
 		return number;

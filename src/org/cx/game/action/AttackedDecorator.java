@@ -172,19 +172,19 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 	}
 
 	@Override
-	public Double getImmuneDamageRatio() {
+	public Integer getImmuneDamageRatio() {
 		// TODO Auto-generated method stub
 		return attacked.getImmuneDamageRatio();
 	}
 
 	@Override
-	public void setImmuneDamageRatio(Double def) {
+	public void setImmuneDamageRatio(Integer def) {
 		// TODO Auto-generated method stub
 		attacked.setImmuneDamageRatio(def);
 	}
 
 	@Override
-	public void addToImmuneDamageRatio(Double damageChance) {
+	public void addToImmuneDamageRatio(Integer damageChance) {
 		// TODO Auto-generated method stub
 		attacked.addToImmuneDamageRatio(damageChance);
 	}

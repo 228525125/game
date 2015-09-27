@@ -38,6 +38,7 @@ public class JsonOut extends Response implements Observer {
 			"pri",                                              //Priority
 			"locker",                                           //AttackLockBuff
 			"conjureRange",                                     //MagicCard
+			"unitNumber",                                       //HuntUnits
 			"owner","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
 		});
 		return JSONObject.fromObject(resp,config);

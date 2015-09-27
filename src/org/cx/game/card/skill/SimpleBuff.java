@@ -15,8 +15,8 @@ public abstract class SimpleBuff extends Buff {
 	private Integer keepAtkOldValue = 0;
 	private Integer keepSpeedChanceNewValue = 0;
 	private Integer keepSpeedChanceOldValue = 0;
-	private Double keepImmuneDamageRatioNewValue = 0d;
-	private Double keepImmuneDamageRatioOldValue = 0d;
+	private Integer keepImmuneDamageRatioNewValue = 0;
+	private Integer keepImmuneDamageRatioOldValue = 0;
 	private Integer keepDodgeChanceNewValue = 0;
 	private Integer keepDodgeChanceOldValue = 0;
 	private Integer keepEnergyNewValue = 0;
@@ -39,7 +39,7 @@ public abstract class SimpleBuff extends Buff {
 		}
 		
 		if(0!=keepImmuneDamageRatioNewValue){
-			getOwner().getAttacked().addToImmuneDamageRatio(Util.sub(keepImmuneDamageRatioNewValue, keepImmuneDamageRatioOldValue));
+			getOwner().getAttacked().addToImmuneDamageRatio(keepImmuneDamageRatioNewValue - keepImmuneDamageRatioOldValue);
 			keepImmuneDamageRatioOldValue = keepImmuneDamageRatioNewValue;
 		}
 		
@@ -71,7 +71,7 @@ public abstract class SimpleBuff extends Buff {
 		
 		if(0!=keepImmuneDamageRatioOldValue){
 			getOwner().getAttacked().addToImmuneDamageRatio(-keepImmuneDamageRatioOldValue);
-			addToKeepImmuneDamageRatio(0d);
+			addToKeepImmuneDamageRatio(0);
 		}
 		
 		if(0!=keepSpeedChanceOldValue){
@@ -101,8 +101,8 @@ public abstract class SimpleBuff extends Buff {
 		this.keepSpeedChanceNewValue = keepSpeedChance;
 	}
 
-	public void addToKeepImmuneDamageRatio(Double ImmuneDamageRatio) {
-		this.keepImmuneDamageRatioNewValue = Util.round(ImmuneDamageRatio, Util.Precision);
+	public void addToKeepImmuneDamageRatio(Integer ImmuneDamageRatio) {
+		this.keepImmuneDamageRatioNewValue = ImmuneDamageRatio;
 	}
 
 	public void addToKeepDodgeChance(Integer keepDodgeChance) {

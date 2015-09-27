@@ -19,7 +19,7 @@ public class Attacked extends Action implements IAttacked {
 	private Integer attackBackChance = 0;
 	private Integer dodgeChance = 0;
 	private Integer parryChance = 0;
-	private Double immuneDamageRatio = 0d;	
+	private Integer immuneDamageRatio = 0;	
 	
 	public Attacked(Integer armourType) {
 		// TODO Auto-generated constructor stub
@@ -77,12 +77,12 @@ public class Attacked extends Action implements IAttacked {
 		this.parryChance = parryChance;
 	}
 
-	public Double getImmuneDamageRatio() {
+	public Integer getImmuneDamageRatio() {
 		return immuneDamageRatio;
 	}
 	
-	public void addToImmuneDamageRatio(Double damageChance){
-		this.immuneDamageRatio = Util.sum(immuneDamageRatio, Util.round(damageChance, Util.Precision));
+	public void addToImmuneDamageRatio(Integer damageChance){
+		this.immuneDamageRatio = immuneDamageRatio + damageChance;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -94,8 +94,8 @@ public class Attacked extends Action implements IAttacked {
 		super.notifyObservers(info); 
 	}
 
-	public void setImmuneDamageRatio(Double damageChance) {
-		this.immuneDamageRatio = Util.round(damageChance, Util.Precision);
+	public void setImmuneDamageRatio(Integer damageChance) {
+		this.immuneDamageRatio = damageChance;
 	}
 
 	@Override
@@ -105,9 +105,9 @@ public class Attacked extends Action implements IAttacked {
 		
 		LifeCard attack = (LifeCard) objects[0];
 		Integer atk = attack.getAttack().getAtk();
-		Double damageChance = 1d-getOwner().getAttacked().getImmuneDamageRatio();
+		Integer damageChance = 100-getOwner().getAttacked().getImmuneDamageRatio();
 		
-		Double damage = atk*damageChance;
+		Integer damage = atk*damageChance;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());

@@ -15,9 +15,9 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 	private Integer eruptSpeedChance = 0;
 	private Integer keepSpeedChanceNewValue = 0;
 	private Integer keepSpeedChanceOldValue = 0;
-	private Double eruptImmuneDamageRatio = 0d;
-	private Double keepImmuneDamageRatioNewValue = 0d;
-	private Double keepImmuneDamageRatioOldValue = 0d;
+	private Integer eruptImmuneDamageRatio = 0;
+	private Integer keepImmuneDamageRatioNewValue = 0;
+	private Integer keepImmuneDamageRatioOldValue = 0;
 	private Integer eruptDodgeChance = 0;
 	private Integer keepDodgeChanceNewValue = 0;
 	private Integer keepDodgeChanceOldValue = 0;
@@ -37,9 +37,9 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		}
 		
 		if(0!=eruptImmuneDamageRatio){
-			Double damageChance = getOwner().getAttacked().getImmuneDamageRatio();
-			getOwner().getAttacked().setImmuneDamageRatio(Util.sum(damageChance, eruptImmuneDamageRatio));
-			addToEruptImmuneDamageRatio(0d);
+			Integer damageChance = getOwner().getAttacked().getImmuneDamageRatio();
+			getOwner().getAttacked().setImmuneDamageRatio(damageChance+eruptImmuneDamageRatio);
+			addToEruptImmuneDamageRatio(0);
 		}
 		
 		if(0!=eruptSpeedChance){
@@ -71,12 +71,12 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		}
 		
 		if(0!=eruptImmuneDamageRatio){
-			Double immuneDamageRatio = getOwner().getAttacked().getImmuneDamageRatio();
-			getOwner().getAttacked().setImmuneDamageRatio(Util.sum(immuneDamageRatio, eruptImmuneDamageRatio));
+			Integer immuneDamageRatio = getOwner().getAttacked().getImmuneDamageRatio();
+			getOwner().getAttacked().setImmuneDamageRatio(immuneDamageRatio + eruptImmuneDamageRatio);
 		}
 		
 		if(0!=keepImmuneDamageRatioNewValue){
-			getOwner().getAttacked().addToImmuneDamageRatio(Util.sub(keepImmuneDamageRatioNewValue, keepImmuneDamageRatioOldValue));
+			getOwner().getAttacked().addToImmuneDamageRatio(keepImmuneDamageRatioNewValue - keepImmuneDamageRatioOldValue);
 			keepImmuneDamageRatioOldValue = keepImmuneDamageRatioNewValue;
 		}
 		
@@ -117,12 +117,12 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		this.keepSpeedChanceNewValue = keepSpeedChance;
 	}
 
-	public void addToEruptImmuneDamageRatio(Double eruptImmuneDamageRatio) {
-		this.eruptImmuneDamageRatio = Util.round(eruptImmuneDamageRatio, Util.Precision);
+	public void addToEruptImmuneDamageRatio(Integer eruptImmuneDamageRatio) {
+		this.eruptImmuneDamageRatio = eruptImmuneDamageRatio;
 	}
 
-	public void addToKeepImmuneDamageRatio(Double ImmuneDamageRatio) {
-		this.keepImmuneDamageRatioNewValue = Util.round(ImmuneDamageRatio, Util.Precision);
+	public void addToKeepImmuneDamageRatio(Integer ImmuneDamageRatio) {
+		this.keepImmuneDamageRatioNewValue = ImmuneDamageRatio;
 	}
 
 	public void addToEruptDodgeChance(Integer eruptDodgeChance) {

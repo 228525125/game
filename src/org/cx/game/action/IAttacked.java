@@ -41,7 +41,7 @@ public interface IAttacked extends IAction {
 	public void addToDodgeChance(Integer dodgeChance);
 
 	/**
-	 * 格挡几率 基准100.00
+	 * 格挡几率 基准100
 	 * @return
 	 */
 	public Integer getParryChance();
@@ -49,12 +49,12 @@ public interface IAttacked extends IAction {
 	public void setParryChance(Integer parryChance);
 	
 	/**
-	 * 免伤比，基准100.00
+	 * 免伤比，基准100
 	 * @return
 	 */
-	public Double getImmuneDamageRatio();
+	public Integer getImmuneDamageRatio();
 
-	public void setImmuneDamageRatio(Double damageChance);
+	public void setImmuneDamageRatio(Integer damageChance);
 	
-	public void addToImmuneDamageRatio(Double damageChance);
+	public void addToImmuneDamageRatio(Integer damageChance);
 }

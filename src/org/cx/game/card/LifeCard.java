@@ -270,15 +270,15 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	/**
-	 * 免伤比 基准1.00
+	 * 免伤比 基准100
 	 */
-	private Double immuneDamageRatio=0d;
+	private Integer immuneDamageRatio=0;
 	
-	public Double getImmuneDamageRatio() {
+	public Integer getImmuneDamageRatio() {
 		return immuneDamageRatio;
 	}
 
-	public void setImmuneDamageRatio(Double damageChance) {
+	public void setImmuneDamageRatio(Integer damageChance) {
 		this.immuneDamageRatio = damageChance;
 	} 
 

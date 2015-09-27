@@ -32,13 +32,13 @@ public class Puncture extends PassiveSkill {
 		this.downScale = downImmuneDamageRatio;
 	}
 	
-	private Double downImmuneDamageRatioValue = 0d;
+	private Integer downImmuneDamageRatioValue = 0;
 	
 	@Override
 	public void affect(Object... objects) {
 		// TODO Auto-generated method stub
 		if(attacked.getAttacked().getImmuneDamageRatio()>0){
-			Double immuneDamageRatio = attacked.getAttacked().getImmuneDamageRatio();
+			Integer immuneDamageRatio = attacked.getAttacked().getImmuneDamageRatio();
 			downImmuneDamageRatioValue = immuneDamageRatio*downScale/100;
 			attacked.getAttacked().setImmuneDamageRatio(immuneDamageRatio - downImmuneDamageRatioValue);
 		}
@@ -48,9 +48,9 @@ public class Puncture extends PassiveSkill {
 	@Override
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
-		Double immuneDamageRatio = attacked.getAttacked().getImmuneDamageRatio();
+		Integer immuneDamageRatio = attacked.getAttacked().getImmuneDamageRatio();
 		attacked.getAttacked().setImmuneDamageRatio(immuneDamageRatio + downImmuneDamageRatioValue);
-		downImmuneDamageRatioValue = 0d;
+		downImmuneDamageRatioValue = 0;
 	}
 
 	@Override
