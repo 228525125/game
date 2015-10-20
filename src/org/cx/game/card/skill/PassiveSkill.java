@@ -18,6 +18,12 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 import org.cx.game.tools.I18n;
 
+/**
+ * 被动技能
+ * 除Dodge、AttackBack、Parry等系统级被动外，通常都要覆盖setOwer方法，并指定action；
+ * @author chenxian
+ *
+ */
 public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 
 	private String cType;

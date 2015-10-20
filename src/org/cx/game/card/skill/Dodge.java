@@ -17,7 +17,7 @@ import org.cx.game.observer.NotifyInfo;
 public class Dodge extends PassiveSkill {
 	
 	private boolean invoke = true;
-	private LifeCard attack;
+	private LifeCard attack = null;
 	
 	public Dodge(Integer style, LifeCard life) {
 		// TODO Auto-generated constructor stub

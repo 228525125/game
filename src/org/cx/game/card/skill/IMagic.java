@@ -61,9 +61,14 @@ public interface IMagic {
 	public static final Integer Func_Gain = 4;
 	
 	/**
+	 * 持续伤害
+	 */
+	public static final Integer Func_SustainedHarm = 5;
+	
+	/**
 	 * 其他功能
 	 */
-	public static final Integer Func_Other = 5;
+	public static final Integer Func_Other = 9;
 	
 	/**
 	 * 功能类型

@@ -107,7 +107,7 @@ public class Attacked extends Action implements IAttacked {
 		Integer atk = attack.getAttack().getAtk();
 		Integer damageChance = 100-getOwner().getAttacked().getImmuneDamageRatio();
 		
-		Integer damage = atk*damageChance;
+		Integer damage = atk*damageChance/100;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
