@@ -1,5 +1,6 @@
 package org.cx.game.card.skill.ext.forest;
 
+import org.cx.game.action.IAttack;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.Buff;
 import org.cx.game.intercepter.IIntercepter;
@@ -48,11 +49,12 @@ public class BarbedAureoleBuff extends Buff {
 		// TODO Auto-generated method stub
 		LifeCard attack = (LifeCard) objects[0];
 		
-		Integer atk = attack.getAttack().getAtk();
-		Integer damage = atk*returnRatio/100;
-		attack.getDeath().magicToHp(-damage);
-		
-		super.affect(objects);
-		
+		if(IAttack.Mode_Near==attack.getAttack().getMode()){        //判断近战或远程
+			Integer atk = attack.getAttack().getAtk();
+			Integer damage = atk*returnRatio/100;
+			attack.getDeath().magicToHp(-damage);
+			
+			super.affect(objects);
+		}
 	}
 }

@@ -4,6 +4,11 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.Aureole;
 import org.cx.game.card.skill.IBuff;
 
+/**
+ * 荆棘光环
+ * @author chenxian
+ *
+ */
 public class BarbedAureole extends Aureole {
 
 	private Integer returnRatio = 0;
