@@ -267,7 +267,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	@Override
 	public void doValidator(IValidator validator) {
 		// TODO Auto-generated method stub
-		if(validator.validate())
+		if(!validator.validate())
 			errors.addError(validator);
 	}
 	

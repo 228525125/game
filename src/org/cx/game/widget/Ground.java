@@ -747,6 +747,33 @@ public class Ground extends Container implements IGround
 		return list;
 	}
 	
+	@Override
+	public List<Integer> queryLineDistance(Integer stand, Integer target) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		Integer [] sp = integerToPoint(stand);
+		Integer [] tp = integerToPoint(target);
+		if(sp[0].equals(tp[0])){        //x轴相同
+			if(sp[1]<tp[1])
+				for(int i=(sp[1]+1);i<=tp[1];i++)
+					list.add(pointToInteger(sp[0], i));
+			
+			if(sp[1]>tp[1])
+				for(int i=(sp[1]-1);i>=tp[1];i--)
+					list.add(pointToInteger(sp[0], i));
+				
+		}else if(sp[1].equals(tp[1])){  //y轴相同
+			if(sp[0]<tp[0])
+				for(int i=(sp[0]+1);i<=tp[0];i++)
+					list.add(pointToInteger(i, sp[1]));
+			
+			if(sp[0]>tp[0])
+				for(int i=(sp[0]-1);i>=tp[0];i--)
+					list.add(pointToInteger(i, sp[1]));
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 		/*Integer x1=1,y1=1,x2=2,y2=2;
 		System.out.println(Util.convertInteger(Math.sqrt(Math.pow(x1.doubleValue()-x2.doubleValue(),2)+Math.pow(y1.doubleValue()-y2.doubleValue(),2))));
@@ -755,4 +782,5 @@ public class Ground extends Container implements IGround
 		Random r = new Random();
 		System.out.println(r.nextInt(10));
 	}
+
 }

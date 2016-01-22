@@ -242,5 +242,14 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<Integer> line(Integer stand, Integer direction, Integer range);
+	
+	/**
+	 * 查询两点的直线距离，stand与target是不同的位置，
+	 * @param stand 站位
+	 * @param target 目标位置
+	 * @return 如果两点不在直线上，则list.isEmpty()为true，否则返回直线上的点的集合，
+	 * 例如1，1 - 1，4 = [1，2；1，3；1，4]；
+	 */
+	public List<Integer> queryLineDistance(Integer stand, Integer target);
 
 }

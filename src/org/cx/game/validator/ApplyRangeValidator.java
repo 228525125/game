@@ -1,9 +1,7 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.MagicCard;
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IPlace;
 
 public class ApplyRangeValidator extends Validator {
 

@@ -5,6 +5,11 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
 
+/**
+ * item是否属于当前用户
+ * @author chenxian
+ *
+ */
 public class OwnerValidator extends Validator {
 
 	private Object item = null;

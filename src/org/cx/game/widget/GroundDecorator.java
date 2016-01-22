@@ -251,4 +251,10 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		ground.loadMap();
 	}
+
+	@Override
+	public List<Integer> queryLineDistance(Integer stand, Integer target) {
+		// TODO Auto-generated method stub
+		return ground.queryLineDistance(stand, target);
+	}
 }

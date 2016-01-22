@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.IActiveSkill;
-import org.cx.game.card.skill.ext.ShieldHit;
 import org.cx.game.tools.I18n;
 
 /**
@@ -48,9 +47,9 @@ public class ParameterTypeValidator extends Validator {
 	}
 	
 	public static void main(String[] args) {
-		ShieldHit sh = new ShieldHit(0,0,0,0,0,0,0);
+		/*ShieldHit sh = new ShieldHit(0,0,0,0,0,0,0);
 		System.out.println(new Object []{}.getClass());
 		System.out.println(new Object []{sh}.getClass());
-		System.out.println(Object.class.isAssignableFrom(String.class));
+		System.out.println(Object.class.isAssignableFrom(String.class));*/
 	}
 }

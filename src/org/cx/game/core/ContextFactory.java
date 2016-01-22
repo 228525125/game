@@ -3,7 +3,6 @@ package org.cx.game.core;
 import java.util.List;
 
 import org.cx.game.card.ICard;
-import org.cx.game.card.skill.ext.IceStorm;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.widget.IStrongHold;
 

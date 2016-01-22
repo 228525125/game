@@ -11,7 +11,7 @@ import org.cx.game.tools.I18n;
 import org.cx.game.widget.IControlQueue;
 
 /**
- * 眩晕
+ * 眩晕，实现方式：增加speedChance值
  * @author chenxian
  *
  */
@@ -27,6 +27,8 @@ public class DizzyBuff extends Buff {
 	@Override
 	public void effect() {
 		// TODO Auto-generated method stub
+		super.effect();
+		
 		/*
 		 * 被击晕后，锁定的目标全部取消
 		 */
@@ -46,8 +48,6 @@ public class DizzyBuff extends Buff {
 		recordIntercepter(getOwner(), activateIn);
 		
 		affect();
-		
-		super.effect();
 	}
 	
 	@Override

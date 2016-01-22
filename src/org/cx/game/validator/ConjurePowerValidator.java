@@ -4,6 +4,11 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.tools.I18n;
 
+/**
+ * 施法所需能量是否足够
+ * @author chenxian
+ *
+ */
 public class ConjurePowerValidator extends Validator {
 
 	private LifeCard life = null;
