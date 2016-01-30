@@ -181,7 +181,7 @@ public interface IGround extends IContainer{
 	public List<Integer> queryRange(ICard card, String action);
 	
 	/**
-	 * 查询技能使用范围
+	 * 查询技能使用范围，现将查询逻辑交给ActiveSkill来完成
 	 * @param skill
 	 * @param action
 	 * @return
@@ -236,7 +236,7 @@ public interface IGround extends IContainer{
 	public List<Integer> twoFlanks(Integer stand, Integer direction); 
 	
 	/**
-	 * 以target为基点，获取direction方向上的一条直线（不包含站位）
+	 * 以stand为基点，获取direction方向上的一条直线（不包含站位）
 	 * @param stand 站位
 	 * @param direction 方向
 	 * @return

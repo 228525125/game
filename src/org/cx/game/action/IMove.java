@@ -10,6 +10,10 @@ public interface IMove extends IAction{
 	
 	public static final Integer Consume = 1; //单格移动消耗
 	
+	public static final Integer Energy_Max = 20;      //最大精力，表示可移动到任意位置
+	
+	public static final Integer Energy_Min = 0;       //最小精力，表示不可移动
+	
 	public static final Integer TurnoverRatio = 60; //资源转换率
 	
 	public Integer getType(); 

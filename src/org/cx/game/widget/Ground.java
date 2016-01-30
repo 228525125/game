@@ -15,6 +15,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
 import org.cx.game.card.TrickCard;
+import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.skill.ITrick;
@@ -345,9 +346,16 @@ public class Ground extends Container implements IGround
 	public List<Integer> queryRange(ISkill skill, String action){
 		List<Integer> positionList = new ArrayList<Integer>();
 		if(NotifyInfo.Command_Query_Conjure == action && skill.getOwner() instanceof LifeCard){
-			LifeCard card = (LifeCard) skill.getOwner();
-			Integer position = card.getContainerPosition();
-			positionList = easyAreaForDistance(position, skill.getRange(), Contain);
+			
+			//ActiveSkill的技能范围由自己给出逻辑
+			if (skill instanceof ActiveSkill) {
+				ActiveSkill as = (ActiveSkill) skill;
+				positionList = as.getConjureRange(this);
+			}else{
+				LifeCard card = (LifeCard) skill.getOwner();
+				Integer position = card.getContainerPosition();
+				positionList = easyAreaForDistance(position, skill.getRange(), Contain);
+			}
 		}
 		return positionList;
 	}
@@ -526,8 +534,16 @@ public class Ground extends Container implements IGround
 		return new Integer[]{x,y}; 
 	}
 	
+	/**
+	 * 用于表示越界的点，isOver = true
+	 */
+	private static final Integer OverPoint = 110010;
+	
 	private Integer pointToInteger(Integer x,Integer y){
-		return Integer.valueOf(x+space+y);
+		if(x<1 || y<1)
+			return OverPoint;
+		else
+			return Integer.valueOf(x+space+y);
 	}
 	
 	@Override

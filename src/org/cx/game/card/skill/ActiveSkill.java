@@ -22,6 +22,7 @@ import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
+import org.cx.game.widget.IGround;
 
 public abstract class ActiveSkill extends Observable implements IActiveSkill {
 
@@ -89,11 +90,21 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	private final static String UseSkill = "_UseSkill";
 	private ParameterTypeValidator parameterValidator = null;
 	
-	public void useSkill(Object...objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub
+	protected void parameterTypeValidator(Object...objects) throws RuleValidatorException {
 		deleteValidator(parameterValidator);
 		this.parameterValidator = new ParameterTypeValidator(objects,parameterTypeValidator); 
 		addValidator(parameterValidator);
+		
+		doValidator();
+		
+		if(hasError())
+			throw new RuleValidatorException(getErrors().getMessage());
+	}
+	
+	public void useSkill(Object...objects) throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		
+		parameterTypeValidator(objects);
 		
 		/* 
 		 * 执行规则验证
@@ -113,6 +124,19 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		map.put("position", owner.getContainerPosition());
 		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
 		notifyObservers(info);           //通知所有卡片对象，被动技能发动		
+	}
+	
+	/**
+	 * 技能有效范围
+	 * @param ground
+	 * @return
+	 */
+	public List<Integer> getConjureRange(IGround ground){
+		List<Integer> positionList = new ArrayList<Integer>();
+		LifeCard card = (LifeCard) getOwner();
+		Integer position = card.getContainerPosition();
+		positionList = ground.easyAreaForDistance(position, getRange(), IGround.Contain);
+		return positionList;
 	}
 	
 	@Override

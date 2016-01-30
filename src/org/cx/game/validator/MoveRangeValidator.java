@@ -21,7 +21,9 @@ public class MoveRangeValidator extends Validator {
 		
 		Integer curPosition = life.getContainerPosition();
 		Integer step = life.getPlayer().getGround().distance(curPosition, place.getPosition());
-		Integer range = life.getMove().getEnergy()/life.getMove().getConsume();    // 145/50 = 2;整数默认情况符合游戏规则
+		Integer energy = life.getMove().getEnergy();
+		Integer consume = life.getMove().getConsume();
+		Integer range = energy/consume;         // 145/50 = 2;整数默认情况符合游戏规则
 		
 		if(range>=step)
 			return true;
