@@ -365,7 +365,7 @@ public class Ground extends Container implements IGround
 		// TODO Auto-generated method stub
 		List<Integer> positionList = new ArrayList<Integer>();
 		if(magic.needConjurer())
-			positionList = easyAreaForDistance(magic.getConjurer().getContainerPosition(), magic.getConjureRange(), Contain);
+			positionList = magic.getApplyRange(this);         
 		return positionList;
 	}
 

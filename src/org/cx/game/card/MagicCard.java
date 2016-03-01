@@ -13,6 +13,7 @@ import org.cx.game.card.skill.IMagic;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
 import org.cx.game.policy.IUseCardPolicy;
@@ -22,12 +23,15 @@ import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
 import org.cx.game.widget.IContainer;
+import org.cx.game.widget.IGround;
 
 public abstract class MagicCard extends java.util.Observable implements ICard, IMagic, Observable, IValidatable {
 	
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private Integer style = 0;
 	private Integer func = 0;
+	
+	private String action = null;
 	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
@@ -41,7 +45,11 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		this.style = style;
 		this.func = func;
 		this.consume = consume;
+		
+		setAction("Magic");
 	}
+	
+	private final static String Apply = "_Apply";
 	
 	private Integer id;
 	
@@ -148,8 +156,12 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	 * 魔法使用范围
 	 * @return
 	 */
-	public Integer getConjureRange(){
-		return getConjurer().getAttack().getRange();
+	public List<Integer> getApplyRange(IGround ground){
+		List<Integer> positionList = new ArrayList<Integer>();
+		LifeCard conjure = getConjurer();
+		Integer position = conjure.getContainerPosition();
+		positionList = ground.easyAreaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
+		return positionList;
 	}
 
 	/**
@@ -199,7 +211,24 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		this.conjurer = conjurer;
 	}
 	
+	/**
+	 * 是否需要施法者，例如传送，需要施法者法师在场，这时法师就是施法者
+	 * @return
+	 */
 	public abstract Boolean needConjurer();
+	
+	/**
+	 * 能够使用该魔法卡的施法者们
+	 */
+	private List<Integer> conjurerList = new ArrayList<Integer>();
+
+	public List<Integer> getConjurerList() {
+		return conjurerList;
+	}
+
+	public void setConjurerList(List<Integer> conjurerList) {
+		this.conjurerList = conjurerList;
+	}
 
 	@Override
 	public void initState() {
@@ -266,6 +295,18 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	public void chuck() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		chuck.action();
+	}
+	
+	@Override
+	public void affect(Object... objects) throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getPlayer());
+		map.put("container", getContainer());
+		map.put("card", this);
+		map.put("position", getContainerPosition());
+		NotifyInfo info = new NotifyInfo(getAction()+Apply,map);
+		notifyObservers(info);
 	}
 	
 	@Override
@@ -359,4 +400,13 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		// TODO Auto-generated method stub
 		return errors.hasError();
 	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+	
 }

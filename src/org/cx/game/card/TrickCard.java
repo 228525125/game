@@ -1,9 +1,6 @@
 package org.cx.game.card;
 
-import org.cx.game.action.AttackDecorator;
-import org.cx.game.action.Chuck;
 import org.cx.game.action.ChuckDecorator;
-import org.cx.game.action.IAttack;
 import org.cx.game.action.IChuck;
 import org.cx.game.action.ISetup;
 import org.cx.game.action.ITrigger;
@@ -12,8 +9,6 @@ import org.cx.game.action.TriggerDecorator;
 import org.cx.game.card.skill.ITrick;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.out.JsonOut;
-import org.cx.game.out.Response;
 
 /**
  * 仅表示陷阱卡，它与Trick有本质区别，陷阱卡只能放置在专用区域，作用范围是所有对象，而

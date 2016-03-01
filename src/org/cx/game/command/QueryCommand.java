@@ -50,12 +50,21 @@ public class QueryCommand extends InteriorCommand {
 			positionList = ground.queryRange(buffer.getSkill(), map.get(parameter));
 		}else if("attack".equals(parameter) || "call".equals(parameter) || "move".equals(parameter)){
 			doValidator(new SelectLifeCardValidator(buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
 			LifeCard life = (LifeCard) buffer.getCard();           
 			positionList = ground.queryRange(life, map.get(parameter));   //这里需要计算
 		}else if("apply".equals(parameter)){
 			doValidator(new SelectMagicCardValidator(buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
 			MagicCard magic = (MagicCard) buffer.getCard();
 			doValidator(new NeedConjurerValidator(magic, buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
 			if(magic.needConjurer()){
 				magic.setConjurer((LifeCard) buffer.lastCard());
 				positionList = ground.queryRange(magic, map.get(parameter));

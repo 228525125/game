@@ -21,7 +21,7 @@ public class NeedConjurerValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
 		if(magic.needConjurer()){
-			if (buffer.lastCard() instanceof LifeCard) {
+			if (buffer.lastCard() instanceof LifeCard && magic.getConjurerList().contains(buffer.lastCard().getId())) {
 				ret = true;
 			}else{
 				addMessage(I18n.getMessage(this));
