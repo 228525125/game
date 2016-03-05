@@ -1,4 +1,4 @@
-package org.cx.game.card.skill;
+package org.cx.game.card.buff;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;

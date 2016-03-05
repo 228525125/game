@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.widget.IGround;

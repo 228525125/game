@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Observer;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.ITrick;
+import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IIntercepter;
 
 public class CemeteryDecorator implements ICemetery{

@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.intercepter.IInterceptable;

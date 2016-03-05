@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.TrickCard;
-import org.cx.game.card.skill.ITrick;
+import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 

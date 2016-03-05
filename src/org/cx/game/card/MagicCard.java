@@ -9,7 +9,7 @@ import org.cx.game.action.ApplyDecorator;
 import org.cx.game.action.ChuckDecorator;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
-import org.cx.game.card.skill.IMagic;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;

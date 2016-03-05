@@ -1,6 +1,7 @@
 package org.cx.game.card.skill;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.magic.IMagic;
 
 
 public interface ISkill extends IMagic {

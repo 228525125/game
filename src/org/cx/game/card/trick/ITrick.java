@@ -1,5 +1,6 @@
-package org.cx.game.card.skill;
+package org.cx.game.card.trick;
 
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;

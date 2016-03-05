@@ -1,6 +1,7 @@
-package org.cx.game.card.skill;
+package org.cx.game.card.buff;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;

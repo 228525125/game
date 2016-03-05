@@ -1,4 +1,4 @@
-package org.cx.game.card.skill;
+package org.cx.game.card.trick;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Map.Entry;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;

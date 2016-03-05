@@ -8,7 +8,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.TrickCard;
 import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.skill.ITrick;
+import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.IPlayer;
 import org.cx.game.widget.ICardGroup;

@@ -9,7 +9,7 @@ import java.util.Observable;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.TrickCard;
-import org.cx.game.card.skill.ITrick;
+import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;

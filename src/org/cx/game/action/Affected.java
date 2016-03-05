@@ -3,7 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.skill.IMagic;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 

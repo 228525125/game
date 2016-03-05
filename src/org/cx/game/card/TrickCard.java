@@ -6,7 +6,7 @@ import org.cx.game.action.ISetup;
 import org.cx.game.action.ITrigger;
 import org.cx.game.action.SetupDecorator;
 import org.cx.game.action.TriggerDecorator;
-import org.cx.game.card.skill.ITrick;
+import org.cx.game.card.trick.ITrick;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 

@@ -1,9 +1,10 @@
-package org.cx.game.card.skill;
+package org.cx.game.card.buff;
 
 import java.util.List;
 
 import org.cx.game.action.Random;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.tools.Debug;

@@ -18,7 +18,7 @@ import org.cx.game.card.TrickCard;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.skill.ITrick;
+import org.cx.game.card.trick.ITrick;
 import org.cx.game.core.IPlayer;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;

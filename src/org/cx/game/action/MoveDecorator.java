@@ -1,10 +1,10 @@
 package org.cx.game.action;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IBuff;
-import org.cx.game.card.skill.IMagic;
+import org.cx.game.card.buff.IBuff;
+import org.cx.game.card.buff.TiredAttackBuff;
+import org.cx.game.card.magic.IMagic;
 import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.skill.TiredAttackBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
