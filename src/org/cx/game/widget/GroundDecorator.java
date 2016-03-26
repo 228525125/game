@@ -28,7 +28,7 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 			for(int j=1;j<ground.getYBorder()+1;j++){
 				Integer curPos = Integer.valueOf(""+i+Ground.space+j);
 				IPlace place = new Place(this, curPos);
-				ground.addPlace(place);
+				ground.addPlace(new PlaceDecorator(place));
 			}
 		}
 		

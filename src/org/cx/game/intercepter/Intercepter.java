@@ -57,5 +57,19 @@ public abstract class Intercepter implements IIntercepter {
 		// TODO Auto-generated method stub
 		return IIntercepter.Level_Current;
 	}
+	
+	private Boolean isDelete = false;
+	
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		this.isDelete = true;
+	}
+	
+	@Override
+	public Boolean isDelete() {
+		// TODO Auto-generated method stub
+		return isDelete;
+	}
 
 }

@@ -3,6 +3,7 @@ package org.cx.game.widget;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -141,10 +142,7 @@ public class Place extends Observable implements IPlace {
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}
+		intercepter.delete();
 	}
 
 	@Override

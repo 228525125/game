@@ -34,6 +34,7 @@ public abstract class Buff extends Observable implements IBuff {
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
+	private Boolean isDelete = false;
 	private String action = null;
 	private Integer bout = 0;
 	private Integer style = 0;       //风格，法术、物理   
@@ -84,11 +85,14 @@ public abstract class Buff extends Observable implements IBuff {
 	
 	public String getName() {
 		// TODO Auto-generated method stub
-		if(null==name){
+		/* 在没有分包之前，buff的名字自动选用skill的名字代替，分包后逻辑发生变化了
+		 * if(null==name){
 			String clazz = this.getClass().getName();
 			if(-1!=clazz.indexOf("Buff"))
 				name = I18n.getMessage(clazz.substring(0, clazz.indexOf("Buff"))+".name");
-		}
+		}*/
+		if(null==name)
+			name = I18n.getMessage(this, "name");
 		return name;
 	}
 	
@@ -226,10 +230,12 @@ public abstract class Buff extends Observable implements IBuff {
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
+		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
 		if(null!=list){
 			list.remove(intercepter);
-		}
+		}*/
+		
+		intercepter.delete();
 	}
 
 	@Override
@@ -261,6 +267,18 @@ public abstract class Buff extends Observable implements IBuff {
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg);
+	}
+	
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		this.isDelete = true;
+	}
+	
+	@Override
+	public Boolean isDelete() {
+		// TODO Auto-generated method stub
+		return this.isDelete;
 	}
 
 }

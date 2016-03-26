@@ -59,4 +59,8 @@ public interface IIntercepter {
 	 * @return
 	 */
 	public Integer getLevel();
+	
+	public void delete();
+	
+	public Boolean isDelete();
 }

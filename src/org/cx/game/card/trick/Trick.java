@@ -2,6 +2,7 @@ package org.cx.game.card.trick;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -31,6 +32,7 @@ public abstract class Trick extends Observable implements ITrick {
 	private IPlayer player;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
+	private Boolean isDelete = false;
 	private String action = null;
 	private Integer bout = 0;
 	private Integer style = 0;       //风格，法术、物理   
@@ -38,11 +40,17 @@ public abstract class Trick extends Observable implements ITrick {
 	private Integer beginBout = 0;
 	private Integer func = IMagic.Func_Damage;      //功能类型
 	
-	public Trick(Integer bout, Integer style, Integer type, Integer func, IPlace place, IPlayer player) {
+	private Integer touchNumberOfTimes = DEFAULT_TOUCHNUMBEROFTIMES;         //陷阱触发次数
+	private Integer countTouchNumberOfTimes = 0;    //陷阱触发计数
+	
+	public final static Integer DEFAULT_TOUCHNUMBEROFTIMES = 1;
+	
+	public Trick(Integer bout, Integer touchNumberOfTimes, Integer style, Integer type, Integer func, IPlace place, IPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
 		this.owner = place.getTrickList();
 		this.bout = bout;
+		this.touchNumberOfTimes = touchNumberOfTimes;
 		this.style = style;
 		this.type = type;
 		this.func = func;
@@ -52,6 +60,8 @@ public abstract class Trick extends Observable implements ITrick {
 		String packageName = this.getClass().getPackage().getName();
 		String name = allName.substring(packageName.length()+1);
 		setAction("Trick");
+		
+		setup();
 	}
 	
 	@Override
@@ -65,7 +75,10 @@ public abstract class Trick extends Observable implements ITrick {
 				// TODO Auto-generated method stub
 				LifeCard life = (LifeCard) args[0];
 				try {
-					life.affected(Trick.this);
+					if(countTouchNumberOfTimes<touchNumberOfTimes)
+						life.affected(Trick.this);
+					if(countTouchNumberOfTimes==touchNumberOfTimes)
+						invalid();
 				} catch (RuleValidatorException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -102,7 +115,7 @@ public abstract class Trick extends Observable implements ITrick {
 	public ITrickList getOwner() {
 		return owner;
 	}
-	
+
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
@@ -116,6 +129,8 @@ public abstract class Trick extends Observable implements ITrick {
 		// TODO Auto-generated method stub
 		if(0==beginBout)
 			beginBout = getPlayer().getContext().getBout();
+		
+		this.countTouchNumberOfTimes++;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getPlayer());
@@ -218,10 +233,13 @@ public abstract class Trick extends Observable implements ITrick {
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
+		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
 		if(null!=list){
 			list.remove(intercepter);
-		}
+		}*/
+		/* 这两种编码方式效果一样，但后一种避免了java.util.ConcurrentModificationException 异常  */
+		
+		intercepter.delete();
 	}
 
 	@Override
@@ -259,5 +277,17 @@ public abstract class Trick extends Observable implements ITrick {
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Boolean isDelete() {
+		// TODO Auto-generated method stub
+		return this.isDelete;
+	}
+	
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		this.isDelete = true;
 	}
 }

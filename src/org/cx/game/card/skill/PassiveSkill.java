@@ -31,6 +31,7 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 	private String name;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
+	private Boolean isDelete = false;
 	private String action = null;
 	private Integer style = IMagic.Style_physical;
 	private Integer func = 0;	
@@ -139,10 +140,12 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
+		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
 		if(null!=list){
 			list.remove(intercepter);
-		}
+		}*/
+		
+		intercepter.delete();
 	}
 
 	@Override
@@ -191,5 +194,18 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		super.setChanged();
 		super.notifyObservers(arg);
 	}
+	
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		this.isDelete = true;
+	}
+	
+	@Override
+	public Boolean isDelete() {
+		// TODO Auto-generated method stub
+		return this.isDelete;
+	}
+
 
 }

@@ -111,10 +111,12 @@ public class Cemetery extends Observable implements ICemetery {
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
+		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
 		if(null!=list){
 			list.remove(intercepter);
-		}
+		}*/
+		
+		intercepter.delete();
 	}
 
 	@Override
