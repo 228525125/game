@@ -29,7 +29,7 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 
 				@Override
 				public void finish(Object[] args) {
-					new TiredAttackBuff(1,IMagic.Style_physical,IBuff.Type_Harm,IMagic.Func_Other,fm.getTiredAttackScale(),life).effect();
+					new TiredAttackBuff(1,fm.getTiredAttackScale(),life).effect();
 				}
 				
 				@Override

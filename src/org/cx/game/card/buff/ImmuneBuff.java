@@ -23,8 +23,8 @@ public class ImmuneBuff extends Buff {
 	private Boolean magic;
 	private Boolean astrict;
 	
-	public ImmuneBuff(Integer bout, Integer style, Integer type, Integer func, LifeCard life) {
-		super(bout, style, type, func, life);
+	public ImmuneBuff(Integer bout, LifeCard life) {
+		super(bout, life);
 		// TODO Auto-generated constructor stub
 	}
 

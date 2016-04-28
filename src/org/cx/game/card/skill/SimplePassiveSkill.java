@@ -22,8 +22,8 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 	private Integer keepDodgeChanceNewValue = 0;
 	private Integer keepDodgeChanceOldValue = 0;
 	
-	public SimplePassiveSkill(Integer style) {
-		super(style);
+	public SimplePassiveSkill() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

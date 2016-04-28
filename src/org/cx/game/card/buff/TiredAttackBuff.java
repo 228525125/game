@@ -22,9 +22,9 @@ public class TiredAttackBuff extends SimpleBuff {
 	 * @param atkDownScale 攻击力下降比例，计算基准，取值范围0-100，计算时，atk*atkDownScale
 	 * @param life
 	 */
-	public TiredAttackBuff(Integer bout, Integer style, Integer type, Integer func,
+	public TiredAttackBuff(Integer bout,
 			Integer atkDownScale, LifeCard life) {
-		super(bout, style, type, func, life);
+		super(bout, life);
 		// TODO Auto-generated constructor stub
 		this.atkDownScale = atkDownScale;
 	}

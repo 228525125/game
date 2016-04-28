@@ -9,8 +9,8 @@ public class ShortRangeAmerce extends SimplePassiveSkill {
 	private Integer atkScale;
 	private Integer mode;
 	
-	public ShortRangeAmerce(Integer style, Integer atkScale, LifeCard life) {
-		super(style);
+	public ShortRangeAmerce(Integer atkScale, LifeCard life) {
+		super();
 		// TODO Auto-generated constructor stub
 		this.atkScale = atkScale;
 		setOwner(life);

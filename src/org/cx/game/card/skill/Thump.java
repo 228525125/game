@@ -16,9 +16,9 @@ public class Thump extends SimplePassiveSkill {
 	private Integer upAtkScale;      //攻击提升比例
 	
 	
-	public Thump(Integer style, Integer upAtkScale, LifeCard life) {
+	public Thump(Integer upAtkScale, LifeCard life) {
 		// TODO Auto-generated constructor stub
-		super(style);
+		super();
 		setOwner(life);
 		this.upAtkScale = upAtkScale;
 	}

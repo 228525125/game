@@ -42,7 +42,7 @@ public interface IPlayer
 	
 	public CommandBuffer getCommandBuffer();
 	
-	public List<ICard> getDecks();
+	public List<ICard> decksList();
 	
 	public String getName();
 	

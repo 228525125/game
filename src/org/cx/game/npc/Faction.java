@@ -17,7 +17,7 @@ public class Faction extends Player {
 	}
 	
 	@Override
-	public List<ICard> getDecks() {
+	public List<ICard> decksList() {
 		// TODO Auto-generated method stub
 		return new ArrayList<ICard>();
 	}

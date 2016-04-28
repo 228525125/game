@@ -19,8 +19,8 @@ public class AttackLock extends PassiveSkill {
 
 	private LifeCard attacked = null;
 	
-	public AttackLock(Integer style, LifeCard life) {
-		super(style);
+	public AttackLock(LifeCard life) {
+		super();
 		// TODO Auto-generated constructor stub
 		setOwner(life);
 	}

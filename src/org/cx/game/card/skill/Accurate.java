@@ -15,9 +15,9 @@ public class Accurate extends PassiveSkill {
 
 	private boolean invoke = false;
 	
-	public Accurate(Integer style, LifeCard life) {
+	public Accurate(LifeCard life) {
 		// TODO Auto-generated constructor stub
-		super(style);
+		super();
 		setOwner(life);
 	}
 	

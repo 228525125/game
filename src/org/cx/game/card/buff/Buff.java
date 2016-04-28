@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.magic.IMagic;
+import org.cx.game.core.Context;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
@@ -29,7 +30,7 @@ import org.cx.game.tools.I18n;
  */
 public abstract class Buff extends Observable implements IBuff {
 
-	private String cType = null;
+	private String cType = null;                    //类名
 	private String name = null;
 	private LifeCard owner;
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
@@ -37,20 +38,18 @@ public abstract class Buff extends Observable implements IBuff {
 	private Boolean isDelete = false;
 	private String action = null;
 	private Integer bout = 0;
-	private Integer style = 0;       //风格，法术、物理   
-	private Integer type = 0;        //类型，受益、受损、中性    
+	private Integer style = IMagic.Style_physical;       //风格，法术、物理   
+	private Integer hostility = IBuff.Type_Neutral;        //类型，受益、受损、中性    
 	private Integer beginBout = 0;
 	private Boolean duplication = false;  //是否可以叠加
 	private Integer func = IMagic.Func_Damage;      //功能类型
 	
 	protected final static String Affect = "_Affect";
 
-	public Buff(Integer bout, Integer style, Integer type, Integer func, LifeCard life) {
+	public Buff(Integer bout, LifeCard life) {
 		// TODO Auto-generated constructor stub
 		this.owner = life;
 		this.bout = bout;
-		this.style = style;
-		this.type = type;
 		recordIntercepter(life.getPlayer().getContext(), this);
 		
 		addObserver(new JsonOut());
@@ -59,6 +58,10 @@ public abstract class Buff extends Observable implements IBuff {
 		String packageName = this.getClass().getPackage().getName();
 		this.cType = allName.substring(packageName.length()+1);
 		setAction("Buff");
+		
+		this.func = Context.getMagicFunction(allName);
+		this.style = Context.getMagicStyle(allName);
+		this.hostility = Context.getMagicHostility(allName);
 	}
 	
 	@Override
@@ -75,6 +78,10 @@ public abstract class Buff extends Observable implements IBuff {
 
 	public LifeCard getOwner() {
 		return owner;
+	}
+	
+	public void setOwner(LifeCard owner){
+		this.owner = owner;
 	}
 	
 	@Override
@@ -166,8 +173,8 @@ public abstract class Buff extends Observable implements IBuff {
 		return style;
 	}
 
-	public Integer getType() {
-		return type;
+	public Integer getHostility() {
+		return hostility;
 	}
 	
 	public Boolean isDuplication() {

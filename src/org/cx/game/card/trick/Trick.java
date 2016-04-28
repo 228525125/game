@@ -9,7 +9,9 @@ import java.util.Observable;
 import java.util.Map.Entry;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
+import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -35,31 +37,31 @@ public abstract class Trick extends Observable implements ITrick {
 	private Boolean isDelete = false;
 	private String action = null;
 	private Integer bout = 0;
-	private Integer style = 0;       //风格，法术、物理   
-	private Integer type = 0;        //类型，受益、受损、中性    
+	private Integer style = IMagic.Style_physical;       //风格，法术、物理       
 	private Integer beginBout = 0;
-	private Integer func = IMagic.Func_Damage;      //功能类型
+	private Integer func = IMagic.Func_Other;      //功能类型
 	
 	private Integer touchNumberOfTimes = DEFAULT_TOUCHNUMBEROFTIMES;         //陷阱触发次数
 	private Integer countTouchNumberOfTimes = 0;    //陷阱触发计数
 	
 	public final static Integer DEFAULT_TOUCHNUMBEROFTIMES = 1;
 	
-	public Trick(Integer bout, Integer touchNumberOfTimes, Integer style, Integer type, Integer func, IPlace place, IPlayer player) {
+	public Trick(Integer bout, Integer touchNumberOfTimes, IPlace place, IPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
 		this.owner = place.getTrickList();
 		this.bout = bout;
 		this.touchNumberOfTimes = touchNumberOfTimes;
-		this.style = style;
-		this.type = type;
-		this.func = func;
+
 		recordIntercepter(player.getContext(), this);
 		
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();
 		String name = allName.substring(packageName.length()+1);
 		setAction("Trick");
+		
+		this.func = Context.getMagicFunction(allName);
+		this.style = Context.getMagicStyle(allName);
 		
 		setup();
 	}
@@ -175,10 +177,6 @@ public abstract class Trick extends Observable implements ITrick {
 	
 	public Integer getStyle() {
 		return style;
-	}
-
-	public Integer getType() {
-		return type;
 	}
 
 	public String getAction() {

@@ -1,11 +1,19 @@
 package org.cx.game.core;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
+import java.util.Set;
 import java.util.UUID;
 
 import org.cx.game.card.ICard;
@@ -16,12 +24,17 @@ import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.npc.NPC;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.ControlQueueDecorator;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 public class Context extends Observable implements IContext
 {	
@@ -34,6 +47,11 @@ public class Context extends Observable implements IContext
 	
 	private ContextDecorator decorator = null; 
 	
+	private final static Map<Integer,Map<Integer,Integer>> Attack_Armour = new HashMap<Integer,Map<Integer,Integer>>();
+	private final static Map<String,Integer> Magic_Style = new HashMap<String,Integer>();
+	private final static Map<String,Integer> Magic_Function = new HashMap<String,Integer>();
+	private final static Map<String,Integer> Magic_Hostility = new HashMap<String,Integer>();
+	
 	public Context(IPlayer player1, IPlayer player2) {
 		// TODO Auto-generated constructor stub
 		this.player1 = player1;
@@ -44,6 +62,189 @@ public class Context extends Observable implements IContext
 		queue = new ControlQueueDecorator(this.queue);
 		queue.add(player1);
 		queue.add(player2);
+		
+		loadResource();
+	}
+	
+	private void loadResource(){
+		
+		/*
+		 * attack.xml
+		 */
+		Element type = getRoot("attack.path").element("attackType");
+		for(Iterator it = type.elementIterator("attack");it.hasNext();){
+			Element attack = (Element) it.next();
+			Integer attackType = Integer.valueOf(attack.attribute("type").getText());
+			
+			Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+			
+			for(Iterator itr = attack.elementIterator("armour");itr.hasNext();){
+				Element armour = (Element) itr.next();
+				map.put(Integer.valueOf(armour.attribute("type").getText()), Integer.valueOf(armour.getText()));
+			}
+			
+			Attack_Armour.put(attackType, map);
+		}
+		
+		
+		/*
+		 * magic_style.xml
+		 */
+		Element magicStyle = getRoot("magic_style.path").element("magicStyle");
+		for(Iterator it = magicStyle.elementIterator("style");it.hasNext();){
+			Element style = (Element) it.next();
+			Integer code = Integer.valueOf(style.attribute("code").getText());
+			
+			for(Iterator itr = style.elementIterator("magic");itr.hasNext();){
+				Element magic = (Element) itr.next();
+				String className = magic.attribute("type").getText();
+				Magic_Style.put(className, code);
+			}
+		}
+		
+		/*
+		 * magic_hostility.xml
+		 */
+		Element magicHostility = getRoot("magic_hostility.path").element("magicHostility");
+		for(Iterator it = magicHostility.elementIterator("hostility");it.hasNext();){
+			Element hostility = (Element) it.next();
+			Integer code = Integer.valueOf(hostility.attribute("code").getText());
+			
+			for(Iterator itr = hostility.elementIterator("magic");itr.hasNext();){
+				Element magic = (Element) itr.next();
+				String className = magic.attribute("type").getText();
+				Magic_Hostility.put(className, code);
+			}
+		}
+		
+		/*
+		 * magic_function.xml
+		 */
+		Element magicFunction = getRoot("magic_function.path").element("magicFunction");
+		for(Iterator it = magicFunction.elementIterator("function");it.hasNext();){
+			Element function = (Element) it.next();
+			Integer code = Integer.valueOf(function.attribute("code").getText());
+			
+			for(Iterator itr = function.elementIterator("magic");itr.hasNext();){
+				Element magic = (Element) itr.next();
+				String className = magic.attribute("type").getText();
+				Magic_Function.put(className, code);
+			}
+		}
+		
+		
+	}
+	
+	private static Element getRoot(String pathName) {
+		SAXReader saxReader = new SAXReader();
+		try {
+			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure(pathName))); 
+		
+			Document document = saxReader.read(is);
+			return document.getRootElement();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param atkType 攻击类型
+	 * @param armourType 防御类型
+	 * @return 折算比例
+	 */
+	public static Integer getAttackArmour(Integer atkType, Integer armourType){
+		Map<Integer,Integer> map = Attack_Armour.get(atkType);
+		return map.get(armourType);
+	}
+	
+	/**
+	 * 根据一个magic类，获取它的style
+	 * @param className 类的全名（包含包名）
+	 * @return
+	 */
+	public static Integer getMagicStyle(String className){
+		return Magic_Style.get(className);
+	}
+	
+	/**
+	 * 根据style，查询className的集合
+	 * @param style 
+	 * @return
+	 */
+	public static List<String> queryMagicStyle(Integer style){
+		List<String> list = new ArrayList<String>();
+		
+		Set<Entry<String,Integer>> set = Magic_Style.entrySet();
+		Iterator<Entry<String,Integer>> it = set.iterator();
+		while (it.hasNext()) {
+			Entry<String, Integer> entry = it.next();
+			if(style.equals(entry.getValue()))
+				list.add(entry.getKey());
+		}
+		return list;
+	}
+	
+	/**
+	 * 根据一个magic类，获取它的hostility
+	 * @param className 类的全名（包含包名）
+	 * @return
+	 */
+	public static Integer getMagicHostility(String className){
+		return Magic_Hostility.get(className);
+	}
+	
+	/**
+	 * 根据host，查询className的集合
+	 * @param host 
+	 * @return
+	 */
+	public static List<String> queryMagicHostility(Integer host){
+		List<String> list = new ArrayList<String>();
+		
+		Set<Entry<String,Integer>> set = Magic_Hostility.entrySet();
+		Iterator<Entry<String,Integer>> it = set.iterator();
+		while (it.hasNext()) {
+			Entry<String, Integer> entry = it.next();
+			if(host.equals(entry.getValue()))
+				list.add(entry.getKey());
+		}
+		return list;
+	}
+	
+	/**
+	 * 根据一个magic类，获取它的function
+	 * @param className 类的全名（包含包名）
+	 * @return
+	 */
+	public static Integer getMagicFunction(String className){
+		return Magic_Function.get(className);
+	}
+	
+	/**
+	 * 根据func，查询className的集合
+	 * @param func 功能
+	 * @return
+	 */
+	public static List<String> queryMagicFunction(Integer func){
+		List<String> list = new ArrayList<String>();
+		
+		Set<Entry<String,Integer>> set = Magic_Function.entrySet();
+		Iterator<Entry<String,Integer>> it = set.iterator();
+		while (it.hasNext()) {
+			Entry<String, Integer> entry = it.next();
+			if(func.equals(entry.getValue()))
+				list.add(entry.getKey());
+		}
+		return list;
 	}
 	
 	public void setDecorator(ContextDecorator decorator) {

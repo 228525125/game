@@ -18,9 +18,9 @@ public class Parry extends PassiveSkill {
 	
 	private LifeCard attack;
 	
-	public Parry(Integer style, LifeCard life) {
+	public Parry(LifeCard life) {
 		// TODO Auto-generated constructor stub
-		super(style);
+		super();
 		setOwner(life);
 	}
 	

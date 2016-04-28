@@ -91,7 +91,7 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		
 		this.context = context;
 		
-		this.cardGroup = new CardGroup(getDecks());
+		this.cardGroup = new CardGroup(decksList());
 		this.cardGroup = new CardGroupDecorator(this.cardGroup);
 		this.cardGroup.setPlayer(this);
 		

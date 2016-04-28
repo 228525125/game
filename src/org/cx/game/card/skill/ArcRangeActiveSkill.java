@@ -14,8 +14,8 @@ public abstract class ArcRangeActiveSkill extends ActiveSkill {
 	private IPlace place;
 	
 	public ArcRangeActiveSkill(Integer consume, Integer cooldown,
-			Integer velocity, Integer style, Integer func, Integer radius) {
-		super(consume, cooldown, velocity, style, func);
+			Integer velocity, Integer radius) {
+		super(consume, cooldown, velocity);
 		// TODO Auto-generated constructor stub
 		this.radius = radius;
 		setParameterTypeValidator(new Class[]{IPlace.class});

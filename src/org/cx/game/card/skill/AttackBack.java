@@ -20,9 +20,9 @@ public class AttackBack extends PassiveSkill {
 
 	private LifeCard attack;
 	
-	public AttackBack(Integer style, LifeCard life) {
+	public AttackBack(LifeCard life) {
 		// TODO Auto-generated constructor stub
-		super(style);
+		super();
 		setOwner(life);
 	}
 	

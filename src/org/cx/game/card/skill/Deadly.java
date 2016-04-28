@@ -16,9 +16,9 @@ public class Deadly extends SimplePassiveSkill {
 	private Integer chance;
 	private Integer upAtkScale;
 	
-	public Deadly(Integer style, Integer chance, Integer upAtkScale) {
+	public Deadly(Integer chance, Integer upAtkScale) {
 		// TODO Auto-generated constructor stub
-		super(style);
+		super();
 		this.chance = chance;
 		this.upAtkScale = upAtkScale;
 	}

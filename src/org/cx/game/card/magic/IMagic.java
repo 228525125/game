@@ -27,12 +27,12 @@ public interface IMagic {
 	/**
 	 * 物理buff
 	 */
-	public static final Integer Style_physical = 1;
+	public static final Integer Style_physical = 11;
 	
 	/**
 	 * 魔法buff
 	 */
-	public static final Integer Style_Magic = 2;
+	public static final Integer Style_Magic = 12;
 	
 	/**
 	 * 风格，法术、物理
@@ -43,32 +43,42 @@ public interface IMagic {
 	/**
 	 * 移动限制
 	 */
-	public static final Integer Func_Astrict = 1;
+	public static final Integer Func_Astrict = 101;
 	
 	/**
 	 * 直接伤害
 	 */
-	public static final Integer Func_Damage = 2;
+	public static final Integer Func_Damage = 102;
 	
 	/**
 	 * 召唤
 	 */
-	public static final Integer Func_Call = 3;
+	public static final Integer Func_Call = 103;
 	
 	/**
 	 * 增益
 	 */
-	public static final Integer Func_Gain = 4;
+	public static final Integer Func_Gain = 104;
+	
+	/**
+	 * 损益
+	 */
+	public static final Integer Func_Loss = 105;
 	
 	/**
 	 * 持续伤害
 	 */
-	public static final Integer Func_SustainedHarm = 5;
+	public static final Integer Func_SustainedHarm = 106;
+	
+	/**
+	 * 陷阱
+	 */
+	public static final Integer Func_Trick = 107;
 	
 	/**
 	 * 其他功能
 	 */
-	public static final Integer Func_Other = 9;
+	public static final Integer Func_Other = 199;
 	
 	/**
 	 * 功能类型

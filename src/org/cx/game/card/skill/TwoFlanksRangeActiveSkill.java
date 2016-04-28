@@ -13,8 +13,8 @@ public class TwoFlanksRangeActiveSkill extends ActiveSkill {
 	private LifeCard affected;
 	
 	public TwoFlanksRangeActiveSkill(Integer consume, Integer cooldown,
-			Integer velocity, Integer style, Integer func, Integer range) {
-		super(consume, cooldown, velocity, style, func);
+			Integer velocity, Integer range) {
+		super(consume, cooldown, velocity);
 		// TODO Auto-generated constructor stub
 		this.range = range;
 		setParameterTypeValidator(new Class[]{LifeCard.class});

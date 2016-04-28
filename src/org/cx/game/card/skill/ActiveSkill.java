@@ -1,8 +1,14 @@
 package org.cx.game.card.skill;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -11,6 +17,7 @@ import java.util.Map.Entry;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.magic.IMagic;
+import org.cx.game.core.Context;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -20,10 +27,15 @@ import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 import org.cx.game.tools.I18n;
+import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
 import org.cx.game.widget.IGround;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 public abstract class ActiveSkill extends Observable implements IActiveSkill {
 
@@ -37,7 +49,7 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	private Integer cooldown = 0;             //冷却回合
 	private Integer cooldownBout = 0;         //冷却剩余回合数
 	private Integer velocity = 0;             //瞬发/蓄力
-	private Integer style = 0;                //魔法/物理
+	private Integer style = IMagic.Style_Magic;  //魔法/物理
 	private Integer func = IMagic.Func_Other; //限制/直接伤害/其他
 	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
@@ -61,13 +73,11 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	 * @param style 魔法/物理
 	 * @param func 限制/直接伤害/其他 
 	 */
-	public ActiveSkill(Integer consume, Integer cooldown, Integer velocity, Integer style, Integer func) {
+	public ActiveSkill(Integer consume, Integer cooldown, Integer velocity) {
 		// TODO Auto-generated constructor stub
 		this.consume = consume;
 		this.cooldown = cooldown;
 		this.velocity = velocity;
-		this.style = style;
-		this.func = func;
 		
 		addObserver(new JsonOut());
 		
@@ -76,6 +86,9 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		String packageName = this.getClass().getPackage().getName();
 		this.cType = allName.substring(packageName.length()+1);
 		setAction("Skill");
+		
+		this.func = Context.getMagicFunction(allName);
+		this.style = Context.getMagicStyle(allName);
 	}
 	
 	public IIntercepter getCooldownBoutIntercepter() {
@@ -308,5 +321,25 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	public Boolean hasError() {
 		// TODO Auto-generated method stub
 		return errors.hasError();
+	}
+	
+	private static Element getRoot(String pathName) {
+		SAXReader saxReader = new SAXReader();
+		try {
+			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure(pathName))); 
+		
+			Document document = saxReader.read(is);
+			return document.getRootElement();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -10,6 +10,7 @@ import org.cx.game.action.ChuckDecorator;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
 import org.cx.game.card.magic.IMagic;
+import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
@@ -38,15 +39,20 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	
 	private Class[] parameterTypeValidator = new Class[]{};      //用于参数的验证
 	
-	public MagicCard(Integer id, Integer consume, Integer style, Integer func) {
+	public MagicCard(Integer id, Integer consume) {
 		// TODO Auto-generated constructor stub
 		addObserver(new JsonOut());
 		this.id = id;
-		this.style = style;
-		this.func = func;
 		this.consume = consume;
 		
 		setAction("Magic");
+		
+		/* 取类名 */
+		String allName = this.getClass().getName();
+		this.func = Context.getMagicFunction(allName);
+		this.style = Context.getMagicStyle(allName);
+		
+		
 	}
 	
 	private final static String Apply = "_Apply";

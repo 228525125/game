@@ -19,9 +19,9 @@ public class Dodge extends PassiveSkill {
 	private boolean invoke = true;
 	private LifeCard attack = null;
 	
-	public Dodge(Integer style, LifeCard life) {
+	public Dodge(LifeCard life) {
 		// TODO Auto-generated constructor stub
-		super(style);
+		super();
 		setOwner(life);
 	}
 	

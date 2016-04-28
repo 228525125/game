@@ -17,8 +17,8 @@ public abstract class CircleRangeAcitveSkill extends ActiveSkill {
 	private Integer radius;
 	
 	public CircleRangeAcitveSkill(Integer consume, Integer cooldown,
-			Integer velocity, Integer style, Integer func, Integer radius) {
-		super(consume, cooldown, velocity, style, func);
+			Integer velocity, Integer radius) {
+		super(consume, cooldown, velocity);
 		// TODO Auto-generated constructor stub
 		this.radius = radius;
 	}

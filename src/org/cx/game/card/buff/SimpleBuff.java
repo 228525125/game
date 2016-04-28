@@ -22,9 +22,8 @@ public abstract class SimpleBuff extends Buff {
 	private Integer keepEnergyNewValue = 0;
 	private Integer keepEnergyOldValue = 0;
 	
-	public SimpleBuff(Integer bout, Integer style, Integer type,
-			Integer func, LifeCard life) {
-		super(bout, style, type, func, life);
+	public SimpleBuff(Integer bout, LifeCard life) {
+		super(bout, life);
 		// TODO Auto-generated constructor stub
 	}
 	

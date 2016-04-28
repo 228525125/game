@@ -14,7 +14,7 @@ public class AttackLockBuff extends Buff {
 	private LifeCard attack = null;
 	
 	public AttackLockBuff(Integer bout, LifeCard attack, LifeCard life) {
-		super(bout, IMagic.Style_physical, IBuff.Type_Harm, IMagic.Func_Astrict, life);
+		super(bout, life);
 		// TODO Auto-generated constructor stub
 		this.attack = attack;
 		setDuplication(true);         //允许同时被多人锁定

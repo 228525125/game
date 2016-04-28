@@ -488,6 +488,16 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		return ret;
 	}
 	
+	public List<IBuff> getBuff(String className){
+		List<IBuff> ret = new ArrayList<IBuff>();
+		List<IBuff> buffs = new ArrayList<IBuff>();
+		buffs.addAll(buffList);
+		for(IBuff buff : buffs)
+			if(buff.getClass().getName().equals(className))
+				ret.add(buff);
+		return ret;
+	}
+	
 	public void clearBuff(){
 		List<IBuff> buffs = new ArrayList<IBuff>();
 		buffs.addAll(buffList);
@@ -534,34 +544,39 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 人类
 	 */
-	public final static Integer Race_Human = 1;
+	public final static Integer Stirps_Human = 51;
 	
 	/**
 	 * 天使
 	 */
-	public final static Integer Race_Angel = 2;
+	public final static Integer Stirps_Angel = 52;
 	
 	/**
 	 * 亡灵
 	 */
-	public final static Integer Race_Die = 3;
+	public final static Integer Stirps_Die = 53;
 	
 	/**
 	 * 恶魔
 	 */
-	public final static Integer Race_Daimon = 4;
+	public final static Integer Stirps_Daimon = 54;
+	
+	/**
+	 * 野兽
+	 */
+	public final static Integer Stirps_Beast = 55;
 	
 	/**
 	 * 种族
 	 */
-	private Integer race;
+	private Integer stirps;
 	
-	public Integer getRace() {
-		return race;
+	public Integer getStirps() {
+		return stirps;
 	}
 
-	public void setRace(Integer race) {
-		this.race = race;
+	public void setStirps(Integer stirps) {
+		this.stirps = stirps;
 	}
 	
 	/**
@@ -637,10 +652,10 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	public void setAttack(IAttack attack) {
-		attack.addIntercepter(new Accurate(IMagic.Style_physical, this));
-		attack.addIntercepter(new Thump(IMagic.Style_physical, 150, this));
+		attack.addIntercepter(new Accurate(this));
+		attack.addIntercepter(new Thump(150, this));
 		//attack.addIntercepter(new AttackLock(IMagic.Style_physical, this));
-		attack.addIntercepter(new ShortRangeAmerce(IMagic.Style_physical, 50, this));
+		attack.addIntercepter(new ShortRangeAmerce(50, this));
 		attack.setAccurateChance(accurateChance);
 		attack.setAtk(atk);
 		attack.setRange(range);
@@ -661,9 +676,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	public void setAttacked(IAttacked attacked) {
-		attacked.addIntercepter(new Dodge(IMagic.Style_physical,this));
-		attacked.addIntercepter(new AttackBack(IMagic.Style_physical,this));
-		attacked.addIntercepter(new Parry(IMagic.Style_physical,this));
+		attacked.addIntercepter(new Dodge(this));
+		attacked.addIntercepter(new AttackBack(this));
+		attacked.addIntercepter(new Parry(this));
 		attacked.setAttackBackChance(attackBackChance);
 		attacked.setDodgeChance(dodgeChance);
 		attacked.setImmuneDamageRatio(immuneDamageRatio);

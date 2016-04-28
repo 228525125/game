@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import org.cx.game.card.CardFactory;
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.Context;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
@@ -29,7 +30,7 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 
 	private IAttacked attacked = null;
 	
-	private static Element getRoot() {
+	/*private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
 		try {
 			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("attack.path"))); 
@@ -63,7 +64,7 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 				continue;
 		}
 		return null;
-	}
+	}*/
 	
 	public AttackedDecorator(IAttacked attacked) {
 		// TODO Auto-generated constructor stub
@@ -83,7 +84,8 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 				/*
 				 * 攻击类型与防御类型相克的处理
 				 */
-				attack.getAttack().setAtk(Util.convertInteger(atk*getAttackScale(attack.getAttack().getType(), attacked.getAttacked().getArmourType())));
+				//attack.getAttack().setAtk(Util.convertInteger(atk*getAttackScale(attack.getAttack().getType(), attacked.getAttacked().getArmourType())));
+				attack.getAttack().setAtk(atk*Context.getAttackArmour(attack.getAttack().getType(), attacked.getAttacked().getArmourType())/100);
 			}
 			
 			@Override

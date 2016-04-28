@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.magic.IMagic;
+import org.cx.game.core.Context;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
@@ -33,14 +34,13 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private Boolean isDelete = false;
 	private String action = null;
-	private Integer style = IMagic.Style_physical;
-	private Integer func = 0;	
+	private Integer style = IMagic.Style_physical;       //AttackBack、AttackLock等会用到
+	private Integer func = IMagic.Func_Other;	
 	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
-	public PassiveSkill(Integer style) {
+	public PassiveSkill() {
 		// TODO Auto-generated constructor stub
-		this.style = style;
 		addObserver(new JsonOut());
 		
 		/* 取类名 */
@@ -48,6 +48,9 @@ public abstract class PassiveSkill extends Observable implements IPassiveSkill {
 		String packageName = this.getClass().getPackage().getName();
 		this.cType = allName.substring(packageName.length()+1);
 		setAction("Skill");
+		
+		this.func = Context.getMagicFunction(allName);
+		this.style = Context.getMagicStyle(allName);
 	}
 	
 	private final static String UseSkill = "_UseSkill";

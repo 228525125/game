@@ -58,22 +58,22 @@ public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRe
 	/**
 	 * 受益，不包含系统级的buff
 	 */
-	public static final Integer Type_Benefit = 0;
+	public static final Integer Type_Benefit = 21;
 	
 	/**
 	 * 受损，不包含系统级的buff
 	 */
-	public static final Integer Type_Harm = 1;
+	public static final Integer Type_Harm = 22;
 	
 	/**
 	 * 中性
 	 */
-	public static final Integer Type_Neutral = 2;
+	public static final Integer Type_Neutral = 23;
 	
 	/**
 	 * 类型，受益、受损、中性
 	 * @return
 	 */
-	public Integer getType();
+	public Integer getHostility();
 	
 }

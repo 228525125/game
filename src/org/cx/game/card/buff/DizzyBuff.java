@@ -21,7 +21,7 @@ public class DizzyBuff extends Buff {
 	private String name = null;
 	
 	public DizzyBuff(Integer bout, LifeCard life) {
-		super(bout, IMagic.Style_physical, IBuff.Type_Harm, IMagic.Func_Astrict, life);
+		super(bout, life);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -14,8 +14,8 @@ public abstract class LineRangeActiveSkill extends ActiveSkill {
 	private IPlace place = null;
 	
 	public LineRangeActiveSkill(Integer consume, Integer cooldown,
-			Integer velocity, Integer style, Integer func, Integer length) {
-		super(consume, cooldown, velocity, style, func);
+			Integer velocity, Integer length) {
+		super(consume, cooldown, velocity);
 		// TODO Auto-generated constructor stub
 		this.length = length;
 		setParameterTypeValidator(new Class[]{IPlace.class});
