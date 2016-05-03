@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
+import org.cx.game.core.Context;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
@@ -45,7 +46,13 @@ public class CardFactory {
 		ObjectTypeBuilder otb = new ObjectTypeBuilder();
 		try {
 			new ObjectTypeParse(otb).parse(cardEl);
-			return (ICard) otb.builder();
+			ICard card = (ICard) otb.builder();
+			if (card instanceof LifeCard) {
+				LifeCard life = (LifeCard) card;
+				Integer stirps = Context.getLifeStirps(life.getId());
+				life.setStirps(stirps);
+			}
+			return card;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

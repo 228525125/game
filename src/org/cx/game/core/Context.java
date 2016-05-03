@@ -51,6 +51,7 @@ public class Context extends Observable implements IContext
 	private final static Map<String,Integer> Magic_Style = new HashMap<String,Integer>();
 	private final static Map<String,Integer> Magic_Function = new HashMap<String,Integer>();
 	private final static Map<String,Integer> Magic_Hostility = new HashMap<String,Integer>();
+	private final static Map<Integer,Integer> Life_Stirps = new HashMap<Integer,Integer>();
 	
 	public Context(IPlayer player1, IPlayer player2) {
 		// TODO Auto-generated constructor stub
@@ -132,6 +133,21 @@ public class Context extends Observable implements IContext
 			}
 		}
 		
+		
+		/*
+		 * life_stirps
+		 */
+		Element lifeStirps = getRoot("life_stirps.path").element("lifeStirps");
+		for(Iterator it = lifeStirps.elementIterator("stirps");it.hasNext();){
+			Element stirps = (Element) it.next();
+			Integer code = Integer.valueOf(stirps.attribute("code").getText());
+			
+			for(Iterator itr = stirps.elementIterator("life");itr.hasNext();){
+				Element life = (Element) itr.next();
+				Integer cardID = Integer.valueOf(life.attribute("cardID").getText());
+				Life_Stirps.put(cardID, code);
+			}
+		}
 		
 	}
 	
@@ -242,6 +258,33 @@ public class Context extends Observable implements IContext
 		while (it.hasNext()) {
 			Entry<String, Integer> entry = it.next();
 			if(func.equals(entry.getValue()))
+				list.add(entry.getKey());
+		}
+		return list;
+	}
+	
+	/**
+	 * 根据一个CardID类，获取它的stirps
+	 * @param CardID 类的全名（包含包名）
+	 * @return
+	 */
+	public static Integer getLifeStirps(Integer cardID){
+		return Life_Stirps.get(cardID);
+	}
+	
+	/**
+	 * 根据stirps，查询CardID的集合
+	 * @param stirps 功能
+	 * @return
+	 */
+	public static List<Integer> queryLifeStirps(Integer stirps){
+		List<Integer> list = new ArrayList<Integer>();
+		
+		Set<Entry<Integer,Integer>> set = Life_Stirps.entrySet();
+		Iterator<Entry<Integer,Integer>> it = set.iterator();
+		while (it.hasNext()) {
+			Entry<Integer, Integer> entry = it.next();
+			if(stirps.equals(entry.getValue()))
 				list.add(entry.getKey());
 		}
 		return list;
