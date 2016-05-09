@@ -37,8 +37,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
-	private Class[] parameterTypeValidator = new Class[]{};      //用于参数的验证
-	
 	public MagicCard(Integer id, Integer consume) {
 		// TODO Auto-generated constructor stub
 		addObserver(new JsonOut());
@@ -272,9 +270,18 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	}
 	
 	private ParameterTypeValidator parameterValidator = null;
+	private Class[] parameterType = new Class[]{};      //用于参数的验证
+	private String proertyName = null;
+	private Object[] validatorValue = null;
 
-	protected void setParameterTypeValidator(Class[] parameterTypeValidator) {
-		this.parameterTypeValidator = parameterTypeValidator;
+	protected void setParameterTypeValidator(Class[] parameterType) {
+		this.parameterType = parameterType;
+	}
+	
+	protected void setParameterTypeValidator(Class[] parameterType, String proertyName, Object[] validatorValue) {
+		this.parameterType = parameterType;
+		this.proertyName = proertyName;
+		this.validatorValue = validatorValue;
 	}
 	
 	/**
@@ -283,7 +290,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	public void apply(Object...objects) throws RuleValidatorException {
 
 		deleteValidator(parameterValidator);
-		this.parameterValidator = new ParameterTypeValidator(objects,parameterTypeValidator); 
+		this.parameterValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
 		addValidator(parameterValidator);
 		
 		/* 

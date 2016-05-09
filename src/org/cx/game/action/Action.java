@@ -24,8 +24,6 @@ public abstract class Action extends Observable implements IAction {
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
-	private Class[] parameterType = new Class[]{};      //用于参数的验证
-	
 	private ActionDecorator decorator = null;
 	
 	public ActionDecorator getDecorator() {
@@ -52,10 +50,23 @@ public abstract class Action extends Observable implements IAction {
 	}
 	
 	private ParameterTypeValidator parameterTypeValidator = null;
+	private Class[] parameterType = new Class[]{};      //用于参数的验证
+	private String proertyName = null;
+	private Object[] validatorValue = null;
+	
+	protected void setParameterTypeValidator(Class[] parameterType) {
+		this.parameterType = parameterType;
+	}
+	
+	protected void setParameterTypeValidator(Class[] parameterType, String proertyName, Object[] validatorValue) {
+		this.parameterType = parameterType;
+		this.proertyName = proertyName;
+		this.validatorValue = validatorValue;
+	}
 	
 	public void action(Object...objects) throws RuleValidatorException {
 		deleteValidator(parameterTypeValidator);
-		this.parameterTypeValidator = new ParameterTypeValidator(objects,parameterType); 
+		this.parameterTypeValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
 		addValidator(parameterTypeValidator);
 		
 		/* 
@@ -65,10 +76,6 @@ public abstract class Action extends Observable implements IAction {
 		
 		if(hasError())
 			throw new RuleValidatorException(getErrors().getMessage());
-	}
-
-	protected void setParameterTypeValidator(Class[] parameterType) {
-		this.parameterType = parameterType;
 	}
 
 	@Override

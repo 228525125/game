@@ -23,7 +23,7 @@ public class ConjureCommand extends InteriorCommand {
 		// TODO Auto-generated constructor stub
 		addValidator(new SelectContainerValidator(player.getGround(),buffer));
 		addValidator(new SelectSkillValidator(buffer));
-		addValidator(new ParameterTypeValidator(new Object[]{buffer.getSkill()}, new Class[]{IActiveSkill.class}));
+		addValidator(new ParameterTypeValidator(new Object[]{buffer.getSkill()}, new Class[]{IActiveSkill.class},null,null));
 	}
 
 	@Override

@@ -544,27 +544,32 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 人类
 	 */
-	public final static Integer Stirps_Human = 51;
+	public final static Integer Stirps_Human = 201;
 	
 	/**
 	 * 天使
 	 */
-	public final static Integer Stirps_Angel = 52;
+	public final static Integer Stirps_Angel = 202;
 	
 	/**
 	 * 亡灵
 	 */
-	public final static Integer Stirps_Die = 53;
+	public final static Integer Stirps_Die = 203;
 	
 	/**
 	 * 恶魔
 	 */
-	public final static Integer Stirps_Daimon = 54;
+	public final static Integer Stirps_Daimon = 204;
 	
 	/**
 	 * 野兽
 	 */
-	public final static Integer Stirps_Beast = 55;
+	public final static Integer Stirps_Beast = 205;
+	
+	/**
+	 * 其他
+	 */
+	public final static Integer Stirps_Other = 299;
 	
 	/**
 	 * 种族

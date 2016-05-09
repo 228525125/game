@@ -1,5 +1,10 @@
 package org.cx.game.validator;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.cx.game.card.skill.ActiveSkill;
@@ -15,11 +20,22 @@ public class ParameterTypeValidator extends Validator {
 
 	private Object[] parameter = null;
 	private Class[] type = null;
+	private String proertyName = null;
+	private List propertyValueList = new ArrayList();
 	
-	public ParameterTypeValidator(Object[] parameter, Class[] type) {
-		// TODO Auto-generated constructor stub
+	/**
+	 * 
+	 * @param parameter 参数
+	 * @param type 参数类型
+	 * @param propertyName 参数属性
+	 * @param propertyValue 包含属性值的集合
+	 */
+	public ParameterTypeValidator(Object[] parameter, Class[] type, String propertyName, Object[] propertyValue){
 		this.parameter = parameter;
 		this.type = type;
+		this.proertyName = propertyName;
+		if(null!=propertyValue)
+			Collections.addAll(this.propertyValueList, propertyValue);
 	}
 	
 	@Override
@@ -32,7 +48,38 @@ public class ParameterTypeValidator extends Validator {
 		
 		if(parameter.length==type.length){
 			for(int i=0;i<parameter.length;i++){
-				if(!type[i].isAssignableFrom(parameter[i].getClass())){
+				if(type[i].isAssignableFrom(parameter[i].getClass())){
+					if(null!=this.proertyName){
+						try {
+							String pName = proertyName.substring(0, 1).toUpperCase() + proertyName.substring(1);    //首字母大写
+							Method method = parameter[i].getClass().getDeclaredMethod("get"+pName);
+							Object pValue = method.invoke(parameter[i]);
+							
+							if(this.propertyValueList.contains(pValue)){
+								;
+							}else{
+								addMessage(I18n.getMessage(this));
+								ret = false;
+								break;
+							}
+						}catch (SecurityException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (NoSuchMethodException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else{
 					addMessage(I18n.getMessage(this));
 					ret = false;
 					break;
@@ -44,6 +91,10 @@ public class ParameterTypeValidator extends Validator {
 		}
 		
 		return ret;
+	}
+	
+	protected Object[] getParameter() {
+		return this.parameter;
 	}
 	
 	public static void main(String[] args) {

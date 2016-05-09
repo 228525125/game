@@ -39,6 +39,8 @@ import org.dom4j.io.SAXReader;
 
 public abstract class ActiveSkill extends Observable implements IActiveSkill {
 
+	private final static String UseSkill = "_UseSkill";
+	
 	private String cType = null;
 	private String name = null;
 	private LifeCard owner;
@@ -54,8 +56,6 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
-	
-	private Class[] parameterTypeValidator = new Class[]{};      //用于参数的验证
 	
 	private IIntercepter cooldownBoutIntercepter = new Intercepter("addBout") {      //当回合数变化时，计算冷却时间
 		@Override
@@ -101,13 +101,25 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		
 	}
 	
-	private final static String UseSkill = "_UseSkill";
-	private ParameterTypeValidator parameterValidator = null;
+	private ParameterTypeValidator parameterTypeValidator = null;
+	private Class[] parameterType = new Class[]{};      //用于参数的验证
+	private String proertyName = null;
+	private Object[] validatorValue = null;
+	
+	protected void setParameterTypeValidator(Class[] parameterType) {
+		this.parameterType = parameterType;
+	}
+	
+	protected void setParameterTypeValidator(Class[] parameterType, String proertyName, Object[] validatorValue) {
+		this.parameterType = parameterType;
+		this.proertyName = proertyName;
+		this.validatorValue = validatorValue;
+	}
 	
 	protected void parameterTypeValidator(Object...objects) throws RuleValidatorException {
-		deleteValidator(parameterValidator);
-		this.parameterValidator = new ParameterTypeValidator(objects,parameterTypeValidator); 
-		addValidator(parameterValidator);
+		deleteValidator(parameterTypeValidator);
+		this.parameterTypeValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
+		addValidator(parameterTypeValidator);
 		
 		doValidator();
 		
@@ -215,10 +227,6 @@ public abstract class ActiveSkill extends Observable implements IActiveSkill {
 		if(null==name)
 			name = I18n.getMessage(this, "name");
 		return name;
-	}
-
-	protected void setParameterTypeValidator(Class[] parameterTypeValidator) {
-		this.parameterTypeValidator = parameterTypeValidator;
 	}
 
 	@Override
