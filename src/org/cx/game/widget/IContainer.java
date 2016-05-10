@@ -46,6 +46,7 @@ public interface IContainer extends IInterceptable, Observable
 	 */
 	public ICard getCard(Integer position);
 	
+	
 	/**
 	 * 根据卡片查找位置
 	 * @param card
@@ -61,6 +62,21 @@ public interface IContainer extends IInterceptable, Observable
 	public void setPlayer(IPlayer player);
 	
 	public List<ICard> list();
+	
+	/**
+	 * 根据ID查找card
+	 * @param ids 需要查找的卡片编号，非playID
+	 * @return
+	 */
+	public List<ICard> listForID(List<Integer> ids);
+	
+	/**
+	 * 根据player和ID查询card
+	 * @param player
+	 * @param ids
+	 * @return
+	 */
+	public List<ICard> listForID(IPlayer player, List<Integer> ids);
 	
 	public String getName();
 	

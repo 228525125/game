@@ -55,6 +55,18 @@ public class ContainerDecorator implements IContainer {
 		// TODO Auto-generated method stub
 		return original.list();
 	}
+	
+	@Override
+	public List<ICard> listForID(IPlayer player, List<Integer> ids) {
+		// TODO Auto-generated method stub
+		return original.listForID(player, ids);
+	}
+	
+	@Override
+	public List<ICard> listForID(List<Integer> ids) {
+		// TODO Auto-generated method stub
+		return original.listForID(ids);
+	}
 
 	@Override
 	public void setPlayer(IPlayer player) {

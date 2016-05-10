@@ -65,10 +65,10 @@ public class QueryCommand extends InteriorCommand {
 			if(hasError())
 				throw new CommandValidatorException(getErrors().getMessage());
 			
-			if(magic.needConjurer()){
+			if(magic.needConjurer())
 				magic.setConjurer((LifeCard) buffer.lastCard());
-				positionList = ground.queryRange(magic, map.get(parameter));
-			}
+			
+			positionList = ground.queryRange(magic, map.get(parameter));
 		}
 	
 		Map<String,Object> bean = new HashMap<String,Object>();

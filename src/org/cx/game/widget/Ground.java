@@ -364,8 +364,9 @@ public class Ground extends Container implements IGround
 	public List<Integer> queryRange(MagicCard magic, String action) {
 		// TODO Auto-generated method stub
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(magic.needConjurer())
-			positionList = magic.getApplyRange(this);         
+		if(NotifyInfo.Command_Query_Apply == action){
+			positionList = magic.getApplyRange(this);
+		}
 		return positionList;
 	}
 

@@ -126,6 +126,28 @@ public abstract class Container extends Observable implements IContainer {
 		// TODO Auto-generated method stub
 		return cardList;
 	}
+	
+	@Override
+	public List<ICard> listForID(List<Integer> ids) {
+		// TODO Auto-generated method stub
+		List<ICard> ret = new ArrayList<ICard>();
+		for(ICard card : cardList){
+			if(ids.contains(card.getId()))
+				ret.add(card);
+		}
+		return ret;
+	}
+	
+	@Override
+	public List<ICard> listForID(IPlayer player, List<Integer> ids) {
+		// TODO Auto-generated method stub
+		List<ICard> ret = new ArrayList<ICard>();
+		for(ICard card : cardList){
+			if(ids.contains(card.getId()) && player.equals(card.getPlayer()))
+				ret.add(card);
+		}
+		return ret;
+	}
 
 	@Override
 	public void add(Integer position, ICard card) {
