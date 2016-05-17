@@ -53,7 +53,7 @@ public class Apply extends Action implements IApply {
 		super.notifyObservers(info);
 		
 		IPlayer player = getOwner().getPlayer();
-		player.setResource(player.getResource()-consume);
+		player.addToResource(-consume);
 		getOwner().initState();
 	}
 	

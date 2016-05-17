@@ -40,8 +40,7 @@ public class Call extends Action implements ICall {
 		getOwner().getDeath().setStatus(IDeath.Status_Live);
 		
 		IPlayer player = getOwner().getPlayer();
-		Integer power = player.getResource();
-		player.setResource(power-getOwner().getCall().getConsume());     //消耗能量，命令中已经判断
+		player.addToResource(-getOwner().getCall().getConsume());;     //消耗能量，命令中已经判断
 		player.getUseCard().remove(getOwner());      //出牌
 		
 		/* 召唤的动作应在place_in之前，因为place_in动作与移动时的place_in动作相同 */

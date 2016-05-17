@@ -162,9 +162,12 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	 */
 	public List<Integer> getApplyRange(IGround ground){
 		List<Integer> positionList = new ArrayList<Integer>();
-		LifeCard conjure = getConjurer();
-		Integer position = conjure.getContainerPosition();
-		positionList = ground.easyAreaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
+		if(needConjurer()){
+			LifeCard conjure = getConjurer();
+			Integer position = conjure.getContainerPosition();
+			positionList = ground.easyAreaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
+		}
+		
 		return positionList;
 	}
 

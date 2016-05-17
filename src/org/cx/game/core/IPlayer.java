@@ -38,7 +38,17 @@ public interface IPlayer
 	
 	public Integer getResource();
 	
-	public void setResource(Integer resource);
+	/**
+	 * 隐式的改变资源
+	 * @param power
+	 */
+	public void setResource(Integer power);
+	
+	/**
+	 * 显示的改变资源
+	 * @param resource
+	 */
+	public void addToResource(Integer power);
 	
 	public CommandBuffer getCommandBuffer();
 	

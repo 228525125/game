@@ -122,13 +122,19 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	@Override
 	public void setResource(Integer power) {
 		// TODO Auto-generated method stub
-		Integer temp = this.power;
 		this.power = power;
+	}
+	
+	@Override
+	public void addToResource(Integer power) {
+		// TODO Auto-generated method stub
+		this.power += power;
+		this.power = this.power>0 ? this.power : 0;    //判断下限
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", this);
-		map.put("power", power);
-		map.put("change", temp-power);
+		map.put("power", this.power);
+		map.put("change", power);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Power,map);
 		notifyObservers(info);
 	}

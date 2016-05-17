@@ -416,8 +416,7 @@ public class Context extends Observable implements IContext
 				decorator.addBout();                        //增加回合
 				boutCount = 0;
 			}
-			Integer power = getControlPlayer().getResource();
-			getControlPlayer().setResource(power+Power_Add);        //增加能量
+			getControlPlayer().addToResource(Power_Add);        //增加能量
 			
 			ICardGroup cardGroup = getControlPlayer().getCardGroup();
 			ICard card = cardGroup.out();  //摸牌
