@@ -76,6 +76,11 @@ public interface IMagic {
 	public static final Integer Func_Trick = 107;
 	
 	/**
+	 * 冲锋
+	 */
+	public static final Integer Func_Bump = 108;
+	
+	/**
 	 * 其他功能
 	 */
 	public static final Integer Func_Other = 199;

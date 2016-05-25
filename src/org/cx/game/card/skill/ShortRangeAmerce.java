@@ -4,6 +4,11 @@ import org.cx.game.action.IAttack;
 import org.cx.game.card.LifeCard;
 import org.cx.game.widget.IGround;
 
+/**
+ * 近战惩罚
+ * @author chenxian
+ *
+ */
 public class ShortRangeAmerce extends SimplePassiveSkill {
 
 	private Integer atkScale;
@@ -33,7 +38,7 @@ public class ShortRangeAmerce extends SimplePassiveSkill {
 		
 		if(IAttack.Mode_Far.equals(mode) && 1==distance){
 			Integer downAtkValue = getOwner().getAttack().getAtk() * atkScale / 100;
-			addToEruptAtk(-downAtkValue);
+			addToEruptAtk(downAtkValue);
 			getOwner().getAttack().setMode(IAttack.Mode_Near);
 			affect();
 		}

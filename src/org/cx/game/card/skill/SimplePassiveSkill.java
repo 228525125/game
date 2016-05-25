@@ -60,9 +60,12 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		// TODO Auto-generated method stub
 		super.affect(objects);
 		
-		if(0<eruptAtk){
+		if(0!=eruptAtk){
 			Integer atk = getOwner().getAttack().getAtk();
-			getOwner().getAttack().setAtk(atk + eruptAtk);
+			if(atk<eruptAtk)
+				getOwner().getAttack().setAtk(0);
+			else
+				getOwner().getAttack().setAtk(atk + eruptAtk);
 		}
 		
 		if(0!=keepAtkNewValue){

@@ -33,6 +33,7 @@ import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.AttackBack;
 import org.cx.game.card.skill.AttackLock;
 import org.cx.game.card.skill.Dodge;
+import org.cx.game.card.skill.FarHarmHalve;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.skill.Parry;
@@ -659,8 +660,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setAttack(IAttack attack) {
 		attack.addIntercepter(new Accurate(this));
 		attack.addIntercepter(new Thump(150, this));
-		//attack.addIntercepter(new AttackLock(IMagic.Style_physical, this));
-		attack.addIntercepter(new ShortRangeAmerce(50, this));
+		attack.addIntercepter(new ShortRangeAmerce(-50, this));
 		attack.setAccurateChance(accurateChance);
 		attack.setAtk(atk);
 		attack.setRange(range);

@@ -30,42 +30,6 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 
 	private IAttacked attacked = null;
 	
-	/*private static Element getRoot() {
-		SAXReader saxReader = new SAXReader();
-		try {
-			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("attack.path"))); 
-		
-			Document document = saxReader.read(is);
-			return document.getRootElement();
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	private static Double getAttackScale(Integer atkType, Integer armourType){
-		Element type = getRoot().element("attacktype");
-		for(Iterator it = type.elementIterator("attack");it.hasNext();){
-			Element attack = (Element) it.next();
-			if(atkType.equals(Integer.valueOf(attack.attribute("type").getText()))){
-				for(Iterator itr = attack.elementIterator("armour");it.hasNext();){
-					Element armour = (Element) itr.next();
-					if(armourType.equals(Integer.valueOf(armour.attribute("type").getText())))
-						return Double.valueOf(armour.getText())/100;
-				}
-			}else
-				continue;
-		}
-		return null;
-	}*/
-	
 	public AttackedDecorator(IAttacked attacked) {
 		// TODO Auto-generated constructor stub
 		super(attacked);

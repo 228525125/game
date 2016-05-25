@@ -6,6 +6,7 @@ import java.util.List;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.widget.IGround;
 
@@ -30,7 +31,7 @@ public abstract class Aureole extends PassiveSkill {
 		// TODO Auto-generated method stub
 		super.setOwner(life);
 		
-		life.getCall().addIntercepter(new Intercepter("action"){
+		life.getCall().addIntercepter(new Intercepter(){
 			@Override
 			public void after(Object[] args) {
 				// TODO Auto-generated method stub
@@ -39,7 +40,7 @@ public abstract class Aureole extends PassiveSkill {
 			}
 		});
 		
-		life.getDeath().addIntercepter(new Intercepter("action"){
+		life.getDeath().addIntercepter(new Intercepter(){
 			@Override
 			public void after(Object[] args) {
 				// TODO Auto-generated method stub
@@ -49,6 +50,14 @@ public abstract class Aureole extends PassiveSkill {
 					if(buffs.isEmpty())
 						buffs.get(0).invalid();
 				}
+			}
+		});
+		
+		life.getMove().addIntercepter(new Intercepter(){
+			@Override
+			public void finish(Object[] args) {
+				// TODO Auto-generated method stub
+				refurbish();
 			}
 		});
 	}
