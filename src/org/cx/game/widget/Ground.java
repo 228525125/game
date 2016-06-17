@@ -791,6 +791,20 @@ public class Ground extends Container implements IGround
 		return list;
 	}
 	
+	@Override
+	public List<LifeCard> list(IPlayer player) {
+		// TODO Auto-generated method stub
+		List<LifeCard> ret = new ArrayList<LifeCard>();
+		List<ICard> list = list();
+		
+		for(ICard card : list){
+			if(player.equals(card.getPlayer()))
+				ret.add((LifeCard) card);
+		}
+		
+		return ret;
+	}
+	
 	public static void main(String[] args) {
 		/*Integer x1=1,y1=1,x2=2,y2=2;
 		System.out.println(Util.convertInteger(Math.sqrt(Math.pow(x1.doubleValue()-x2.doubleValue(),2)+Math.pow(y1.doubleValue()-y2.doubleValue(),2))));

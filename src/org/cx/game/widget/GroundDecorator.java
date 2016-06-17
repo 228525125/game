@@ -257,4 +257,10 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		return ground.queryLineDistance(stand, target);
 	}
+	
+	@Override
+	public List<LifeCard> list(IPlayer player) {
+		// TODO Auto-generated method stub
+		return ground.list(player);
+	}
 }

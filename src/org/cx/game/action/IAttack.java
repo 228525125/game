@@ -30,6 +30,8 @@ public interface IAttack extends IAction {
 	
 	public void setRange(Integer range);
 	
+	public void addToRange(Integer range);
+	
 	public static final Integer Type_Usually = 0;      //普通攻击
 	
 	public static final Integer Type_Puncture = 1;   //穿刺

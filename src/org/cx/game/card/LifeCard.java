@@ -181,7 +181,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		if(activate){
 			getMove().setMoveable(true);
-			getAttacked().setAttackBackChance(100); //恢复反击能力，每回合只有一次
+			getAttacked().setAttackBackChance(100); //恢复反击能力，每获得一次控制权
 			List<IBuff> buffs = getNexusBuff(AttackLockBuff.class);  //清除锁定对象
 			for(IBuff buff : buffs)
 				removeNexusBuff(buff);

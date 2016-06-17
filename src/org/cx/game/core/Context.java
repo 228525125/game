@@ -48,10 +48,17 @@ public class Context extends Observable implements IContext
 	private ContextDecorator decorator = null; 
 	
 	private final static Map<Integer,Map<Integer,Integer>> Attack_Armour = new HashMap<Integer,Map<Integer,Integer>>();
-	private final static Map<String,Integer> Magic_Style = new HashMap<String,Integer>();
-	private final static Map<String,Integer> Magic_Function = new HashMap<String,Integer>();
-	private final static Map<String,Integer> Magic_Hostility = new HashMap<String,Integer>();
-	private final static Map<Integer,Integer> Life_Stirps = new HashMap<Integer,Integer>();
+	private final static Map<Integer,List<String>> Magic_Style_1 = new HashMap<Integer,List<String>>();
+	private final static Map<String,Integer> Magic_Style_2 = new HashMap<String,Integer>();
+	private final static Map<Integer,List<String>> Magic_Function_1 = new HashMap<Integer,List<String>>();
+	private final static Map<String,Integer> Magic_Function_2 = new HashMap<String,Integer>();
+	private final static Map<Integer,List<String>> Magic_Hostility_1 = new HashMap<Integer,List<String>>();
+	private final static Map<String,Integer> Magic_Hostility_2 = new HashMap<String,Integer>();
+	private final static Map<Integer,List<Integer>> Life_Stirps_1 = new HashMap<Integer,List<Integer>>();
+	private final static Map<Integer,Integer> Life_Stirps_2 = new HashMap<Integer,Integer>();
+	private final static Map<Integer,List<String>> Magic_Tag_1 = new HashMap<Integer,List<String>>();
+	private final static Map<String,List<Integer>> Magic_Tag_2 = new HashMap<String,List<Integer>>();
+	
 	
 	public Context(IPlayer player1, IPlayer player2) {
 		// TODO Auto-generated constructor stub
@@ -96,10 +103,12 @@ public class Context extends Observable implements IContext
 			Element style = (Element) it.next();
 			Integer code = Integer.valueOf(style.attribute("code").getText());
 			
+			Magic_Style_1.put(code, new ArrayList<String>());
 			for(Iterator itr = style.elementIterator("magic");itr.hasNext();){
 				Element magic = (Element) itr.next();
 				String className = magic.attribute("type").getText();
-				Magic_Style.put(className, code);
+				Magic_Style_1.get(code).add(className);
+				Magic_Style_2.put(className, code);
 			}
 		}
 		
@@ -111,10 +120,12 @@ public class Context extends Observable implements IContext
 			Element hostility = (Element) it.next();
 			Integer code = Integer.valueOf(hostility.attribute("code").getText());
 			
+			Magic_Hostility_1.put(code, new ArrayList<String>());
 			for(Iterator itr = hostility.elementIterator("magic");itr.hasNext();){
 				Element magic = (Element) itr.next();
 				String className = magic.attribute("type").getText();
-				Magic_Hostility.put(className, code);
+				Magic_Hostility_1.get(code).add(className);
+				Magic_Hostility_2.put(className, code);
 			}
 		}
 		
@@ -126,10 +137,12 @@ public class Context extends Observable implements IContext
 			Element function = (Element) it.next();
 			Integer code = Integer.valueOf(function.attribute("code").getText());
 			
+			Magic_Function_1.put(code, new ArrayList<String>());
 			for(Iterator itr = function.elementIterator("magic");itr.hasNext();){
 				Element magic = (Element) itr.next();
 				String className = magic.attribute("type").getText();
-				Magic_Function.put(className, code);
+				Magic_Function_1.get(code).add(className);
+				Magic_Function_2.put(className, code);
 			}
 		}
 		
@@ -142,13 +155,35 @@ public class Context extends Observable implements IContext
 			Element stirps = (Element) it.next();
 			Integer code = Integer.valueOf(stirps.attribute("code").getText());
 			
+			Life_Stirps_1.put(code, new ArrayList<Integer>());
 			for(Iterator itr = stirps.elementIterator("life");itr.hasNext();){
 				Element life = (Element) itr.next();
 				Integer cardID = Integer.valueOf(life.attribute("cardID").getText());
-				Life_Stirps.put(cardID, code);
+				Life_Stirps_1.get(code).add(cardID);
+				Life_Stirps_2.put(cardID, code);
 			}
 		}
 		
+		/*
+		 * magic_tag
+		 */
+		Element magicTag = getRoot("magic_tag.path").element("magicTag");
+		for(Iterator it = magicTag.elementIterator("tag");it.hasNext();){
+			Element tag = (Element) it.next();
+			Integer code = Integer.valueOf(tag.attribute("code").getText());
+			
+			Magic_Tag_1.put(code, new ArrayList<String>());
+			for(Iterator itr = tag.elementIterator("magic");itr.hasNext();){
+				Element magic = (Element) itr.next();
+				String className = magic.attribute("type").getText();
+				Magic_Tag_1.get(code).add(className);
+				
+				if(null==Magic_Tag_2.get(className))
+					Magic_Tag_2.put(className, new ArrayList<Integer>());
+				
+				Magic_Tag_2.get(className).add(code);
+			}			
+		}
 	}
 	
 	private static Element getRoot(String pathName) {
@@ -188,7 +223,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static Integer getMagicStyle(String className){
-		return Magic_Style.get(className);
+		return Magic_Style_2.get(className);
 	}
 	
 	/**
@@ -197,16 +232,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static List<String> queryMagicStyle(Integer style){
-		List<String> list = new ArrayList<String>();
-		
-		Set<Entry<String,Integer>> set = Magic_Style.entrySet();
-		Iterator<Entry<String,Integer>> it = set.iterator();
-		while (it.hasNext()) {
-			Entry<String, Integer> entry = it.next();
-			if(style.equals(entry.getValue()))
-				list.add(entry.getKey());
-		}
-		return list;
+		return Magic_Style_1.get(style);
 	}
 	
 	/**
@@ -215,7 +241,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static Integer getMagicHostility(String className){
-		return Magic_Hostility.get(className);
+		return Magic_Hostility_2.get(className);
 	}
 	
 	/**
@@ -224,16 +250,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static List<String> queryMagicHostility(Integer host){
-		List<String> list = new ArrayList<String>();
-		
-		Set<Entry<String,Integer>> set = Magic_Hostility.entrySet();
-		Iterator<Entry<String,Integer>> it = set.iterator();
-		while (it.hasNext()) {
-			Entry<String, Integer> entry = it.next();
-			if(host.equals(entry.getValue()))
-				list.add(entry.getKey());
-		}
-		return list;
+		return Magic_Hostility_1.get(host);
 	}
 	
 	/**
@@ -242,7 +259,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static Integer getMagicFunction(String className){
-		return Magic_Function.get(className);
+		return Magic_Function_2.get(className);
 	}
 	
 	/**
@@ -251,16 +268,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static List<String> queryMagicFunction(Integer func){
-		List<String> list = new ArrayList<String>();
-		
-		Set<Entry<String,Integer>> set = Magic_Function.entrySet();
-		Iterator<Entry<String,Integer>> it = set.iterator();
-		while (it.hasNext()) {
-			Entry<String, Integer> entry = it.next();
-			if(func.equals(entry.getValue()))
-				list.add(entry.getKey());
-		}
-		return list;
+		return Magic_Function_1.get(func);
 	}
 	
 	/**
@@ -269,7 +277,7 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static Integer getLifeStirps(Integer cardID){
-		return Life_Stirps.get(cardID);
+		return Life_Stirps_2.get(cardID);
 	}
 	
 	/**
@@ -278,16 +286,25 @@ public class Context extends Observable implements IContext
 	 * @return
 	 */
 	public static List<Integer> queryLifeStirps(Integer stirps){
-		List<Integer> list = new ArrayList<Integer>();
-		
-		Set<Entry<Integer,Integer>> set = Life_Stirps.entrySet();
-		Iterator<Entry<Integer,Integer>> it = set.iterator();
-		while (it.hasNext()) {
-			Entry<Integer, Integer> entry = it.next();
-			if(stirps.equals(entry.getValue()))
-				list.add(entry.getKey());
-		}
-		return list;
+		return Life_Stirps_1.get(stirps);
+	}
+	
+	/**
+	 * 根据magic类，查询tag
+	 * @param className
+	 * @return
+	 */
+	public static List<Integer> queryMagicTag(String className){
+		return Magic_Tag_2.get(className);
+	}
+	
+	/**
+	 * 根据tag，查询magic类	
+	 * @param tag
+	 * @return
+	 */
+	public static List<String> queryMagicTag(Integer tag){
+		return Magic_Tag_1.get(tag);
 	}
 	
 	public void setDecorator(ContextDecorator decorator) {

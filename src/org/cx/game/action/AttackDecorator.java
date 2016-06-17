@@ -83,6 +83,12 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated method stub
 		attack.setRange(range);
 	}
+	
+	@Override
+	public void addToRange(Integer range) {
+		// TODO Auto-generated method stub
+		attack.addToRange(range);
+	}
 
 	@Override
 	public Integer getAccurateChance() {

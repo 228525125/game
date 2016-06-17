@@ -251,5 +251,12 @@ public interface IGround extends IContainer{
 	 * 例如1，1 - 1，4 = [1，2；1，3；1，4]；
 	 */
 	public List<Integer> queryLineDistance(Integer stand, Integer target);
+	
+	/**
+	 * 获取某玩家战场上所有生物
+	 * @param player
+	 * @return
+	 */
+	public List<LifeCard> list(IPlayer player);
 
 }

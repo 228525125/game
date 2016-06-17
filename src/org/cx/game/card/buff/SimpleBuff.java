@@ -13,6 +13,8 @@ public abstract class SimpleBuff extends Buff {
 
 	private Integer keepAtkNewValue = 0;
 	private Integer keepAtkOldValue = 0;
+	private Integer keepRangeNewValue = 0;
+	private Integer keepRangeOldValue = 0;
 	private Integer keepSpeedChanceNewValue = 0;
 	private Integer keepSpeedChanceOldValue = 0;
 	private Integer keepImmuneDamageRatioNewValue = 0;
@@ -35,6 +37,11 @@ public abstract class SimpleBuff extends Buff {
 		if(0!=keepAtkNewValue){
 			getOwner().getAttack().addToAtk(keepAtkNewValue - keepAtkOldValue);
 			keepAtkOldValue = keepAtkNewValue;
+		}
+		
+		if(0!=keepRangeNewValue){
+			getOwner().getAttack().addToRange(keepRangeNewValue - keepRangeOldValue);
+			keepRangeOldValue = keepRangeNewValue;
 		}
 		
 		if(0!=keepImmuneDamageRatioNewValue){
@@ -68,6 +75,11 @@ public abstract class SimpleBuff extends Buff {
 			addToKeepAtk(0);
 		}
 		
+		if(0!=keepRangeOldValue){
+			getOwner().getAttack().addToRange(-keepRangeOldValue);
+			addToKeepRange(0);
+		}
+		
 		if(0!=keepImmuneDamageRatioOldValue){
 			getOwner().getAttacked().addToImmuneDamageRatio(-keepImmuneDamageRatioOldValue);
 			addToKeepImmuneDamageRatio(0);
@@ -94,6 +106,10 @@ public abstract class SimpleBuff extends Buff {
 	
 	public void addToKeepAtk(Integer keepAtk) {
 		this.keepAtkNewValue = keepAtk;
+	}
+	
+	public void addToKeepRange(Integer keepRange){
+		this.keepRangeNewValue = keepRange;
 	}
 
 	public void addToKeepSpeedChance(Integer keepSpeedChance) {
