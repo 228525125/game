@@ -86,6 +86,15 @@ public class Death extends Action implements IDeath {
 		map.put("position", getOwner().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
 		super.notifyObservers(info);
+		
+		if(0==this.hp){
+			try {
+				getOwner().death();
+			} catch (RuleValidatorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override

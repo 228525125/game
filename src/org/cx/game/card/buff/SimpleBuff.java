@@ -17,10 +17,6 @@ public abstract class SimpleBuff extends Buff {
 	private Integer keepRangeOldValue = 0;
 	private Integer keepSpeedChanceNewValue = 0;
 	private Integer keepSpeedChanceOldValue = 0;
-	private Integer keepImmuneDamageRatioNewValue = 0;
-	private Integer keepImmuneDamageRatioOldValue = 0;
-	private Integer keepDodgeChanceNewValue = 0;
-	private Integer keepDodgeChanceOldValue = 0;
 	private Integer keepEnergyNewValue = 0;
 	private Integer keepEnergyOldValue = 0;
 	
@@ -44,19 +40,9 @@ public abstract class SimpleBuff extends Buff {
 			keepRangeOldValue = keepRangeNewValue;
 		}
 		
-		if(0!=keepImmuneDamageRatioNewValue){
-			getOwner().getAttacked().addToImmuneDamageRatio(keepImmuneDamageRatioNewValue - keepImmuneDamageRatioOldValue);
-			keepImmuneDamageRatioOldValue = keepImmuneDamageRatioNewValue;
-		}
-		
 		if(0!=keepSpeedChanceNewValue){
 			getOwner().getAttack().addToSpeedChance(keepSpeedChanceNewValue - keepSpeedChanceOldValue);
 			keepSpeedChanceOldValue = keepSpeedChanceNewValue;
-		}
-		
-		if(0!=keepDodgeChanceNewValue){
-			getOwner().getAttacked().addToDodgeChance(keepDodgeChanceNewValue - keepDodgeChanceOldValue);
-			keepDodgeChanceOldValue = keepDodgeChanceNewValue;
 		}
 		
 		if(0!=keepEnergyNewValue){
@@ -79,28 +65,17 @@ public abstract class SimpleBuff extends Buff {
 			getOwner().getAttack().addToRange(-keepRangeOldValue);
 			addToKeepRange(0);
 		}
-		
-		if(0!=keepImmuneDamageRatioOldValue){
-			getOwner().getAttacked().addToImmuneDamageRatio(-keepImmuneDamageRatioOldValue);
-			addToKeepImmuneDamageRatio(0);
-		}
-		
+
 		if(0!=keepSpeedChanceOldValue){
 			Integer speedChance = getOwner().getAttack().getSpeedChance();
 			getOwner().getAttack().setSpeedChance(speedChance - keepSpeedChanceOldValue);
 			addToKeepSpeedChance(0);
 		}
 		
-		if(0!=keepDodgeChanceOldValue){
-			Integer dodgeChance = getOwner().getAttacked().getDodgeChance();
-			getOwner().getAttacked().setDodgeChance(dodgeChance - keepDodgeChanceOldValue);
-			addToKeepDodgeChance(0);
-		}
-		
 		if(0!=keepEnergyOldValue){
 			Integer energy = getOwner().getMove().getEnergy();
 			getOwner().getMove().setEnergy(energy - keepEnergyOldValue);
-			addToKeepDodgeChance(0);
+			addToKeepEnergy(0);
 		}
 	}
 	
@@ -116,14 +91,6 @@ public abstract class SimpleBuff extends Buff {
 		this.keepSpeedChanceNewValue = keepSpeedChance;
 	}
 
-	public void addToKeepImmuneDamageRatio(Integer ImmuneDamageRatio) {
-		this.keepImmuneDamageRatioNewValue = ImmuneDamageRatio;
-	}
-
-	public void addToKeepDodgeChance(Integer keepDodgeChance) {
-		this.keepDodgeChanceNewValue = keepDodgeChance;
-	}
-	
 	public void addToKeepEnergy(Integer keepEnergy) {
 		this.keepEnergyNewValue = keepEnergy;
 	}

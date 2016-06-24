@@ -55,21 +55,9 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	}
 
 	@Override
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return attack.getType();
-	}
-
-	@Override
 	public void setMode(Integer type) {
 		// TODO Auto-generated method stub
 		attack.setMode(type);
-	}
-
-	@Override
-	public void setType(Integer atkType) {
-		// TODO Auto-generated method stub
-		attack.setType(atkType);
 	}
 
 	@Override
@@ -90,30 +78,6 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		attack.addToRange(range);
 	}
 
-	@Override
-	public Integer getAccurateChance() {
-		// TODO Auto-generated method stub
-		return attack.getAccurateChance();
-	}
-
-	@Override
-	public void setAccurateChance(Integer chance) {
-		// TODO Auto-generated method stub
-		attack.setAccurateChance(chance);
-	}
-
-	@Override
-	public Integer getThumpChance() {
-		// TODO Auto-generated method stub
-		return attack.getThumpChance();
-	}
-
-	@Override
-	public void setThumpChance(Integer thumpChance) {
-		// TODO Auto-generated method stub
-		attack.setThumpChance(thumpChance);
-	}
-	
 	@Override
 	public Integer getSpeedChance() {
 		// TODO Auto-generated method stub
@@ -160,5 +124,17 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void setLockChance(Integer lockChance) {
 		// TODO Auto-generated method stub
 		attack.setLockChance(lockChance);
+	}
+	
+	@Override
+	public IAttack clone() {
+		// TODO Auto-generated method stub
+		return attack.clone();
+	}
+
+	@Override
+	public void changeMode(Integer mode) {
+		// TODO Auto-generated method stub
+		attack.changeMode(mode);
 	}
 }

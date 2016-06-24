@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.cx.game.action.ApplyDecorator;
+import org.cx.game.action.Chuck;
 import org.cx.game.action.ChuckDecorator;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
@@ -251,9 +252,15 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	/**
 	 * 使用
 	 */
-	private IApply apply;
+	private IApply apply = null;
 
 	public IApply getApply() {
+		if(null==apply){
+			IApply apply = new org.cx.game.action.Apply();
+			apply.setConsume(consume);
+			apply.setOwner(this);
+			this.apply = new ApplyDecorator(apply);
+		}
 		return apply;
 	}
 
@@ -266,9 +273,14 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	/**
 	 * 丢弃
 	 */
-	private IChuck chuck;
+	private IChuck chuck = null;
 
 	public IChuck getChuck() {
+		if(null==chuck){
+			IChuck chuck = new Chuck();
+			chuck.setOwner(this);
+			this.chuck = new ChuckDecorator(chuck);
+		}
 		return chuck;
 	}
 
@@ -279,14 +291,14 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	
 	private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
-	private String proertyName = null;
+	private String[] proertyName = null;
 	private Object[] validatorValue = null;
 
 	protected void setParameterTypeValidator(Class[] parameterType) {
 		this.parameterType = parameterType;
 	}
 	
-	protected void setParameterTypeValidator(Class[] parameterType, String proertyName, Object[] validatorValue) {
+	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
 		this.parameterType = parameterType;
 		this.proertyName = proertyName;
 		this.validatorValue = validatorValue;

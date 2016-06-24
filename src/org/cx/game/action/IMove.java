@@ -20,6 +20,8 @@ public interface IMove extends IAction{
 	
 	public void setType(Integer type);
 	
+	public void changeType(Integer type);
+	
 	/**
 	 * 单格移动消耗
 	 * @return
@@ -49,5 +51,15 @@ public interface IMove extends IAction{
 	public void setFleeChance(Integer fleeChance);
 	
 	public void addToEnergy(Integer energy);
+	
+	/**
+	 * 隐身状态
+	 * @return
+	 */
+	public Boolean getHide();
+	
+	public void setHide(Boolean hide);
+	
+	public void changeHide(Boolean hide);
 
 }

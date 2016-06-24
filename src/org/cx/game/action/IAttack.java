@@ -26,37 +26,13 @@ public interface IAttack extends IAction {
 	
 	public void setMode(Integer mode);
 	
+	public void changeMode(Integer mode);
+	
 	public Integer getRange();
 	
 	public void setRange(Integer range);
 	
 	public void addToRange(Integer range);
-	
-	public static final Integer Type_Usually = 0;      //普通攻击
-	
-	public static final Integer Type_Puncture = 1;   //穿刺
-	
-	public static final Integer Type_Magic = 2;       //法术	
-	
-	public static final Integer Type_Large = 3;         //投石
-	
-	public static final Integer Type_Chaos = 4;         //混沌
-	
-	/**
-	 * 攻击类型，普通/穿刺/法术/投石/混沌
-	 * @return
-	 */
-	public Integer getType();
-	
-	public void setType(Integer type);
-	
-	public Integer getAccurateChance();
-	
-	public void setAccurateChance(Integer chance);
-	
-	public Integer getThumpChance();
-
-	public void setThumpChance(Integer thumpChance);
 	
 	public Integer getSpeedChance();
 	
@@ -73,4 +49,6 @@ public interface IAttack extends IAction {
 	public void setLockChance(Integer lockChance);
 	
 	public void addToAtk(Integer atk);
+	
+	public IAttack clone();
 }

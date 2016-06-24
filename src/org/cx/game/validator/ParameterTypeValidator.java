@@ -20,7 +20,7 @@ public class ParameterTypeValidator extends Validator {
 
 	private Object[] parameter = null;
 	private Class[] type = null;
-	private String proertyName = null;
+	private String[] propertyName = null;
 	private List propertyValueList = new ArrayList();
 	
 	/**
@@ -30,10 +30,10 @@ public class ParameterTypeValidator extends Validator {
 	 * @param propertyName 参数属性
 	 * @param propertyValue 包含属性值的集合
 	 */
-	public ParameterTypeValidator(Object[] parameter, Class[] type, String propertyName, Object[] propertyValue){
+	public ParameterTypeValidator(Object[] parameter, Class[] type, String[] propertyName, Object[] propertyValue){
 		this.parameter = parameter;
 		this.type = type;
-		this.proertyName = propertyName;
+		this.propertyName = propertyName;
 		if(null!=propertyValue)
 			Collections.addAll(this.propertyValueList, propertyValue);
 	}
@@ -49,9 +49,9 @@ public class ParameterTypeValidator extends Validator {
 		if(parameter.length==type.length){
 			for(int i=0;i<parameter.length;i++){
 				if(type[i].isAssignableFrom(parameter[i].getClass())){
-					if(null!=this.proertyName){
+					if(null!=this.propertyName && null!=this.propertyName[i]){
 						try {
-							String pName = proertyName.substring(0, 1).toUpperCase() + proertyName.substring(1);    //首字母大写
+							String pName = propertyName[i].substring(0, 1).toUpperCase() + propertyName[i].substring(1);    //首字母大写
 							Method method = parameter[i].getClass().getDeclaredMethod("get"+pName);
 							Object pValue = method.invoke(parameter[i]);
 							

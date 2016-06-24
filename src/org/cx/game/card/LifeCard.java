@@ -5,12 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.action.Affected;
 import org.cx.game.action.AffectedDecorator;
+import org.cx.game.action.Attack;
 import org.cx.game.action.AttackDecorator;
+import org.cx.game.action.Attacked;
 import org.cx.game.action.AttackedDecorator;
+import org.cx.game.action.Call;
 import org.cx.game.action.CallDecorator;
+import org.cx.game.action.Chuck;
 import org.cx.game.action.ChuckDecorator;
+import org.cx.game.action.Conjure;
 import org.cx.game.action.ConjureDecorator;
+import org.cx.game.action.Death;
 import org.cx.game.action.DeathDecorator;
 import org.cx.game.action.IAffected;
 import org.cx.game.action.IAttack;
@@ -22,23 +29,18 @@ import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
 import org.cx.game.action.ISwap;
+import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
+import org.cx.game.action.Renew;
 import org.cx.game.action.RenewDecorator;
+import org.cx.game.action.Swap;
 import org.cx.game.action.SwapDecorator;
 import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
-import org.cx.game.card.skill.Accurate;
 import org.cx.game.card.skill.ActiveSkill;
-import org.cx.game.card.skill.AttackBack;
-import org.cx.game.card.skill.AttackLock;
-import org.cx.game.card.skill.Dodge;
-import org.cx.game.card.skill.FarHarmHalve;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.skill.Parry;
-import org.cx.game.card.skill.ShortRangeAmerce;
-import org.cx.game.card.skill.Thump;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
@@ -130,11 +132,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.hp = hp;
 	}
 
-	/**
-	 * 精力
-	 */
 	private Integer energy = 100;
-	
+
+	/**
+	 * 精力、与移动范围相关
+	 */
 	public Integer getEnergy() {
 		return energy;
 	}
@@ -143,11 +145,25 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.energy = energy;
 	}
 	
+	private Integer moveType = IMove.Type_Walk;
+	
+	/**
+	 * 移动类型
+	 * @return
+	 */
+	public Integer getMoveType() {
+		return moveType;
+	}
+
+	public void setMoveType(Integer moveType) {
+		this.moveType = moveType;
+	}
+
+	private Integer power = Debug.isDebug ? IConjure.Max_Power : 0;
+
 	/**
 	 * 能量
 	 */
-	private Integer power = Debug.isDebug ? IConjure.Max_Power : 0;
-
 	public Integer getPower() {
 		return power;
 	}
@@ -156,11 +172,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.power = power;
 	}
 
-	/**
-	 * 激活
-	 */
 	private Boolean activate = false;
 
+	/**
+	 * 激活状态
+	 */
 	public Boolean getActivate() {
 		if(Debug.isDebug)
 			return Debug.activate;
@@ -181,7 +197,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		if(activate){
 			getMove().setMoveable(true);
-			getAttacked().setAttackBackChance(100); //恢复反击能力，每获得一次控制权
+			getAttacked().setAttackBack(true);
 			List<IBuff> buffs = getNexusBuff(AttackLockBuff.class);  //清除锁定对象
 			for(IBuff buff : buffs)
 				removeNexusBuff(buff);
@@ -190,38 +206,24 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		}
 	}
 	
+	private Boolean hide = false;
+
 	/**
 	 * 隐形状态
 	 */
-	private Boolean hide = false;
-
 	public Boolean getHide() {
 		return hide;
 	}
 
 	public void setHide(Boolean hide) {
 		this.hide = hide;
-		
-		/*
-		 * 隐身状态的改变在战场上才有意义
-		 */
-		if (getContainer() instanceof IGround) {
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getPlayer());
-			map.put("container", getContainer());
-			map.put("card", this);
-			map.put("position", getContainerPosition());
-			map.put("hide", hide);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
-			notifyObservers(info);
-		}
 	}
 	
+	private Boolean immuneMagic = false;
+
 	/**
 	 * 法术免疫状态
 	 */
-	private Boolean immuneMagic = false;
-
 	public Boolean getImmuneMagic() {
 		return immuneMagic;
 	}
@@ -230,11 +232,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.immuneMagic = immuneMagic;
 	}
 	
+	private Boolean immunePhysical = false;
+
 	/**
 	 * 物理免疫状态
 	 */
-	private Boolean immunePhysical = false;
-
 	public Boolean getImmunePhysical() {
 		return immunePhysical;
 	}
@@ -243,11 +245,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.immunePhysical = immunePhysical;
 	}
 
+	private Integer atk=0;
+
 	/**
 	 * 攻击力
 	 */
-	private Integer atk=0;
-	
 	public Integer getAtk() {
 		// TODO 自动生成方法存根
 		return atk;
@@ -257,100 +259,49 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.atk = atk;
 	}
 	
+	private Integer attackRange = 0;
+
 	/**
 	 * 攻击范围
 	 */
-	private Integer range = 0;
-
-	public Integer getRange() {
-		return range;
+	public Integer getAttackRange() {
+		return attackRange;
 	}
 
-	public void setRange(Integer range) {
-		this.range = range;
+	public void setAttackRange(Integer attackRange) {
+		this.attackRange = attackRange;
 	}
 
-	/**
-	 * 免伤比 基准100
-	 */
-	private Integer immuneDamageRatio=0;
+	private Integer attackMode = 0;
 	
-	public Integer getImmuneDamageRatio() {
-		return immuneDamageRatio;
+	/**
+	 * 攻击模式，远/近
+	 */
+	public Integer getAttackMode() {
+		return attackMode;
 	}
 
-	public void setImmuneDamageRatio(Integer damageChance) {
-		this.immuneDamageRatio = damageChance;
-	} 
+	public void setAttackMode(Integer attackMode) {
+		this.attackMode = attackMode;
+	}
+
+	
+	private Integer type = Type_Life;
 
 	/**
 	 * 卡片类型
 	 */
-	private Integer type = Type_Life;
-
 	@Override
 	public Integer getType() {
 		// TODO Auto-generated method stub
 		return type;
 	}
-	
-	/**
-	 * 反击概率 基准100.00
-	 */
-	private Integer attackBackChance = 100;
-	
-	public Integer getAttackBackChance() {
-		return attackBackChance;
-	}
-
-	public void setAttackBackChance(Integer attackBackChance) {
-		this.attackBackChance = attackBackChance;
-	}
-
-	/**
-	 * 闪避概率 基准100.00
-	 */
-	private Integer dodgeChance = 0;
-
-	public Integer getDodgeChance() {
-		return dodgeChance;
-	}
-
-	public void setDodgeChance(Integer dodgeChance) {
-		this.dodgeChance = dodgeChance;
-	}
-	
-	/**
-	 * 暴击几率 基准100.00
-	 */
-	private Integer thumpChance = 0;
-
-	public Integer getThumpChance() {
-		return thumpChance;
-	}
-
-	public void setThumpChance(Integer criticalChance) {
-		this.thumpChance = criticalChance;
-	}
-	
-	/**
-	 * 命中 基准100.00
-	 */
-	private Integer accurateChance = 100;
-
-	public Integer getAccurateChance() {
-		return accurateChance;
-	}
-
-	public void setAccurateChance(Integer accurateChance) {
-		this.accurateChance = accurateChance;
-	}
+		
+	private Integer speedChance = 100;
 	
 	/**
 	 * 速度，基准100，为什么速度是int型，因为在ControlQueue中使用int方便计算
 	 */
-	private Integer speedChance = 100;
-	
 	public Integer getSpeedChance() {
 		return speedChance;
 	}
@@ -359,24 +310,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.speedChance = speed;
 	}
 	
-	/**
-	 * 格挡概率
-	 */
-	private Integer parryChance = 0;
-
-	public Integer getParryChance() {
-		return parryChance;
-	}
-
-	public void setParryChance(Integer parryChance) {
-		this.parryChance = parryChance;
-	}
+	private Integer fleeChance = 0;
 	
 	/**
 	 * 逃脱几率
 	 */
-	private Integer fleeChance = 0;
-	
 	public Integer getFleeChance() {
 		return fleeChance;
 	}
@@ -385,11 +323,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.fleeChance = fleeChance;
 	}
 	
+	private Integer lockChance = 0;
+
 	/**
 	 * 锁定几率
 	 */
-	private Integer lockChance = 0;
-
 	public Integer getLockChance() {
 		return lockChance;
 	}
@@ -398,11 +336,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.lockChance = lockChance;
 	}
 	
+	private List<IBuff> nexusBuffList = new ArrayList<IBuff>();
+	
 	/**
 	 * 发起方状态
 	 */
-	private List<IBuff> nexusBuffList = new ArrayList<IBuff>();
-	
 	public void addNexusBuff(IBuff buff){
 		this.nexusBuffList.add(buff);
 	}
@@ -429,11 +367,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		}
 	}
 
-	/**
-	 * 状态
-	 */
 	private List<IBuff> buffList = new ArrayList<IBuff>();
-	
+
+	/**
+	 * Buff
+	 */
 	public List<IBuff> getBuffList() {
 		return buffList;
 	}
@@ -651,22 +589,28 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 攻击
 	 */
-	private IAttack attack;
+	private IAttack attack = null;
 	
 	public IAttack getAttack() {
+		if(null==attack){
+			IAttack attack = new Attack();
+			attack.setAtk(atk);
+			attack.setRange(attackRange);
+			attack.setSpeedChance(speedChance);
+			attack.setLockChance(lockChance);
+			attack.setMode(attackMode);
+			attack.setOwner(this);
+			this.attack = new AttackDecorator(attack);
+		}
 		return attack;
 	}
 
 	public void setAttack(IAttack attack) {
-		attack.addIntercepter(new Accurate(this));
-		attack.addIntercepter(new Thump(150, this));
-		attack.addIntercepter(new ShortRangeAmerce(-50, this));
-		attack.setAccurateChance(accurateChance);
 		attack.setAtk(atk);
-		attack.setRange(range);
+		attack.setRange(attackRange);
 		attack.setSpeedChance(speedChance);
-		attack.setThumpChance(thumpChance);
 		attack.setLockChance(lockChance);
+		attack.setMode(attackMode);
 		attack.setOwner(this);
 		this.attack = new AttackDecorator(attack);
 	}
@@ -674,20 +618,18 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 受到攻击,也是普通攻击的入口
 	 */
-	private IAttacked attacked;
+	private IAttacked attacked = null;
 	
 	public IAttacked getAttacked() {
+		if(null==attacked){
+			IAttacked attacked = new Attacked();
+			attacked.setOwner(this);
+			this.attacked = new AttackedDecorator(attacked);
+		}
 		return attacked;
 	}
 
 	public void setAttacked(IAttacked attacked) {
-		attacked.addIntercepter(new Dodge(this));
-		attacked.addIntercepter(new AttackBack(this));
-		attacked.addIntercepter(new Parry(this));
-		attacked.setAttackBackChance(attackBackChance);
-		attacked.setDodgeChance(dodgeChance);
-		attacked.setImmuneDamageRatio(immuneDamageRatio);
-		attacked.setParryChance(parryChance);
 		attacked.setOwner(this);
 		this.attacked = new AttackedDecorator(attacked);
 	}
@@ -695,9 +637,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 使用技能，注意：法师普通攻击不属于技能攻击
 	 */
-	private IConjure conjure;
+	private IConjure conjure = null;
 	
 	public IConjure getConjure() {
+		if(null==conjure){
+			IConjure conjure = new Conjure();
+			conjure.setOwner(this);
+			this.conjure = new ConjureDecorator(conjure);
+		}
 		return conjure;
 	}
 
@@ -709,9 +656,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 受到法术影响，法术攻击的入口
 	 */
-	private IAffected affected;
+	private IAffected affected = null;
 	
 	public IAffected getAffected() {
+		if(null==affected){
+			IAffected affected = new Affected();
+			affected.setOwner(this);
+			this.affected = new AffectedDecorator(affected);
+		}
 		return affected;
 	}
 
@@ -723,15 +675,26 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 移动
 	 */
-	private IMove move;
+	private IMove move = null;
 	
 	public IMove getMove() {
+		if(null==move){
+			IMove move = new Move();
+			move.setEnergy(energy);
+			move.setFleeChance(fleeChance);
+			move.setType(moveType);
+			move.setHide(hide);
+			move.setOwner(this);
+			this.move = new MoveDecorator(move);
+		}
 		return move;
 	}
 
 	public void setMove(IMove move) {
 		move.setEnergy(energy);
 		move.setFleeChance(fleeChance);
+		move.setType(moveType);
+		move.setHide(hide);
 		move.setOwner(this);
 		this.move = new MoveDecorator(move);
 	}
@@ -742,6 +705,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private ISwap swap = null;
 	
 	public ISwap getSwap() {
+		if(null==swap){
+			ISwap swap = new Swap();
+			swap.setOwner(this);
+			this.swap = new SwapDecorator(swap);
+		}
 		return swap;
 	}
 
@@ -756,6 +724,13 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private ICall call = null;
 	
 	public ICall getCall() {
+		if(null==call){
+			ICall call = new Call();
+			call.setConsume(consume);
+			call.setOwner(this);
+			this.call = new CallDecorator(call);
+		}
+		
 		return call;
 	}
 
@@ -771,6 +746,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private IRenew renew = null;
 	
 	public IRenew getRenew(){
+		if(null==renew){
+			IRenew renew = new Renew();
+			renew.setOwner(this);
+			this.renew = new RenewDecorator(renew);
+		}
 		return renew;
 	}
 	
@@ -785,6 +765,12 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private IDeath death = null;
 	
 	public IDeath getDeath() {
+		if(null==death){
+			IDeath death = new Death();
+			death.setHp(hp);
+			death.setOwner(this);
+			this.death = new DeathDecorator(death);
+		}
 		return death;
 	}
 
@@ -800,6 +786,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private IChuck chuck = null;
 
 	public IChuck getChuck() {
+		if(null==chuck){
+			IChuck chuck = new Chuck();
+			chuck.setOwner(this);
+			this.chuck = new ChuckDecorator(chuck);
+		}
 		return chuck;
 	}
 
@@ -820,8 +811,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * 受攻击
 	 * @param attack
 	 */
-	public void attacked(LifeCard attack) throws RuleValidatorException {
-		attacked.action(attack);
+	public void attacked(LifeCard life, IAttack attack) throws RuleValidatorException {
+		attacked.action(life,attack);
 	}
 	
 	/**
@@ -897,25 +888,21 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated method stub
 
 		this.attack.setAtk(atk);
-		this.attack.setAccurateChance(accurateChance);
-		this.attack.setThumpChance(thumpChance);
+		this.attack.setMode(attackMode);
 		if(Debug.isDebug)
 			this.attack.setSpeedChance(IControlQueue.consume);
 		else
 			this.attack.setSpeedChance(speedChance);
 		this.attack.setLockChance(lockChance);
 		
-		this.attacked.setImmuneDamageRatio(immuneDamageRatio);
-		this.attacked.setAttackBackChance(attackBackChance);
-		this.attacked.setDodgeChance(dodgeChance);
-		this.attacked.setParryChance(parryChance);
-		
 		this.conjure.setPower(power);
 		
 		this.call.setConsume(consume);
 		
 		this.move.setEnergy(energy);
+		this.move.setType(moveType);
 		this.move.setFleeChance(fleeChance);
+		this.move.setHide(hide);
 		
 		this.death.setHp(hp);
 		

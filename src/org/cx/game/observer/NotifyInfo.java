@@ -53,7 +53,9 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Hp = "Card_LifeCard_State_Hp";
 	public final static String Card_LifeCard_State_Atk = "Card_LifeCard_State_Atk";
 	public final static String Card_LifeCard_State_Range = "Card_LifeCard_State_Range";
-	public final static String Card_LifeCard_State_ImmuneDamageRatio = "Card_LifeCard_State_ImmuneDamageRatio";	
+	public final static String Card_LifeCard_State_Energy = "Card_LifeCard_State_Energy";
+	public final static String Card_LifeCard_State_Mode = "Card_LifeCard_State_Mode";
+	public final static String Card_LifeCard_State_Type = "Card_LifeCard_State_Type";
 	
 	public final static String Card_TrickCard_Trigger = "Card_TrickCard_Trigger";
 	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";

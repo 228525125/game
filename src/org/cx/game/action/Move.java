@@ -20,11 +20,11 @@ public class Move extends Action implements IMove{
 	private Integer type = Type_Walk;
 	private Boolean moveable = false;   //是否能移动，回合内只能移动一次
 	private Integer fleeChance = 0;         //逃离成功率
+	private Boolean hide = false;           //隐形状态
 	
-	public Move(Integer type) {
+	public Move() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.type = type;
 		setParameterTypeValidator(new Class[]{IPlace.class});
 	}
 	
@@ -44,6 +44,21 @@ public class Move extends Action implements IMove{
 	public void setType(Integer type) {
 		// TODO Auto-generated method stub
 		this.type = type;
+	}
+	
+	@Override
+	public void changeType(Integer type) {
+		// TODO Auto-generated method stub
+		this.type = type;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("change", type);
+		map.put("position", getOwner().getContainerPosition());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Type,map);
+		super.notifyObservers(info);
 	}
 	
 	public Integer getConsume() {
@@ -76,10 +91,54 @@ public class Move extends Action implements IMove{
 		this.fleeChance = fleeChance;
 	}
 	
+	public Boolean getHide() {
+		return hide;
+	}
+
+	/**
+	 * 隐式的改变隐身状态
+	 * @param hide
+	 */
+	public void setHide(Boolean hide) {
+		this.hide = hide;
+	}
+	
+	/**
+	 * 显式的改变隐身状态，只能在战场上调用
+	 * @param hide
+	 */
+	public void changeHide(Boolean hide){
+		
+		this.hide = hide;
+		
+		/*
+		 * 隐身状态的改变在战场上才有意义
+		 */
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("position", getOwner().getContainerPosition());
+		map.put("hide", hide);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
+		notifyObservers(info);
+	}
+
 	@Override
 	public void addToEnergy(Integer energy) {
 		// TODO Auto-generated method stub
 		this.energy += energy;
+		this.energy = this.energy < 1 ? 1 : this.energy;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("change", energy);
+		map.put("position", getOwner().getContainerPosition());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Energy,map);
+		super.notifyObservers(info);
 	}
 	
 	public Boolean getMoveable() {

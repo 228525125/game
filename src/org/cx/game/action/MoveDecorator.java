@@ -121,4 +121,28 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 		move.setFleeChance(fleeChance);
 	}
 
+	@Override
+	public Boolean getHide() {
+		// TODO Auto-generated method stub
+		return move.getHide();
+	}
+
+	@Override
+	public void setHide(Boolean hide) {
+		// TODO Auto-generated method stub
+		move.setHide(hide);
+	}
+
+	@Override
+	public void changeHide(Boolean hide) {
+		// TODO Auto-generated method stub
+		move.changeHide(hide);
+	}
+
+	@Override
+	public void changeType(Integer type) {
+		// TODO Auto-generated method stub
+		move.changeType(type);
+	}
+
 }

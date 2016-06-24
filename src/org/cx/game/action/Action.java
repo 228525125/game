@@ -51,14 +51,14 @@ public abstract class Action extends Observable implements IAction {
 	
 	private ParameterTypeValidator parameterTypeValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
-	private String proertyName = null;
+	private String[] proertyName = null;
 	private Object[] validatorValue = null;
 	
 	protected void setParameterTypeValidator(Class[] parameterType) {
 		this.parameterType = parameterType;
 	}
 	
-	protected void setParameterTypeValidator(Class[] parameterType, String proertyName, Object[] validatorValue) {
+	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
 		this.parameterType = parameterType;
 		this.proertyName = proertyName;
 		this.validatorValue = validatorValue;

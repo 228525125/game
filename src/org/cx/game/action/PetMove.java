@@ -20,11 +20,6 @@ public class PetMove extends Move {
 	 */
 	public final static Integer Move_Range = 8;
 	
-	public PetMove(Integer type) {
-		super(type);
-		// TODO Auto-generated constructor stub
-	}
-	
 	/**
 	 * 回到主人身边
 	 */

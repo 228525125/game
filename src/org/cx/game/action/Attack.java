@@ -21,18 +21,13 @@ public class Attack extends Action implements IAttack {
 	
 	private Integer mode = IAttack.Mode_Far;
 	private Integer range = 1;
-	private Integer type = IAttack.Type_Usually;
-	private Integer accurateChance = 0;
-	private Integer thumpChance = 0;
 	private Integer speedChance = 0;
 	private Integer lockChance = 0;
 	private Integer atk = 0;
 	
-	public Attack(Integer mode, Integer type) {
+	public Attack() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.mode = mode;
-		this.type = type;
 		setParameterTypeValidator(new Class[]{LifeCard.class});
 	}
 	
@@ -54,6 +49,7 @@ public class Attack extends Action implements IAttack {
 	public void addToRange(Integer range) {
 		// TODO Auto-generated method stub
 		this.range += range;
+		this.range = this.range < 1 ? 1 : this.range;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -69,34 +65,23 @@ public class Attack extends Action implements IAttack {
 		return mode;
 	}
 	
-	public void setMode(Integer type) {
-		this.mode = type;
-	}
-
-	public Integer getType() {
-		return type;
-	}
-
-	public void setType(Integer atkType) {
-		this.type = atkType;
-	}
-
-	public Integer getAccurateChance() {
-		return accurateChance;
-	}
-
-	public void setAccurateChance(Integer accurateChance) {
-		this.accurateChance = accurateChance;
-	}
-
-	public Integer getThumpChance() {
-		return thumpChance;
-	}
-
-	public void setThumpChance(Integer thumpChance) {
-		this.thumpChance = thumpChance;
+	public void setMode(Integer mode) {
+		this.mode = mode;
 	}
 	
+	public void changeMode(Integer mode){
+		this.mode = mode;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("change", range);
+		map.put("position", getOwner().getContainerPosition());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Mode,map);
+		super.notifyObservers(info);
+	}
+
 	@Override
 	public Integer getSpeedChance() {
 		// TODO Auto-generated method stub
@@ -123,6 +108,7 @@ public class Attack extends Action implements IAttack {
 	public void addToSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
 		this.speedChance += speedChance;
+		this.speedChance = this.speedChance < 0 ? 0 : this.speedChance;
 		
 		/*
 		 * 初始化时，owner为null
@@ -158,6 +144,7 @@ public class Attack extends Action implements IAttack {
 	public void addToAtk(Integer atk) {
 		// TODO Auto-generated method stub
 		this.atk += atk;
+		this.atk = this.atk < 0 ? 0 : this.atk;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -184,20 +171,10 @@ public class Attack extends Action implements IAttack {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attack,map);
 		super.notifyObservers(info);  
 		
-		List<IBuff> buffs = attacked.getBuff(AttackLockBuff.class);
-		Boolean exist = false;
-		for(IBuff buff : buffs){
-			if(getOwner().equals(buff.getOwner())){
-				exist = true;
-				break;
-			}
-		}
-		
 		IGround ground = getOwner().getPlayer().getGround();
 		Integer distance = ground.easyDistance(attacked.getContainerPosition(), getOwner().getContainerPosition());
 		if(IDeath.Status_Live == attacked.getDeath().getStatus()
-		&& 1==distance                                           //近身
-		&& !exist){                                               //判断是否被锁定过
+		&& 1==distance){                                           //近身
 			
 			List<IBuff> buffList = getOwner().getNexusBuff(AttackLockBuff.class);
 			for(IBuff buff : buffList)
@@ -205,11 +182,30 @@ public class Attack extends Action implements IAttack {
 			
 			new AttackLockBuff(2,getOwner(),attacked).effect();
 		}
-			
 		
-		attacked.attacked(getOwner());         //比赛规则在attacked中实现的
+		IAttack attack = getOwner().getAttack().clone();
+		if(IAttack.Mode_Far.equals(getMode()) && 1==distance){
+			attack.setMode(IAttack.Mode_Near);
+			Integer atk = attack.getAtk()/2;
+			attack.setAtk(atk);
+		}
+		
+		attacked.attacked(getOwner(), attack);
+		
+		
 		
 		if(!Debug.isDebug)
 			getOwner().getPlayer().getContext().done();
+	}
+	
+	public IAttack clone() {
+		// TODO Auto-generated method stub
+		try {
+			return (IAttack) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
