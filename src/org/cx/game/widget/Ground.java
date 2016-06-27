@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
+import org.cx.game.action.IAttack;
 import org.cx.game.action.IMove;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
@@ -314,6 +315,21 @@ public class Ground extends Container implements IGround
 		if(NotifyInfo.Command_Query_Attack == action && card instanceof LifeCard){
 			LifeCard life = (LifeCard) card;
 			Integer range = life.getAttack().getRange();
+			/*
+			 * 这里要考虑远程单位射程切换为近战时的变化
+			 * 当远程单位在战场上时，如果附近有敌方单位，则只能近身攻击
+			 */
+			if(IAttack.Mode_Far.equals(life.getAttack().getMode())){
+				List<Integer> list = easyAreaForDistance(life.getContainerPosition(), 1, IGround.Equal);
+				for(Integer position : list){
+					LifeCard lifeCard = getCard(position);
+					if(null!=lifeCard && !lifeCard.getPlayer().equals(lifeCard.getPlayer())){
+						range = 1;
+						break;
+					}
+				}
+			}
+			
 			positionList = easyAreaForDistance(life.getContainerPosition(), range, Contain);  //1：表示范围内的所有单元格，0：表示等于范围的单元格
 			positionList.remove(life.getContainerPosition());
 		}
