@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
@@ -43,7 +44,7 @@ public class Context extends Observable implements IContext
 	private IControlQueue queue = new ControlQueue();
 	private Long newCardPlayId = 1l;
 	
-	private final static Integer Power_Add = 100;
+	private final static Integer Power_Add = 1;
 	
 	private ContextDecorator decorator = null; 
 	
@@ -438,14 +439,21 @@ public class Context extends Observable implements IContext
 			ICardGroup cardGroup = getControlPlayer().getCardGroup();
 			ICard card = cardGroup.out();  //摸牌
 			
-			IUseCard useCard = getControlPlayer().getUseCard();
-			useCard.add(useCard.getSize(),card);
+			if(null!=card){
+				IUseCard useCard = getControlPlayer().getUseCard();
+				useCard.add(useCard.getSize(),card);
+			}
 			
 			this.controlLife=null;      //如果ControlLife不为null就表示控制权在life
 		}
 		if (object instanceof LifeCard) {
 			LifeCard life = (LifeCard) object;
-			life.setActivate(true);             //设置为可以行动
+			try {
+				life.activate(true);
+			} catch (RuleValidatorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}             //设置为可以行动
 			setControlLife(life);
 		}
 	}

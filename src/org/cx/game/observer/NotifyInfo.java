@@ -38,6 +38,7 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Action_Conjure = "Card_LifeCard_Action_Conjure";
 	public final static String Card_LifeCard_Action_Affected = "Card_LifeCard_Action_Affected";
 	
+	public final static String Card_LifeCard_Action_Activate = "Card_LifeCard_Action_Activate";
 	public final static String Card_LifeCard_Action_Call = "Card_LifeCard_Action_Call";
 	public final static String Card_LifeCard_Action_Renew = "Card_LifeCard_Action_Renew";
 	public final static String Card_LifeCard_Action_Death = "Card_LifeCard_Action_Death";
@@ -48,7 +49,6 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Action_Chuck = "Card_LifeCard_Action_Chuck";
 	public final static String Card_LifeCard_Action_Move = "Card_LifeCard_Action_Move";
 	
-	public final static String Card_LifeCard_State_Activate = "Card_LifeCard_State_Activate";
 	public final static String Card_LifeCard_State_Hide = "Card_LifeCard_State_Hide";
 	public final static String Card_LifeCard_State_Hp = "Card_LifeCard_State_Hp";
 	public final static String Card_LifeCard_State_Atk = "Card_LifeCard_State_Atk";

@@ -48,7 +48,8 @@ public class CardGroup extends Container implements ICardGroup
 	public ICard out() {
 		// TODO Auto-generated method stub
 		ICard card = getCard(0);
-		remove(card);
+		if(null!=card)
+			remove(card);
 		return card;
 	}
 	

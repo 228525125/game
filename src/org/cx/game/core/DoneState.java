@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 
@@ -25,8 +26,13 @@ public class DoneState extends PlayState {
 	public void done() {
 		// TODO Auto-generated method stub
 		LifeCard life = context.getControlLife();
-		if(null!=life){           //结束回合，不管life是否已经完成操作
-			life.setActivate(false);
+		if(null!=life && life.getActivate().getActivation()){           //结束回合，不管life是否已经完成操作
+			try {
+				life.activate(false);
+			} catch (RuleValidatorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		IPlayer curPlayer = context.getControlPlayer();

@@ -149,10 +149,6 @@ public class Move extends Action implements IMove{
 
 	public void setMoveable(Boolean moveable) {
 		this.moveable = moveable;
-		
-		if(!moveable){
-			energy = 0;
-		}
 	}
 	
 	@Override

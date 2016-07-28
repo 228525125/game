@@ -109,7 +109,7 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		commandBuffer = new CommandBuffer(this);
 	}
 	
-	private Integer power = 100;
+	private Integer power = 0;
 
 	@Override
 	public Integer getResource() {

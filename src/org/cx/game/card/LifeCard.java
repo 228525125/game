@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.action.Activate;
+import org.cx.game.action.ActivateDecorator;
 import org.cx.game.action.Affected;
 import org.cx.game.action.AffectedDecorator;
 import org.cx.game.action.Attack;
@@ -19,6 +21,7 @@ import org.cx.game.action.Conjure;
 import org.cx.game.action.ConjureDecorator;
 import org.cx.game.action.Death;
 import org.cx.game.action.DeathDecorator;
+import org.cx.game.action.IActivate;
 import org.cx.game.action.IAffected;
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IAttacked;
@@ -157,53 +160,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setMoveType(Integer moveType) {
 		this.moveType = moveType;
-	}
-
-	private Integer power = Debug.isDebug ? IConjure.Max_Power : 0;
-
-	/**
-	 * 能量
-	 */
-	public Integer getPower() {
-		return power;
-	}
-
-	public void setPower(Integer power) {
-		this.power = power;
-	}
-
-	private Boolean activate = false;
-
-	/**
-	 * 激活状态
-	 */
-	public Boolean getActivate() {
-		if(Debug.isDebug)
-			return Debug.activate;
-		return activate;
-	}
-
-	public void setActivate(Boolean activate) {
-		this.activate = activate;
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getPlayer());
-		map.put("container", getContainer());
-		map.put("card", this);
-		map.put("position", getContainerPosition());
-		map.put("activate", activate);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Activate,map);
-		notifyObservers(info);
-		
-		if(activate){
-			getMove().setMoveable(true);
-			getAttacked().setAttackBack(true);
-			List<IBuff> buffs = getNexusBuff(AttackLockBuff.class);  //清除锁定对象
-			for(IBuff buff : buffs)
-				removeNexusBuff(buff);
-		}else{
-			getMove().setMoveable(false);
-		}
 	}
 	
 	private Boolean hide = false;
@@ -587,6 +543,32 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 激活状态
+	 */
+	private Boolean activation = false;
+	
+	private IActivate activate = null;
+	
+	/**
+	 * 激活
+	 * @return
+	 */
+	public IActivate getActivate() {
+		if(null==activate){
+			IActivate activate = new Activate();
+			activate.setActivation(activation);
+			activate.setOwner(this);
+			this.activate = new ActivateDecorator(activate);
+		}
+		return activate;
+	}
+
+	public void setActivate(IActivate activate) {
+		activate.setOwner(this);
+		this.activate = new ActivateDecorator(activate);
+	}
+
+	/**
 	 * 攻击
 	 */
 	private IAttack attack = null;
@@ -798,13 +780,22 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		chuck.setOwner(this);
 		this.chuck = new ChuckDecorator(chuck);
 	}
+	
+	/**
+	 * 激活
+	 * @param activate
+	 * @throws RuleValidatorException
+	 */
+	public void activate(Boolean activate) throws RuleValidatorException {
+		getActivate().action(activate);
+	}
 
 	/**
 	 * 攻击
 	 * @param attacked 被攻击的卡片
 	 */
 	public void attack(LifeCard attacked) throws RuleValidatorException {
-		attack.action(attacked);
+		getAttack().action(attacked);
 	}
 	
 	/**
@@ -812,7 +803,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @param attack
 	 */
 	public void attacked(LifeCard life, IAttack attack) throws RuleValidatorException {
-		attacked.action(life,attack);
+		getAttacked().action(life,attack);
 	}
 	
 	/**
@@ -820,7 +811,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @param magic
 	 */
 	public void affected(IMagic magic) throws RuleValidatorException {
-		affected.action(magic);
+		getAffected().action(magic);
 	}
 	
 	/**
@@ -829,7 +820,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @param objects
 	 */
 	public void conjure(IActiveSkill skill, Object...objects) throws RuleValidatorException {
-		conjure.action(skill, objects);
+		getConjure().action(skill, objects);
 	}
 	
 	/**
@@ -837,7 +828,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @param position 指定位置
 	 */
 	public void move(IPlace place) throws RuleValidatorException {
-		move.action(place);
+		getMove().action(place);
 	}
 	
 	/**
@@ -845,7 +836,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 *
 	 */
 	public void call(IPlace place) throws RuleValidatorException {
-		call.action(place);
+		getCall().action(place);
 	}
 	
 	/**
@@ -854,7 +845,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @throws RuleValidatorException
 	 */
 	public void renew(IPlace place) throws RuleValidatorException {
-		renew.action(place);
+		getRenew().action(place);
 	}
 
 	/**
@@ -862,7 +853,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	public void death() throws RuleValidatorException {
 		// TODO 自动生成方法存根
-		death.action();
+		getDeath().action();
 	}
 	
 	/**
@@ -870,7 +861,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @param life 用于交换的卡片
 	 */
 	public void swap(LifeCard life) throws RuleValidatorException {
-		swap.action(life);
+		getSwap().action(life);
 	}
 	
 	/**
@@ -878,7 +869,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	public void chuck() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		chuck.action();
+		getChuck().action();
 	}
 	
 	/**
@@ -887,35 +878,42 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void initState() {
 		// TODO Auto-generated method stub
 
-		this.attack.setAtk(atk);
-		this.attack.setMode(attackMode);
+		getActivate().setActivation(activation);
+		
+		getAttack().setAtk(atk);
+		getAttack().setMode(attackMode);
 		if(Debug.isDebug)
-			this.attack.setSpeedChance(IControlQueue.consume);
+			getAttack().setSpeedChance(IControlQueue.consume);
 		else
-			this.attack.setSpeedChance(speedChance);
-		this.attack.setLockChance(lockChance);
+			getAttack().setSpeedChance(speedChance);
+		getAttack().setLockChance(lockChance);
 		
-		this.conjure.setPower(power);
+		getCall().setConsume(consume);
 		
-		this.call.setConsume(consume);
+		getMove().setEnergy(energy);
+		getMove().setType(moveType);
+		getMove().setFleeChance(fleeChance);
+		getMove().setHide(hide);
 		
-		this.move.setEnergy(energy);
-		this.move.setType(moveType);
-		this.move.setFleeChance(fleeChance);
-		this.move.setHide(hide);
-		
-		this.death.setHp(hp);
+		getDeath().setHp(hp);
 		
 		setHide(false);
 		
 		clearBuff();
 		
+		List<IBuff> buffs = new ArrayList<IBuff>();     //与自己相关的buff，不是自己发起的buff，例如AttackLockBuff
+		buffs.addAll(this.nexusBuffList);
+		for(IBuff buff : buffs){        
+			buff.invalid();
+		}
+		
+		/* 随从已取消主动技能，因此冷却也被取消
 		for(ISkill skill : skillList){            //刷新技能冷却时间
 			if (skill instanceof ActiveSkill) {
 				ActiveSkill as = (ActiveSkill) skill;
 				as.setCooldownBout(0);
 			}
-		}
+		}*/
 	}
 	
 	@Override

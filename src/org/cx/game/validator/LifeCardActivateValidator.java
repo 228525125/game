@@ -16,7 +16,7 @@ public class LifeCardActivateValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(getLifeCard().getActivate()){
+			if(getLifeCard().getActivate().getActivation()){
 				ret = true;
 			}else{
 				addMessage(I18n.getMessage(this));

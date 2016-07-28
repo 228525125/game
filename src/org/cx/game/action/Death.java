@@ -154,7 +154,6 @@ public class Death extends Action implements IDeath {
 		
 		getOwner().initState();                //初始化
 		
-		getOwner().setActivate(false);
 		getOwner().getPlayer().getContext().getQueue().remove(getOwner());   //从队列中移除
 		
 		IGround ground = (IGround)getOwner().getContainer();     //只有在战场上才会死亡
@@ -162,13 +161,14 @@ public class Death extends Action implements IDeath {
 		place.out();
 		place.getCemetery().add(getOwner());         //进入墓地
 		
+		/* 随从已取消主动技能
 		LifeCard life = (LifeCard) getOwner();            //停止计算技能冷却时间
 		for(ISkill skill : life.getSkillList()){
 			if (skill instanceof ActiveSkill) {
 				ActiveSkill as = (ActiveSkill) skill;
 				life.getPlayer().getContext().deleteIntercepter(as.getCooldownBoutIntercepter());
 			}
-		}
+		}*/
 	}
 	
 	public void resetIntercepter() {

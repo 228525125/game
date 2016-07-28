@@ -65,13 +65,27 @@ public class CardFactory {
 	
 	public static List<ICard> getInstances(List<Integer> cid){
 		List<ICard> list = new ArrayList<ICard>();
-		Element cards = getRoot().element("cards");
-		for(Iterator it = cards.elementIterator("card");it.hasNext();){
-			Element card = (Element) it.next();
-			if(cid.contains(Integer.valueOf(card.attribute("cardID").getText())))
-				list.add(getInstance(card));
+		
+		for(Integer id : cid){
+			Element cardEl = getElement(id);
+			list.add(getInstance(cardEl));
 		}
 		return list;
+	}
+	
+	private static Element getElement(Integer cid){
+		
+		Element el = null;
+		
+		Element cards = getRoot().element("cards");
+		
+		for(Iterator it = cards.elementIterator("card");it.hasNext();){
+			Element card = (Element) it.next();
+			if(cid.equals(Integer.valueOf(card.attribute("cardID").getText())))
+				el = card;
+		}
+		
+		return el;
 	}
 	
 	public static void main(String[] args) {

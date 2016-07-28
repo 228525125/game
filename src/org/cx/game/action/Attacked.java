@@ -67,7 +67,7 @@ public class Attacked extends Action implements IAttacked {
 		/*
 		 * 反击
 		 */
-		if(IDeath.Status_Live.equals(death.getStatus()) && getAttackBack()){
+		if(IAttack.Mode_Near.equals(attack.getMode()) && IDeath.Status_Live.equals(death.getStatus()) && getAttackBack()){
 			life.getDeath().attackToDamage(-damage2);
 			setAttackBack(false);
 			

@@ -69,7 +69,6 @@ public class MirageDeath extends Death {
 		
 		getOwner().initState();                //初始化
 		
-		getOwner().setActivate(false);
 		getOwner().getPlayer().getContext().getQueue().remove(getOwner());   //从队列中移除
 		
 		IGround ground = (IGround)getOwner().getContainer();     //只有在战场上才会死亡

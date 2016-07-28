@@ -38,11 +38,17 @@ public class ControlQueue extends Observable implements IControlQueue {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
 		
-		if(consume<=place.getCount()){    //如果大于consume，则插入当前queue进行排序
+		/*if(consume<=place.getCount()){    //如果大于consume，则插入当前queue进行排序
 			insert(place);
 		}else{                            //如果小于额定消耗，则进入下一个queue
 			insertOtherQueue(place); 
-		}
+		}*/		
+		
+		/*
+		 * 这里为什么直接插入第二队列，它的效果就像你排队办事一样，你总是从最后一个排起
+		 */
+		place.setCount(0);
+		insertOtherQueue(place);
 		
 	}
 	

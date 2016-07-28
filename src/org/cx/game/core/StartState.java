@@ -49,13 +49,18 @@ public class StartState extends PlayState {
 			IPlayer player = context.getPlayer1();
 			ICardGroup cardGroup = player.getCardGroup();
 			ICard card = cardGroup.out();
-			IUseCard useCard = player.getUseCard();
-	    	useCard.add(useCard.getSize(),card);
+			if(null!=card){
+				IUseCard useCard = player.getUseCard();
+		    	useCard.add(useCard.getSize(),card);
+			}
+			
 	    	player = context.getPlayer2();
 	    	cardGroup = player.getCardGroup();
 	    	card = cardGroup.out();
-	    	useCard = player.getUseCard();
-	    	useCard.add(useCard.getSize(),card);
+	    	if(null!=card){
+	    		IUseCard useCard = player.getUseCard();
+		    	useCard.add(useCard.getSize(),card);
+	    	}
 		}
 		
 		context.switchControl();
