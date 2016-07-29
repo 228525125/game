@@ -6,6 +6,7 @@ import java.util.Observer;
 import org.cx.game.card.TrickCard;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.widget.IPlace;
 
 public class SetupDecorator extends ActionDecorator implements ISetup {
 
@@ -15,5 +16,7 @@ public class SetupDecorator extends ActionDecorator implements ISetup {
 		// TODO Auto-generated constructor stub
 		super(setup);
 		this.setup = setup;
+		
+		setParameterTypeValidator(new Class[]{IPlace.class});
 	}
 }

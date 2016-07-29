@@ -12,6 +12,7 @@ import org.cx.game.policy.IActionPolicy;
 import org.cx.game.policy.IFormula;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
+import org.cx.game.validator.ParameterTypeValidator;
 
 public abstract class ActionDecorator implements IAction {
 
@@ -48,9 +49,28 @@ public abstract class ActionDecorator implements IAction {
 		return original.getOwner();
 	}
 	
+	private ParameterTypeValidator parameterTypeValidator = null;
+	private Class[] parameterType = new Class[]{};      //用于参数的验证
+	private String[] proertyName = null;
+	private Object[] validatorValue = null;
+	
+	protected void setParameterTypeValidator(Class[] parameterType) {
+		this.parameterType = parameterType;
+	}
+	
+	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
+		this.parameterType = parameterType;
+		this.proertyName = proertyName;
+		this.validatorValue = validatorValue;
+	}
+	
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		
+		deleteValidator(parameterTypeValidator);
+		this.parameterTypeValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
+		addValidator(parameterTypeValidator);
 		
 		/* 
 		 * 执行规则验证

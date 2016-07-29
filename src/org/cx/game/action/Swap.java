@@ -21,12 +21,6 @@ import org.cx.game.widget.IUseCard;
  */
 public class Swap extends Action implements ISwap {
 	
-	public Swap() {
-		// TODO Auto-generated constructor stub
-		super();
-		setParameterTypeValidator(new Class[]{LifeCard.class});
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub

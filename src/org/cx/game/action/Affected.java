@@ -14,12 +14,6 @@ import org.cx.game.observer.NotifyInfo;
  */
 public class Affected extends Action implements IAffected {
 
-	public Affected() {
-		super();
-		// TODO Auto-generated constructor stub
-		setParameterTypeValidator(new Class[]{IMagic.class});
-	}
-
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub

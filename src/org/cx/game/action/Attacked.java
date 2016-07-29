@@ -14,12 +14,6 @@ public class Attacked extends Action implements IAttacked {
 	
 	private Boolean attackBack = true;
 	
-	public Attacked() {
-		// TODO Auto-generated constructor stub
-		super();
-		setParameterTypeValidator(new Class[]{LifeCard.class,IAttack.class});
-	}
-	
 	public Boolean getAttackBack() {
 		return attackBack;
 	}

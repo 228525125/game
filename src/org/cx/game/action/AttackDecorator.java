@@ -5,6 +5,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.validator.AttackRangeValidator;
+import org.cx.game.widget.IControlQueue;
 
 public class AttackDecorator extends ActionDecorator implements IAttack {
 	
@@ -14,6 +15,8 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated constructor stub
 		super(attack);
 		this.attack = attack;
+		
+		setParameterTypeValidator(new Class[]{LifeCard.class});
 		
 		/*
 		 * 当life速度发生变化时，刷新控制列表
@@ -88,7 +91,30 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void setSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
 		attack.setSpeedChance(speedChance);
+		
+		/*
+		 * 初始化时，owner为null
+		 */
+		if(null!=getOwner()){
+			IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
+			queue.refurbish();        //刷新控制列表
+		}
 	}
+	
+	@Override
+	public void addToSpeedChance(Integer speedChance) {
+		// TODO Auto-generated method stub
+		attack.addToSpeedChance(speedChance);
+		
+		/*
+		 * 初始化时，owner为null
+		 */
+		if(null!=getOwner()){
+			IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
+			queue.refurbish();        //刷新控制列表
+		}
+	}
+
 
 	@Override
 	public Integer getAtk() {
@@ -106,12 +132,6 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void addToAtk(Integer atk) {
 		// TODO Auto-generated method stub
 		attack.addToAtk(atk);
-	}
-
-	@Override
-	public void addToSpeedChance(Integer speedChance) {
-		// TODO Auto-generated method stub
-		attack.addToSpeedChance(speedChance);
 	}
 
 	@Override

@@ -21,6 +21,8 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 		super(move);
 		this.move = move;
 		
+		setParameterTypeValidator(new Class[]{IPlace.class});
+		
 		if (move instanceof FarMove) {        //远程单位，添加"疲劳攻击"设置
 			final FarMove fm = (FarMove) move;
 			final LifeCard life = (LifeCard) move.getOwner();

@@ -25,12 +25,6 @@ public class Attack extends Action implements IAttack {
 	private Integer lockChance = 0;
 	private Integer atk = 0;
 	
-	public Attack() {
-		// TODO Auto-generated constructor stub
-		super();
-		setParameterTypeValidator(new Class[]{LifeCard.class});
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
@@ -93,14 +87,6 @@ public class Attack extends Action implements IAttack {
 		// TODO Auto-generated method stub
 		if(this.speedChance!=speedChance){
 			this.speedChance = speedChance;
-			
-			/*
-			 * 初始化时，owner为null
-			 */
-			if(null!=getOwner()){
-				IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
-				queue.refurbish();        //刷新控制列表
-			}
 		}
 	}
 	
@@ -108,16 +94,7 @@ public class Attack extends Action implements IAttack {
 	public void addToSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
 		this.speedChance += speedChance;
-		this.speedChance = this.speedChance < 0 ? 0 : this.speedChance;
-		
-		/*
-		 * 初始化时，owner为null
-		 */
-		if(null!=getOwner()){
-			IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
-			queue.refurbish();        //刷新控制列表
-		}
-		
+		this.speedChance = this.speedChance < 0 ? 0 : this.speedChance;		
 	}
 
 	public Integer getAtk() {
@@ -191,8 +168,6 @@ public class Attack extends Action implements IAttack {
 		}
 		
 		attacked.attacked(getOwner(), attack);
-		
-		
 		
 		if(!Debug.isDebug)
 			getOwner().getPlayer().getContext().done();

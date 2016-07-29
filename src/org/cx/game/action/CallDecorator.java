@@ -19,6 +19,7 @@ public class CallDecorator extends ActionDecorator implements ICall {
 		super(call);
 		this.call = call;
 		
+		setParameterTypeValidator(new Class[]{IPlace.class});
 		addValidator(new CallConsumeValidator((LifeCard)call.getOwner()));
 	}
 	

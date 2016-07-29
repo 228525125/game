@@ -17,12 +17,6 @@ public class Apply extends Action implements IApply {
 
 	private Integer consume = 1;
 	
-	public Apply() {
-		// TODO Auto-generated constructor stub
-		super();
-		setParameterTypeValidator(new Class[]{Object.class});
-	}
-	
 	@Override
 	public MagicCard getOwner() {
 		// TODO Auto-generated method stub
@@ -40,10 +34,6 @@ public class Apply extends Action implements IApply {
 		// TODO Auto-generated method stub
 		super.action(objects);
 		
-		addValidator(new ApplyConsumeValidator(getOwner()));
-		
-		doValidator();		
-			
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());

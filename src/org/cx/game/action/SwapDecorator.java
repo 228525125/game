@@ -1,12 +1,8 @@
 package org.cx.game.action;
 
-import java.util.List;
-import java.util.Observer;
-
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
-import org.cx.game.intercepter.ProxyFactory;
 
 public class SwapDecorator extends ActionDecorator implements ISwap {
 
@@ -16,6 +12,9 @@ public class SwapDecorator extends ActionDecorator implements ISwap {
 		// TODO Auto-generated constructor stub
 		super(swap);
 		this.swap = swap;
+		
+		setParameterTypeValidator(new Class[]{LifeCard.class});
+		
 		this.swap.addIntercepter(new Intercepter(){
 
 			private Boolean invoke = true;

@@ -13,12 +13,6 @@ import org.cx.game.widget.IPlace;
 
 public class Setup extends Action implements ISetup {
 
-	public Setup() {
-		// TODO Auto-generated constructor stub
-		super();
-		setParameterTypeValidator(new Class[]{IPlace.class});
-	}
-	
 	@Override
 	public TrickCard getOwner() {
 		// TODO Auto-generated method stub

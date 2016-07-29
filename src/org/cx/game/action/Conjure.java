@@ -12,18 +12,12 @@ import org.cx.game.validator.ConjurePowerValidator;
 
 /**
  * 施法
- * @author 贤
+ * @author chenxian
  *
  */
 public class Conjure extends Action implements IConjure {
 
 	private Integer power = 0;
-	
-	public Conjure() {
-		super();
-		// TODO Auto-generated constructor stub
-		setParameterTypeValidator(new Class[]{IActiveSkill.class, Object[].class});
-	}
 
 	public Integer getPower() {
 		return power;
@@ -45,9 +39,6 @@ public class Conjure extends Action implements IConjure {
 		super.action(objects);
 		
 		IActiveSkill skill = (IActiveSkill) objects[0];
-		addValidator(new ConjurePowerValidator((LifeCard)getOwner(), skill));
-		
-		doValidator();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
