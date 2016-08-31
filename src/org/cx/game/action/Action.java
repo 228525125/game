@@ -11,9 +11,9 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.out.JsonOut;
 import org.cx.game.policy.IActionPolicy;
+import org.cx.game.rule.IRule;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
-import org.cx.game.validator.ParameterTypeValidator;
 
 public abstract class Action extends Observable implements IAction {
 
@@ -47,30 +47,8 @@ public abstract class Action extends Observable implements IAction {
 		return owner;
 	}
 	
-	/*private ParameterTypeValidator parameterTypeValidator = null;
-	private Class[] parameterType = new Class[]{};      //用于参数的验证
-	private String[] proertyName = null;
-	private Object[] validatorValue = null;
-	
-	protected void setParameterTypeValidator(Class[] parameterType) {
-		this.parameterType = parameterType;
-	}
-	
-	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
-		this.parameterType = parameterType;
-		this.proertyName = proertyName;
-		this.validatorValue = validatorValue;
-	}*/
-	
 	public void action(Object...objects) throws RuleValidatorException {
-		/*deleteValidator(parameterTypeValidator);
-		this.parameterTypeValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
-		addValidator(parameterTypeValidator);
 		
-		doValidator();
-		
-		if(hasError())
-			throw new RuleValidatorException(getErrors().getMessage());*/
 	}
 
 	@Override
@@ -89,11 +67,6 @@ public abstract class Action extends Observable implements IAction {
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
 		intercepter.delete();
 	}
 

@@ -9,23 +9,28 @@ import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.rule.IRule;
 
 public class Attacked extends Action implements IAttacked {
-	
-	private Boolean attackBack = true;
-	
-	public Boolean getAttackBack() {
-		return attackBack;
-	}
 
-	public void setAttackBack(Boolean attackBack) {
-		this.attackBack = attackBack;
-	}
-
+	private Boolean fightBack = false;
+	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return (LifeCard) super.getOwner();
+	}
+	
+	@Override
+	public Boolean getFightBack() {
+		// TODO Auto-generated method stub
+		return this.fightBack;
+	}
+	
+	@Override
+	public void setFightBack(Boolean fightBack) {
+		// TODO Auto-generated method stub
+		this.fightBack = fightBack;
 	}
 
 	@Override
@@ -35,8 +40,26 @@ public class Attacked extends Action implements IAttacked {
 		
 		LifeCard life = (LifeCard) objects[0];
 		IAttack attack = (IAttack) objects[1];
-		Integer mode1 = attack.getMode();
 		Integer damage1 = attack.getAtk();
+		
+		IDeath death = getOwner().getDeath();
+		death.attackToDamage(-damage1);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("attack", attack.getOwner());
+		map.put("attacked", getOwner());
+		map.put("position", getOwner().getContainerPosition());
+		map.put("damage", -damage1);
+		map.put("ruleParam", attack);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
+		super.notifyObservers(info);		
+		
+		/*
+		 * 反击
+		 */
+		Integer mode1 = attack.getMode();
 		
 		Integer mode2 = getOwner().getAttack().getMode();
 		Integer damage2 = getOwner().getAttack().getAtk();
@@ -46,21 +69,6 @@ public class Attacked extends Action implements IAttacked {
 			damage2 = atk;
 		}
 		
-		IDeath death = getOwner().getDeath();
-		death.attackToDamage(-damage1);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
-		map.put("damage", -damage1);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
-		super.notifyObservers(info);
-		
-		/*
-		 * 反击
-		 */
 		if(IAttack.Mode_Near.equals(attack.getMode()) && IDeath.Status_Live.equals(death.getStatus()) && getAttackBack()){
 			life.getDeath().attackToDamage(-damage2);
 			setAttackBack(false);
@@ -81,5 +89,11 @@ public class Attacked extends Action implements IAttacked {
 			super.notifyObservers(in);
 		}
 
+	}
+
+	@Override
+	public IRule getRule() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,14 +1,17 @@
 package org.cx.game.action;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 
-public interface IAttacked extends IAction {
-	
-	@Override
-	public LifeCard getOwner();
-	
+/**
+ * 反击
+ * @author chenxian
+ *
+ */
+public interface IRetaliate extends IAction {
+
 	public Boolean getFightBack();
 	
 	public void setFightBack(Boolean fightBack);
+	
+	public LifeCard getOwner();
 }

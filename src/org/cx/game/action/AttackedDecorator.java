@@ -1,5 +1,6 @@
 package org.cx.game.action;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 
 /**
@@ -16,18 +17,24 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		super(attacked);
 		this.attacked = attacked;
 		
-		setParameterTypeValidator(new Class[]{LifeCard.class,IAttack.class});
+		setParameterTypeValidator(new Class[]{LifeCard.class,IAttack.class}); //第二个参数可能是反击
 	}
 
 	@Override
-	public Boolean getAttackBack() {
+	public Boolean getFightBack() {
 		// TODO Auto-generated method stub
-		return attacked.getAttackBack();
+		return this.attacked.getFightBack();
 	}
 
 	@Override
-	public void setAttackBack(Boolean attackBack) {
+	public void setFightBack(Boolean fightBack) {
 		// TODO Auto-generated method stub
-		attacked.setAttackBack(attackBack);
+		this.attacked.setFightBack(fightBack);
+	}
+	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return this.attacked.getOwner();
 	}
 }

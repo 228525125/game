@@ -10,6 +10,7 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.policy.IActionPolicy;
 import org.cx.game.policy.IFormula;
+import org.cx.game.rule.IRule;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
@@ -215,5 +216,11 @@ public abstract class ActionDecorator implements IAction {
 	public void setPolicy(IActionPolicy actionPolicy) {
 		// TODO Auto-generated method stub
 		original.setPolicy(actionPolicy);
+	}
+	
+	@Override
+	public IRule getRule() {
+		// TODO Auto-generated method stub
+		return original.getRule();
 	}
 }

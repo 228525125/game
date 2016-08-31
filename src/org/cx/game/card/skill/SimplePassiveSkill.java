@@ -25,14 +25,12 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
 		if(0!=eruptAtk){
-			Integer atk = getOwner().getAttack().getAtk();
-			getOwner().getAttack().setAtk(atk - eruptAtk);
+			getOwner().getAttack().addToAtk(-eruptAtk);
 			addToEruptAtk(0);
 		}
 		
 		if(0!=eruptSpeedChance){
-			Integer speedChance = getOwner().getAttack().getSpeedChance();
-			getOwner().getAttack().setSpeedChance(speedChance - eruptSpeedChance);
+			getOwner().getAttack().addToSpeedChance(-eruptSpeedChance);
 			addToEruptSpeedChance(0);
 		}
 	}
@@ -56,8 +54,7 @@ public abstract class SimplePassiveSkill extends PassiveSkill {
 		}
 		
 		if(0!=eruptSpeedChance){
-			Integer speedChance = getOwner().getAttack().getSpeedChance();
-			getOwner().getAttack().setSpeedChance(speedChance + eruptSpeedChance);
+			getOwner().getAttack().addToSpeedChance(eruptSpeedChance);
 		}
 		
 		if(0!=keepSpeedChanceNewValue){

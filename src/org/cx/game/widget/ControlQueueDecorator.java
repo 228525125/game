@@ -6,6 +6,7 @@ import java.util.Observer;
 
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.rule.IRule;
 
 public class ControlQueueDecorator implements IControlQueue {
 
@@ -29,21 +30,7 @@ public class ControlQueueDecorator implements IControlQueue {
 		Object proxy = ProxyFactory.getProxy(original);
 		return ((IControlQueue)proxy).out();
 	}
-
-	@Override
-	public void remove(Object object) {
-		// TODO Auto-generated method stub
-		Object proxy = ProxyFactory.getProxy(original);
-		((IControlQueue)proxy).remove(object);
-	}
 	
-	@Override
-	public void refurbish() {
-		// TODO Auto-generated method stub
-		Object proxy = ProxyFactory.getProxy(original);
-		((IControlQueue)proxy).refurbish();
-	}
-
 	@Override
 	public void addObserver(Observer o) {
 		// TODO Auto-generated method stub
@@ -108,6 +95,24 @@ public class ControlQueueDecorator implements IControlQueue {
 	public Map<String,List<IIntercepter>> getIntercepterList() {
 		// TODO Auto-generated method stub
 		return original.getIntercepterList();
+	}
+
+	@Override
+	public IRule getRule() {
+		// TODO Auto-generated method stub
+		return original.getRule();
+	}
+
+	@Override
+	public void refurbish() {
+		// TODO Auto-generated method stub
+		original.refurbish();
+	}
+
+	@Override
+	public void remove(Object object) {
+		// TODO Auto-generated method stub
+		original.remove(object);
 	}
 
 }

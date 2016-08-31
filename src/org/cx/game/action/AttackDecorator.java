@@ -1,5 +1,6 @@
 package org.cx.game.action;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
@@ -17,24 +18,6 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		this.attack = attack;
 		
 		setParameterTypeValidator(new Class[]{LifeCard.class});
-		
-		/*
-		 * 当life速度发生变化时，刷新控制列表
-		 */
-		this.attack.addIntercepter(new Intercepter("setSpeedChance"){
-
-			@Override
-			public void finish(Object[] args) {
-				// TODO Auto-generated method stub
-				attack.getOwner().getPlayer().getContext().getQueue().refurbish();    //当速度发生变化时，刷新队列顺序
-			}
-			
-			@Override
-			public Integer getLevel() {
-				// TODO Auto-generated method stub
-				return IIntercepter.Level_Rule;
-			}
-		});
 	}
 	
 	private AttackRangeValidator attackRangeValidator = null;
@@ -91,28 +74,12 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void setSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
 		attack.setSpeedChance(speedChance);
-		
-		/*
-		 * 初始化时，owner为null
-		 */
-		if(null!=getOwner()){
-			IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
-			queue.refurbish();        //刷新控制列表
-		}
 	}
 	
 	@Override
 	public void addToSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
 		attack.addToSpeedChance(speedChance);
-		
-		/*
-		 * 初始化时，owner为null
-		 */
-		if(null!=getOwner()){
-			IControlQueue queue = getOwner().getPlayer().getContext().getQueue();
-			queue.refurbish();        //刷新控制列表
-		}
 	}
 
 
@@ -156,5 +123,17 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void changeMode(Integer mode) {
 		// TODO Auto-generated method stub
 		attack.changeMode(mode);
+	}
+	
+	@Override
+	public void addToLockChance(Integer lockChance) {
+		// TODO Auto-generated method stub
+		attack.addToLockChance(lockChance);
+	}
+	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return attack.getOwner();
 	}
 }

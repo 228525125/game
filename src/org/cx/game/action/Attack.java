@@ -12,6 +12,8 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.AttackRule;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.widget.IControlQueue;
@@ -24,6 +26,8 @@ public class Attack extends Action implements IAttack {
 	private Integer speedChance = 0;
 	private Integer lockChance = 0;
 	private Integer atk = 0;
+	
+	private AttackRule rule;
 	
 	@Override
 	public LifeCard getOwner() {
@@ -93,8 +97,19 @@ public class Attack extends Action implements IAttack {
 	@Override
 	public void addToSpeedChance(Integer speedChance) {
 		// TODO Auto-generated method stub
-		this.speedChance += speedChance;
-		this.speedChance = this.speedChance < 0 ? 0 : this.speedChance;		
+		if(0!=speedChance){
+			this.speedChance += speedChance;
+			this.speedChance = this.speedChance < 0 ? 0 : this.speedChance;		
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", speedChance);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Speed,map);
+			super.notifyObservers(info);
+		}
 	}
 
 	public Integer getAtk() {
@@ -103,18 +118,6 @@ public class Attack extends Action implements IAttack {
 
 	public void setAtk(Integer atk) {
 		this.atk = atk;
-	}
-	
-	@Override
-	public Integer getLockChance() {
-		// TODO Auto-generated method stub
-		return lockChance;
-	}
-
-	@Override
-	public void setLockChance(Integer lockChance) {
-		// TODO Auto-generated method stub
-		this.lockChance = lockChance;
 	}
 	
 	@Override
@@ -134,6 +137,35 @@ public class Attack extends Action implements IAttack {
 	}
 	
 	@Override
+	public Integer getLockChance() {
+		// TODO Auto-generated method stub
+		return lockChance;
+	}
+
+	@Override
+	public void setLockChance(Integer lockChance) {
+		// TODO Auto-generated method stub
+		this.lockChance = lockChance;
+	}
+	
+	@Override
+	public void addToLockChance(Integer lockChance) {
+		// TODO Auto-generated method stub
+		this.lockChance += lockChance;
+		this.lockChance = this.lockChance < 0 ? 0 : this.lockChance;
+		this.lockChance = this.lockChance > 100 ? 100 : this.lockChance;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("change", lockChance);
+		map.put("position", getOwner().getContainerPosition());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Lock,map);
+		super.notifyObservers(info);
+	}
+	
+	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub		
 		super.action(objects);
@@ -143,34 +175,13 @@ public class Attack extends Action implements IAttack {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
+		map.put("attack", getOwner());
+		map.put("attacked", attacked);
 		map.put("position", getOwner().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attack,map);
-		super.notifyObservers(info);  
+		super.notifyObservers(info);
 		
-		IGround ground = getOwner().getPlayer().getGround();
-		Integer distance = ground.easyDistance(attacked.getContainerPosition(), getOwner().getContainerPosition());
-		if(IDeath.Status_Live == attacked.getDeath().getStatus()
-		&& 1==distance){                                           //近身
-			
-			List<IBuff> buffList = getOwner().getNexusBuff(AttackLockBuff.class);
-			for(IBuff buff : buffList)
-				buff.invalid();
-			
-			new AttackLockBuff(2,getOwner(),attacked).effect();
-		}
-		
-		IAttack attack = getOwner().getAttack().clone();
-		if(IAttack.Mode_Far.equals(getMode()) && 1==distance){
-			attack.setMode(IAttack.Mode_Near);
-			Integer atk = attack.getAtk()/2;
-			attack.setAtk(atk);
-		}
-		
-		attacked.attacked(getOwner(), attack);
-		
-		if(!Debug.isDebug)
-			getOwner().getPlayer().getContext().done();
+		attacked.attacked(getOwner(), getRule().cloneForAttack());
 	}
 	
 	public IAttack clone() {
@@ -182,5 +193,14 @@ public class Attack extends Action implements IAttack {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Override
+	public AttackRule getRule() {
+		// TODO Auto-generated method stub
+		if(null==this.rule){
+			this.rule = new AttackRule(this);
+		}
+		return this.rule;
 	}
 }

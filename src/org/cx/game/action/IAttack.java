@@ -1,5 +1,6 @@
 package org.cx.game.action;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -29,26 +30,46 @@ public interface IAttack extends IAction {
 	public void changeMode(Integer mode);
 	
 	public Integer getRange();
-	
+
+	/**
+	 * 隐式使用，不涉及到模块以外的变更时使用；
+	 * @param range
+	 */
 	public void setRange(Integer range);
 	
 	public void addToRange(Integer range);
 	
 	public Integer getSpeedChance();
 	
+	/**
+	 * 隐式使用，不涉及到模块以外的变更时使用；
+	 * @param speedChance
+	 */
 	public void setSpeedChance(Integer speedChance);
 	
 	public void addToSpeedChance(Integer speedChance);
 	
 	public Integer getAtk();
 
+	/**
+	 * 隐式使用，不涉及到模块以外的变更时使用；
+	 * @param atk
+	 */
 	public void setAtk(Integer atk);
-	
-	public Integer getLockChance();
-	
-	public void setLockChance(Integer lockChance);
 	
 	public void addToAtk(Integer atk);
 	
+	public Integer getLockChance();
+	
+	/**
+	 * 隐式使用，不涉及到模块以外的变更时使用；
+	 * @param lockChance
+	 */
+	public void setLockChance(Integer lockChance);
+	
+	public void addToLockChance(Integer lockChance);
+	
 	public IAttack clone();
+	
+	public LifeCard getOwner();
 }

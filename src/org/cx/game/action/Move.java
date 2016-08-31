@@ -161,8 +161,6 @@ public class Move extends Action implements IMove{
 		IGround ground = (IGround) getOwner().getContainer();
 		List<Integer> route = ground.move(getOwner(), place.getPosition(), type);
 		
-		getDecorator().setMoveable(false);     //一个回合只能移动一次
-		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());

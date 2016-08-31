@@ -11,6 +11,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 import org.cx.game.widget.IContainer;
+import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
@@ -49,7 +50,8 @@ public class Call extends Action implements ICall {
 		IContainer ground = place.getContainer();
 		ground.add(place.getPosition(), getOwner());
 		
-		player.getContext().getQueue().add(getOwner());   //插入队列		
+		IControlQueue cq = player.getContext().getQueue();
+		cq.add(getOwner());   //插入队列
 		
 		LifeCard life = (LifeCard) getOwner();        //启动技能冷却时间的计算
 		for(ISkill skill : life.getSkillList()){

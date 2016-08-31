@@ -7,12 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.ControlQueueRule;
+import org.cx.game.rule.IRule;
 
 public class ControlQueue extends Observable implements IControlQueue {
 
@@ -38,6 +41,12 @@ public class ControlQueue extends Observable implements IControlQueue {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
 		
+		if (object instanceof LifeCard) {
+			LifeCard life = (LifeCard) object;
+			life.getAttack().addObserver(getRule());
+			life.getDeath().addObserver(getRule());
+		}
+		
 		/*if(consume<=place.getCount()){    //如果大于consume，则插入当前queue进行排序
 			insert(place);
 		}else{                            //如果小于额定消耗，则进入下一个queue
@@ -52,7 +61,6 @@ public class ControlQueue extends Observable implements IControlQueue {
 		
 	}
 	
-	@Override
 	public void remove(Object object) {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
@@ -81,9 +89,19 @@ public class ControlQueue extends Observable implements IControlQueue {
 		
 		
 		return object; 
-	}	
+	}
+	
+	private IRule rule = null;
 	
 	@Override
+	public IRule getRule() {
+		// TODO Auto-generated method stub
+		if(null!=rule){
+			this.rule = new ControlQueueRule(this);
+		}
+		return rule;
+	}
+	
 	public void refurbish() {
 		// TODO Auto-generated method stub
 		for(int i=0;i<queue.size();i++){
@@ -326,5 +344,5 @@ public class ControlQueue extends Observable implements IControlQueue {
 			else
 				return -1;
 		}
-	} 
+	}
 }

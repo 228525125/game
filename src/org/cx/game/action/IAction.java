@@ -5,6 +5,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.policy.IActionPolicy;
+import org.cx.game.rule.IRule;
 import org.cx.game.validator.IValidatable;
 
 /**
@@ -36,5 +37,7 @@ public interface IAction extends IInterceptable, Observable, IValidatable, Clone
 	public IActionPolicy getPolicy();
 	
 	public void setPolicy(IActionPolicy actionPolicy);
+	
+	public IRule getRule();
 	
 }

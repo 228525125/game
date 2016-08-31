@@ -67,14 +67,12 @@ public abstract class SimpleBuff extends Buff {
 		}
 
 		if(0!=keepSpeedChanceOldValue){
-			Integer speedChance = getOwner().getAttack().getSpeedChance();
-			getOwner().getAttack().setSpeedChance(speedChance - keepSpeedChanceOldValue);
+			getOwner().getAttack().addToSpeedChance(-keepSpeedChanceOldValue);
 			addToKeepSpeedChance(0);
 		}
 		
 		if(0!=keepEnergyOldValue){
-			Integer energy = getOwner().getMove().getEnergy();
-			getOwner().getMove().setEnergy(energy - keepEnergyOldValue);
+			getOwner().getMove().addToEnergy(-keepEnergyOldValue);
 			addToKeepEnergy(0);
 		}
 	}

@@ -1,7 +1,10 @@
 package org.cx.game.widget;
 
+import java.util.Observer;
+
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
+import org.cx.game.rule.IRule;
 
 /**
  * 控制队列
@@ -23,16 +26,21 @@ public interface IControlQueue extends Observable, IInterceptable{
 	public Object out();
 	
 	/**
-	 * 用于life death后从queue中移除
-	 * @param object life 或者 player
-	 * @return 
+	 * 子类需要提供适合自己的Observer（观察者），来适应不同的环境；该方法减少了多余的接口，又增加了扩展性；
+	 * @return
 	 */
-	public void remove(Object object);
+	public IRule getRule();
 	
 	/**
-	 * 刷新，当place中的life的speed发生变化时，立即刷新
+	 * 刷新，当place中的life的speed发生变化时，立即刷新，该方法只用于rule
 	 */
 	public void refurbish();
+	
+	/**
+	 * 用于life death后从queue中移除，该方法只用于rule
+	 * @param object life 或者 player
+	 */
+	public void remove(Object object);
 	
 	/**
 	 * 获取一次控制权需要消耗的能量

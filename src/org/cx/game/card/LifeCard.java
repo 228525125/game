@@ -31,11 +31,14 @@ import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
+import org.cx.game.action.IRetaliate;
 import org.cx.game.action.ISwap;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.Renew;
 import org.cx.game.action.RenewDecorator;
+import org.cx.game.action.Retaliate;
+import org.cx.game.action.RetaliateDecorator;
 import org.cx.game.action.Swap;
 import org.cx.game.action.SwapDecorator;
 import org.cx.game.card.buff.AttackLockBuff;
@@ -596,7 +599,26 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		attack.setOwner(this);
 		this.attack = new AttackDecorator(attack);
 	}
+
+	/**
+	 * 反击
+	 */
+	private IRetaliate retaliate = null;
 	
+	public IRetaliate getRetaliate() {
+		if(null==retaliate){
+			IRetaliate retaliate = new Retaliate();
+			retaliate.setOwner(this);
+			this.retaliate = new RetaliateDecorator(retaliate);
+		}
+		return retaliate;
+	}
+
+	public void setRetaliate(IRetaliate retaliate) {
+		retaliate.setOwner(this);
+		this.retaliate = retaliate;
+	}
+
 	/**
 	 * 受到攻击,也是普通攻击的入口
 	 */
@@ -796,6 +818,15 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	public void attack(LifeCard attacked) throws RuleValidatorException {
 		getAttack().action(attacked);
+	}
+	
+	/**
+	 * 反击
+	 * @param attacked 被反击的随从
+	 * @throws RuleValidatorException
+	 */
+	public void retaliate(LifeCard attacked) throws RuleValidatorException {
+		getRetaliate().action(attacked);
 	}
 	
 	/**

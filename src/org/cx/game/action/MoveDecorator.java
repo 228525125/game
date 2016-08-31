@@ -109,6 +109,8 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 		addValidator(moveRangeValidator);
 		
 		super.action(objects);
+		
+		setMoveable(false);     //一个回合只能移动一次
 	}
 
 	@Override
