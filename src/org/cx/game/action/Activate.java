@@ -4,16 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.rule.ActivateRule;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Debug;
 
 public class Activate extends Action implements IActivate {
 
 	private Boolean activation = false;
+	
+	public Activate() {
+		// TODO Auto-generated constructor stub
+		addObserver(new ActivateRule(this));
+	}
 	
 	@Override
 	public Boolean getActivation() {
@@ -38,26 +46,22 @@ public class Activate extends Action implements IActivate {
 		
 		setActivation(activate);
 		
-		LifeCard owner = (LifeCard) getOwner();
-		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", owner.getPlayer());
-		map.put("container", owner.getContainer());
-		map.put("card", owner);
-		map.put("position", owner.getContainerPosition());
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("position", getOwner().getContainerPosition());
 		map.put("activate", activate);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Activate,map);
 		notifyObservers(info);
 		
-		if(activation){
-			owner.getMove().setMoveable(true);
-			owner.getAttacked().setAttackBack(true);
-			List<IBuff> buffs = owner.getNexusBuff(AttackLockBuff.class);  //清除锁定对象
-			for(IBuff buff : buffs)
-				owner.removeNexusBuff(buff);
-		}else{
-			owner.getMove().setMoveable(false);
-		}
+		
+	}
+	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return (LifeCard) super.getOwner();
 	}
 
 }

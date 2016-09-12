@@ -38,6 +38,4 @@ public interface IAction extends IInterceptable, Observable, IValidatable, Clone
 	
 	public void setPolicy(IActionPolicy actionPolicy);
 	
-	public IRule getRule();
-	
 }

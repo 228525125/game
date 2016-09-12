@@ -69,6 +69,14 @@ public interface IAttack extends IAction {
 	
 	public void addToLockChance(Integer lockChance);
 	
+	/**
+	 * 攻击方式，是否是反击
+	 * @return
+	 */
+	public Boolean getCounterAttack();
+	
+	public void setCounterAttack(Boolean counterAttack);
+	
 	public IAttack clone();
 	
 	public LifeCard getOwner();

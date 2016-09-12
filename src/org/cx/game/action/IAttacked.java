@@ -5,7 +5,6 @@ import org.cx.game.card.LifeCard;
 
 public interface IAttacked extends IAction {
 	
-	@Override
 	public LifeCard getOwner();
 	
 	public Boolean getFightBack();

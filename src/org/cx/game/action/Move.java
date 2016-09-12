@@ -9,6 +9,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
@@ -19,7 +20,7 @@ public class Move extends Action implements IMove{
 	private Integer consume = IMove.Consume;        //移动一格的消耗
 	private Integer type = Type_Walk;
 	private Boolean moveable = false;   //是否能移动，回合内只能移动一次
-	private Integer fleeChance = 0;         //逃离成功率
+	private Integer flee = 0;         //逃离成功率
 	private Boolean hide = false;           //隐形状态
 	
 	@Override
@@ -43,24 +44,22 @@ public class Move extends Action implements IMove{
 	@Override
 	public void changeType(Integer type) {
 		// TODO Auto-generated method stub
-		this.type = type;
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
-		map.put("change", type);
-		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Type,map);
-		super.notifyObservers(info);
+		if(!this.type.equals(type)){
+			this.type = type;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", type);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Type,map);
+			super.notifyObservers(info);
+		}
 	}
 	
 	public Integer getConsume() {
 		return consume;
-	}
-
-	public void setConsume(Integer consume) {
-		this.consume = consume;
 	}
 
 	public Integer getEnergy() {
@@ -74,15 +73,51 @@ public class Move extends Action implements IMove{
 	}
 	
 	@Override
-	public Integer getFleeChance() {
+	public void addToEnergy(Integer energy) {
 		// TODO Auto-generated method stub
-		return fleeChance;
+		if(!Integer.valueOf(0).equals(energy)){
+			this.energy += energy;
+			this.energy = this.energy < 1 ? 1 : this.energy;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", energy);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Energy,map);
+			super.notifyObservers(info);
+		}
 	}
 	
 	@Override
-	public void setFleeChance(Integer fleeChance) {
+	public Integer getFlee() {
 		// TODO Auto-generated method stub
-		this.fleeChance = fleeChance;
+		return flee;
+	}
+	
+	@Override
+	public void setFlee(Integer flee) {
+		// TODO Auto-generated method stub
+		this.flee = flee;
+	}
+	
+	@Override
+	public void addToFlee(Integer flee) {
+		// TODO Auto-generated method stub
+		if(!Integer.valueOf(0).equals(flee)){
+			this.flee += flee;
+			this.flee = this.flee < 0 ? 0 : this.flee;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", flee);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Energy,map);
+			super.notifyObservers(info);
+		}
 	}
 	
 	public Boolean getHide() {
@@ -102,45 +137,30 @@ public class Move extends Action implements IMove{
 	 * @param hide
 	 */
 	public void changeHide(Boolean hide){
-		
-		this.hide = hide;
-		
-		/*
-		 * 隐身状态的改变在战场上才有意义
-		 */
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
-		map.put("hide", hide);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
-		notifyObservers(info);
+		if(!this.hide.equals(hide)){
+			this.hide = hide;
+			
+			/*
+			 * 隐身状态的改变在战场上才有意义
+			 */
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("position", getOwner().getContainerPosition());
+			map.put("hide", hide);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
+			notifyObservers(info);
+		}
 	}
 
-	@Override
-	public void addToEnergy(Integer energy) {
-		// TODO Auto-generated method stub
-		this.energy += energy;
-		this.energy = this.energy < 1 ? 1 : this.energy;
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
-		map.put("change", energy);
-		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Energy,map);
-		super.notifyObservers(info);
-	}
-	
 	public Boolean getMoveable() {
 		if(Debug.isDebug)
 			return Debug.moveable;
 		return moveable;
 	}
-
+	
 	public void setMoveable(Boolean moveable) {
 		this.moveable = moveable;
 	}
@@ -170,5 +190,4 @@ public class Move extends Action implements IMove{
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Move,map);
 		super.notifyObservers(info);
 	}
-	
 }

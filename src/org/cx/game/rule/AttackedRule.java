@@ -28,10 +28,13 @@ public class AttackedRule implements IRule {
 				Map bean = (Map) info.getInfo();	
 				LifeCard attack = (LifeCard) bean.get("attack");
 				LifeCard attacked = (LifeCard) bean.get("attacked");
+				IAttack att = (IAttack) bean.get("ruleParam");
 			
-				if(getOwner().getFightBack()){
+				if(getOwner().getFightBack() && !att.getCounterAttack()){
 					try {
+						attacked.getAttack().setCounterAttack(true);      //设置为反击
 						attacked.attack(attack);
+						attacked.getAttacked().setFightBack(false);
 					} catch (RuleValidatorException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -63,7 +63,7 @@ public class AttackLockBuff extends Buff {
 					}
 				}
 				
-				Integer chance = attack.getAttack().getLockChance() - getOwner().getMove().getFleeChance();
+				Integer chance = attack.getAttack().getLockChance() - getOwner().getMove().getFlee();
 				if(!locked && Random.isTrigger(chance)){
 					invoke = false;
 					affect();
@@ -85,7 +85,7 @@ public class AttackLockBuff extends Buff {
 			@Override
 			public void before(Object[] args) {
 				// TODO Auto-generated method stub
-				if(!Random.isTrigger(getOwner().getMove().getFleeChance())){
+				if(!Random.isTrigger(getOwner().getMove().getFlee())){
 					invoke = false;
 					affect();
 				}

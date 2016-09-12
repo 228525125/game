@@ -96,7 +96,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 	@Override
 	public IRule getRule() {
 		// TODO Auto-generated method stub
-		if(null!=rule){
+		if(null==rule){
 			this.rule = new ControlQueueRule(this);
 		}
 		return rule;

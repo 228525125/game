@@ -56,12 +56,6 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 	}
 
 	@Override
-	public void setConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		this.move.setConsume(consume);
-	}
-
-	@Override
 	public Integer getEnergy() {
 		// TODO Auto-generated method stub
 		return move.getEnergy();
@@ -114,15 +108,15 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 	}
 
 	@Override
-	public Integer getFleeChance() {
+	public Integer getFlee() {
 		// TODO Auto-generated method stub
-		return move.getFleeChance();
+		return move.getFlee();
 	}
 
 	@Override
-	public void setFleeChance(Integer fleeChance) {
+	public void setFlee(Integer fleeChance) {
 		// TODO Auto-generated method stub
-		move.setFleeChance(fleeChance);
+		move.setFlee(fleeChance);
 	}
 
 	@Override
@@ -147,6 +141,12 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 	public void changeType(Integer type) {
 		// TODO Auto-generated method stub
 		move.changeType(type);
+	}
+
+	@Override
+	public void addToFlee(Integer flee) {
+		// TODO Auto-generated method stub
+		move.addToFlee(flee);
 	}
 
 }

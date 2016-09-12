@@ -9,8 +9,14 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.IRule;
 import org.cx.game.widget.IPlace;
 
+/**
+ * 暂未使用
+ * @author chenxian
+ *
+ */
 public class Setup extends Action implements ISetup {
 
 	@Override
@@ -39,5 +45,4 @@ public class Setup extends Action implements ISetup {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_TrickCard_Setup,map);
 		super.notifyObservers(info);           //通知所有卡片对象，召唤事件
 	}
-
 }

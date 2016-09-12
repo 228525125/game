@@ -18,6 +18,8 @@ import org.cx.game.intercepter.Intercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.DeathRule;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Logger;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.ICemetery;
@@ -29,6 +31,11 @@ public class Death extends Action implements IDeath {
 	private Integer hp = 0;
 	private Integer status = IDeath.Status_Exist;
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
+	
+	public Death() {
+		// TODO Auto-generated constructor stub
+		addObserver(new DeathRule(this));
+	}
 	
 	@Override
 	public LifeCard getOwner() {
@@ -74,25 +81,27 @@ public class Death extends Action implements IDeath {
 	 */
 	private void addToHp(Integer hp) {
 		// TODO Auto-generated method stub
-		this.hp += hp;
-		this.hp = this.hp>0 ? this.hp : 0;       //判断下限
-		this.hp = this.hp<getOwner().getHp() ? this.hp : getOwner().getHp(); //判断上限
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
-		map.put("card", getOwner());
-		map.put("change", hp);
-		map.put("position", getOwner().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
-		super.notifyObservers(info);
-		
-		if(0==this.hp){
-			try {
-				getOwner().death();
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(!Integer.valueOf(0).equals(hp)){
+			this.hp += hp;
+			this.hp = this.hp>0 ? this.hp : 0;       //判断下限
+			this.hp = this.hp<getOwner().getHp() ? this.hp : getOwner().getHp(); //判断上限
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", hp);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
+			super.notifyObservers(info);
+			
+			if(0==this.hp){
+				try {
+					getOwner().death();
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -102,48 +111,6 @@ public class Death extends Action implements IDeath {
 		
 		super.action(objects);
 		
-		this.status = Status_Death;
-		
-		/*
-		 * 当你death时，如果你还有攻击指令没有执行完，即取消攻击；
-		 */
-		IIntercepter attackIn = new Intercepter(){
-
-			@Override
-			public void finish(Object[] args) {
-				// TODO Auto-generated method stub
-				resetIntercepter();
-			}
-
-			@Override
-			public Boolean isInvoke() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-		}; 
-		recordIntercepter(getOwner().getAttack(), attackIn);
-		
-		/*
-		 * 当你death时，如果你还有技能指令没有执行完，即取消技能；
-		 */
-		IIntercepter conjureIn = new Intercepter(){
-
-			@Override
-			public void finish(Object[] args) {
-				// TODO Auto-generated method stub
-				resetIntercepter();
-			}
-
-			@Override
-			public Boolean isInvoke() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-		};
-		recordIntercepter(getOwner().getConjure(), conjureIn);
-		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
@@ -152,21 +119,10 @@ public class Death extends Action implements IDeath {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Death,map);
 		super.notifyObservers(info);           //通知所有卡片对象，死亡事件		
 		
-		getOwner().initState();                //初始化
-		
 		IGround ground = (IGround)getOwner().getContainer();     //只有在战场上才会死亡
 		IPlace place = ground.getPlace(getOwner().getContainerPosition());
 		place.out();
 		place.getCemetery().add(getOwner());         //进入墓地
-		
-		/* 随从已取消主动技能
-		LifeCard life = (LifeCard) getOwner();            //停止计算技能冷却时间
-		for(ISkill skill : life.getSkillList()){
-			if (skill instanceof ActiveSkill) {
-				ActiveSkill as = (ActiveSkill) skill;
-				life.getPlayer().getContext().deleteIntercepter(as.getCooldownBoutIntercepter());
-			}
-		}*/
 	}
 	
 	public void resetIntercepter() {

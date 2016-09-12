@@ -7,11 +7,12 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.ConjurePowerValidator;
 
 /**
- * 施法
+ * 施法一个主动技能(停用)
  * @author chenxian
  *
  */
@@ -57,5 +58,4 @@ public class Conjure extends Action implements IConjure {
 		if(!Debug.isDebug)
 			getOwner().getPlayer().getContext().done();
 	}
-
 }

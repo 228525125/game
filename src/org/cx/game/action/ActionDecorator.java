@@ -217,10 +217,4 @@ public abstract class ActionDecorator implements IAction {
 		// TODO Auto-generated method stub
 		original.setPolicy(actionPolicy);
 	}
-	
-	@Override
-	public IRule getRule() {
-		// TODO Auto-generated method stub
-		return original.getRule();
-	}
 }

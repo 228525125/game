@@ -1,5 +1,8 @@
 package org.cx.game.action;
 
+import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
+
 public class ActivateDecorator extends ActionDecorator implements IActivate {
 
 	private IActivate activate = null;
@@ -20,6 +23,12 @@ public class ActivateDecorator extends ActionDecorator implements IActivate {
 	public void setActivation(Boolean activate) {
 		// TODO Auto-generated method stub
 		this.activate.setActivation(activate);
+	}
+	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return this.activate.getOwner();
 	}
 
 }

@@ -53,8 +53,12 @@ public class AttackRule implements IRule {
 					Integer atk = clone.getAtk()/2;
 					clone.setAtk(atk);
 				}
+				
+				//判断是否为反击
+				if(getOwner().getCounterAttack()){
+					getOwner().setCounterAttack(false);
+				}
 			}
-			
 		}
 	}
 

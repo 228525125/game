@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import org.cx.game.card.LifeCard;
+
 public interface IActivate extends IAction {
 
 	public Boolean getActivation();
@@ -9,4 +11,6 @@ public interface IActivate extends IAction {
 	 * @param activate
 	 */
 	public void setActivation(Boolean activate);
+	
+	public LifeCard getOwner();
 }

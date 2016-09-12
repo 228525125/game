@@ -10,12 +10,19 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.ApplyRule;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Logger;
 import org.cx.game.validator.ApplyConsumeValidator;
 
 public class Apply extends Action implements IApply {
 
 	private Integer consume = 1;
+	
+	public Apply() {
+		// TODO Auto-generated constructor stub
+		addObserver(new ApplyRule(this));
+	}
 	
 	@Override
 	public MagicCard getOwner() {
@@ -41,10 +48,6 @@ public class Apply extends Action implements IApply {
 		map.put("position", getOwner().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_MagicCard_Apply,map);
 		super.notifyObservers(info);
-		
-		IPlayer player = getOwner().getPlayer();
-		player.addToResource(-consume);
-		getOwner().initState();
 	}
 	
 	@Override

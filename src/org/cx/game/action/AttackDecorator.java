@@ -136,4 +136,16 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated method stub
 		return attack.getOwner();
 	}
+
+	@Override
+	public Boolean getCounterAttack() {
+		// TODO Auto-generated method stub
+		return attack.getCounterAttack();
+	}
+
+	@Override
+	public void setCounterAttack(Boolean counterAttack) {
+		// TODO Auto-generated method stub
+		attack.setCounterAttack(counterAttack);
+	}
 }

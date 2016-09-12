@@ -31,20 +31,15 @@ import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
-import org.cx.game.action.IRetaliate;
 import org.cx.game.action.ISwap;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.Renew;
 import org.cx.game.action.RenewDecorator;
-import org.cx.game.action.Retaliate;
-import org.cx.game.action.RetaliateDecorator;
 import org.cx.game.action.Swap;
 import org.cx.game.action.SwapDecorator;
-import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
-import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
@@ -60,7 +55,6 @@ import org.cx.game.tools.Debug;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IControlQueue;
-import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
 /**
@@ -601,25 +595,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	/**
-	 * 反击
-	 */
-	private IRetaliate retaliate = null;
-	
-	public IRetaliate getRetaliate() {
-		if(null==retaliate){
-			IRetaliate retaliate = new Retaliate();
-			retaliate.setOwner(this);
-			this.retaliate = new RetaliateDecorator(retaliate);
-		}
-		return retaliate;
-	}
-
-	public void setRetaliate(IRetaliate retaliate) {
-		retaliate.setOwner(this);
-		this.retaliate = retaliate;
-	}
-
-	/**
 	 * 受到攻击,也是普通攻击的入口
 	 */
 	private IAttacked attacked = null;
@@ -685,7 +660,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(null==move){
 			IMove move = new Move();
 			move.setEnergy(energy);
-			move.setFleeChance(fleeChance);
+			move.setFlee(fleeChance);
 			move.setType(moveType);
 			move.setHide(hide);
 			move.setOwner(this);
@@ -696,7 +671,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setMove(IMove move) {
 		move.setEnergy(energy);
-		move.setFleeChance(fleeChance);
+		move.setFlee(fleeChance);
 		move.setType(moveType);
 		move.setHide(hide);
 		move.setOwner(this);
@@ -821,15 +796,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
-	 * 反击
-	 * @param attacked 被反击的随从
-	 * @throws RuleValidatorException
-	 */
-	public void retaliate(LifeCard attacked) throws RuleValidatorException {
-		getRetaliate().action(attacked);
-	}
-	
-	/**
 	 * 受攻击
 	 * @param attack
 	 */
@@ -923,7 +889,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		getMove().setEnergy(energy);
 		getMove().setType(moveType);
-		getMove().setFleeChance(fleeChance);
+		getMove().setFlee(fleeChance);
 		getMove().setHide(hide);
 		
 		getDeath().setHp(hp);

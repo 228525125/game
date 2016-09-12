@@ -8,7 +8,13 @@ import org.cx.game.card.TrickCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.IRule;
 
+/**
+ * 暂未使用
+ * @author chenxian
+ *
+ */
 public class Trigger extends Action implements ITrigger {
 	
 	public Trigger() {

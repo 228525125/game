@@ -8,6 +8,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.IRule;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.ICemetery;
 import org.cx.game.widget.IGround;

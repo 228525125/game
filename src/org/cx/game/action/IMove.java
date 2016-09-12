@@ -16,23 +16,29 @@ public interface IMove extends IAction{
 	
 	public static final Integer TurnoverRatio = 60; //资源转换率
 	
-	public Integer getType(); 
-	
-	public void setType(Integer type);
-	
-	public void changeType(Integer type);
-	
 	/**
 	 * 单格移动消耗
 	 * @return
 	 */
 	public Integer getConsume();
 	
-	public void setConsume(Integer consume);
-	
+	/**
+	 * 移动状态
+	 * @return
+	 */
 	public Boolean getMoveable();
 	
 	public void setMoveable(Boolean moveable);
+	
+	/**
+	 * 移动方式
+	 * @return
+	 */
+	public Integer getType(); 
+	
+	public void setType(Integer type);
+	
+	public void changeType(Integer type);
 	
 	/**
 	 * 精力，与移动范围相关
@@ -42,15 +48,17 @@ public interface IMove extends IAction{
 
 	public void setEnergy(Integer energy);
 	
+	public void addToEnergy(Integer energy);
+	
 	/**
 	 * 逃离成功率
 	 * @return
 	 */
-	public Integer getFleeChance();
+	public Integer getFlee();
 	
-	public void setFleeChance(Integer fleeChance);
+	public void setFlee(Integer fleeChance);
 	
-	public void addToEnergy(Integer energy);
+	public void addToFlee(Integer fleeChance);
 	
 	/**
 	 * 隐身状态

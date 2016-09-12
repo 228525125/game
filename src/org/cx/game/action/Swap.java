@@ -8,6 +8,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.IRule;
 import org.cx.game.tools.Logger;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IGround;
@@ -15,7 +16,7 @@ import org.cx.game.widget.IPlace;
 import org.cx.game.widget.IUseCard;
 
 /**
- * 交换，交换的条件判断应该子类中实现，即必须要有子类
+ * 交换，交换的条件判断应该子类中实现，即必须要有子类（暂未使用）
  * @author chenxian
  *
  */
