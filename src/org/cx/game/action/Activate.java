@@ -1,17 +1,12 @@
 package org.cx.game.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.buff.AttackLockBuff;
-import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.ActivateRule;
-import org.cx.game.rule.IRule;
 import org.cx.game.tools.Debug;
 
 public class Activate extends Action implements IActivate {

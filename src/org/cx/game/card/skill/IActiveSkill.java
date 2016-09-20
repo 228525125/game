@@ -26,7 +26,7 @@ public interface IActiveSkill extends ISkill,IInterceptable,Observable,IValidata
 	 */
 	public Integer getConsume();
 	
-	public void setConsume(Integer consume);
+	public void setConsume(Integer power);
 	
 	public Integer getRange();
 	
