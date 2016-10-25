@@ -6,6 +6,10 @@ import org.cx.game.card.magic.IMagic;
 
 public interface ISkill extends IMagic {
 	
+	/**
+	 * 类名，不包含包名
+	 * @return
+	 */
 	public String getCType();
 	
 	public String getName();

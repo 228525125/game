@@ -1,5 +1,6 @@
 package org.cx.game.action;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
@@ -127,6 +128,12 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 	public void addToFlee(Integer flee) {
 		// TODO Auto-generated method stub
 		move.addToFlee(flee);
+	}
+	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return move.getOwner();
 	}
 
 }

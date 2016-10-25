@@ -18,6 +18,7 @@ import org.cx.game.widget.IPlace;
 public class Death extends Action implements IDeath {
 	
 	private Integer hp = 0;
+	private Integer hplimit = 0;
 	private Integer status = IDeath.Status_Exist;
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
@@ -32,48 +33,32 @@ public class Death extends Action implements IDeath {
 		return (LifeCard) super.getOwner();
 	}
 	
+	public Integer getHplimit() {
+		return hplimit;
+	}
+
+	public void setHplimit(Integer hplimit) {
+		this.hplimit = hplimit;
+	}
+
 	public Integer getHp() {
 		return hp;
 	}
 
-	/**
-	 * 隐式的改变HP
-	 * @param hp
-	 */
 	public void setHp(Integer hp) {
 		this.hp = hp;
-	}
-	
-	public Integer getStatus() {
-		return status;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	@Override
-	public void attackToDamage(Integer hp) {
-		// TODO Auto-generated method stub
-		addToHp(hp);
-	}
-	
-	@Override
-	public void magicToHp(Integer hp) {
-		// TODO Auto-generated method stub
-		addToHp(hp);
 	}
 	
 	/**
 	 * 显式的改变HP
 	 * @param hp
 	 */
-	private void addToHp(Integer hp) {
+	public void addToHp(Integer hp) {
 		// TODO Auto-generated method stub
 		if(!Integer.valueOf(0).equals(hp)){
 			this.hp += hp;
 			this.hp = this.hp>0 ? this.hp : 0;       //判断下限
-			this.hp = this.hp<getOwner().getHp() ? this.hp : getOwner().getHp(); //判断上限
+			this.hp = this.hp<this.hplimit ? this.hp : this.hplimit; //判断上限
 			
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
@@ -83,16 +68,15 @@ public class Death extends Action implements IDeath {
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
 			super.notifyObservers(info);
-			
-			if(0==this.hp){
-				try {
-					getOwner().death();
-				} catch (RuleValidatorException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 		}
+	}
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	@Override

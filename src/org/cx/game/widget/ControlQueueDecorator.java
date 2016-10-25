@@ -7,6 +7,8 @@ import java.util.Observer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.rule.IRule;
+import org.cx.game.widget.ControlQueue.Place;
+import org.cx.game.widget.ControlQueue.PlaceComparator;
 
 public class ControlQueueDecorator implements IControlQueue {
 
@@ -114,5 +116,16 @@ public class ControlQueueDecorator implements IControlQueue {
 		// TODO Auto-generated method stub
 		original.remove(object);
 	}
+	
+	@Override
+	public org.cx.game.widget.ControlQueue.Place getPlace(Object object) {
+		// TODO Auto-generated method stub
+		return original.getPlace(object);
+	}
 
+	@Override
+	public void moveToPrior(Place place) {
+		// TODO Auto-generated method stub
+		original.moveToPrior(place);
+	}
 }

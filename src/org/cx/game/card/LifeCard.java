@@ -893,6 +893,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		getMove().setHide(hide);
 		
 		getDeath().setHp(hp);
+		getDeath().setHplimit(hp);
 		
 		setHide(false);
 		

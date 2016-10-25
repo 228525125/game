@@ -3,6 +3,7 @@ package org.cx.game.action;
 import java.util.List;
 import java.util.Observer;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.ISkill;
@@ -20,22 +21,6 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 		// TODO Auto-generated constructor stub
 		super(death);
 		this.death = death;
-		
-		this.death.addIntercepter(new Intercepter("addToHp"){
-			
-			@Override
-			public void finish(Object[] args) {
-				// TODO Auto-generated method stub
-				if(0==getHp()){
-					try {
-						action();
-					} catch (RuleValidatorException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		});
 	}
 
 	@Override
@@ -51,16 +36,22 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 	}
 
 	@Override
-	public void attackToDamage(Integer hp) {
+	public void addToHp(Integer hp) {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(this.death);     
-		((IDeath)proxy).attackToDamage(hp);
+		((IDeath)proxy).addToHp(hp);
+	}
+	
+	@Override
+	public Integer getHplimit() {
+		// TODO Auto-generated method stub
+		return death.getHplimit();
 	}
 
 	@Override
-	public void magicToHp(Integer hp) {
+	public void setHplimit(Integer hplimit) {
 		// TODO Auto-generated method stub
-		death.magicToHp(hp);
+		death.setHplimit(hplimit);
 	}
 
 	@Override
@@ -86,6 +77,12 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 	public void setStatus(Integer status) {
 		// TODO Auto-generated method stub
 		death.setStatus(status);
+	}
+	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return death.getOwner();
 	}
 
 }

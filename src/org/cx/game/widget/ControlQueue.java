@@ -10,6 +10,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.effect.QuickAttack;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
@@ -20,11 +22,14 @@ import org.cx.game.rule.IRule;
 public class ControlQueue extends Observable implements IControlQueue {
 
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
+	private List<Place> queueList = new ArrayList<Place>();
 	private List<Place> queue1 = new ArrayList<Place>();
 	private List<Place> queue2 = new ArrayList<Place>();
 	private Map<Integer,List<Place>> map = new HashMap<Integer,List<Place>>(); 
 	private List<Place> queue = null;        //当前队列
 	private Integer curQueue = 0;	
+	
+	private List<Place> priorQueue = new ArrayList<Place>();     //这个队列的对象会优先出场，例如具有突袭效果的随从；
 	
 	public ControlQueue() {
 		// TODO Auto-generated constructor stub
@@ -47,39 +52,60 @@ public class ControlQueue extends Observable implements IControlQueue {
 			life.getDeath().addObserver(getRule());
 		}
 		
-		/*if(consume<=place.getCount()){    //如果大于consume，则插入当前queue进行排序
-			insert(place);
-		}else{                            //如果小于额定消耗，则进入下一个queue
-			insertOtherQueue(place); 
-		}*/		
-		
 		/*
 		 * 这里为什么直接插入第二队列，它的效果就像你排队办事一样，你总是从最后一个排起
 		 */
 		place.setCount(0);
 		insertOtherQueue(place);
 		
+		this.queueList.add(place);
 	}
 	
 	public void remove(Object object) {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
 		takeOut(place);
+		
+		if (object instanceof LifeCard) {
+			LifeCard life = (LifeCard) object;
+			life.getAttack().deleteObserver(getRule());
+			life.getDeath().deleteObserver(getRule());
+		}
+		
+		this.queueList.remove(place);
+	}
+	
+	@Override
+	public Place getPlace(Object object) {
+		// TODO Auto-generated method stub
+		for(Place place : this.queueList){
+			if(place.getObject().equals(object))
+				return place;
+		}
+		return null;
 	}
 	
 	@Override
 	public Object out() {
 		// TODO Auto-generated method stub
 		Object object = null;
+		Place place = null;
 		
-		if(queue.isEmpty())             //如果当前queue为空，则切换到下个queue，并进行递归调用
-			swapQueue();
-		
-		Place place = queue.get(0);  //返回最前面的一个place
-		takeOut(place);
-		
-		place.setCount(place.getCount() - consume); //swapQueue方法确保当前queue内的place始终大于消耗，因此这里不用判断，直接 减掉消耗，并获得一次控制机会
-		object = place.getObject();
+		if(priorQueue.isEmpty()){
+			if(queue.isEmpty())             //如果当前queue为空，则切换到下个queue，并进行递归调用
+				swapQueue();
+			
+			place = queue.get(0);  //返回最前面的一个place
+			takeOut(place);        //从整个队列中取出place
+			
+			place.setCount(place.getCount() - consume); //swapQueue方法确保当前queue内的place始终大于消耗，因此这里不用判断，直接 减掉消耗，并获得一次控制机会
+			object = place.getObject();
+		}else{
+			place = priorQueue.remove(0);
+			object = place.getObject();
+			
+			place.setCount(0);
+		}
 		
 		if(consume<=place.getCount()){        //如果减去消耗后仍大于consume，则继续插入当前queue进行排序
 			insert(place);
@@ -87,8 +113,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			insertOtherQueue(place); //如果小于额定消耗，则进入下一个queue
 		}
 		
-		
-		return object; 
+		return object;
 	}
 	
 	private IRule rule = null;
@@ -156,6 +181,23 @@ public class ControlQueue extends Observable implements IControlQueue {
 		notifyObservers(info);
 	}
 	
+	public void moveToPrior(Place place){
+		Integer position = indexOf(place);
+		
+		if(!this.queue1.remove(place))
+			this.queue2.remove(place);
+		
+		this.priorQueue.add(place);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("unit", place.getObject());
+		map.put("beforePosition", position);
+		map.put("afterPosition", 0);
+		map.put("queue", toListMap());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Move,map);
+		notifyObservers(info);
+	}
+	
 	private void swapQueue(){
 		if(1==this.curQueue){
 			this.queue = map.get(2);
@@ -203,12 +245,21 @@ public class ControlQueue extends Observable implements IControlQueue {
 	}
 	
 	private Integer indexOf(Place place){
-		Integer index = queue.indexOf(place);
+		Integer index = priorQueue.indexOf(place);
+		
+		if(-1==index){
+			index = queue.indexOf(place);
+			if(-1!=index)
+				index += priorQueue.size();
+		}
 		
 		if(-1==index){
 			List<Place> list = otherQueue(queue);
 			index = list.indexOf(place);
-			index += queue.size();
+			if(-1!=index){
+				index += priorQueue.size();
+				index += queue.size();
+			}
 		}
 		
 		return index;
@@ -225,6 +276,15 @@ public class ControlQueue extends Observable implements IControlQueue {
 	
 	private List<Map<String, Object>> toListMap(){
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+		for(int i=0;i<this.priorQueue.size();i++){
+			Map<String, Object> map = new HashMap<String, Object>();
+			Place place = this.priorQueue.get(i);
+			map.put("position",indexOf(place));
+			map.put("unit", place.getObject());
+			map.put("count", place.getCount());
+			list.add(map);
+		}
 		
 		for(int i=0;i<this.queue.size();i++){
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -289,9 +349,10 @@ public class ControlQueue extends Observable implements IControlQueue {
 		return intercepterList;
 	}
 	
-	class Place {
+	public class Place {
 		private Object obj = null;
 		private Integer count = 0;
+		private Integer speed = 0;
 		
 		public Place(Object object) {
 			// TODO Auto-generated constructor stub
@@ -302,10 +363,10 @@ public class ControlQueue extends Observable implements IControlQueue {
 		public void loadSpeed(){
 			if (obj instanceof LifeCard) {
 				LifeCard life = (LifeCard) obj;
-				this.count = life.getAttack().getSpeedChance();
+				this.speed = life.getAttack().getSpeedChance();
 			}
 			if (obj instanceof IPlayer) {
-				this.count = 100;
+				this.speed = 100;
 			}
 		}
 		
@@ -315,6 +376,10 @@ public class ControlQueue extends Observable implements IControlQueue {
 		
 		public void setCount(Integer count){
 			this.count = count;
+		}
+		
+		public Integer getSpeed() {
+			return speed;
 		}
 		
 		public Object getObject(){

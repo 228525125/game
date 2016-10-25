@@ -6,6 +6,7 @@ import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.LifeCardActivateValidator;
 import org.cx.game.validator.SelectContainerValidator;
+import org.cx.game.validator.SelectLifeCardNotHideValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
 
 public class AttackCommand extends InteriorCommand {
@@ -13,7 +14,7 @@ public class AttackCommand extends InteriorCommand {
 	public AttackCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
-		addValidator(new SelectLifeCardValidator(buffer));
+		addValidator(new SelectLifeCardNotHideValidator(buffer));
 		addValidator(new SelectContainerValidator(player.getGround(),buffer));
 		addValidator(new LifeCardActivateValidator(buffer));
 	}

@@ -30,6 +30,7 @@ public class JsonOut extends Response implements Observer {
 		config.setExcludes(new String[]{
 			"cards","password","context","decks","cardGroup","ground","useCard","commandBuffer",       //User
 			"near",                  //Place
+			"index",                 //ControlQueue.Place
 			//"place",                 //Camp
 			"strongHoldList","randomEntry",        //Ground
 			"appendCardList","hashCode","containerPosition","useCardPolicy","policy",        //LifeCard

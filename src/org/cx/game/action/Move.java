@@ -10,6 +10,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 import org.cx.game.rule.IRule;
+import org.cx.game.rule.MoveRule;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
@@ -22,6 +23,13 @@ public class Move extends Action implements IMove{
 	private Boolean moveable = false;   //是否能移动，回合内只能移动一次
 	private Integer flee = 0;         //逃离成功率
 	private Boolean hide = false;           //隐形状态
+	
+	private MoveRule rule = new MoveRule(this);
+	
+	public Move() {
+		// TODO Auto-generated constructor stub
+		//addObserver(rule);         预留，暂没有内容
+	}
 	
 	@Override
 	public MoveDecorator getDecorator() {

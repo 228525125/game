@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import org.cx.game.card.LifeCard;
+
 public interface IMove extends IAction{
 
 	public static final Integer Type_Walk = 0;    //步行
@@ -69,5 +71,7 @@ public interface IMove extends IAction{
 	public void setHide(Boolean hide);
 	
 	public void changeHide(Boolean hide);
+	
+	public LifeCard getOwner();
 
 }

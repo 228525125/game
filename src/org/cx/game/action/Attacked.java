@@ -62,6 +62,6 @@ public class Attacked extends Action implements IAttacked {
 		 * 先反击，再死亡
 		 */
 		IDeath death = getOwner().getDeath();
-		death.attackToDamage(-damage1);
+		death.addToHp(-damage1);
 	}
 }

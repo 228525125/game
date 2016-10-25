@@ -1,10 +1,9 @@
 package org.cx.game.widget;
 
-import java.util.Observer;
-
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.rule.IRule;
+import org.cx.game.widget.ControlQueue.Place;
 
 /**
  * 控制队列
@@ -41,6 +40,19 @@ public interface IControlQueue extends Observable, IInterceptable{
 	 * @param object life 或者 player
 	 */
 	public void remove(Object object);
+	
+	/**
+	 * 根据对象反查place
+	 * @param object
+	 * @return
+	 */
+	public Place getPlace(Object object);
+	
+	/**
+	 * 将一个place移入优先队列
+	 * @param place
+	 */
+	public void moveToPrior(Place place);
 	
 	/**
 	 * 获取一次控制权需要消耗的能量
