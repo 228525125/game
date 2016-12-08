@@ -51,17 +51,6 @@ public abstract class TrickCard implements ICard, ITrick {
 	}
 	
 	/**
-	 * 卡片类型
-	 */
-	private Integer type = Type_Trap;
-
-	@Override
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return type;
-	}
-	
-	/**
 	 * 陷阱卡发动
 	 */
 	private ITrigger trigger;

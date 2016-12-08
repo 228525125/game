@@ -48,17 +48,10 @@ public class Context extends Observable implements IContext
 	
 	private ContextDecorator decorator = null; 
 	
-	private final static Map<Integer,Map<Integer,Integer>> Attack_Armour = new HashMap<Integer,Map<Integer,Integer>>();
-	private final static Map<Integer,List<String>> Magic_Style_1 = new HashMap<Integer,List<String>>();
-	private final static Map<String,Integer> Magic_Style_2 = new HashMap<String,Integer>();
-	private final static Map<Integer,List<String>> Magic_Function_1 = new HashMap<Integer,List<String>>();
-	private final static Map<String,Integer> Magic_Function_2 = new HashMap<String,Integer>();
-	private final static Map<Integer,List<String>> Magic_Hostility_1 = new HashMap<Integer,List<String>>();
-	private final static Map<String,Integer> Magic_Hostility_2 = new HashMap<String,Integer>();
-	private final static Map<Integer,List<Integer>> Life_Stirps_1 = new HashMap<Integer,List<Integer>>();
-	private final static Map<Integer,Integer> Life_Stirps_2 = new HashMap<Integer,Integer>();
-	private final static Map<Integer,List<String>> Magic_Tag_1 = new HashMap<Integer,List<String>>();
-	private final static Map<String,List<Integer>> Magic_Tag_2 = new HashMap<String,List<Integer>>();
+	private final static Map<Integer,Integer> TagCategory_1 = new HashMap<Integer,Integer>();
+	private final static Map<Integer,List<Integer>> TagCategory_2 = new HashMap<Integer,List<Integer>>();
+	private final static Map<Integer,List<Integer>> Tag_1 = new HashMap<Integer,List<Integer>>();
+	private final static Map<Integer,List<Integer>> Tag_2 = new HashMap<Integer,List<Integer>>();
 	
 	
 	public Context(IPlayer player1, IPlayer player2) {
@@ -78,112 +71,34 @@ public class Context extends Observable implements IContext
 	private void loadResource(){
 		
 		/*
-		 * attack.xml
+		 * tag
 		 */
-		Element type = getRoot("attack.path").element("attackType");
-		for(Iterator it = type.elementIterator("attack");it.hasNext();){
-			Element attack = (Element) it.next();
-			Integer attackType = Integer.valueOf(attack.attribute("type").getText());
+		Element tags = getRoot("tag.path").element("tags");
+		for(Iterator it = tags.elementIterator("category");it.hasNext();){
+			Element category = (Element) it.next();
+			Integer categoryCode = Integer.valueOf(category.attribute("code").getText());
 			
-			Map<Integer,Integer> map = new HashMap<Integer,Integer>();
-			
-			for(Iterator itr = attack.elementIterator("armour");itr.hasNext();){
-				Element armour = (Element) itr.next();
-				map.put(Integer.valueOf(armour.attribute("type").getText()), Integer.valueOf(armour.getText()));
-			}
-			
-			Attack_Armour.put(attackType, map);
-		}
-		
-		
-		/*
-		 * magic_style.xml
-		 */
-		Element magicStyle = getRoot("magic_style.path").element("magicStyle");
-		for(Iterator it = magicStyle.elementIterator("style");it.hasNext();){
-			Element style = (Element) it.next();
-			Integer code = Integer.valueOf(style.attribute("code").getText());
-			
-			Magic_Style_1.put(code, new ArrayList<String>());
-			for(Iterator itr = style.elementIterator("magic");itr.hasNext();){
-				Element magic = (Element) itr.next();
-				String className = magic.attribute("type").getText();
-				Magic_Style_1.get(code).add(className);
-				Magic_Style_2.put(className, code);
-			}
-		}
-		
-		/*
-		 * magic_hostility.xml
-		 */
-		Element magicHostility = getRoot("magic_hostility.path").element("magicHostility");
-		for(Iterator it = magicHostility.elementIterator("hostility");it.hasNext();){
-			Element hostility = (Element) it.next();
-			Integer code = Integer.valueOf(hostility.attribute("code").getText());
-			
-			Magic_Hostility_1.put(code, new ArrayList<String>());
-			for(Iterator itr = hostility.elementIterator("magic");itr.hasNext();){
-				Element magic = (Element) itr.next();
-				String className = magic.attribute("type").getText();
-				Magic_Hostility_1.get(code).add(className);
-				Magic_Hostility_2.put(className, code);
-			}
-		}
-		
-		/*
-		 * magic_function.xml
-		 */
-		Element magicFunction = getRoot("magic_function.path").element("magicFunction");
-		for(Iterator it = magicFunction.elementIterator("function");it.hasNext();){
-			Element function = (Element) it.next();
-			Integer code = Integer.valueOf(function.attribute("code").getText());
-			
-			Magic_Function_1.put(code, new ArrayList<String>());
-			for(Iterator itr = function.elementIterator("magic");itr.hasNext();){
-				Element magic = (Element) itr.next();
-				String className = magic.attribute("type").getText();
-				Magic_Function_1.get(code).add(className);
-				Magic_Function_2.put(className, code);
-			}
-		}
-		
-		
-		/*
-		 * life_stirps
-		 */
-		Element lifeStirps = getRoot("life_stirps.path").element("lifeStirps");
-		for(Iterator it = lifeStirps.elementIterator("stirps");it.hasNext();){
-			Element stirps = (Element) it.next();
-			Integer code = Integer.valueOf(stirps.attribute("code").getText());
-			
-			Life_Stirps_1.put(code, new ArrayList<Integer>());
-			for(Iterator itr = stirps.elementIterator("life");itr.hasNext();){
-				Element life = (Element) itr.next();
-				Integer cardID = Integer.valueOf(life.attribute("cardID").getText());
-				Life_Stirps_1.get(code).add(cardID);
-				Life_Stirps_2.put(cardID, code);
-			}
-		}
-		
-		/*
-		 * magic_tag
-		 */
-		Element magicTag = getRoot("magic_tag.path").element("magicTag");
-		for(Iterator it = magicTag.elementIterator("tag");it.hasNext();){
-			Element tag = (Element) it.next();
-			Integer code = Integer.valueOf(tag.attribute("code").getText());
-			
-			Magic_Tag_1.put(code, new ArrayList<String>());
-			for(Iterator itr = tag.elementIterator("magic");itr.hasNext();){
-				Element magic = (Element) itr.next();
-				String className = magic.attribute("type").getText();
-				Magic_Tag_1.get(code).add(className);
+			TagCategory_2.put(categoryCode, new ArrayList());
+			for(Iterator ite = category.elementIterator("tag");ite.hasNext();){
+				Element tag = (Element) ite.next();
+				Integer tagCode = Integer.valueOf(tag.attribute("code").getText());
 				
-				if(null==Magic_Tag_2.get(className))
-					Magic_Tag_2.put(className, new ArrayList<Integer>());
+				TagCategory_1.put(tagCode, categoryCode);
+				TagCategory_2.get(categoryCode).add(tagCode);
 				
-				Magic_Tag_2.get(className).add(code);
-			}			
+				Tag_2.put(tagCode, new ArrayList<Integer>());
+				for(Iterator iter = category.elementIterator("object");iter.hasNext();){
+					Element object = (Element) iter.next();
+					Integer objectCode = Integer.valueOf(object.attribute("code").getText());
+					
+					
+					if(null==Tag_1.get(objectCode))
+						Tag_1.put(objectCode, new ArrayList<Integer>());
+					
+					Tag_1.get(objectCode).add(tagCode);
+					Tag_2.get(tagCode).add(objectCode);
+				}
+			}
 		}
 	}
 	
@@ -208,104 +123,39 @@ public class Context extends Observable implements IContext
 	}
 	
 	/**
-	 * 
-	 * @param atkType 攻击类型
-	 * @param armourType 防御类型
-	 * @return 折算比例
-	 */
-	public static Integer getAttackArmour(Integer atkType, Integer armourType){
-		Map<Integer,Integer> map = Attack_Armour.get(atkType);
-		return map.get(armourType);
-	}
-	
-	/**
-	 * 根据一个magic类，获取它的style
-	 * @param className 类的全名（包含包名）
+	 * 根据对象，查询标签
+	 * @param object
 	 * @return
 	 */
-	public static Integer getMagicStyle(String className){
-		return Magic_Style_2.get(className);
+	public static List<Integer> queryForObject(Integer object){
+		return Tag_1.get(object);
 	}
 	
 	/**
-	 * 根据style，查询className的集合
-	 * @param style 
-	 * @return
-	 */
-	public static List<String> queryMagicStyle(Integer style){
-		return Magic_Style_1.get(style);
-	}
-	
-	/**
-	 * 根据一个magic类，获取它的hostility
-	 * @param className 类的全名（包含包名）
-	 * @return
-	 */
-	public static Integer getMagicHostility(String className){
-		return Magic_Hostility_2.get(className);
-	}
-	
-	/**
-	 * 根据host，查询className的集合
-	 * @param host 
-	 * @return
-	 */
-	public static List<String> queryMagicHostility(Integer host){
-		return Magic_Hostility_1.get(host);
-	}
-	
-	/**
-	 * 根据一个magic类，获取它的function
-	 * @param className 类的全名（包含包名）
-	 * @return
-	 */
-	public static Integer getMagicFunction(String className){
-		return Magic_Function_2.get(className);
-	}
-	
-	/**
-	 * 根据func，查询className的集合
-	 * @param func 功能
-	 * @return
-	 */
-	public static List<String> queryMagicFunction(Integer func){
-		return Magic_Function_1.get(func);
-	}
-	
-	/**
-	 * 根据一个CardID类，获取它的stirps
-	 * @param CardID 类的全名（包含包名）
-	 * @return
-	 */
-	public static Integer getLifeStirps(Integer cardID){
-		return Life_Stirps_2.get(cardID);
-	}
-	
-	/**
-	 * 根据stirps，查询CardID的集合
-	 * @param stirps 功能
-	 * @return
-	 */
-	public static List<Integer> queryLifeStirps(Integer stirps){
-		return Life_Stirps_1.get(stirps);
-	}
-	
-	/**
-	 * 根据magic类，查询tag
-	 * @param className
-	 * @return
-	 */
-	public static List<Integer> queryMagicTag(String className){
-		return Magic_Tag_2.get(className);
-	}
-	
-	/**
-	 * 根据tag，查询magic类	
+	 * 根据tag，查询对象	
 	 * @param tag
 	 * @return
 	 */
-	public static List<String> queryMagicTag(Integer tag){
-		return Magic_Tag_1.get(tag);
+	public static List<Integer> queryForTag(Integer tag){
+		return Tag_2.get(tag);
+	}
+	
+	/**
+	 * 根据category，查询tag的集合
+	 * @param category
+	 * @return
+	 */
+	public static List<Integer> queryForCategory(Integer category){
+		return TagCategory_2.get(category);
+	}
+	
+	/**
+	 * 根据tag，查询category
+	 * @param category
+	 * @return
+	 */
+	public static Integer getCategory(Integer tag){
+		return TagCategory_1.get(tag);
 	}
 	
 	public void setDecorator(ContextDecorator decorator) {

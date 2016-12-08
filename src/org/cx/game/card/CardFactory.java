@@ -47,11 +47,6 @@ public class CardFactory {
 		try {
 			new ObjectTypeParse(otb).parse(cardEl);
 			ICard card = (ICard) otb.builder();
-			if (card instanceof LifeCard) {
-				LifeCard life = (LifeCard) card;
-				Integer stirps = Context.getLifeStirps(life.getId());
-				life.setStirps(stirps);
-			}
 			return card;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

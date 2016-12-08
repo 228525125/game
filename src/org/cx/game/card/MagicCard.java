@@ -30,8 +30,6 @@ import org.cx.game.widget.IGround;
 public abstract class MagicCard extends java.util.Observable implements ICard, IMagic, Observable, IValidatable {
 	
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	private Integer style = 0;
-	private Integer func = 0;
 	
 	private String action = null;
 	
@@ -45,13 +43,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		this.consume = consume;
 		
 		setAction("Magic");
-		
-		/* 取类名 */
-		String allName = this.getClass().getName();
-		this.func = Context.getMagicFunction(allName);
-		this.style = Context.getMagicStyle(allName);
-		
-		
 	}
 	
 	private final static String Apply = "_Apply";
@@ -66,22 +57,10 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 
 	public String getName() {
 		if(null==name)
-			name = I18n.getCardName(this, id);
+			name = I18n.getMessage(this, id, "name");
 		return name;
 	}
-	
-	@Override
-	public Integer getStyle() {
-		// TODO Auto-generated method stub
-		return style;
-	}
-	
-	@Override
-	public Integer getFunc() {
-		// TODO Auto-generated method stub
-		return func;
-	}
-	
+
 	/**
 	 * 比赛中的ID，临时的
 	 */
@@ -175,17 +154,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		}
 		
 		return positionList;
-	}
-
-	/**
-	 * 卡片类型
-	 */
-	private Integer type = Type_Magic;
-
-	@Override
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return type;
 	}
 	
 	private Integer star = 1;
@@ -442,6 +410,19 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+	
+	@Override
+	public Boolean contains(Integer tag) {
+		// TODO Auto-generated method stub
+		List<Integer> objectList = Context.queryForTag(tag);
+		return objectList.contains(getId());
+	}
+	
+	@Override
+	public List<Integer> queryForCategory(Integer category) {
+		// TODO Auto-generated method stub
+		return Context.queryForCategory(category);
 	}
 	
 }

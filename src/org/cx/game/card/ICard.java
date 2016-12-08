@@ -4,20 +4,22 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.policy.IUseCardPolicy;
+import org.cx.game.tag.ITag;
 import org.cx.game.widget.IContainer;
 
-public interface ICard extends IInterceptable
+public interface ICard extends IInterceptable, ITag
 {
+	/**
+	 * 主键/唯一标识
+	 * @return
+	 */
+	public Integer getId();
 	
 	public String getName();
 	
-	public final static Integer Type_Life = 1;//生物卡
+	public final static Integer Type_Life = 131;//生物卡
 	
-	public final static Integer Type_Magic = 2;//魔法卡
-	
-	public final static Integer Type_Trap = 3;//陷阱卡
-	
-	public Integer getType();
+	public final static Integer Type_Magic = 132;//魔法卡
 	
 	/**
 	 * 比赛环境中初始化状态，主要用于复原属性值
@@ -38,12 +40,6 @@ public interface ICard extends IInterceptable
 	 *
 	 */
 	public void chuck() throws RuleValidatorException;
-	
-	/**
-	 * 非比赛环境时，卡片的编号
-	 * @return
-	 */
-	public Integer getId();
 	
 	/**
 	 * 比赛环境时，使用的编号

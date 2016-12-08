@@ -14,9 +14,15 @@ import org.cx.game.observer.Observable;
  */
 public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRecover{
 	
+	/**
+	 * 类名，不包含包名
+	 * @return
+	 */
 	public String getCType();
 	
 	public String getName();
+	
+	public static final Integer Max_Bout = 999;
 	
 	/**
 	 * 持续回合
@@ -58,22 +64,16 @@ public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRe
 	/**
 	 * 受益，不包含系统级的buff
 	 */
-	public static final Integer Type_Benefit = 21;
+	public static final Integer Type_Benefit = 121;
 	
 	/**
 	 * 受损，不包含系统级的buff
 	 */
-	public static final Integer Type_Harm = 22;
+	public static final Integer Type_Harm = 122;
 	
 	/**
 	 * 中性
 	 */
-	public static final Integer Type_Neutral = 23;
-	
-	/**
-	 * 类型，受益、受损、中性
-	 * @return
-	 */
-	public Integer getHostility();
+	public static final Integer Type_Neutral = 123;
 	
 }

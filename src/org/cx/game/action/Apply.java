@@ -31,9 +31,9 @@ public class Apply extends Action implements IApply {
 	}
 	
 	@Override
-	public ConjureDecorator getDecorator() {
+	public ApplyDecorator getDecorator() {
 		// TODO Auto-generated method stub
-		return (ConjureDecorator) super.getDecorator();
+		return (ApplyDecorator) super.getDecorator();
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ public class SwapDecorator extends ActionDecorator implements ISwap {
 				// TODO Auto-generated method stub
 				LifeCard swap = (LifeCard) ((Object[]) args[0])[0];
 				LifeCard swaped = (LifeCard) args[1];
-				if(swap.getStirps()==swaped.getStirps())   //交换的条件至少保证种族
+				if(swap.queryForCategory(LifeCard.Stirps).get(0).equals(swaped.queryForCategory(LifeCard.Stirps).get(0)))   //交换的条件至少保证种族
 					this.invoke = true;
 				else
 					this.invoke = false;

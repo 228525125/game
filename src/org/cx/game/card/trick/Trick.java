@@ -36,10 +36,8 @@ public abstract class Trick extends Observable implements ITrick {
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	private Boolean isDelete = false;
 	private String action = null;
-	private Integer bout = 0;
-	private Integer style = IMagic.Style_physical;       //风格，法术、物理       
+	private Integer bout = 0; 
 	private Integer beginBout = 0;
-	private Integer func = IMagic.Func_Other;      //功能类型
 	
 	private Integer touchNumberOfTimes = DEFAULT_TOUCHNUMBEROFTIMES;         //陷阱触发次数
 	private Integer countTouchNumberOfTimes = 0;    //陷阱触发计数
@@ -59,9 +57,6 @@ public abstract class Trick extends Observable implements ITrick {
 		String packageName = this.getClass().getPackage().getName();
 		String name = allName.substring(packageName.length()+1);
 		setAction("Trick");
-		
-		this.func = Context.getMagicFunction(allName);
-		this.style = Context.getMagicStyle(allName);
 		
 		setup();
 	}
@@ -174,10 +169,6 @@ public abstract class Trick extends Observable implements ITrick {
 		entry.put(interceptable, intercepter);
 		resetList.add(entry);
 	}
-	
-	public Integer getStyle() {
-		return style;
-	}
 
 	public String getAction() {
 		return action;
@@ -185,10 +176,6 @@ public abstract class Trick extends Observable implements ITrick {
 
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	public Integer getFunc() {
-		return func;
 	}
 
 	@Override
@@ -287,5 +274,18 @@ public abstract class Trick extends Observable implements ITrick {
 	public void delete() {
 		// TODO Auto-generated method stub
 		this.isDelete = true;
+	}
+	
+	@Override
+	public Boolean contains(Integer tag) {
+		// TODO Auto-generated method stub
+		List<Integer> objectList = Context.queryForTag(tag);
+		return objectList.contains(getId());
+	}
+
+	@Override
+	public List<Integer> queryForCategory(Integer category) {
+		// TODO Auto-generated method stub
+		return Context.queryForCategory(category);
 	}
 }

@@ -63,11 +63,6 @@ public class I18n {
 		return getMessage(key, locale);
 	}
 	
-	public static String getCardName(Object card, Integer id){
-		String key = card.getClass().getName()+"."+id+".name";
-		return getMessage(key);
-	}
-	
 	public static String getMessage(Object object, String property){
 		String key = object.getClass().getName()+"."+property;
 		return getMessage(key);

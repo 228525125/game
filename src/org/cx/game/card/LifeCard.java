@@ -42,6 +42,7 @@ import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
+import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
@@ -51,6 +52,7 @@ import org.cx.game.out.JsonOut;
 import org.cx.game.policy.ILifeCardPolicy;
 import org.cx.game.policy.IUseCardPolicy;
 import org.cx.game.policy.LifeCardPolicy;
+import org.cx.game.tag.ITag;
 import org.cx.game.tools.Debug;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
@@ -84,7 +86,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public String getName() {
 		if(null==name)
-			name = I18n.getCardName(this, id);
+			name = I18n.getMessage(this, id, "name");
 		return name;
 	}
 	
@@ -237,19 +239,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setAttackMode(Integer attackMode) {
 		this.attackMode = attackMode;
 	}
-
 	
-	private Integer type = Type_Life;
-
-	/**
-	 * 卡片类型
-	 */
-	@Override
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return type;
-	}
-		
 	private Integer speedChance = 100;
 	
 	/**
@@ -434,47 +424,49 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
-	 * 人类
+	 * 种族
 	 */
-	public final static Integer Stirps_Human = 201;
+	public final static Integer Stirps = 1004;
 	
 	/**
-	 * 天使
+	 * 人类
 	 */
-	public final static Integer Stirps_Angel = 202;
+	public final static Integer Stirps_Human = 171;
+	
+	/**
+	 * 天神
+	 */
+	public final static Integer Stirps_Angel = 173;
 	
 	/**
 	 * 亡灵
 	 */
-	public final static Integer Stirps_Die = 203;
+	public final static Integer Stirps_Die = 172;
 	
 	/**
 	 * 恶魔
 	 */
-	public final static Integer Stirps_Daimon = 204;
+	public final static Integer Stirps_Daimon = 174;
 	
 	/**
 	 * 野兽
 	 */
-	public final static Integer Stirps_Beast = 205;
+	public final static Integer Stirps_Beast = 175;
 	
 	/**
-	 * 其他
+	 * 昆虫
 	 */
-	public final static Integer Stirps_Other = 299;
+	public final static Integer Stirps_Insect = 176;
 	
 	/**
-	 * 种族
+	 * 植物
 	 */
-	private Integer stirps;
+	public final static Integer Stirps_Plant = 177;
 	
-	public Integer getStirps() {
-		return stirps;
-	}
-
-	public void setStirps(Integer stirps) {
-		this.stirps = stirps;
-	}
+	/**
+	 * 机械
+	 */
+	public final static Integer Stirps_Machine = 178;
 	
 	/**
 	 * 技能
@@ -982,6 +974,19 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public ILifeCardPolicy getPolicy() {
 		return policy;
+	}
+
+	@Override
+	public Boolean contains(Integer tag) {
+		// TODO Auto-generated method stub
+		List<Integer> objectList = Context.queryForTag(tag);
+		return objectList.contains(getId());
+	}
+
+	@Override
+	public List<Integer> queryForCategory(Integer category) {
+		// TODO Auto-generated method stub
+		return Context.queryForCategory(category);
 	}
 	
 }

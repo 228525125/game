@@ -1,15 +1,17 @@
 package org.cx.game.card.magic;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.tag.ITag;
 
 /**
  * 所有魔法的公共接口（trick、skill、buff）
  * @author 贤
  *
  */
-public interface IMagic {
+public interface IMagic extends ITag {
 
+	public Integer getId();
+	
 	/**
 	 * 所属对象
 	 * @return
@@ -27,67 +29,55 @@ public interface IMagic {
 	/**
 	 * 物理buff
 	 */
-	public static final Integer Style_physical = 11;
+	public static final Integer Style_physical = 111;
 	
 	/**
 	 * 魔法buff
 	 */
-	public static final Integer Style_Magic = 12;
-	
-	/**
-	 * 风格，法术、物理
-	 * @return
-	 */
-	public Integer getStyle();
+	public static final Integer Style_Magic = 112;
 	
 	/**
 	 * 移动限制
 	 */
-	public static final Integer Func_Astrict = 101;
+	public static final Integer Func_Astrict = 201;
 	
 	/**
 	 * 直接伤害
 	 */
-	public static final Integer Func_Damage = 102;
+	public static final Integer Func_Damage = 202;
 	
 	/**
 	 * 召唤
 	 */
-	public static final Integer Func_Call = 103;
+	public static final Integer Func_Call = 203;
 	
 	/**
 	 * 增益
 	 */
-	public static final Integer Func_Gain = 104;
+	public static final Integer Func_Gain = 204;
 	
 	/**
 	 * 损益
 	 */
-	public static final Integer Func_Loss = 105;
+	public static final Integer Func_Loss = 205;
 	
 	/**
 	 * 持续伤害
 	 */
-	public static final Integer Func_SustainedHarm = 106;
+	public static final Integer Func_SustainedHarm = 206;
 	
 	/**
 	 * 陷阱
 	 */
-	public static final Integer Func_Trick = 107;
+	public static final Integer Func_Trick = 207;
 	
 	/**
 	 * 冲锋
 	 */
-	public static final Integer Func_Bump = 108;
+	public static final Integer Func_Bump = 208;
 	
 	/**
 	 * 其他功能
 	 */
-	public static final Integer Func_Other = 199;
-	
-	/**
-	 * 功能类型
-	 * @return
-	 */
-	public Integer getFunc();
+	public static final Integer Func_Other = 299;
 }
