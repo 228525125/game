@@ -1,5 +1,6 @@
 package org.cx.game.card.skill;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.magic.IMagic;
 
@@ -18,7 +19,7 @@ public interface ISkill extends IMagic {
 	 * 所属对象
 	 * @return
 	 */
-	public LifeCard getOwner();
+	public ICard getOwner();
 	
 	public void setOwner(LifeCard life);
 	

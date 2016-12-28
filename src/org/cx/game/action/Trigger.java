@@ -31,8 +31,6 @@ public class Trigger extends Action implements ITrigger {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
-		
 		getOwner().setDisplay(true);
 		
 		Map<String,Object> map = new HashMap<String,Object>();

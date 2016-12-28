@@ -27,7 +27,7 @@ public class CallDecorator extends ActionDecorator implements ICall {
 		IPlace place = (IPlace) objects[0];
 		
 		deleteValidator(callRangeValidator);
-		callRangeValidator = new CallRangeValidator(getOwner().getPlayer(),place);
+		callRangeValidator = new CallRangeValidator(getOwner(),place);
 		addValidator(callRangeValidator);
 		
 		super.action(objects);

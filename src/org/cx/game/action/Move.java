@@ -182,8 +182,6 @@ public class Move extends Action implements IMove{
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
-		
 		IPlace place = (IPlace) objects[0];
 		
 		IGround ground = (IGround) getOwner().getContainer();

@@ -30,8 +30,6 @@ public class Renew extends Action implements IRenew {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
-		
 		IPlace place = (IPlace) objects[0];
 		
 		IPlayer player = getOwner().getPlayer();

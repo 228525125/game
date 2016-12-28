@@ -113,10 +113,12 @@ public class ObjectTypeParse implements IParse {
 	public static Class getType(String className){
 		if("int".equals(className)){
 			return Integer.class;
-		}else if("string".equals(className)){
+		}else if("str".equals(className)){
 			return String.class;
 		}else if("double".equals(className)){
 			return Double.class;
+		}else if("bool".equals(className)){
+			return Boolean.class;
 		}
 		try {
 			return Class.forName(className);

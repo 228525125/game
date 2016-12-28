@@ -28,8 +28,6 @@ public class Setup extends Action implements ISetup {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
-		
 		IPlace place = (IPlace) objects[0];
 		getOwner().initState();
 		

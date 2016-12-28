@@ -31,8 +31,6 @@ public class Swap extends Action implements ISwap {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
-		
 		LifeCard swaped = (LifeCard) objects[0];		
 		
 		Map<String,Object> entry = new HashMap<String,Object>();

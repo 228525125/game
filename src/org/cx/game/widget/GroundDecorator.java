@@ -94,7 +94,7 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public List<Integer> getCampPosition(IPlayer player) {
+	public Integer getCampPosition(IPlayer player) {
 		// TODO Auto-generated method stub
 		return ground.getCampPosition(player);
 	}
@@ -229,15 +229,15 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 	
 	@Override
-	public Integer getRandomEntry(IPlayer player) {
+	public Integer getRandomEntry(LifeCard life) {
 		// TODO Auto-generated method stub
-		return ground.getRandomEntry(player);
+		return ground.getRandomEntry(life);
 	}
 	
 	@Override
-	public List<Integer> getEntryList(IPlayer player) {
+	public List<Integer> getEntryList(LifeCard life) {
 		// TODO Auto-generated method stub
-		return ground.getEntryList(player);
+		return ground.getEntryList(life);
 	}
 	
 	@Override

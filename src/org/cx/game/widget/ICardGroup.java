@@ -5,4 +5,6 @@ import org.cx.game.card.ICard;
 public interface ICardGroup extends IContainer{
 
 	public ICard out();
+	
+	public ICard out(Integer position);
 }

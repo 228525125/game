@@ -101,18 +101,21 @@ public abstract class Container extends Observable implements IContainer {
 	}
 
 	@Override
-	public void remove(ICard card) {
+	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", card.getPlayer());
-		map.put("container", this);
-		map.put("card", card);
-		map.put("position", card.getContainerPosition());
-		NotifyInfo info = new NotifyInfo(action,map);
+		Boolean ret = cardList.remove(card);
+		if(ret){
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", card.getPlayer());
+			map.put("container", this);
+			map.put("card", card);
+			map.put("position", card.getContainerPosition());
+			NotifyInfo info = new NotifyInfo(action,map);
+	
+			notifyObservers(info);    //通知观察者
+		}
 		
-		cardList.remove(card);
-		
-		notifyObservers(info);    //通知观察者
+		return ret;
 	}
 
 	@Override

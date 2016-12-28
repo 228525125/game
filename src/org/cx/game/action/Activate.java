@@ -35,7 +35,6 @@ public class Activate extends Action implements IActivate {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		Boolean activate = (Boolean) objects[0];
 		

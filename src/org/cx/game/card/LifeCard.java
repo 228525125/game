@@ -106,7 +106,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated method stub
 		this.playId = playId;
 	}
-	
+
 	private IPlayer player;
 
 	@Override
@@ -313,7 +313,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	private List<IBuff> buffList = new ArrayList<IBuff>();
 
 	/**
-	 * Buff
+	 * 自身Buff
 	 */
 	public List<IBuff> getBuffList() {
 		return buffList;
@@ -394,9 +394,23 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 				return true;
 		return false;
 	}
+	
+	private Boolean hero = false;
+	
+	/**
+	 * 是否为英雄卡
+	 * @return
+	 */
+	public Boolean getHero() {
+		return hero;
+	}
+
+	public void setHero(Boolean hero) {
+		this.hero = hero;
+	}
 
 	/**
-	 * 卡片的星数
+	 * 稀有度
 	 */
 	private Integer star = 1;
 	
@@ -893,7 +907,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		List<IBuff> buffs = new ArrayList<IBuff>();     //与自己相关的buff，不是自己发起的buff，例如AttackLockBuff
 		buffs.addAll(this.nexusBuffList);
-		for(IBuff buff : buffs){        
+		for(IBuff buff : buffs){
 			buff.invalid();
 		}
 		

@@ -21,7 +21,7 @@ public interface IActiveSkill extends ISkill,IInterceptable,Observable,IValidata
 	public String getCode();
 	
 	/**
-	 * 消耗活力值
+	 * 消耗法力值
 	 * @return
 	 */
 	public Integer getConsume();
@@ -32,19 +32,19 @@ public interface IActiveSkill extends ISkill,IInterceptable,Observable,IValidata
 	
 	/**
 	 * 瞬发
-	 */
-	public static final Integer Velocity_Quick = 0;  
+	
+	public static final Integer Velocity_Quick = 0;  */  
 	
 	/**
 	 * 蓄力
-	 */
-	public static final Integer Velocity_Slow= 1;    
+	
+	public static final Integer Velocity_Slow= 1; */    
 	
 	/**
 	 * 是否需蓄力
 	 * @return
-	 */
-	public Integer getVelocity();
+	 
+	public Integer getVelocity(); */
 	
 	/**
 	 * 使用技能

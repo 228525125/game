@@ -38,16 +38,25 @@ public class CardGroup extends Container implements ICardGroup
 	}
 	
 	@Override
-	public void remove(ICard card) {
+	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
 		setAction(NotifyInfo.Container_CardGroup_Remove);
-		super.remove(card);
+		return super.remove(card);
 	}
 	
 	@Override
 	public ICard out() {
 		// TODO Auto-generated method stub
 		ICard card = getCard(0);
+		if(null!=card)
+			remove(card);
+		return card;
+	}
+	
+	@Override
+	public ICard out(Integer position) {
+		// TODO Auto-generated method stub
+		ICard card = getCard(position);
 		if(null!=card)
 			remove(card);
 		return card;

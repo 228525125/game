@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
 import org.cx.game.core.Player;
 import org.cx.game.tools.I18n;
 
 public class Faction extends Player {
 
 	private String name = "";
+	private LifeCard hero = null;
 	
 	public Faction(Integer id) {
 		// TODO Auto-generated constructor stub
@@ -28,5 +30,17 @@ public class Faction extends Player {
 		if(null==name)
 			name = I18n.getMessage(this, getId(), "name");
 		return name;
+	}
+
+	@Override
+	public LifeCard getHeroCard() {
+		// TODO Auto-generated method stub
+		return this.hero;
+	}
+
+	@Override
+	public void setHeroCard(LifeCard hero) {
+		// TODO Auto-generated method stub
+		this.hero = hero;
 	}
 }

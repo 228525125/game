@@ -42,8 +42,6 @@ public class Attacked extends Action implements IAttacked {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
-		
 		IAttack attack = (IAttack) objects[1];
 		Integer damage1 = attack.getAtk();		
 		

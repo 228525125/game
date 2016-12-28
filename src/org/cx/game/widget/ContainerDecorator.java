@@ -20,10 +20,10 @@ public class ContainerDecorator implements IContainer {
 	}
 
 	@Override
-	public void remove(ICard card) {
+	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(original);
-		((IContainer)proxy).remove(card);
+		return ((IContainer)proxy).remove(card);
 	}
 
 	@Override

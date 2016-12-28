@@ -63,7 +63,7 @@ public class UseCardPolicy implements IUseCardPolicy {
 		if (this.owner instanceof LifeCard) {
 			LifeCard life = (LifeCard) this.owner;
 			IPlayer player = this.owner.getPlayer();
-			Integer entry = player.getGround().getRandomEntry(player);
+			Integer entry = player.getGround().getRandomEntry(life);
 			if(null!=entry){
 				try {
 					life.call(player.getGround().getPlace(entry));

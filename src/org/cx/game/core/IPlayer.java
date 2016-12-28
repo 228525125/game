@@ -3,6 +3,7 @@ package org.cx.game.core;
 import java.util.List;
 
 import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.policy.IPlayerPolicy;
 import org.cx.game.widget.ICamp;
@@ -57,5 +58,13 @@ public interface IPlayer
 	public String getName();
 	
 	public IPlayerPolicy getPolicy();
+	
+	/**
+	 * 英雄卡
+	 * @return
+	 */
+	public LifeCard getHeroCard();
+	
+	public void setHeroCard(LifeCard hero);
 
 }

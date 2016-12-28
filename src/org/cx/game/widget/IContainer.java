@@ -31,7 +31,7 @@ public interface IContainer extends IInterceptable, Observable
 	 * 从容器中移出
 	 * 如果是Ground，card只能是life
 	 */
-	public void remove(ICard card);
+	public Boolean remove(ICard card);
 	
 	/**
 	 * 

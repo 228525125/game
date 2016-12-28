@@ -3,6 +3,7 @@ package org.cx.game.core;
 import java.util.List;
 
 import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.widget.IStrongHold;
 
@@ -13,6 +14,11 @@ public class ContextFactory {
 		
 		List<ICard> decks = player1.decksList();              
 		for(ICard card : decks){
+			if (card instanceof LifeCard) {
+				LifeCard life = (LifeCard) card;
+				if(life.getHero())
+					player1.setHeroCard(life);
+			}
 			card.setPlayId(context.newCardPlayId());     //设置卡片在比赛中的ID
 			card.setPlayer(player1);  //设置持卡者
 		}
@@ -22,6 +28,11 @@ public class ContextFactory {
 
 		decks = player2.decksList();
 		for(ICard card : decks){
+			if (card instanceof LifeCard) {
+				LifeCard life = (LifeCard) card;
+				if(life.getHero())
+				player2.setHeroCard(life);
+			}
 			card.setPlayId(context.newCardPlayId());
 			card.setPlayer(player2);  //设置持卡者
 		}

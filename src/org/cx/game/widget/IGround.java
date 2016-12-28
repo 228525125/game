@@ -111,19 +111,19 @@ public interface IGround extends IContainer{
 	 * 获取营地的坐标
 	 * @return
 	 */
-	public List<Integer> getCampPosition(IPlayer player);
+	public Integer getCampPosition(IPlayer player);
 	
 	/**
 	 * 获得一个随机的入口
 	 * @return
 	 */
-	public Integer getRandomEntry(IPlayer player);
+	public Integer getRandomEntry(LifeCard life);
 	
 	/**
 	 * 获取入口位置
 	 * @return
 	 */
-	public List<Integer> getEntryList(IPlayer player);
+	public List<Integer> getEntryList(LifeCard life);
 	
 	/**
 	 * 受地形限制的区域

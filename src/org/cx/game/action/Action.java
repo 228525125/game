@@ -46,10 +46,6 @@ public abstract class Action extends Observable implements IAction {
 	public ICard getOwner() {
 		return owner;
 	}
-	
-	public void action(Object...objects) throws RuleValidatorException {
-		
-	}
 
 	@Override
 	public void addIntercepter(IIntercepter intercepter) {

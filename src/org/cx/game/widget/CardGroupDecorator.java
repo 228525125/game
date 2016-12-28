@@ -22,4 +22,12 @@ public class CardGroupDecorator extends ContainerDecorator implements
 		ICardGroup cardGroup = ((ICardGroup)proxy);
 		return cardGroup.out();
 	}
+
+	@Override
+	public ICard out(Integer position) {
+		// TODO Auto-generated method stub
+		Object proxy = ProxyFactory.getProxy(cardGroup);
+		ICardGroup cardGroup = ((ICardGroup)proxy);
+		return cardGroup.out(position);
+	}
 }

@@ -65,14 +65,18 @@ public class Ground extends Container implements IGround
 	}
 	
 	@Override
-	public void remove(ICard card) {
+	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
 		setAction(NotifyInfo.Container_Ground_Remove);
-		super.remove(card);
+		Boolean ret = super.remove(card);
 		
-		Integer position = getPosition(card);
-		IPlace place = getPlace(position);
-		place.out();
+		if(ret){
+			Integer position = getPosition(card);
+			IPlace place = getPlace(position);
+			place.out();
+		}
+		
+		return ret;
 	}
 	
 	@Override
@@ -246,31 +250,24 @@ public class Ground extends Container implements IGround
 	}
 
 	@Override
-	public List<Integer> getCampPosition(IPlayer player) {
+	public Integer getCampPosition(IPlayer player) {
 		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
 		for(ICamp camp : campList){
 			if(camp.getPlayer().equals(player))
-				list.add(camp.getPosition());
+				return camp.getPosition();
 		}
 		
-		return list;
+		return null;
 	}
 	
 	@Override
-	public Integer getRandomEntry(IPlayer player) {
+	public Integer getRandomEntry(LifeCard life) {
 		// TODO Auto-generated method stub
+		IPlayer player = life.getPlayer();
 		List<Integer> list = new ArrayList<Integer>();
-		for(ICamp camp : campList){
-			if(camp.getPlayer().equals(player)){
-				List<Integer> clist = camp.getEntryList();
-				for(Integer p : clist){
-					if(!getPlace(p).isDisable())
-						list.add(p);
-				}
-				
-			}
-		}
+
+		LifeCard hero = player.getHeroCard();
+		list.addAll(areaForDistance(hero.getContainerPosition(), 3, IGround.Contain));
 		if(list.isEmpty())
 			return null;
 		else{
@@ -280,15 +277,17 @@ public class Ground extends Container implements IGround
 	}
 	
 	@Override
-	public List<Integer> getEntryList(IPlayer player) {
+	public List<Integer> getEntryList(LifeCard life) {
 		// TODO Auto-generated method stub
+		IPlayer player = life.getPlayer();
 		List<Integer> list = new ArrayList<Integer>();
-		for(ICamp camp : campList){
-			if(camp.getPlayer().equals(player)){
-				List<Integer> clist = camp.getEntryList();
-				list.addAll(clist);
-			}
+		if(life.getHero()){
+			list.add(getCampPosition(player));
+		}else{
+			LifeCard hero = player.getHeroCard();
+			list.addAll(areaForDistance(hero.getContainerPosition(), 3, IGround.Contain));
 		}
+		
 		return list;
 	}
 	
@@ -334,8 +333,8 @@ public class Ground extends Container implements IGround
 			positionList.remove(life.getContainerPosition());
 		}
 		if(NotifyInfo.Command_Query_Call == action && card instanceof LifeCard){
-			IPlayer player = card.getPlayer();
-			positionList.addAll(this.getEntryList(player));
+			LifeCard life = (LifeCard) card;
+			positionList.addAll(this.getEntryList(life));
 		}
 		if(NotifyInfo.Command_Query_Move == action && card instanceof LifeCard){
 			LifeCard life = (LifeCard) card;

@@ -24,10 +24,10 @@ public class UseCard extends Container implements IUseCard {
 	}
 	
 	@Override
-	public void remove(ICard card) {
+	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
 		super.setAction(NotifyInfo.Container_UseCard_Remove);
-		super.remove(card);
+		return super.remove(card);
 	}
 	
 	@Override
