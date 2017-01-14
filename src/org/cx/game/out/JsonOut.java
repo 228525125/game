@@ -40,6 +40,7 @@ public class JsonOut extends Response implements Observer {
 			"locker",                                           //AttackLockBuff
 			"conjureRange",                                     //MagicCard
 			"unitNumber",                                       //HuntUnits
+			"controlLife","controlPlayer","player1","player2","queue",          //Context
 			"ruleParam",                                        //用于传递一些参数给rule，与前台无关
 			"owner","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
 		});

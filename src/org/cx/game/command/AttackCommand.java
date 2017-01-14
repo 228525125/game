@@ -5,10 +5,10 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackAtkValidator;
+import org.cx.game.validator.AttackTauntValidator;
 import org.cx.game.validator.LifeCardActivateValidator;
 import org.cx.game.validator.SelectContainerValidator;
 import org.cx.game.validator.SelectLifeCardNotHideValidator;
-import org.cx.game.validator.SelectLifeCardValidator;
 
 public class AttackCommand extends InteriorCommand {
 
@@ -19,6 +19,13 @@ public class AttackCommand extends InteriorCommand {
 		addValidator(new SelectContainerValidator(player.getGround(),buffer));
 		addValidator(new LifeCardActivateValidator(buffer));
 		addValidator(new AttackAtkValidator(buffer));
+	}
+	
+	@Override
+	public void setParameter(Object parameter) {
+		// TODO Auto-generated method stub
+		super.setParameter(parameter);
+		addValidator(new AttackTauntValidator(buffer, (LifeCard) parameter));
 	}
 	
 	@Override

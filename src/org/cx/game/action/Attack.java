@@ -24,7 +24,7 @@ public class Attack extends Action implements IAttack {
 	private Integer range = 1;                        //距离
 	private Integer speedChance = 0;                  //速度
 	private Integer lockChance = 0;                   //锁定几率
-	private Integer atk = 0;
+	private Integer atk = 0;                          //攻击力
 	private Boolean counterAttack = false;            //是否是反击
 	
 	private AttackRule rule = new AttackRule(this); 

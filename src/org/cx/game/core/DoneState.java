@@ -36,7 +36,6 @@ public class DoneState extends PlayState {
 		}
 		
 		IPlayer curPlayer = context.getControlPlayer();
-		Integer bout = context.getBout();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("control", curPlayer);

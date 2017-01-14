@@ -15,7 +15,6 @@ import org.cx.game.widget.IGround;
 public class AttackRule implements IRule {
 
 	private IAttack attack = null;
-	
 	private IAttack clone = null;
 	
 	public AttackRule(IAttack attack) {
@@ -43,7 +42,7 @@ public class AttackRule implements IRule {
 					for(IBuff buff : buffList)
 						buff.invalid();
 					
-					new AttackLockBuff(2,getOwner().getOwner(),attacked).effect();
+					new AttackLockBuff(getOwner().getOwner(),attacked).effect();
 				}
 				
 				//判断攻击模式，远程近战攻击减半

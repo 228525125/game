@@ -42,9 +42,9 @@ public class Context extends Observable implements IContext
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private String playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
 	private IControlQueue queue = new ControlQueue();
-	private Long newCardPlayId = 1l;
+	private Long newCardPlayId = 1l;                          //用于记录本场比赛中生成的id
 	
-	private final static Integer Power_Add = 1;
+	private final static Integer Bout_Power_Add = 1;               //玩家每回合能量增加单位
 	
 	private ContextDecorator decorator = null; 
 	
@@ -284,7 +284,9 @@ public class Context extends Observable implements IContext
 				decorator.addBout();                        //增加回合
 				boutCount = 0;
 			}
-			getControlPlayer().addToResource(Power_Add);        //增加能量
+			getControlPlayer().addToResource(Bout_Power_Add);        //增加能量
+			
+			getControlPlayer().resetCallCountOfBout();          //重置call计数器
 			
 			ICardGroup cardGroup = getControlPlayer().getCardGroup();
 			ICard card = cardGroup.out();  //摸牌
@@ -364,4 +366,6 @@ public class Context extends Observable implements IContext
 		// TODO Auto-generated method stub
 		return newCardPlayId++;
 	}
+	
+	
 }

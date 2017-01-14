@@ -66,5 +66,34 @@ public interface IPlayer
 	public LifeCard getHeroCard();
 	
 	public void setHeroCard(LifeCard hero);
+	
+	/**
+	 * 玩家本次比赛召唤随从次数
+	 * @return
+	 */
+	public Integer getCallCountOfPlay();
+	
+	/**
+	 * call计数器增加time次
+	 * @param time
+	 */
+	public void addCallCountOfPlay(Integer time);
+	
+	/**
+	 * 玩家本回合召唤随从次数
+	 * @return
+	 */
+	public Integer getCallCountOfBout();
+	
+	/**
+	 * call计数器增加time次
+	 * @param time
+	 */
+	public void addCallCountOfBout(Integer time);
+	
+	/**
+	 * 重置call计数器
+	 */
+	public void resetCallCountOfBout();
 
 }

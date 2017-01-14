@@ -3,6 +3,7 @@ package org.cx.game.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
@@ -162,5 +163,49 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	public IPlayerPolicy getPolicy() {
 		// TODO Auto-generated method stub
 		return policy;
+	}
+	
+	private LifeCard hero;
+	
+	public LifeCard getHeroCard() {
+		// TODO Auto-generated method stub
+		return this.hero;
+	}
+	public void setHeroCard(LifeCard hero) {
+		// TODO Auto-generated method stub
+		this.hero = hero;
+	}
+	
+	private Integer callCountPlay = 0;                        //玩家本次比赛召唤随从次数
+	private Integer callCountBout = 0;                        //玩家本回合召唤随从次数
+	
+	@Override
+	public Integer getCallCountOfBout() {
+		// TODO Auto-generated method stub
+		return callCountBout;
+	}
+	
+	@Override
+	public void addCallCountOfBout(Integer time) {
+		// TODO Auto-generated method stub
+		callCountBout += time;
+	}
+
+	@Override
+	public void resetCallCountOfBout() {
+		// TODO Auto-generated method stub
+		callCountBout = 0;
+	}
+	
+	@Override
+	public Integer getCallCountOfPlay() {
+		// TODO Auto-generated method stub
+		return callCountPlay;
+	}
+	
+	@Override
+	public void addCallCountOfPlay(Integer time) {
+		// TODO Auto-generated method stub
+		callCountPlay += time;
 	}
 }
