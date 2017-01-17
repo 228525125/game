@@ -7,6 +7,7 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.widget.IControlQueue;
+import org.cx.game.widget.IWeapon;
 
 public class AttackDecorator extends ActionDecorator implements IAttack {
 	
@@ -147,5 +148,17 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void setCounterAttack(Boolean counterAttack) {
 		// TODO Auto-generated method stub
 		attack.setCounterAttack(counterAttack);
+	}
+
+	@Override
+	public IWeapon getWeapon() {
+		// TODO Auto-generated method stub
+		return attack.getWeapon();
+	}
+
+	@Override
+	public void setWeapon(IWeapon weapon) {
+		// TODO Auto-generated method stub
+		attack.setWeapon(weapon);
 	}
 }

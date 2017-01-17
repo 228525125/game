@@ -17,6 +17,7 @@ import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
+import org.cx.game.widget.IWeapon;
 
 public class Attack extends Action implements IAttack {
 	
@@ -184,6 +185,23 @@ public class Attack extends Action implements IAttack {
 
 	public void setCounterAttack(Boolean counterAttack) {
 		this.counterAttack = counterAttack;
+	}
+	
+	/**
+	 * 武器
+	 */
+	private IWeapon weapon = null;
+	
+	@Override
+	public IWeapon getWeapon() {
+		// TODO Auto-generated method stub
+		return this.weapon;
+	}
+	
+	@Override
+	public void setWeapon(IWeapon weapon) {
+		// TODO Auto-generated method stub
+		this.weapon = weapon;
 	}
 
 	@Override

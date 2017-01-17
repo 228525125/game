@@ -5,6 +5,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
+import org.cx.game.widget.IWeapon;
 
 /**
  * 系统将攻击这个动作抽象出来的目的是不同的生物攻击方式不同，规则也不同，比如近身攻击、远程攻击等
@@ -76,6 +77,14 @@ public interface IAttack extends IAction {
 	public Boolean getCounterAttack();
 	
 	public void setCounterAttack(Boolean counterAttack);
+	
+	/**
+	 * 武器
+	 * @return
+	 */
+	public IWeapon getWeapon();
+	
+	public void setWeapon(IWeapon weapon);
 	
 	public IAttack clone();
 	

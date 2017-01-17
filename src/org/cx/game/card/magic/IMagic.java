@@ -54,7 +54,7 @@ public interface IMagic extends ITag {
 	/**
 	 * 增益
 	 */
-	public static final Integer Func_Gain = 204;
+	public static final Integer Func_Cure = 204;
 	
 	/**
 	 * 损益

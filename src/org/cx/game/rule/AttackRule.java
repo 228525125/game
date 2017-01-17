@@ -45,8 +45,15 @@ public class AttackRule implements IRule {
 					new AttackLockBuff(getOwner().getOwner(),attacked).effect();
 				}
 				
-				//判断攻击模式，远程近战攻击减半
 				this.clone = getOwner().clone();
+				//判断是否装备武器
+				if(null!=clone.getWeapon()){
+					Integer atk = clone.getAtk();
+					atk += clone.getWeapon().output();
+					clone.setAtk(atk);
+				}
+				
+				//判断攻击模式，远程近战攻击减半
 				if(IAttack.Mode_Far.equals(getOwner().getMode()) && 1==distance){
 					clone.setMode(IAttack.Mode_Near);
 					Integer atk = clone.getAtk()/2;

@@ -8,6 +8,7 @@ import org.cx.game.action.IAttacked;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.IWeapon;
 
 public class AttackedRule implements IRule {
 
@@ -29,6 +30,13 @@ public class AttackedRule implements IRule {
 				LifeCard attack = (LifeCard) bean.get("attack");
 				LifeCard attacked = (LifeCard) bean.get("attacked");
 				IAttack att = (IAttack) bean.get("ruleParam");
+				
+				if(null!=att.getWeapon()){            
+					IWeapon weapon = att.getWeapon();
+					if(weapon.isBreakdown()){    //判断武器是否损坏
+						weapon.breakdown();
+					}
+				}
 			
 				if(getOwner().getFightBack() && !att.getCounterAttack()){
 					try {

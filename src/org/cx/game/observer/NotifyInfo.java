@@ -60,6 +60,10 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Type = "Card_LifeCard_State_Type";
 	public final static String Card_LifeCard_State_Flee = "Card_LifeCard_State_Flee";
 	
+	public final static String Card_LifeCard_Weapon_Hand = "Card_LifeCard_Weapon_Hand";
+	public final static String Card_LifeCard_Weapon_Output = "Card_LifeCard_Weapon_Output";
+	public final static String Card_LifeCard_Weapon_Bearkdown = "Card_LifeCard_Weapon_Bearkdown";
+	
 	public final static String Card_TrickCard_Trigger = "Card_TrickCard_Trigger";
 	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";
 	
