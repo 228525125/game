@@ -258,5 +258,14 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<LifeCard> list(IPlayer player);
+	
+	/**
+	 * 获取指定范围内的随从
+	 * @param stand
+	 * @param step
+	 * @param type
+	 * @return
+	 */
+	public List<LifeCard> list(Integer stand, Integer step, Integer type);
 
 }

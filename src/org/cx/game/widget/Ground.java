@@ -820,6 +820,22 @@ public class Ground extends Container implements IGround
 		return ret;
 	}
 	
+	@Override
+	public List<LifeCard> list(Integer stand, Integer step, Integer type) {
+		// TODO Auto-generated method stub
+		List<LifeCard> ls = new ArrayList<LifeCard>();
+		
+		List<Integer> list = this.easyAreaForDistance(stand, step, type);
+		for(Integer position : list){
+			LifeCard life = this.getCard(position);
+			if(null!=life){
+				ls.add(life);
+			}
+		}
+		
+		return ls;
+	}
+	
 	public static void main(String[] args) {
 		/*Integer x1=1,y1=1,x2=2,y2=2;
 		System.out.println(Util.convertInteger(Math.sqrt(Math.pow(x1.doubleValue()-x2.doubleValue(),2)+Math.pow(y1.doubleValue()-y2.doubleValue(),2))));

@@ -263,4 +263,10 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		return ground.list(player);
 	}
+	
+	@Override
+	public List<LifeCard> list(Integer stand, Integer step, Integer type) {
+		// TODO Auto-generated method stub
+		return ground.list(stand, step, type);
+	}
 }

@@ -12,4 +12,13 @@ import org.cx.game.observer.Observable;
  */
 public interface IPassiveSkill extends ISkill,IInterceptable,Observable,IIntercepter {
 
+	/**
+	 * 激活
+	 */
+	public void activate();
+	
+	/**
+	 * 失效
+	 */
+	public void invalid();
 }

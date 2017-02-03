@@ -77,6 +77,11 @@ public interface IMagic extends ITag {
 	public static final Integer Func_Bump = 208;
 	
 	/**
+	 * 秘术
+	 */
+	public static final Integer Func_Mystery = 209;
+	
+	/**
 	 * 其他功能
 	 */
 	public static final Integer Func_Other = 299;

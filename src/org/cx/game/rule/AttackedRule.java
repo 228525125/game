@@ -38,7 +38,7 @@ public class AttackedRule implements IRule {
 					}
 				}
 			
-				if(getOwner().getFightBack() && !att.getCounterAttack()){
+				if(getOwner().getFightBack() && !att.getCounterAttack() && 0<getOwner().getOwner().getAttack().getAtk()){
 					try {
 						attacked.getAttack().setCounterAttack(true);      //设置为反击
 						attacked.attack(attack);
