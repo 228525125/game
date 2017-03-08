@@ -3,6 +3,7 @@ package org.cx.game.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.observer.NotifyInfo;
@@ -129,15 +130,17 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	@Override
 	public void addToResource(Integer power) {
 		// TODO Auto-generated method stub
-		this.power += power;
-		this.power = this.power>0 ? this.power : 0;    //判断下限
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", this);
-		map.put("power", this.power);
-		map.put("change", power);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Power,map);
-		notifyObservers(info);
+		if(0!=power){
+			this.power += power;
+			this.power = this.power>0 ? this.power : 0;    //判断下限
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", this);
+			map.put("power", this.power);
+			map.put("change", power);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Power,map);
+			notifyObservers(info);
+		}
 	}
 	
 	@Override
@@ -207,5 +210,16 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	public void addCallCountOfPlay(Integer time) {
 		// TODO Auto-generated method stub
 		callCountPlay += time;
+	}
+	
+	@Override
+	public void takeCard() {
+		// TODO Auto-generated method stub
+		ICard card = cardGroup.out();
+		if(null!=card){
+	    	useCard.add(useCard.getSize(),card);
+		}else{
+			//如果牌抽完了
+		}
 	}
 }

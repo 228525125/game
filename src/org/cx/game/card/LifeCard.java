@@ -483,6 +483,16 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public final static Integer Stirps_Machine = 178;
 	
 	/**
+	 * 龙
+	 */
+	public final static Integer Stirps_Dragon = 179;
+	
+	/**
+	 * 鱼
+	 */
+	public final static Integer Stirps_Fish = 180;
+	
+	/**
 	 * 技能
 	 */
 	private List<ISkill> skillList = new ArrayList<ISkill>();
@@ -753,6 +763,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(null==death){
 			IDeath death = new Death();
 			death.setHp(hp);
+			death.setHplimit(hp);
 			death.setOwner(this);
 			this.death = new DeathDecorator(death);
 		}
@@ -761,6 +772,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setDeath(IDeath death) {
 		death.setHp(hp);
+		death.setHplimit(hp);
 		death.setOwner(this);
 		this.death = new DeathDecorator(death);
 	}

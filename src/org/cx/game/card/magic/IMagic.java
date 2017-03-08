@@ -85,4 +85,10 @@ public interface IMagic extends ITag {
 	 * 其他功能
 	 */
 	public static final Integer Func_Other = 299;
+	
+	/**
+	 * 描述
+	 * @return
+	 */
+	public String getDepiction();
 }

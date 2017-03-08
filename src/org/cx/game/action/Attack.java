@@ -199,9 +199,18 @@ public class Attack extends Action implements IAttack {
 	}
 	
 	@Override
-	public void setWeapon(IWeapon weapon) {
+	public void handWeapon(IWeapon weapon) {
 		// TODO Auto-generated method stub
 		this.weapon = weapon;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", getOwner().getPlayer());
+		map.put("container", getOwner().getContainer());
+		map.put("card", getOwner());
+		map.put("position", getOwner().getContainerPosition());
+		map.put("weapon", weapon);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Weapon_Hand,map);
+		super.notifyObservers(info);
 	}
 
 	@Override

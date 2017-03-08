@@ -66,7 +66,7 @@ public class ObjectTypeParse implements IParse {
 					new BasicTypeParse(btb).parse(el);
 					builder.setConstructParameter(cls, btb.builder());
 				}else{
-					throw new ParseException("构造参数只能是基本类型！");
+					throw new ParseException("构造参数只能是基本类型！"+el.getPath());
 				}
 			}
 		}

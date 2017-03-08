@@ -5,6 +5,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
+import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IWeapon;
@@ -157,8 +158,9 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	}
 
 	@Override
-	public void setWeapon(IWeapon weapon) {
+	public void handWeapon(IWeapon weapon) {
 		// TODO Auto-generated method stub
-		attack.setWeapon(weapon);
+		Object proxy = ProxyFactory.getProxy(this.attack);     
+		((IAttack)proxy).handWeapon(weapon);
 	}
 }

@@ -37,4 +37,22 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		// TODO Auto-generated method stub
 		return this.attacked.getOwner();
 	}
+	
+	@Override
+	public Integer getArmour() {
+		// TODO Auto-generated method stub
+		return attacked.getArmour();
+	}
+
+	@Override
+	public void setArmour(Integer armour) {
+		// TODO Auto-generated method stub
+		attacked.setArmour(armour);
+	}
+
+	@Override
+	public Integer addToArmour(Integer armour) {
+		// TODO Auto-generated method stub
+		return attacked.addToArmour(armour);
+	}
 }

@@ -26,17 +26,10 @@ public class AttackedRule implements IRule {
 			NotifyInfo info = (NotifyInfo) arg;
 			
 			if(NotifyInfo.Card_LifeCard_Action_Attacked.equals(info.getType())){
-				Map bean = (Map) info.getInfo();	
+				Map bean = (Map) info.getInfo();
 				LifeCard attack = (LifeCard) bean.get("attack");
 				LifeCard attacked = (LifeCard) bean.get("attacked");
 				IAttack att = (IAttack) bean.get("ruleParam");
-				
-				if(null!=att.getWeapon()){            
-					IWeapon weapon = att.getWeapon();
-					if(weapon.isBreakdown()){    //判断武器是否损坏
-						weapon.breakdown();
-					}
-				}
 			
 				if(getOwner().getFightBack() && !att.getCounterAttack() && 0<getOwner().getOwner().getAttack().getAtk()){
 					try {

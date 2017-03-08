@@ -128,4 +128,10 @@ public class ControlQueueDecorator implements IControlQueue {
 		// TODO Auto-generated method stub
 		original.moveToPrior(place);
 	}
+
+	@Override
+	public Integer getLength() {
+		// TODO Auto-generated method stub
+		return original.getLength();
+	}
 }

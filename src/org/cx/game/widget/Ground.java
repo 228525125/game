@@ -230,7 +230,7 @@ public class Ground extends Container implements IGround
 	@Override
 	public void setPlayerToCamp(Integer campIndex, IPlayer player) {
 		// TODO Auto-generated method stub
-		campList.get(campIndex).setPlayer(player);
+		campList.get(campIndex).setCampPlayer(player);
 	}
 
 	public List<Integer> getDisableList() {
@@ -253,7 +253,7 @@ public class Ground extends Container implements IGround
 	public Integer getCampPosition(IPlayer player) {
 		// TODO Auto-generated method stub
 		for(ICamp camp : campList){
-			if(camp.getPlayer().equals(player))
+			if(camp.getCampPlayer().equals(player))
 				return camp.getPosition();
 		}
 		
@@ -402,7 +402,7 @@ public class Ground extends Container implements IGround
 		map.put("imagePath", imagePath);
 		map.put("campList", campList);
 		map.put("disableList", disableList);
-		map.put("strongHoldList", strongHoldList);
+		//map.put("strongHoldList", strongHoldList);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,map);
 		
 		notifyObservers(info);    //通知观察者

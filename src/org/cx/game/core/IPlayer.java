@@ -95,5 +95,10 @@ public interface IPlayer
 	 * 重置call计数器
 	 */
 	public void resetCallCountOfBout();
+	
+	/**
+	 * 抽牌
+	 */
+	public void takeCard();
 
 }

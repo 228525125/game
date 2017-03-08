@@ -1,10 +1,6 @@
 package org.cx.game.widget;
 
-import java.util.List;
-
 import org.cx.game.core.IPlayer;
-import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.observer.Observable;
 
 /**
  * 营地，英雄进入战场的位置
@@ -17,9 +13,9 @@ public interface ICamp {
 	
 	public Integer getPosition();
 	
-	public IPlayer getPlayer();
+	public IPlayer getCampPlayer();
 	
-	public void setPlayer(IPlayer player);
+	public void setCampPlayer(IPlayer player);
 	
 	public void setOwner(IPlace place);
 }

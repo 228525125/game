@@ -39,5 +39,12 @@ public class Affected extends Action implements IAffected {
 		// TODO Auto-generated method stub
 		return (LifeCard) super.getOwner();
 	}
+	
+	@Override
+	public void magicHarm(Integer harm) {
+		// TODO Auto-generated method stub
+		Integer damage = getOwner().getAttacked().addToArmour(harm);
+		getOwner().getDeath().addToHp(damage);
+	}
 
 }

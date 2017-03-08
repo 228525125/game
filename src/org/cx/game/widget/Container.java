@@ -1,7 +1,6 @@
 package org.cx.game.widget;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import java.util.Observable;
 import org.cx.game.card.ICard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
-import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
 
 public abstract class Container extends Observable implements IContainer {
@@ -20,11 +18,11 @@ public abstract class Container extends Observable implements IContainer {
 	private IPlayer player;
 	private String action;
 	
-	protected static final String CardGroup = "CardGroup";
-	protected static final String Cemetery = "Cemetery";
-	protected static final String Ground = "Ground";
-	protected static final String UseCard = "UseCard";
-	protected static final String TrickList = "TrickList";
+	public static final String CardGroup = "CardGroup";
+	public static final String Cemetery = "Cemetery";
+	public static final String Ground = "Ground";
+	public static final String UseCard = "UseCard";
+	public static final String TrickList = "TrickList";
 	
 	private ContainerDecorator decorator = null;
 
@@ -103,13 +101,14 @@ public abstract class Container extends Observable implements IContainer {
 	@Override
 	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
+		Integer position = card.getContainerPosition();
 		Boolean ret = cardList.remove(card);
 		if(ret){
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", card.getPlayer());
 			map.put("container", this);
 			map.put("card", card);
-			map.put("position", card.getContainerPosition());
+			map.put("position", position);
 			NotifyInfo info = new NotifyInfo(action,map);
 	
 			notifyObservers(info);    //通知观察者

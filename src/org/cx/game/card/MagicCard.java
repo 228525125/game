@@ -60,6 +60,15 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 			name = I18n.getMessage(this, id, "name");
 		return name;
 	}
+	
+	private String depiction = null;
+	
+	public String getDepiction() {
+		// TODO Auto-generated method stub
+		if(null==depiction)
+			depiction = I18n.getMessage(this, id, "depiction");
+		return depiction;
+	}
 
 	/**
 	 * 比赛中的ID，临时的
@@ -266,10 +275,20 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		this.parameterType = parameterType;
 	}
 	
+	/**
+	 * 
+	 * @param parameterType 参数类型
+	 * @param proertyName 属性名称
+	 * @param validatorValue 属性值，但必须为基本类型
+	 */
 	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
 		this.parameterType = parameterType;
 		this.proertyName = proertyName;
 		this.validatorValue = validatorValue;
+	}
+	
+	public Boolean isTrigger(Object[] args){
+		return true;
 	}
 	
 	/**
@@ -289,7 +308,8 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		if(hasError())
 			throw new RuleValidatorException(getErrors().getMessage());
 		
-		apply.action(objects);
+		if(isTrigger(objects))           //如果魔法卡在没有目标对象的情况下，也可以使用
+			apply.action(objects);
 	}
 	
 	@Override

@@ -90,18 +90,6 @@ public class PlaceDecorator implements IPlace {
 	}
 
 	@Override
-	public ICamp getCamp() {
-		// TODO Auto-generated method stub
-		return original.getCamp();
-	}
-
-	@Override
-	public void setCamp(ICamp camp) {
-		// TODO Auto-generated method stub
-		original.setCamp(camp);
-	}
-
-	@Override
 	public void in(LifeCard life) {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(original);

@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Observable;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.effect.QuickAttack;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.ControlQueue.Place;

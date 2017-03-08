@@ -61,10 +61,6 @@ public class Context extends Observable implements IContext
 		
 		addObserver(new JsonOut());
 		
-		queue = new ControlQueueDecorator(this.queue);
-		queue.add(player1);
-		queue.add(player2);
-		
 		loadResource();
 	}
 	
@@ -162,11 +158,11 @@ public class Context extends Observable implements IContext
 		this.decorator = decorator;
 	}
 
-	public IControlQueue getQueue() {
+	public IControlQueue getControlQueue() {
 		return queue;
 	}
 
-	public void setQueue(IControlQueue queue) {
+	public void setControlQueue(IControlQueue queue) {
 		this.queue = queue;
 	}
 
@@ -210,7 +206,7 @@ public class Context extends Observable implements IContext
 	}
 	
 	private int playerNumber = 2;    //参赛人数
-	private int bout=playerNumber;  //游戏回合，
+	private int bout=0;  //游戏回合，
 	
 	public int getBout() {
 		return bout;
@@ -274,7 +270,7 @@ public class Context extends Observable implements IContext
 	 * @param object
 	 */
 	private void setControl(Object object){
-		if (object instanceof IPlayer) {
+		/*if (object instanceof IPlayer) {
 			IPlayer control = (IPlayer) object;
 			
 			setControlPlayer(control);
@@ -288,16 +284,10 @@ public class Context extends Observable implements IContext
 			
 			getControlPlayer().resetCallCountOfBout();          //重置call计数器
 			
-			ICardGroup cardGroup = getControlPlayer().getCardGroup();
-			ICard card = cardGroup.out();  //摸牌
-			
-			if(null!=card){
-				IUseCard useCard = getControlPlayer().getUseCard();
-				useCard.add(useCard.getSize(),card);
-			}
+			getControlPlayer().takeCard();                  //摸牌
 			
 			this.controlLife=null;      //如果ControlLife不为null就表示控制权在life
-		}
+		}*/
 		if (object instanceof LifeCard) {
 			LifeCard life = (LifeCard) object;
 			try {
@@ -307,6 +297,21 @@ public class Context extends Observable implements IContext
 				e.printStackTrace();
 			}             //设置为可以行动
 			setControlLife(life);
+			
+			if(life.getHero()){
+				boutCount += 1;
+				if(boutCount/playerNumber==1){
+					decorator.addBout();                        //增加回合
+					boutCount = 0;
+				}
+				
+				Integer addPower = getBout()<11 ? getBout() : 10;
+				getControlPlayer().addToResource(addPower);        //增加能量
+				
+				getControlPlayer().resetCallCountOfBout();          //重置call计数器
+				
+				getControlPlayer().takeCard();                  //摸牌
+			}
 		}
 	}
 	

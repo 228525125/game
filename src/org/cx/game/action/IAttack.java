@@ -84,7 +84,11 @@ public interface IAttack extends IAction {
 	 */
 	public IWeapon getWeapon();
 	
-	public void setWeapon(IWeapon weapon);
+	/**
+	 * 拿起武器
+	 * @param weapon
+	 */
+	public void handWeapon(IWeapon weapon);
 	
 	public IAttack clone();
 	

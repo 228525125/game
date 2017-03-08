@@ -87,15 +87,15 @@ public class ContextDecorator implements IContext {
 	}
 
 	@Override
-	public IControlQueue getQueue() {
+	public IControlQueue getControlQueue() {
 		// TODO Auto-generated method stub
-		return original.getQueue();
+		return original.getControlQueue();
 	}
 
 	@Override
-	public void setQueue(IControlQueue queue) {
+	public void setControlQueue(IControlQueue queue) {
 		// TODO Auto-generated method stub
-		original.setQueue(queue);
+		original.setControlQueue(queue);
 	}
 
 	@Override

@@ -16,10 +16,6 @@ import org.cx.game.observer.Observable;
 public interface IPlace extends IInterceptable, Observable{
 	
 	public IContainer getContainer();
-	
-	public ICamp getCamp();
-	
-	public void setCamp(ICamp camp);
 
 	public void in(LifeCard life);
 	

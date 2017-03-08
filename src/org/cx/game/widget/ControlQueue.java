@@ -10,7 +10,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.effect.QuickAttack;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
@@ -22,8 +21,8 @@ import org.cx.game.rule.IRule;
 public class ControlQueue extends Observable implements IControlQueue {
 
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	private List<Place> queueList = new ArrayList<Place>();
-	private List<Place> queue1 = new ArrayList<Place>();
+	private List<Place> queueList = new ArrayList<Place>();                // queue1 + queue2
+	private List<Place> queue1 = new ArrayList<Place>();                   // 两个队列用于切换，实现按优先级排序
 	private List<Place> queue2 = new ArrayList<Place>();
 	private Map<Integer,List<Place>> map = new HashMap<Integer,List<Place>>(); 
 	private List<Place> queue = null;        //当前队列
@@ -409,5 +408,11 @@ public class ControlQueue extends Observable implements IControlQueue {
 			else
 				return -1;
 		}
+	}
+
+	@Override
+	public Integer getLength() {
+		// TODO Auto-generated method stub
+		return this.queueList.size();
 	}
 }

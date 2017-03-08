@@ -49,7 +49,7 @@ public class Call extends Action implements ICall {
 		IContainer ground = place.getContainer();
 		ground.add(place.getPosition(), getOwner());
 		
-		IControlQueue cq = player.getContext().getQueue();
+		IControlQueue cq = player.getContext().getControlQueue();
 		cq.add(getOwner());   //插入队列
 	}
 
@@ -61,5 +61,23 @@ public class Call extends Action implements ICall {
 	
 	public void setConsume(Integer consume) {
 		this.consume = consume;
+	}
+
+	@Override
+	public void addToConsume(Integer consume) {
+		// TODO Auto-generated method stub
+		if(!Integer.valueOf(0).equals(consume)){
+			this.consume += consume;
+			this.consume = this.consume < 0 ? 0 : this.consume;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", consume);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Consume,map);
+			super.notifyObservers(info);
+		}
 	}
 }

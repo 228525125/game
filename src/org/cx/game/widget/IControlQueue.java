@@ -58,4 +58,6 @@ public interface IControlQueue extends Observable, IInterceptable{
 	 * 获取一次控制权需要消耗的能量
 	 */
 	public static final Integer consume = 100;
+	
+	public Integer getLength();
 }

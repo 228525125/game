@@ -29,9 +29,10 @@ public class JsonOut extends Response implements Observer {
 		JsonConfig config = new JsonConfig();
 		config.setExcludes(new String[]{
 			"cards","password","context","decks","cardGroup","ground","useCard","commandBuffer",       //User
+			"heroCard",              //Player
 			"near",                  //Place
 			"index",                 //ControlQueue.Place
-			//"place",                 //Camp
+			"campPlayer",                 //Camp
 			"strongHoldList","randomEntry",        //Ground
 			"appendCardList","hashCode","containerPosition","useCardPolicy","policy",        //LifeCard
 			"affectedList",                  //Skill
@@ -40,7 +41,7 @@ public class JsonOut extends Response implements Observer {
 			"locker",                                           //AttackLockBuff
 			"conjureRange",                                     //MagicCard
 			"unitNumber",                                       //HuntUnits
-			"controlLife","controlPlayer","player1","player2","queue",          //Context
+			"controlLife","controlPlayer","player1","player2","controlQueue",          //Context
 			"ruleParam",                                        //用于传递一些参数给rule，与前台无关
 			"owner","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
 		});

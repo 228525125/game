@@ -19,19 +19,18 @@ public class Camp implements ICamp {
 		return place;
 	}
 
-	public IPlayer getPlayer() {
-		return player;
-	}
-	
-	public void setPlayer(IPlayer player){
-		this.player = player;
-	}
-
 	@Override
 	public void setOwner(IPlace place) {
 		// TODO Auto-generated method stub
 		this.place = place;
-		this.place.setCamp(this);
+	}
+	
+	public IPlayer getCampPlayer() {
+		return player;
+	}
+	
+	public void setCampPlayer(IPlayer player){
+		this.player = player;
 	}
 
 	@Override

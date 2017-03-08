@@ -65,15 +65,9 @@ public class StartState extends PlayState {
 		 * 游戏开始各抽5张牌
 		 */
 		for(int i=0;i<5;i++){
-			ICard card1 = cardGroup1.out();
-			if(null!=card1){
-		    	useCard1.add(useCard1.getSize(),card1);
-			}
+			player1.takeCard();
 			
-			ICard card2 = cardGroup2.out();
-	    	if(null!=card2){
-		    	useCard2.add(useCard2.getSize(),card2);
-	    	}
+			player2.takeCard();
 		}
 		
 		/*

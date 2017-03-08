@@ -13,6 +13,10 @@ import org.cx.game.observer.Observable;
  */
 public interface IDeath extends IAction, IRecover{
 	
+	/**
+	 * hp
+	 * @return
+	 */
 	public Integer getHp();
 
 	/**
@@ -20,6 +24,12 @@ public interface IDeath extends IAction, IRecover{
 	 * @param hp
 	 */
 	public void setHp(Integer hp);
+	
+	/**
+	 * 改变HP值，可能是受到伤害，也可能是接收治疗
+	 * @param hp
+	 */
+	public void addToHp(Integer hp);
 	
 	/**
 	 * HP上限
@@ -44,12 +54,6 @@ public interface IDeath extends IAction, IRecover{
 	public Integer getStatus();
 	
 	public void setStatus(Integer status);
-	
-	/**
-	 * 改变HP值，可能是受到伤害，也可能是接收治疗
-	 * @param hp
-	 */
-	public void addToHp(Integer hp);
 	
 	public LifeCard getOwner();
 }

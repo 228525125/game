@@ -21,5 +21,7 @@ public interface ICall extends IAction {
 	
 	public void setConsume(Integer consume);
 	
+	public void addToConsume(Integer consume);
+	
 	public LifeCard getOwner();
 }

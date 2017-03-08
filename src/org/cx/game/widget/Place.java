@@ -103,18 +103,6 @@ public class Place extends Observable implements IPlace {
 	}
 
 	@Override
-	public ICamp getCamp() {
-		// TODO Auto-generated method stub
-		return this.camp;
-	}
-
-	@Override
-	public void setCamp(ICamp camp) {
-		// TODO Auto-generated method stub
-		this.camp = camp;
-	}
-
-	@Override
 	public Boolean isDisable() {
 		// TODO Auto-generated method stub
 		return this.disable;

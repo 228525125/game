@@ -7,9 +7,9 @@ import org.cx.game.widget.IControlQueue;
 
 public interface IContext extends IInterceptable,Observable {
 
-	public abstract IControlQueue getQueue();
+	public abstract IControlQueue getControlQueue();
 
-	public abstract void setQueue(IControlQueue queue);
+	public abstract void setControlQueue(IControlQueue queue);
 	
 	public void setDecorator(ContextDecorator decorator);
 

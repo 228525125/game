@@ -51,6 +51,7 @@ public class NotifyInfo {
 	
 	public final static String Card_LifeCard_State_Hide = "Card_LifeCard_State_Hide";
 	public final static String Card_LifeCard_State_Hp = "Card_LifeCard_State_Hp";
+	public final static String Card_LifeCard_State_Armour = "Card_LifeCard_State_Armour";
 	public final static String Card_LifeCard_State_Atk = "Card_LifeCard_State_Atk";
 	public final static String Card_LifeCard_State_Speed = "Card_LifeCard_State_Speed";
 	public final static String Card_LifeCard_State_Lock = "Card_LifeCard_State_Lock";
@@ -59,10 +60,13 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Mode = "Card_LifeCard_State_Mode";
 	public final static String Card_LifeCard_State_Type = "Card_LifeCard_State_Type";
 	public final static String Card_LifeCard_State_Flee = "Card_LifeCard_State_Flee";
+	public final static String Card_LifeCard_State_Consume = "Card_LifeCard_State_Consume"; 
 	
 	public final static String Card_LifeCard_Weapon_Hand = "Card_LifeCard_Weapon_Hand";
 	public final static String Card_LifeCard_Weapon_Output = "Card_LifeCard_Weapon_Output";
 	public final static String Card_LifeCard_Weapon_Bearkdown = "Card_LifeCard_Weapon_Bearkdown";
+	public final static String Card_LifeCard_Weapon_Atk = "Card_LifeCard_Weapon_Atk";
+	public final static String Card_LifeCard_Weapon_Wear = "Card_LifeCard_Weapon_Wear";
 	
 	public final static String Card_TrickCard_Trigger = "Card_TrickCard_Trigger";
 	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";
