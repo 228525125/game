@@ -306,7 +306,8 @@ public class Context extends Observable implements IContext
 				}
 				
 				Integer addPower = getBout()<11 ? getBout() : 10;
-				getControlPlayer().addToResource(addPower);        //增加能量
+				
+				getControlPlayer().addToResource(addPower-getControlPlayer().getResource());        //增加能量
 				
 				getControlPlayer().resetCallCountOfBout();          //重置call计数器
 				

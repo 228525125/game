@@ -6,8 +6,10 @@ import java.util.Observable;
 
 import org.cx.game.action.IAttack;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.magic.WeaponMagicCard;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.tools.I18n;
 
 /**
  * 武器
@@ -19,17 +21,29 @@ public class Weapon extends Observable implements IWeapon {
 	private Integer atk = 0;
 	private Integer wear = 0;
 	private LifeCard hero = null;
+	private WeaponMagicCard weaponMagicCard = null;
+	
+	private String name = null;
+	
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		if(null==name)
+			name = I18n.getMessage(this.weaponMagicCard, this.weaponMagicCard.getId(), "name");
+		return name;
+	}
 	
 	/**
 	 * 
 	 * @param atk 攻击力
 	 * @param wear 耐久
 	 */
-	public Weapon(Integer atk, Integer wear, LifeCard hero) {
+	public Weapon(Integer atk, Integer wear, WeaponMagicCard weaponMagicCard, LifeCard hero) {
 		// TODO Auto-generated constructor stub
 		this.atk = atk;
 		this.wear = wear;
 		this.hero = hero;
+		this.weaponMagicCard = weaponMagicCard;
 		
 		addObserver(new JsonOut());
 	}
@@ -99,7 +113,7 @@ public class Weapon extends Observable implements IWeapon {
 		}
 	}
 
-	@Override
+	@Deprecated
 	public Integer output() {
 		// TODO Auto-generated method stub
 		

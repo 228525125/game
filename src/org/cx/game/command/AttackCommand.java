@@ -2,6 +2,7 @@ package org.cx.game.command;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackAtkValidator;
@@ -15,7 +16,6 @@ public class AttackCommand extends InteriorCommand {
 	public AttackCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
-		addValidator(new SelectLifeCardNotHideValidator(buffer));
 		addValidator(new SelectContainerValidator(player.getGround(),buffer));
 		addValidator(new LifeCardActivateValidator(buffer));
 		addValidator(new AttackAtkValidator(buffer));
@@ -33,10 +33,14 @@ public class AttackCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 		
-		LifeCard life = (LifeCard) buffer.getCard();
+		LifeCard attack = (LifeCard) buffer.getCard();
+		LifeCard attacked = (LifeCard) parameter;
 		
-		life.attack((LifeCard) parameter);
-				
+		doValidator(new SelectLifeCardNotHideValidator(attacked));
+		if(hasError())
+			throw new CommandValidatorException(getErrors().getMessage());
+		
+		attack.attack(attacked);
 		if(!Debug.isDebug)
 			player.getContext().done();   //结束本回合
 	}

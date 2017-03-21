@@ -33,6 +33,8 @@ public class AttackRule implements IRule {
 				Map bean = (Map) info.getInfo();
 				LifeCard attacked = (LifeCard) bean.get("attacked");
 				
+				this.clone = getOwner().clone();
+				
 				IGround ground = getOwner().getOwner().getPlayer().getGround();
 				Integer distance = ground.easyDistance(attacked.getContainerPosition(), getOwner().getOwner().getContainerPosition());
 				if(IDeath.Status_Live == attacked.getDeath().getStatus()
@@ -43,14 +45,13 @@ public class AttackRule implements IRule {
 						buff.invalid();
 					
 					new AttackLockBuff(getOwner().getOwner(),attacked).effect();
+					
+					this.clone.setMode(IAttack.Mode_Near);             //如果是远程，这里要设置为近身攻击模式
 				}
 				
-				this.clone = getOwner().clone();
 				//判断是否装备武器
 				if(null!=clone.getWeapon()){
-					Integer atk = clone.getAtk();
-					atk += clone.getWeapon().output();
-					clone.setAtk(atk);
+					clone.getWeapon().addToWear(-1);
 				}
 				
 				//判断攻击模式，远程近战攻击减半

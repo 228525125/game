@@ -25,7 +25,7 @@ public class CardGroup extends Container implements ICardGroup
 		for(ICard card : list)
 			card.setContainer(this);
 		
-		if(!Debug.isDebug)
+		if(Debug.isShuffle)
 			Collections.shuffle(list);
 		return list;
 	}

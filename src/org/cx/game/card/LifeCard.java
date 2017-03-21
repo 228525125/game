@@ -893,6 +893,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void initState() {
 		// TODO Auto-generated method stub
 
+		clearBuff();            //首先执行是因为，Buff.invalid会影响死者属性
+		
 		getActivate().setActivation(activation);
 		
 		getAttack().setAtk(atk);
@@ -914,8 +916,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		getDeath().setHplimit(hp);
 		
 		setHide(false);
-		
-		clearBuff();
 		
 		List<IBuff> buffs = new ArrayList<IBuff>();     //与自己相关的buff，不是自己发起的buff，例如AttackLockBuff
 		buffs.addAll(this.nexusBuffList);

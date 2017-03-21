@@ -123,6 +123,8 @@ public class Attack extends Action implements IAttack {
 	}
 
 	public Integer getAtk() {
+		if(null!=getWeapon())
+			return atk+this.weapon.getAtk();
 		return atk;
 	}
 

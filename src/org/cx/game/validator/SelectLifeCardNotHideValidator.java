@@ -9,11 +9,13 @@ import org.cx.game.tools.I18n;
  * @author chenxian
  *
  */
-public class SelectLifeCardNotHideValidator extends SelectLifeCardValidator {
+public class SelectLifeCardNotHideValidator extends Validator {
 	
-	public SelectLifeCardNotHideValidator(CommandBuffer buffer) {
-		super(buffer);
+	private LifeCard attacked = null;
+	
+	public SelectLifeCardNotHideValidator(LifeCard attacked) {
 		// TODO Auto-generated constructor stub
+		this.attacked = attacked;
 	}
 	
 	@Override
@@ -21,8 +23,7 @@ public class SelectLifeCardNotHideValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate(); 
 		if(ret){
-			LifeCard card = getLifeCard();
-			if(card.getMove().getHide()){
+			if(this.attacked.getMove().getHide()){
 				addMessage(I18n.getMessage(this));
 				ret = false;
 			}else{

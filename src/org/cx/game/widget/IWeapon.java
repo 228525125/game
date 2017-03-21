@@ -4,6 +4,8 @@ import org.cx.game.card.LifeCard;
 
 public interface IWeapon {
 
+	public String getName();
+	
 	/**
 	 * 攻击力
 	 * @return
@@ -25,9 +27,10 @@ public interface IWeapon {
 	public void addToWear(Integer wear);
 	
 	/**
-	 * 输出攻击，在AttackRule中输出攻击
+	 * 输出攻击，在AttackRule中输出攻击 (暂时停用)
 	 * @return
 	 */
+	@Deprecated
 	public Integer output();
 	
 	/**
