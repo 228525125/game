@@ -191,21 +191,22 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	
 	/**
 	 * 使用魔法卡的生物
+	 * 现行游戏设定为英雄
 	 * @return
 	 */
 	public LifeCard getConjurer() {
-		return conjurer;
-	}
-
-	public void setConjurer(LifeCard conjurer) {
-		this.conjurer = conjurer;
+		return getPlayer().getHeroCard();
 	}
 	
 	/**
 	 * 是否需要施法者，例如传送，需要施法者法师在场，这时法师就是施法者
+	 * 现游戏设定为施法者即英雄，因此needConjurer方法也无意义
 	 * @return
 	 */
-	public abstract Boolean needConjurer();
+	@Deprecated
+	public Boolean needConjurer(){
+		return true;
+	};
 	
 	/**
 	 * 能够使用该魔法卡的施法者们
@@ -308,8 +309,11 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		if(hasError())
 			throw new RuleValidatorException(getErrors().getMessage());
 		
-		if(isTrigger(objects))           //如果魔法卡在没有目标对象的情况下，也可以使用
-			apply.action(objects);
+		/*
+		 * 魔法卡只有在没有指定对象的时候，即命令验证不通过时，才会被回退
+		 * 如果验证通过，即使魔法卡在没有目标对象的情况下，也会认定被使用
+		 */
+		apply.action(objects);
 	}
 	
 	@Override

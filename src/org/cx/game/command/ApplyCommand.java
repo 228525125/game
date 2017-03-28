@@ -28,14 +28,6 @@ public class ApplyCommand extends InteriorCommand {
 		
 		MagicCard magic = (MagicCard) buffer.getCard();
 		
-		doValidator(new NeedConjurerValidator(magic, buffer));
-		if(hasError())
-			throw new CommandValidatorException(getErrors().getMessage());
-		
-		if(magic.needConjurer()){
-			magic.setConjurer((LifeCard) buffer.lastCard());
-		}
-		
 		magic.apply(new Object[]{parameter});
 		
 		magic.chuck();

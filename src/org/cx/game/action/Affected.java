@@ -31,7 +31,8 @@ public class Affected extends Action implements IAffected {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Affected,map);
 		super.notifyObservers(info); 
 		
-		magic.affect(getOwner());
+		if(magic.isTrigger(objects))
+			magic.affect(getOwner());
 	}
 	
 	@Override

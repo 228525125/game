@@ -61,13 +61,6 @@ public class QueryCommand extends InteriorCommand {
 				throw new CommandValidatorException(getErrors().getMessage());
 			
 			MagicCard magic = (MagicCard) buffer.getCard();
-			doValidator(new NeedConjurerValidator(magic, buffer));
-			if(hasError())
-				throw new CommandValidatorException(getErrors().getMessage());
-			
-			if(magic.needConjurer())
-				magic.setConjurer((LifeCard) buffer.lastCard());
-			
 			positionList = ground.queryRange(magic, map.get(parameter));
 		}
 	

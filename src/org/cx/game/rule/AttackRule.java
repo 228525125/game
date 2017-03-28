@@ -39,11 +39,6 @@ public class AttackRule implements IRule {
 				Integer distance = ground.easyDistance(attacked.getContainerPosition(), getOwner().getOwner().getContainerPosition());
 				if(IDeath.Status_Live == attacked.getDeath().getStatus()
 				&& 1==distance){                                           //近身
-					
-					List<IBuff> buffList = getOwner().getOwner().getNexusBuff(AttackLockBuff.class);
-					for(IBuff buff : buffList)
-						buff.invalid();
-					
 					new AttackLockBuff(getOwner().getOwner(),attacked).effect();
 					
 					this.clone.setMode(IAttack.Mode_Near);             //如果是远程，这里要设置为近身攻击模式

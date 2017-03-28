@@ -19,6 +19,13 @@ public interface IMagic extends ITag {
 	public Object getOwner();
 	
 	/**
+	 * 是否启动法术效果
+	 * @param args 效果作用单位
+	 * @return
+	 */
+	public Boolean isTrigger(Object[] args);
+	
+	/**
 	 * 影响，发挥作用，尽量把法术的逻辑写在这个方法里面，因为Affected会直接调用这个方法,
 	 * 如果是buff，根据需要来写，例如中毒，每回合都会发生影响的，就要把效果写在这个方法
 	 * 里面

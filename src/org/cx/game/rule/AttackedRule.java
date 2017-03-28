@@ -6,6 +6,7 @@ import java.util.Observable;
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IAttacked;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.buff.TauntBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IWeapon;
@@ -31,7 +32,8 @@ public class AttackedRule implements IRule {
 				LifeCard attacked = (LifeCard) bean.get("attacked");
 				IAttack att = (IAttack) bean.get("ruleParam");
 			
-				if(getOwner().getFightBack() && !att.getCounterAttack() && 0<getOwner().getOwner().getAttack().getAtk()){
+				if(getOwner().getFightBack() && !att.getCounterAttack() && 0<getOwner().getOwner().getAttack().getAtk() 
+				&& getOwner().getOwner().getBuff(TauntBuff.class).isEmpty()){        //没有被嘲讽
 					try {
 						attacked.getAttack().setCounterAttack(true);      //设置为反击
 						attacked.attack(attack);

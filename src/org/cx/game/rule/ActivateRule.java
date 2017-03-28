@@ -35,8 +35,9 @@ public class ActivateRule implements IRule {
 					owner.getMove().setMoveable(true);
 					owner.getAttacked().setFightBack(true);
 					List<IBuff> buffs = getOwner().getOwner().getNexusBuff(AttackLockBuff.class);  //清除锁定对象
-					for(IBuff buff : buffs)
-						owner.removeNexusBuff(buff);
+					for(IBuff buff : buffs){
+						buff.invalid();
+					}
 				}else{
 					owner.getMove().setMoveable(false);
 				}

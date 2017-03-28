@@ -1014,5 +1014,16 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated method stub
 		return Context.queryForCategory(category);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		if (obj instanceof LifeCard) {
+			LifeCard life = (LifeCard) obj;
+			return getPlayId().equals(life.getPlayId());
+		}else{
+			return false;
+		}		
+	}
 	
 }
