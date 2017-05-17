@@ -2,15 +2,15 @@ package org.cx.game.widget;
 
 import org.cx.game.core.IPlayer;
 
-public class Camp implements ICamp {
+public class Building implements IBuilding {
 
-	private Integer position = 0;
 	private IPlace place = null;
 	private IPlayer player = null;
+	private Integer type = 0;
 	
-	public Camp(Integer position) {
+	public Building(Integer type) {
 		// TODO Auto-generated constructor stub
-		this.position = position;
+		this.type = type;
 	}
 	
 	@Override
@@ -24,18 +24,23 @@ public class Camp implements ICamp {
 		// TODO Auto-generated method stub
 		this.place = place;
 	}
-	
-	public IPlayer getCampPlayer() {
-		return player;
+
+	@Override
+	public IPlayer getBuildingPlayer() {
+		// TODO Auto-generated method stub
+		return this.player;
 	}
-	
-	public void setCampPlayer(IPlayer player){
+
+	@Override
+	public void setBuildingPlayer(IPlayer player) {
+		// TODO Auto-generated method stub
 		this.player = player;
 	}
 
 	@Override
-	public Integer getPosition() {
+	public Integer getType() {
 		// TODO Auto-generated method stub
-		return position;
+		return this.type;
 	}
+
 }

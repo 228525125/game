@@ -26,7 +26,7 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		 */
 		for(int i=1;i<ground.getXBorder()+1;i++){
 			for(int j=1;j<ground.getYBorder()+1;j++){
-				Integer curPos = Integer.valueOf(""+i+Ground.space+j);
+				Integer curPos = Integer.valueOf(""+i+IGround.space+j);
 				IPlace place = new Place(this, curPos);
 				ground.addPlace(new PlaceDecorator(place));
 			}
@@ -35,8 +35,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		/*
 		 * getPlace 需要初始化 Place
 		 */
-		for(ICamp camp : ground.getCampList())
-			camp.setOwner(getPlace(camp.getPosition()));
+		for(ITown town : ground.getTownList()){
+			IPlace place = getPlace(town.getPosition());
+			town.setOwner(place);
+			place.setBuilding(town);
+		}
 		
 		for(IStrongHold strongHold : ground.getStrongHoldList())
 			strongHold.setGround(this);
@@ -88,15 +91,21 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public void addCamp(ICamp camp) {
+	public void addTown(ITown town) {
 		// TODO Auto-generated method stub
-		ground.addCamp(camp);
+		ground.addTown(town);
 	}
 
 	@Override
-	public Integer getCampPosition(IPlayer player) {
+	public List<Integer> getTownPosition(IPlayer player) {
 		// TODO Auto-generated method stub
-		return ground.getCampPosition(player);
+		return ground.getTownPosition(player);
+	}
+	
+	@Override
+	public List<Integer> getTownPosition(IPlayer player, Integer level) {
+		// TODO Auto-generated method stub
+		return ground.getTownPosition(player, level);
 	}
 
 	@Override
@@ -147,43 +156,17 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		return ground.easyRoute(start, stop);
 	}
-
-	@Override
-	public List<Integer> easyAreaForDistanceDiagonal(Integer position,
-			Integer step, Integer type) {
-		// TODO Auto-generated method stub
-		return ground.easyAreaForDistanceDiagonal(position, step, type);
-	}
-
-	@Override
-	public Integer easyDistanceDiagonal(Integer start, Integer stop) {
-		// TODO Auto-generated method stub
-		return ground.easyDistanceDiagonal(start, stop);
-	}
-
-	@Override
-	public List<Integer> arc(Integer attack, Integer defend,
-			Integer range) {
-		// TODO Auto-generated method stub
-		return ground.arc(attack, defend, range);
-	}
 	
 	@Override
-	public Integer queryDirection(Integer stand, Integer target) {
+	public Integer getDirection(Integer stand, Integer target) {
 		// TODO Auto-generated method stub
-		return ground.queryDirection(stand, target);
+		return ground.getDirection(stand, target);
 	}
 
 	@Override
 	public List<Integer> twoFlanks(Integer stand, Integer target) {
 		// TODO Auto-generated method stub
 		return ground.twoFlanks(stand, target);
-	}
-
-	@Override
-	public List<Integer> line(Integer stand, Integer orientation, Integer range) {
-		// TODO Auto-generated method stub
-		return ground.line(stand, orientation, range);
 	}
 
 	@Override
@@ -199,12 +182,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 	
 	@Override
-	public void setPlayerToCamp(Integer campIndex, IPlayer player) {
-		// TODO Auto-generated method stub
-		ground.setPlayerToCamp(campIndex, player);
-	}
-	
-	@Override
 	public List<IStrongHold> getStrongHoldList() {
 		// TODO Auto-generated method stub
 		return ground.getStrongHoldList();
@@ -217,21 +194,15 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public Integer easyOuDistance(Integer start, Integer stop) {
+	public List<ITown> getTownList() {
 		// TODO Auto-generated method stub
-		return ground.easyOuDistance(start, stop);
-	}
-
-	@Override
-	public List<ICamp> getCampList() {
-		// TODO Auto-generated method stub
-		return ground.getCampList();
+		return ground.getTownList();
 	}
 	
 	@Override
-	public Integer getRandomEntry(LifeCard life) {
+	public Integer getRandomEntry(ITown town, LifeCard life) {
 		// TODO Auto-generated method stub
-		return ground.getRandomEntry(life);
+		return ground.getRandomEntry(town, life);
 	}
 	
 	@Override
@@ -253,12 +224,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public List<Integer> queryLineDistance(Integer stand, Integer target) {
-		// TODO Auto-generated method stub
-		return ground.queryLineDistance(stand, target);
-	}
-	
-	@Override
 	public List<LifeCard> list(IPlayer player) {
 		// TODO Auto-generated method stub
 		return ground.list(player);
@@ -268,5 +233,23 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<LifeCard> list(Integer stand, Integer step, Integer type) {
 		// TODO Auto-generated method stub
 		return ground.list(stand, step, type);
+	}
+
+	@Override
+	public Integer getPosition(Integer stand, Integer direction) {
+		// TODO Auto-generated method stub
+		return ground.getPosition(stand, direction);
+	}
+
+	@Override
+	public Integer getMainTownPosition(IPlayer player) {
+		// TODO Auto-generated method stub
+		return ground.getMainTownPosition(player);
+	}
+
+	@Override
+	public void setPlayerToTown(Integer townID, IPlayer player) {
+		// TODO Auto-generated method stub
+		ground.setPlayerToTown(townID, player);
 	}
 }

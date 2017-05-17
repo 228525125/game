@@ -18,6 +18,8 @@ import org.cx.game.core.IPlayer;
  */
 public interface IGround extends IContainer{
 	
+	public static String space = "8008";                               //位置坐标间隔符
+	
 	public LifeCard getCard(Integer position);
 	
 	/**
@@ -35,22 +37,6 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public Integer easyDistance(Integer start, Integer stop);
-	
-	/**
-	 * 欧氏距离算法，即允许走斜线，不考虑障碍物
-	 * @param start
-	 * @param stop
-	 * @return
-	 */
-	public Integer easyOuDistance(Integer start, Integer stop);
-	
-	/**
-	 * 两个坐标之间的最短距离，不考虑障碍物，并且允许斜线方向计算
-	 * @param start
-	 * @param stop
-	 * @return
-	 */
-	public Integer easyDistanceDiagonal(Integer start, Integer stop);
 	
 	public static final Integer Equal = 0;
 	public static final Integer Contain = 1;
@@ -76,15 +62,6 @@ public interface IGround extends IContainer{
 	public List<Integer> easyAreaForDistance(Integer position, Integer step, Integer type);
 	
 	/**
-	 * 获取指定距离的区域，不考虑障碍物，并且允许斜线方向计算
-	 * @param position
-	 * @param step
-	 * @param type
-	 * @return
-	 */
-	public List<Integer> easyAreaForDistanceDiagonal(Integer position, Integer step, Integer type);
-	
-	/**
 	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
 	 * @param start
 	 * @param stop
@@ -108,19 +85,34 @@ public interface IGround extends IContainer{
 	public IPlace getPlace(Integer position);
 	
 	/**
-	 * 获取营地的坐标
+	 * 获取城镇的坐标
 	 * @return
 	 */
-	public Integer getCampPosition(IPlayer player);
+	public List<Integer> getTownPosition(IPlayer player);
 	
 	/**
-	 * 获得一个随机的入口
+	 * 获取城镇的坐标
+	 * @param player 玩家
+	 * @param level 大于等于这个等级
 	 * @return
 	 */
-	public Integer getRandomEntry(LifeCard life);
+	public List<Integer> getTownPosition(IPlayer player, Integer level);
 	
 	/**
-	 * 获取入口位置
+	 * 获取主城镇的坐标
+	 * @param player 玩家 
+	 * @return
+	 */
+	public Integer getMainTownPosition(IPlayer player);
+	
+	/**
+	 * 获得一个随机的入口 （改）
+	 * @return
+	 */
+	public Integer getRandomEntry(ITown town, LifeCard life);
+	
+	/**
+	 * 获取入口位置 （改）
 	 * @return
 	 */
 	public List<Integer> getEntryList(LifeCard life);
@@ -135,14 +127,21 @@ public interface IGround extends IContainer{
 	 * 获取营地
 	 * @return
 	 */
-	public List<ICamp> getCampList();
+	public List<ITown> getTownList();
 	
 	/**
-	 * 增加一个营地
+	 * 增加一个城镇
 	 * @param position
-	 * @param camp
+	 * @param town
 	 */
-	public void addCamp(ICamp camp);
+	public void addTown(ITown town);
+	
+	/**
+	 * 指定一个玩家的主城
+	 * @param townID 主城ID
+	 * @param player 玩家
+	 */
+	public void setPlayerToTown(Integer townID, IPlayer player);
 	
 	/**
 	 * 在地图上增加一块区域（地图是由若干区域组成）
@@ -158,13 +157,6 @@ public interface IGround extends IContainer{
 	 * 以JSON格式，把map信息发送给前台
 	 */
 	public void loadMap();
-	
-	/**
-	 * 玩家选择营地
-	 * @param campIndex
-	 * @param player
-	 */
-	public void setPlayerToCamp(Integer campIndex, IPlayer player);
 	
 	/**
 	 * 据点
@@ -205,19 +197,15 @@ public interface IGround extends IContainer{
 	 */
 	public List<Integer> move(LifeCard life, Integer position, Integer type);
 	
-	/**
-	 * 查询stand相对于target站位的阴影部分
-	 * @param stand
-	 * @param target
-	 * @param range 范围
-	 * @return
-	 */
-	public List<Integer> arc(Integer stand, Integer direction, Integer range);
-	
 	public static final Integer Relative_Top = 0;
-	public static final Integer Relative_Left = 1;
-	public static final Integer Relative_Bottom = 2;
+	public static final Integer Relative_LeftTop = 10;
+	public static final Integer Relative_Left = 9;
+	public static final Integer Relative_LeftBottom = 8;
+	public static final Integer Relative_Bottom = 6;
+	public static final Integer Relative_RightTop = 2;
 	public static final Integer Relative_Right = 3;
+	public static final Integer Relative_RightBottom = 4;
+	
 	
 	/**
 	 * 相对与目标位置，是上下左右其中一种，stand与target位置必须是相邻的
@@ -225,7 +213,15 @@ public interface IGround extends IContainer{
 	 * @param target 目标位置
 	 * @return
 	 */
-	public Integer queryDirection(Integer stand, Integer target);
+	public Integer getDirection(Integer stand, Integer target);
+	
+	/**
+	 * 根据方向查询相邻位置
+	 * @param stand 站位
+	 * @param Direction 方向
+	 * @return
+	 */
+	public Integer getPosition(Integer stand, Integer direction);
 	
 	/**
 	 * 两侧的位置，stand与target位置必须是相邻的
@@ -234,23 +230,6 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<Integer> twoFlanks(Integer stand, Integer direction); 
-	
-	/**
-	 * 以stand为基点，获取direction方向上的一条直线（不包含站位）
-	 * @param stand 站位
-	 * @param direction 方向
-	 * @return
-	 */
-	public List<Integer> line(Integer stand, Integer direction, Integer range);
-	
-	/**
-	 * 查询两点的直线距离，stand与target是不同的位置，
-	 * @param stand 站位
-	 * @param target 目标位置
-	 * @return 如果两点不在直线上，则list.isEmpty()为true，否则返回直线上的点的集合，
-	 * 例如1，1 - 1，4 = [1，2；1，3；1，4]；
-	 */
-	public List<Integer> queryLineDistance(Integer stand, Integer target);
 	
 	/**
 	 * 获取某玩家战场上所有生物

@@ -75,8 +75,8 @@ public class StartState extends PlayState {
 		 */
 		
 		IGround ground = player1.getGround();
-		IPlace place1 = ground.getPlace(ground.getCampPosition(player1));
-		IPlace place2 = ground.getPlace(ground.getCampPosition(player2));
+		IPlace place1 = ground.getPlace(ground.getMainTownPosition(player1));
+		IPlace place2 = ground.getPlace(ground.getMainTownPosition(player2));
 		try {
 			hero1.call(place1);
 			hero2.call(place2);

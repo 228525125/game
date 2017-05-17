@@ -29,21 +29,22 @@ import org.cx.game.tools.Util;
 
 public class Ground extends Container implements IGround
 {
-	private Integer xBorder = 15;                                       //边界x轴长度
-	private Integer yBorder = 15;                                       //边界y轴长度
+	private Integer xBorder = 0;                                       //边界x轴长度
+	private Integer yBorder = 0;                                       //边界y轴长度
 	private String imagePath = "";                                      //背景图片
-	public static String space = "1001";                               //位置坐标间隔符
+	
 	private Map<Integer,IPlace> ground = new HashMap<Integer,IPlace>();
-	private List<ICamp> campList = new ArrayList<ICamp>();              //营地
+	private List<ITown> townList = new ArrayList<ITown>();              //营地
 	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格
 	private List<IStrongHold> strongHoldList = new ArrayList<IStrongHold>();           //据点
-	private int [][] MAP = new int[xBorder+2][yBorder+2];               //用于查询路线
+	private int [][] MAP = null;               //用于查询路线
 	private int[] hit = new int []{1};                                  //1表示障碍物
 
 	public Ground(Integer xBorder, Integer yBorder, String imagePath) {
 		// TODO Auto-generated constructor stub
 		this.xBorder = xBorder;
 		this.yBorder = yBorder;
+		this.MAP = new int[xBorder+2][yBorder+2];
 		this.imagePath = imagePath;
 		
 		addObserver(new JsonOut());
@@ -106,13 +107,24 @@ public class Ground extends Container implements IGround
 		return Math.abs(starts[0]-stops[0])+Math.abs(starts[1]-stops[1]); 
 	}
 	
+	/**
+	 * 欧氏距离算法，即允许走斜线，不考虑障碍物
+	 * @param start
+	 * @param stop
+	 * @return
+	 */
 	public Integer easyOuDistance(Integer start, Integer stop){
 		Integer [] starts = integerToPoint(start);
 		Integer [] stops = integerToPoint(stop);
 		return Util.convertInteger(Math.sqrt(Math.pow(starts[0].doubleValue()-stops[0].doubleValue(),2)+Math.pow(starts[1].doubleValue()-stops[1].doubleValue(),2)));
 	}	
 	
-	@Override
+	/**
+	 * 两个坐标之间的最短距离，不考虑障碍物，并且允许斜线方向计算 （只适用于四边形）
+	 * @param start
+	 * @param stop
+	 * @return
+	 */
 	public Integer easyDistanceDiagonal(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
 		Integer [] starts = integerToPoint(start);
@@ -154,7 +166,13 @@ public class Ground extends Container implements IGround
 		return list;
 	}
 	
-	@Override
+	/**
+	 * 获取指定距离的区域，不考虑障碍物，并且允许斜线方向计算 （只适用于四边形）
+	 * @param position
+	 * @param step
+	 * @param type
+	 * @return
+	 */
 	public List<Integer> easyAreaForDistanceDiagonal(Integer position,
 			Integer step, Integer type) {
 		// TODO Auto-generated method stub
@@ -219,18 +237,12 @@ public class Ground extends Container implements IGround
 		return ground.get(position);
 	}
 
-	public List<ICamp> getCampList() {
-		return campList;
+	public List<ITown> getTownList() {
+		return townList;
 	}
 
-	public void setCampList(List<ICamp> campList) {
-		this.campList = campList;
-	}
-	
-	@Override
-	public void setPlayerToCamp(Integer campIndex, IPlayer player) {
-		// TODO Auto-generated method stub
-		campList.get(campIndex).setCampPlayer(player);
+	public void setTownList(List<ITown> townList) {
+		this.townList = townList;
 	}
 
 	public List<Integer> getDisableList() {
@@ -250,30 +262,30 @@ public class Ground extends Container implements IGround
 	}
 
 	@Override
-	public Integer getCampPosition(IPlayer player) {
+	public List<Integer> getTownPosition(IPlayer player) {
 		// TODO Auto-generated method stub
-		for(ICamp camp : campList){
-			if(camp.getCampPlayer().equals(player))
-				return camp.getPosition();
+		List<Integer> list = new ArrayList<Integer>();
+		for(ITown town : townList){
+			if(town.getBuildingPlayer().equals(player))
+				list.add(town.getPosition());
 		}
 		
-		return null;
+		return list;
 	}
 	
 	@Override
-	public Integer getRandomEntry(LifeCard life) {
+	public Integer getRandomEntry(ITown town, LifeCard life) {
 		// TODO Auto-generated method stub
-		IPlayer player = life.getPlayer();
 		List<Integer> list = new ArrayList<Integer>();
 
-		LifeCard hero = player.getHeroCard();
-		list.addAll(areaForDistance(hero.getContainerPosition(), 3, IGround.Contain));
+		list.addAll(areaForDistance(town.getPosition(), 1, IGround.Contain));
+		
 		if(list.isEmpty())
 			return null;
 		else{
 			Random r = new Random();
 			return list.get(r.nextInt(list.size()-1));
-		}
+		}	
 	}
 	
 	@Override
@@ -281,20 +293,21 @@ public class Ground extends Container implements IGround
 		// TODO Auto-generated method stub
 		IPlayer player = life.getPlayer();
 		List<Integer> list = new ArrayList<Integer>();
-		if(life.getHero()){
-			list.add(getCampPosition(player));
-		}else{
-			LifeCard hero = player.getHeroCard();
-			list.addAll(areaForDistance(hero.getContainerPosition(), 3, IGround.Contain));
+		
+		for(Integer position : getTownPosition(player, life.getStar())){
+			list.addAll(areaForDistance(position, 1, IGround.Contain));
 		}
+	
+		LifeCard hero = player.getHeroCard();
+		list.addAll(areaForDistance(hero.getContainerPosition(), 1, IGround.Contain));
 		
 		return list;
 	}
 	
 	@Override
-	public void addCamp(ICamp camp) {
+	public void addTown(ITown town) {
 		// TODO Auto-generated method stub
-		campList.add(camp);
+		townList.add(town);
 	}
 	
 	@Override
@@ -400,7 +413,7 @@ public class Ground extends Container implements IGround
 		map.put("xBorder", xBorder);
 		map.put("yBorder", yBorder);
 		map.put("imagePath", imagePath);
-		map.put("campList", campList);
+		map.put("townList", townList);
 		map.put("disableList", disableList);
 		//map.put("strongHoldList", strongHoldList);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,map);
@@ -574,60 +587,6 @@ public class Ground extends Container implements IGround
 		}
 		return list;
 	}
-
-	@Override
-	public List<Integer> arc(Integer stand, Integer direction, Integer range) {
-		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
-		Integer [] as = integerToPoint(stand);
-		Integer defend = line(stand, direction, 1).get(0);		
-		Integer [] ds = integerToPoint(defend);
-		Integer x = ds[0];
-		Integer y = ds[1];
-		
-		if(as[0]>ds[0]){               //当atk站在def的下面
-			for(int i=1;i<=range;i++){
-				Integer lefttop = Integer.valueOf((x-i)+space+(y-i));  //左上
-				if(!isOver(lefttop))
-					list.add(lefttop);
-				Integer righttop = Integer.valueOf((x-i)+space+(y+i));  //右上
-				if(!isOver(righttop))
-					list.add(righttop);
-				if(isOver(lefttop)&&isOver(righttop))
-					continue;
-				list.addAll(queryShade_1(lefttop, righttop));          //左上 和 右上 两个点中间的位置
-			}
-		}else if(as[0]<ds[0]){         //当atk站在def的上面
-			for(int i=1;i<=range;i++){
-				
-				Integer lefttop = Integer.valueOf((x+i)+space+(y-i));
-				list.add(lefttop);
-				Integer righttop = Integer.valueOf((x+i)+space+(y+i));
-				list.add(righttop);
-				list.addAll(queryShade_1(lefttop, righttop));
-			}
-		}
-		
-		if(as[1]>ds[1]){              //当atk站在def的右面
-			for(int i=1;i<=range;i++){
-				Integer lefttop = Integer.valueOf((x+i)+space+(y-i));
-				list.add(lefttop);
-				Integer righttop = Integer.valueOf((x-i)+space+(y-i));
-				list.add(righttop);
-				list.addAll(queryShade_1(lefttop, righttop));
-			}
-		}else if(as[1]<ds[1]){        //当atk站在def的左面
-			for(int i=1;i<=range;i++){
-				Integer lefttop = Integer.valueOf((x+i)+space+(y+i));
-				list.add(lefttop);
-				Integer righttop = Integer.valueOf((x-i)+space+(y+i));
-				list.add(righttop);
-				list.addAll(queryShade_1(lefttop, righttop));
-			}
-		}
-		
-		return list;
-	}
 	
 	/**
 	 * 判断是否超出边界
@@ -689,7 +648,7 @@ public class Ground extends Container implements IGround
 	}
 	
 	@Override
-	public Integer queryDirection(Integer stand, Integer target) {
+	public Integer getDirection(Integer stand, Integer target) {
 		// TODO Auto-generated method stub
 		Integer [] p1 = integerToPoint(stand);
 		Integer [] p2 = integerToPoint(target);
@@ -715,7 +674,7 @@ public class Ground extends Container implements IGround
 		List<Integer> list = new ArrayList<Integer>();
 		Integer target = line(stand, direction, 1).get(0);
 		Integer [] p2 = integerToPoint(target);
-		if(IGround.Relative_Top==queryDirection(stand, target) || IGround.Relative_Bottom==queryDirection(stand, target)){
+		if(IGround.Relative_Top==getDirection(stand, target) || IGround.Relative_Bottom==getDirection(stand, target)){
 			Integer position = pointToInteger(p2[0]-1,p2[1]);
 			if(!isOver(position))
 				list.add(position);
@@ -725,7 +684,7 @@ public class Ground extends Container implements IGround
 				list.add(position);
 		}
 		
-		if(IGround.Relative_Left==queryDirection(stand, target) || IGround.Relative_Right==queryDirection(stand, target)){
+		if(IGround.Relative_Left==getDirection(stand, target) || IGround.Relative_Right==getDirection(stand, target)){
 			Integer position = pointToInteger(p2[0], p2[1]-1);
 			if(!isOver(position))
 				list.add(position);
@@ -738,7 +697,12 @@ public class Ground extends Container implements IGround
 		return list;
 	}
 	
-	@Override
+	/**
+	 * 以stand为基点，获取direction方向上的一条直线（不包含站位）
+	 * @param stand 站位
+	 * @param direction 方向
+	 * @return
+	 */
 	public List<Integer> line(Integer stand, Integer direction,
 			Integer range) {
 		// TODO Auto-generated method stub
@@ -779,7 +743,13 @@ public class Ground extends Container implements IGround
 		return list;
 	}
 	
-	@Override
+	/**
+	 * 查询两点的直线距离，stand与target是不同的位置 （只适用于四边形）
+	 * @param stand 站位
+	 * @param target 目标位置
+	 * @return 如果两点不在直线上，则list.isEmpty()为true，否则返回直线上的点的集合，
+	 * 例如1，1 - 1，4 = [1，2；1，3；1，4]；
+	 */
 	public List<Integer> queryLineDistance(Integer stand, Integer target) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
@@ -843,6 +813,33 @@ public class Ground extends Container implements IGround
 		System.out.println(Math.abs(x1-x2)+Math.abs(y1-y2)) ;*/
 		Random r = new Random();
 		System.out.println(r.nextInt(10));
+		
+		IGround ground = new Ground(21,13,null);
+		System.out.println(ground);
+	}
+
+	@Override
+	public Integer getPosition(Integer stand, Integer direction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Integer> getTownPosition(IPlayer player, Integer level) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMainTownPosition(IPlayer player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlayerToTown(Integer townID, IPlayer player) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

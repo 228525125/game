@@ -145,4 +145,16 @@ public class PlaceDecorator implements IPlace {
 		original.setDisable(disable);
 	}
 
+	@Override
+	public IBuilding getBuilding() {
+		// TODO Auto-generated method stub
+		return original.getBuilding();
+	}
+
+	@Override
+	public void setBuilding(IBuilding building) {
+		// TODO Auto-generated method stub
+		original.setBuilding(building);
+	}
+
 }

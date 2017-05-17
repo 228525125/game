@@ -24,7 +24,7 @@ public class Place extends Observable implements IPlace {
 	private LifeCard life = null;
 	private Integer position = 0;
 	private IGround ground = null;
-	private ICamp camp = null;
+	private IBuilding building  = null;
 	private Boolean disable = false;
 	
 	public Place(IGround ground,Integer position) {
@@ -150,5 +150,17 @@ public class Place extends Observable implements IPlace {
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg0);
+	}
+
+	@Override
+	public IBuilding getBuilding() {
+		// TODO Auto-generated method stub
+		return this.building;
+	}
+
+	@Override
+	public void setBuilding(IBuilding building) {
+		// TODO Auto-generated method stub
+		this.building = building;
 	}
 }

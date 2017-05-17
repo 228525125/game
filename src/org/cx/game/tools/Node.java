@@ -26,9 +26,7 @@ public class Node implements Comparable {
 
 	// get the cost of the Path
 	public int GetCost(Node node) {
-		int m = node._Pos.x - _Pos.x;
-		int n = node._Pos.y - _Pos.y;
-		return (int) Math.sqrt(m * m + n * n);
+		return CellularDistrict.getShortPathLength(CellularDistrict.pointToInteger(this._Pos.x, this._Pos.y), CellularDistrict.pointToInteger(node._Pos.x, node._Pos.y));
 	}
 
 	// check if the node is the destination point
@@ -56,10 +54,22 @@ public class Node implements Comparable {
 		LinkedList limit = new LinkedList();
 		int x = _Pos.x;
 		int y = _Pos.y;
-		limit.add(new Node(new Point(x, y - 1))); // up
-		limit.add(new Node(new Point(x, y + 1))); // down
-		limit.add(new Node(new Point(x - 1, y))); // left
-		limit.add(new Node(new Point(x + 1, y))); // right
+		if(y%2==0){
+			limit.add(new Node(new Point(x - 1, y - 1))); // leftup
+			limit.add(new Node(new Point(x - 1, y + 1))); // leftdown
+			limit.add(new Node(new Point(x - 1, y))); // left
+			limit.add(new Node(new Point(x , y - 1))); // rightup
+			limit.add(new Node(new Point(x , y + 1))); // rightdown
+			limit.add(new Node(new Point(x + 1, y))); // right
+		}else{
+			limit.add(new Node(new Point(x, y - 1))); // leftup
+			limit.add(new Node(new Point(x, y + 1))); // leftdown
+			limit.add(new Node(new Point(x - 1, y))); // left
+			limit.add(new Node(new Point(x + 1, y - 1))); // rightup
+			limit.add(new Node(new Point(x + 1, y + 1))); // rightdown
+			limit.add(new Node(new Point(x + 1, y))); // right
+		}
+		
 		return limit;
 	}
 }

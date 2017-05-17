@@ -47,4 +47,12 @@ public interface IPlace extends IInterceptable, Observable{
 	public Boolean isDisable();
 	
 	public void setDisable(Boolean disable);
+	
+	/**
+	 * 建筑物
+	 * @return 
+	 */
+	public IBuilding getBuilding();
+	
+	public void setBuilding(IBuilding building);
 }

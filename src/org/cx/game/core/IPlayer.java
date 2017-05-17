@@ -6,7 +6,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.policy.IPlayerPolicy;
-import org.cx.game.widget.ICamp;
+import org.cx.game.widget.ITown;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.ICemetery;
 import org.cx.game.widget.IGround;
