@@ -1,11 +1,13 @@
 package org.cx.game.widget;
 
+import org.cx.game.core.IPlayer;
+
 public class Town extends Building implements ITown {
 
 	private Integer position = 0;
 	private Integer level = 1;
 	private Boolean main = false; 
-	
+	private IPlayer player = null;
 	
 	public Town(Integer position, Boolean main) {
 		// TODO Auto-generated constructor stub
@@ -36,6 +38,18 @@ public class Town extends Building implements ITown {
 	public Boolean isMain() {
 		// TODO Auto-generated method stub
 		return this.main;
+	}
+	
+	@Override
+	public IPlayer getOccupier() {
+		// TODO Auto-generated method stub
+		return this.player;
+	}
+
+	@Override
+	public void setOccupier(IPlayer player) {
+		// TODO Auto-generated method stub
+		this.player = player;
 	}
 	
 }

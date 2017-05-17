@@ -248,8 +248,8 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public void setPlayerToTown(Integer townID, IPlayer player) {
+	public void captureTown(Integer townID, IPlayer player) {
 		// TODO Auto-generated method stub
-		ground.setPlayerToTown(townID, player);
+		ground.captureTown(townID, player);
 	}
 }

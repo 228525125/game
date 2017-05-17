@@ -137,11 +137,11 @@ public interface IGround extends IContainer{
 	public void addTown(ITown town);
 	
 	/**
-	 * 指定一个玩家的主城
-	 * @param townID 主城ID
+	 * 占领城镇
+	 * @param townPos 主城位置
 	 * @param player 玩家
 	 */
-	public void setPlayerToTown(Integer townID, IPlayer player);
+	public void captureTown(Integer townPos, IPlayer player);
 	
 	/**
 	 * 在地图上增加一块区域（地图是由若干区域组成）

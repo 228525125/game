@@ -1,5 +1,7 @@
 package org.cx.game.widget;
 
+import org.cx.game.core.IPlayer;
+
 
 /**
  * 城镇
@@ -27,4 +29,12 @@ public interface ITown extends IBuilding{
 	 * @return
 	 */
 	public Boolean isMain();
+	
+	/**
+	 * 占领者
+	 * @return
+	 */
+	public IPlayer getOccupier();
+	
+	public void setOccupier(IPlayer player);
 }

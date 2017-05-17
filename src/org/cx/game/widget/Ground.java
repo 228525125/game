@@ -266,7 +266,7 @@ public class Ground extends Container implements IGround
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
 		for(ITown town : townList){
-			if(town.getBuildingPlayer().equals(player))
+			if(town.getOccupier().equals(player))
 				list.add(town.getPosition());
 		}
 		
@@ -837,7 +837,7 @@ public class Ground extends Container implements IGround
 	}
 
 	@Override
-	public void setPlayerToTown(Integer townID, IPlayer player) {
+	public void captureTown(Integer townID, IPlayer player) {
 		// TODO Auto-generated method stub
 		
 	}
