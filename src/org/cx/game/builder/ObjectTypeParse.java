@@ -96,10 +96,14 @@ public class ObjectTypeParse implements IParse {
 				BasicTypeBuilder btb = new BasicTypeBuilder();
 				new BasicTypeParse(btb).parse(el);
 				propertyValue = btb.builder();
-			}else if(null!=el.attribute("collection")){    //集合
+			}else if(null!=el.attribute("collection")){    //Collection
 				CollectionTypeBuilder ctb = new CollectionTypeBuilder();
 				new CollectionTypeParse(ctb).parse(el);
 				propertyValue = ctb.builder();
+			}else if(null!=el.attribute("map")){    //Map
+				MapTypeBuilder mtb = new MapTypeBuilder();
+				new MapTypeParse(mtb).parse(el);
+				propertyValue = mtb.builder();
 			}else {                                        //对象
 				ObjectTypeBuilder otb = new ObjectTypeBuilder();
 				new ObjectTypeParse(otb).parse(el);

@@ -11,6 +11,9 @@ import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.out.JsonOut;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.Town;
 
 public class GroundDecorator extends ContainerDecorator implements IGround {
 	
@@ -35,10 +38,14 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		/*
 		 * getPlace 需要初始化 Place
 		 */
-		for(ITown town : ground.getTownList()){
-			IPlace place = getPlace(town.getPosition());
-			town.setOwner(place);
-			place.setBuilding(town);
+		for(IBuilding building : ground.getBuildingList()){
+			IPlace place = getPlace(building.getPosition());
+			building.setOwner(place);
+			place.setBuilding(building);
+			
+			for(IOption option : building.getOptions()){
+				option.setOwner(building);
+			}
 		}
 		
 		for(IStrongHold strongHold : ground.getStrongHoldList())
@@ -91,15 +98,15 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public void addTown(ITown town) {
+	public void addBuilding(IBuilding building) {
 		// TODO Auto-generated method stub
-		ground.addTown(town);
+		ground.addBuilding(building);
 	}
 
 	@Override
-	public List<Integer> getTownPosition(IPlayer player) {
+	public List<Integer> getBuildingPosition(IPlayer player) {
 		// TODO Auto-generated method stub
-		return ground.getTownPosition(player);
+		return ground.getBuildingPosition(player);
 	}
 	
 	@Override
@@ -124,6 +131,12 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<Integer> queryRange(MagicCard magic, String action) {
 		// TODO Auto-generated method stub
 		return ground.queryRange(magic, action);
+	}
+	
+	@Override
+	public List<Integer> queryRange(IOption option, String action) {
+		// TODO Auto-generated method stub
+		return ground.queryRange(option, action);
 	}
 	
 	@Override
@@ -194,13 +207,13 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public List<ITown> getTownList() {
+	public List<IBuilding> getBuildingList() {
 		// TODO Auto-generated method stub
-		return ground.getTownList();
+		return ground.getBuildingList();
 	}
 	
 	@Override
-	public Integer getRandomEntry(ITown town, LifeCard life) {
+	public Integer getRandomEntry(Town town, LifeCard life) {
 		// TODO Auto-generated method stub
 		return ground.getRandomEntry(town, life);
 	}
@@ -248,8 +261,20 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public void captureTown(Integer townID, IPlayer player) {
+	public void captureBuilding(Integer townID, IPlayer player) {
 		// TODO Auto-generated method stub
-		ground.captureTown(townID, player);
+		ground.captureBuilding(townID, player);
+	}
+
+	@Override
+	public void setLandformMap(Map<Integer, Integer> landformMap) {
+		// TODO Auto-generated method stub
+		ground.setLandformMap(landformMap);
+	}
+
+	@Override
+	public Map<Integer, Integer> getLandformMap() {
+		// TODO Auto-generated method stub
+		return ground.getLandformMap();
 	}
 }

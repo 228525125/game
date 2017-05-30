@@ -15,6 +15,7 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.widget.building.IBuilding;
 
 public class Place extends Observable implements IPlace {
 
@@ -26,6 +27,7 @@ public class Place extends Observable implements IPlace {
 	private IGround ground = null;
 	private IBuilding building  = null;
 	private Boolean disable = false;
+	private Integer landform = IPlace.Landform_Sward;
 	
 	public Place(IGround ground,Integer position) {
 		// TODO Auto-generated constructor stub
@@ -103,7 +105,7 @@ public class Place extends Observable implements IPlace {
 	}
 
 	@Override
-	public Boolean isDisable() {
+	public Boolean getDisable() {
 		// TODO Auto-generated method stub
 		return this.disable;
 	}
@@ -112,6 +114,18 @@ public class Place extends Observable implements IPlace {
 	public void setDisable(Boolean disable) {
 		// TODO Auto-generated method stub
 		this.disable = disable;
+	}
+	
+	@Override
+	public Integer getLandform() {
+		// TODO Auto-generated method stub
+		return this.landform;
+	}
+	
+	@Override
+	public void setLandform(Integer langform) {
+		// TODO Auto-generated method stub
+		this.landform = langform;
 	}
 	
 	@Override

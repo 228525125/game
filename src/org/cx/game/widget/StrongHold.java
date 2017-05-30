@@ -67,7 +67,7 @@ public abstract class StrongHold implements IStrongHold {
 	protected IPlace getUsablePlace() {
 		for(Integer position : area){
 			IPlace place = ground.getPlace(position); 
-			if(!place.isDisable())
+			if(!place.getDisable())
 				return place;
 		}
 		return null;

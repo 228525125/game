@@ -7,6 +7,12 @@ import org.cx.game.tools.Util;
 import org.cx.game.validator.InteriorCommandParameterExpressionObjectTypeValidator;
 import org.dom4j.Element;
 
+/**
+ * 利用缓存（ParameterExpressionBuffer）解析参数表达式
+ * 原理：前面参数表达式验证时已经将通过验证的参数转换成了对象，并保存在缓存中，这里只需要从缓存取出即可
+ * @author chenxian
+ *
+ */
 public class InteriorCommandParameterBufferExpression extends
 		InteriorCommandParameterExpression {
 
@@ -50,6 +56,14 @@ public class InteriorCommandParameterBufferExpression extends
 			
 			if(CommandBuffer.PLACE.equals(item)){
 				ret = buffer.getPlace();
+			}
+			
+			if(CommandBuffer.BUILDING.equals(item)){
+				ret = buffer.getBuilding();
+			}
+			
+			if(CommandBuffer.OPTION.equals(item)){
+				ret = buffer.getOption();
 			}
 			
 			if(CommandBuffer.CEMETERY.equals(item)){

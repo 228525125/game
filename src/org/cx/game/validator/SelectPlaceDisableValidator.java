@@ -20,7 +20,7 @@ public class SelectPlaceDisableValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(place.isDisable().equals(disable))
+			if(place.getDisable().equals(disable))
 				ret = true;
 			else{
 				addMessage(I18n.getMessage(this));

@@ -58,6 +58,11 @@ public class CardFactory {
 		return null;
 	}
 	
+	public static ICard getInstance(Integer cid){
+		Element cardEl = getElement(cid);
+		return getInstance(cardEl);
+	}
+	
 	public static List<ICard> getInstances(List<Integer> cid){
 		List<ICard> list = new ArrayList<ICard>();
 		

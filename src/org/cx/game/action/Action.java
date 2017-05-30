@@ -18,7 +18,7 @@ import org.cx.game.validator.IValidator;
 public abstract class Action extends Observable implements IAction {
 
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	private ICard owner;
+	private Object owner;
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
@@ -38,12 +38,12 @@ public abstract class Action extends Observable implements IAction {
 	}
 	
 	@Override
-	public void setOwner(ICard card) {
+	public void setOwner(Object object) {
 		// TODO Auto-generated method stub
-		this.owner = card;
+		this.owner = object;
 	}
 	
-	public ICard getOwner() {
+	public Object getOwner() {
 		return owner;
 	}
 

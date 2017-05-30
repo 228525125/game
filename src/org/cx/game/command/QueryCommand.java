@@ -18,8 +18,8 @@ import org.cx.game.validator.NeedConjurerValidator;
 import org.cx.game.validator.QueryCommandValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
 import org.cx.game.validator.SelectMagicCardValidator;
-import org.cx.game.widget.Ground;
 import org.cx.game.widget.IGround;
+import org.cx.game.widget.building.IOption;
 
 public class QueryCommand extends InteriorCommand {
 
@@ -34,6 +34,7 @@ public class QueryCommand extends InteriorCommand {
 		map.put("conjure", NotifyInfo.Command_Query_Conjure);
 		map.put("swap", NotifyInfo.Command_Query_Swap);
 		map.put("apply", NotifyInfo.Command_Query_Apply);
+		map.put("execute", NotifyInfo.Command_Query_Execute);
 	}
 	
 	private List<Integer> positionList = new ArrayList<Integer>();
@@ -48,13 +49,16 @@ public class QueryCommand extends InteriorCommand {
 		
 		if("conjure".equals(parameter)){
 			positionList = ground.queryRange(buffer.getSkill(), map.get(parameter));
-		}else if("attack".equals(parameter) || "call".equals(parameter) || "move".equals(parameter)){
+		}else if("attack".equals(parameter) || "move".equals(parameter)){
 			doValidator(new SelectLifeCardValidator(buffer));
 			if(hasError())
 				throw new CommandValidatorException(getErrors().getMessage());
 			
 			LifeCard life = (LifeCard) buffer.getCard();           
 			positionList = ground.queryRange(life, map.get(parameter));   //这里需要计算
+		}else if("execute".equals(parameter)){
+			IOption option = buffer.getOption();
+			positionList = ground.queryRange(option, map.get(parameter));
 		}else if("apply".equals(parameter)){
 			doValidator(new SelectMagicCardValidator(buffer));
 			if(hasError())

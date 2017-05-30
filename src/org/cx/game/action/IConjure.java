@@ -1,5 +1,6 @@
 package org.cx.game.action;
 
+import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 
 /**
@@ -18,4 +19,7 @@ public interface IConjure extends IAction {
 	public Integer getPower();
 	
 	public void setPower(Integer power);
+	
+	@Override
+	public LifeCard getOwner();
 }

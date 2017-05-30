@@ -39,13 +39,13 @@ public abstract class ActionDecorator implements IAction {
 	}
 	
 	@Override
-	public void setOwner(ICard card) {
+	public void setOwner(Object object) {
 		// TODO Auto-generated method stub
-		this.original.setOwner(card);
+		this.original.setOwner(object);
 	}
 	
 	@Override
-	public ICard getOwner() {
+	public Object getOwner() {
 		// TODO Auto-generated method stub
 		return original.getOwner();
 	}

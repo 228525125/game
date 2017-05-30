@@ -5,6 +5,11 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.tools.I18n;
 
+/**
+ * 验证缓存中是否存在LifeCard
+ * @author chenxian
+ *
+ */
 public class SelectLifeCardValidator extends SelectCardValidator {
 	
 	private LifeCard life = null;

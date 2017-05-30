@@ -26,6 +26,9 @@ import org.cx.game.tools.CellularDistrict;
 import org.cx.game.tools.Node;
 import org.cx.game.tools.PathFinding;
 import org.cx.game.tools.Util;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.Town;
 
 public class HoneycombGround extends Container implements IGround {
 
@@ -34,10 +37,11 @@ public class HoneycombGround extends Container implements IGround {
 	private String imagePath = "";                                      //背景图片
 	
 	private Map<Integer,IPlace> ground = new HashMap<Integer,IPlace>();
-	private List<ITown> townList = new ArrayList<ITown>();                 //城镇
-	private Map<Integer, ITown> townMap = new HashMap<Integer, ITown>();   //位置 - 城镇
+	private List<IBuilding> buildingList = new ArrayList<IBuilding>();                 //建筑
+	private Map<Integer, IBuilding> buildingMap = new HashMap<Integer, IBuilding>();   //位置 - 建筑
 	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格
 	private List<IStrongHold> strongHoldList = new ArrayList<IStrongHold>();           //据点
+	private Map<Integer, Integer> landformMap = new HashMap<Integer, Integer>();
 	private int [][] MAP = null;               //用于查询路线
 	private int[] hit = new int []{1};                                  //1表示障碍物
 	
@@ -120,15 +124,15 @@ public class HoneycombGround extends Container implements IGround {
 		return ground.get(position);
 	}
 
-	public List<ITown> getTownList() {
-		return townList;
+	public List<IBuilding> getBuildingList() {
+		return buildingList;
 	}
 
-	public void setTownList(List<ITown> townList) {
-		for(ITown town : townList)
-			townMap.put(town.getPosition(), town);
+	public void setBuildingList(List<IBuilding> buildingList) {
+		for(IBuilding building : buildingList)
+			buildingMap.put(building.getPosition(), building);
 		
-		this.townList = townList;
+		this.buildingList = buildingList;
 	}
 
 	public List<Integer> getDisableList() {
@@ -146,14 +150,26 @@ public class HoneycombGround extends Container implements IGround {
 	public void setStrongHoldList(List<IStrongHold> strongHoldList) {
 		this.strongHoldList = strongHoldList;
 	}
+	
+	@Override
+	public void setLandformMap(Map<Integer, Integer> landformMap) {
+		// TODO Auto-generated method stub
+		this.landformMap = landformMap;
+	}
 
 	@Override
-	public List<Integer> getTownPosition(IPlayer player) {
+	public Map<Integer, Integer> getLandformMap() {
+		// TODO Auto-generated method stub
+		return this.landformMap;
+	}
+
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(ITown town : townList){
-			if(town.getOccupier().equals(player))
-				list.add(town.getPosition());
+		for(IBuilding building : buildingList){
+			if(building.getPlayer().equals(player))
+				list.add(building.getPosition());
 		}
 		
 		return list;
@@ -163,9 +179,12 @@ public class HoneycombGround extends Container implements IGround {
 	public List<Integer> getTownPosition(IPlayer player, Integer level) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(ITown town : townList){
-			if(town.getOccupier().equals(player) && town.getLevel()>=level)
-				list.add(town.getPosition());
+		for(IBuilding building : buildingList){
+			if (building instanceof Town) {
+				Town town = (Town) building;
+				if(town.getPlayer().equals(player) && town.getLevel()>=level)
+					list.add(town.getPosition());
+			}
 		}
 		
 		return list;
@@ -174,24 +193,27 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public Integer getMainTownPosition(IPlayer player) {
 		// TODO Auto-generated method stub
-		for(ITown town : townList){
-			if(town.getOccupier().equals(player) && town.isMain())
-				return town.getPosition();
+		for(IBuilding building : buildingList){
+			if (building instanceof Town) {
+				Town town = (Town) building;
+				if(town.getPlayer().equals(player) && town.isMain())
+					return town.getPosition();
+			}
 		}
 		return null;
 	}
 	
 	@Override
-	public void addTown(ITown town) {
+	public void addBuilding(IBuilding building) {
 		// TODO Auto-generated method stub
-		townList.add(town);
+		buildingList.add(building);
 	}
 	
 	@Override
-	public void captureTown(Integer townPos, IPlayer player) {
+	public void captureBuilding(Integer position, IPlayer player) {
 		// TODO Auto-generated method stub
-		ITown town = this.townMap.get(townPos);
-		town.setOccupier(player);
+		IBuilding building = this.buildingMap.get(position);
+		building.setPlayer(player);
 	}
 	
 	@Override
@@ -281,6 +303,16 @@ public class HoneycombGround extends Container implements IGround {
 		}
 		return positionList;
 	}
+	
+	@Override
+	public List<Integer> queryRange(IOption option, String action) {
+		// TODO Auto-generated method stub
+		List<Integer> positionList = new ArrayList<Integer>();
+		if(NotifyInfo.Command_Query_Execute == action){
+			positionList = option.getExecuteRange(this);
+		}
+		return positionList;
+	}
 
 	public Integer getXBorder() {
 		return xBorder;
@@ -297,7 +329,7 @@ public class HoneycombGround extends Container implements IGround {
 		map.put("xBorder", xBorder);
 		map.put("yBorder", yBorder);
 		map.put("imagePath", imagePath);
-		map.put("townList", townList);
+		map.put("buildingList", buildingList);
 		map.put("disableList", disableList);
 		//map.put("strongHoldList", strongHoldList);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,map);
@@ -470,13 +502,13 @@ public class HoneycombGround extends Container implements IGround {
 				switch (type) {
 				case 0:
 					if(step==distance(curPos, position))
-						if(!getPlace(curPos).isDisable())
+						if(!getPlace(curPos).getDisable())
 							list.add(curPos);
 					break;
 					
 				case 1:
 					if(step>=distance(curPos, position))
-						if(!getPlace(curPos).isDisable())
+						if(!getPlace(curPos).getDisable())
 							list.add(curPos);
 					break;	
 					
@@ -517,14 +549,14 @@ public class HoneycombGround extends Container implements IGround {
 		
 		
 		IPlace place = getPlace(stop);
-		Boolean disable = place.isDisable();
+		Boolean disable = place.getDisable();
 		place.setDisable(false);                //终点必须可以到达才有意义
 		
 		for(Integer i : m){
 			String [] is = i.toString().split(space);
 			Integer ix = Integer.valueOf(is[0]);
 			Integer iy = Integer.valueOf(is[1]);
-			if(getPlace(i).isDisable())
+			if(getPlace(i).getDisable())
 				MAP[ix][iy] = 1;
 			else
 				MAP[ix][iy] = 0;
@@ -767,7 +799,7 @@ public class HoneycombGround extends Container implements IGround {
 	}
 	
 	@Override
-	public Integer getRandomEntry(ITown town, LifeCard life) {
+	public Integer getRandomEntry(Town town, LifeCard life) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
 

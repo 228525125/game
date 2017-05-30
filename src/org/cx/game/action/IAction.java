@@ -15,9 +15,9 @@ import org.cx.game.validator.IValidatable;
  */
 public interface IAction extends IInterceptable, Observable, IValidatable, Cloneable{
 
-	public ICard getOwner();
+	public Object getOwner();
 	
-	public void setOwner(ICard card);
+	public void setOwner(Object card);
 	
 	public void setDecorator(ActionDecorator decorator);
 	

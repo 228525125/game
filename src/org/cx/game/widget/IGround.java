@@ -10,6 +10,9 @@ import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.Town;
 
 /**
  * position用二维坐标系表示，中间用0000隔开，例如(1,2) = 100002
@@ -38,7 +41,14 @@ public interface IGround extends IContainer{
 	 */
 	public Integer easyDistance(Integer start, Integer stop);
 	
+	/**
+	 * 边界上
+	 */
 	public static final Integer Equal = 0;
+	
+	/**
+	 * 范围内
+	 */
 	public static final Integer Contain = 1;
 	
 	/**
@@ -85,10 +95,10 @@ public interface IGround extends IContainer{
 	public IPlace getPlace(Integer position);
 	
 	/**
-	 * 获取城镇的坐标
+	 * 获取建筑的坐标
 	 * @return
 	 */
-	public List<Integer> getTownPosition(IPlayer player);
+	public List<Integer> getBuildingPosition(IPlayer player);
 	
 	/**
 	 * 获取城镇的坐标
@@ -109,7 +119,7 @@ public interface IGround extends IContainer{
 	 * 获得一个随机的入口 （改）
 	 * @return
 	 */
-	public Integer getRandomEntry(ITown town, LifeCard life);
+	public Integer getRandomEntry(Town town, LifeCard life);
 	
 	/**
 	 * 获取入口位置 （改）
@@ -124,24 +134,36 @@ public interface IGround extends IContainer{
 	public List<Integer> getDisableList();
 	
 	/**
-	 * 获取营地
+	 * 设置地形
+	 * @param landformMap 地形数据
+	 */
+	public void setLandformMap(Map<Integer, Integer> landformMap);
+	
+	/**
+	 * 
+	 * @return 地形数据
+	 */
+	public Map<Integer, Integer> getLandformMap();
+	
+	/**
+	 * 获取所有建筑物
 	 * @return
 	 */
-	public List<ITown> getTownList();
+	public List<IBuilding> getBuildingList();
 	
 	/**
-	 * 增加一个城镇
+	 * 增加一个建筑物
 	 * @param position
-	 * @param town
+	 * @param building
 	 */
-	public void addTown(ITown town);
+	public void addBuilding(IBuilding building);
 	
 	/**
-	 * 占领城镇
-	 * @param townPos 主城位置
+	 * 占领建筑
+	 * @param position 位置
 	 * @param player 玩家
 	 */
-	public void captureTown(Integer townPos, IPlayer player);
+	public void captureBuilding(Integer position, IPlayer player);
 	
 	/**
 	 * 在地图上增加一块区域（地图是由若干区域组成）
@@ -188,6 +210,14 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<Integer> queryRange(MagicCard magic, String action);
+	
+	/**
+	 * 查询选项使用范围
+	 * @param option
+	 * @param action
+	 * @return
+	 */
+	public List<Integer> queryRange(IOption option, String action);
 	
 	/**
 	 * 移动到指定位置

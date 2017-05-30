@@ -17,6 +17,8 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
 import org.cx.game.widget.IUseCard;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
 
 /**
  * 验证参数是否能够通过buffer进行完整的解析
@@ -102,6 +104,31 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						IPlace place = getBuffer().getGround().getPlace(Integer.valueOf(position));
 						parameterObject = place;
 						getBuffer().setPlace(place);
+					}
+				}
+				
+				if(CommandBuffer.BUILDING.equals(item)){
+					if(null==getBuffer().getPlace()){
+						addMessage(I18n.getMessage(this));
+						ret = false;
+						break;
+					}else{
+						IBuilding building = getBuffer().getPlace().getBuilding();
+						parameterObject = building;
+						getBuffer().setBuilding(building);
+					}
+				}
+				
+				if(CommandBuffer.OPTION.equals(item)){
+					if(null==getBuffer().getBuilding()){
+						addMessage(I18n.getMessage(this));
+						ret = false;
+						break;
+					}else{
+						IBuilding building = getBuffer().getBuilding();
+						IOption option = building.getOption(Integer.valueOf(position));
+						parameterObject = option;
+						getBuffer().setOption(option);
 					}
 				}
 				

@@ -18,7 +18,14 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
 import org.cx.game.widget.IUseCard;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
 
+/**
+ * 参数表达式缓存，与命令缓存（CommandBuffer）进行了区分
+ * @author chenxian
+ *
+ */
 public class ParameterExpressionBuffer {
 
 	private Map<String,Object> bufferMap = new HashMap<String,Object>();
@@ -30,6 +37,10 @@ public class ParameterExpressionBuffer {
 		this.player = player;
 	}
 	
+	/**
+	 * 
+	 * @return 当前具有控制权的玩家
+	 */
 	public IPlayer getPlayer(){
 		if(null==bufferMap.get(CommandBuffer.PLAYER))
 			return player;
@@ -72,6 +83,14 @@ public class ParameterExpressionBuffer {
 		return (IPlace) bufferMap.get(CommandBuffer.PLACE);
 	}
 	
+	public IBuilding getBuilding(){
+		return (IBuilding) bufferMap.get(CommandBuffer.BUILDING);
+	}
+	
+	public IOption getOption(){
+		return (IOption) bufferMap.get(CommandBuffer.OPTION);
+	}
+	
 	public ICemetery getCemetery(){
 		return (ICemetery) bufferMap.get(CommandBuffer.CEMETERY);
 	}
@@ -112,10 +131,8 @@ public class ParameterExpressionBuffer {
 	
 	public void setContainer(IContainer container){
 		if(null!=container){
-			IPlayer player = container.getPlayer();;
-			if (container instanceof IGround) {
-				player = getPlayer();
-			}
+			player = getPlayer();
+			
 			setPlayer(player);
 			
 			bufferMap.put(CommandBuffer.CONTAINER, container);
@@ -127,6 +144,22 @@ public class ParameterExpressionBuffer {
 			setContainer(place.getContainer());
 			
 			bufferMap.put(CommandBuffer.PLACE, place);
+		}
+	}
+	
+	public void setBuilding(IBuilding building){
+		if(null!=building){
+			setPlace(building.getOwner());
+			
+			bufferMap.put(CommandBuffer.BUILDING, building);
+		}
+	}
+	
+	public void setOption(IOption option){
+		if(null!=option){
+			setBuilding(option.getOwner());
+			
+			bufferMap.put(CommandBuffer.OPTION, option);
 		}
 	}
 	
@@ -164,7 +197,7 @@ public class ParameterExpressionBuffer {
 					}
 				}
 			}
-
+			
 			bufferMap.put(CommandBuffer.CARD, card);
 		}		
 	}

@@ -29,6 +29,12 @@ public class ConjureDecorator extends ActionDecorator implements IConjure {
 		this.conjure.setPower(power);
 	}
 	
+	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return this.conjure.getOwner();
+	}
+	
 	private ConjurePowerValidator conjurePowerValidator = null;
 	
 	@Override

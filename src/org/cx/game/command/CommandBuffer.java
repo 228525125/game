@@ -24,6 +24,8 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
 import org.cx.game.widget.IUseCard;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
 
 /**
  * CommandBuffer是对命令中选择的对象进行缓存
@@ -55,6 +57,10 @@ public class CommandBuffer {
 	public static final String CONTAINER = "container";
 	
 	public static final String PLACE = "place"; 
+	
+	public static final String BUILDING = "building";
+	
+	public static final String OPTION = "option";
 	
 	public static final String CARD = "card";
 	
@@ -95,6 +101,12 @@ public class CommandBuffer {
 		}else if(PLACE.equals(item)){
 			IPlace place = (IPlace) object;
 			setPlace(place, bufferMap);
+		}else if(BUILDING.equals(item)){
+			IBuilding building = (IBuilding) object;
+			setBuilding(building, bufferMap);
+		}else if(OPTION.equals(item)){
+			IOption option = (IOption) object;
+			setOption(option, bufferMap);
 		}else if(CEMETERY.equals(item)){
 			ICemetery cemetery = (ICemetery) object;
 			setCemetery(cemetery, bufferMap);
@@ -117,6 +129,10 @@ public class CommandBuffer {
 		offer(bufferMap);
 	}
 	
+	/**
+	 * 当前具有控制权的玩家
+	 * @return
+	 */
 	public IPlayer getPlayer(){
 		if(null==element().get(PLAYER))
 			return player;
@@ -157,6 +173,14 @@ public class CommandBuffer {
 	
 	public IPlace getPlace(){
 		return (IPlace) element().get(PLACE);
+	}
+	
+	public IBuilding getBuilding(){
+		return (IBuilding) element().get(BUILDING);
+	}
+	
+	public IOption getOption(){
+		return (IOption) element().get(OPTION);
 	}
 	
 	public ICemetery getCemetery(){
@@ -202,6 +226,12 @@ public class CommandBuffer {
 		if (item instanceof IPlace) {
 			return PLACE;
 		}
+		if (item instanceof IBuilding) {
+			return BUILDING;
+		}
+		if (item instanceof IOption) {
+			return OPTION;
+		}
 		if(item instanceof ICemetery){
 			return CEMETERY;
 		}
@@ -242,10 +272,12 @@ public class CommandBuffer {
 	
 	private void setContainer(IContainer container, Map<String, Object> bufferMap){
 		if(null!=container){
-			IPlayer player = container.getPlayer();;
+			/*IPlayer player = container.getPlayer();;
 			if (container instanceof IGround) {
 				player = getPlayer();
-			}
+			}*/
+			
+			player = getPlayer();
 			setPlayer(player, bufferMap);
 			
 			bufferMap.put(CONTAINER, container);
@@ -257,6 +289,22 @@ public class CommandBuffer {
 			setContainer(place.getContainer(), bufferMap);
 			
 			bufferMap.put(PLACE, place);
+		}
+	}
+	
+	private void setBuilding(IBuilding building, Map<String, Object> bufferMap){
+		if(null!=building){
+			setPlace(building.getOwner(), bufferMap);
+			
+			bufferMap.put(BUILDING, building);
+		}
+	}
+	
+	private void setOption(IOption option, Map<String, Object> bufferMap){
+		if(null!=option){
+			setBuilding(option.getOwner(), bufferMap);
+			
+			bufferMap.put(OPTION, option);
 		}
 	}
 	

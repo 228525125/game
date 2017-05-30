@@ -12,4 +12,10 @@ public class ChuckDecorator extends ActionDecorator implements IChuck {
 		super(chuck);
 		this.chuck = chuck;
 	}
+	
+	@Override
+	public ICard getOwner() {
+		// TODO Auto-generated method stub
+		return this.chuck.getOwner();
+	}
 }

@@ -37,6 +37,14 @@ public class ShowCommand extends InteriorCommand {
 			map.put("position", buffer.getPlace().getPosition());
 		}
 		
+		if(null!=buffer.getBuilding()){
+			map.put("building", buffer.getBuilding());
+		}
+		
+		if(null!=buffer.getOption()){
+			map.put("option", buffer.getOption());
+		}
+		
 		if(null!=buffer.getCemetery()){
 			map.put("cemetery", buffer.getCemetery());
 		}

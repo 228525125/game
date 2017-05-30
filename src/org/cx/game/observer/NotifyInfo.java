@@ -71,7 +71,9 @@ public class NotifyInfo {
 	public final static String Card_TrickCard_Trigger = "Card_TrickCard_Trigger";
 	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";
 	
-	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";		
+	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";
+	
+	public final static String Building_Option_Execute = "Building_Option_Execute";
 	
 	/*
 	 * skill = "Skill_"+class.name; buff = "Buff_"+class.name;
@@ -164,6 +166,7 @@ public class NotifyInfo {
 	public final static String Command_Query_Conjure = "Command_Query_Conjure";
 	public final static String Command_Query_Swap = "Command_Query_Swap";
 	public final static String Command_Query_Apply = "Command_Query_Apply";
+	public final static String Command_Query_Execute = "Command_Query_Execute";
 	public final static String Command_Reload = "Command_Reload";
 	
 	public final static String Context_Control = "Context_Control";

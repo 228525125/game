@@ -36,6 +36,13 @@
 			<item>move</item>
 			<item>swap</item>
 			<item>apply</item>
+			<item>execute</item>
+		</type>
+		<type name = "building">
+			<item>building</item>
+		</type>
+		<type name = "option">
+			<item>option</item>
 		</type>
 	</types>	
 	<commands>
@@ -46,6 +53,8 @@
 				<option>player</option>
 				<option>container</option>
 				<option>place</option>
+				<option>building</option>
+				<option>option</option>
 				<option>cemetery</option>
 				<option>tricklist</option>
 				<option>card</option>			
@@ -58,7 +67,13 @@
 			<description>显示</description>			
 		</command>
 		<command name='call' class='org.cx.game.command.CallCommand' parameter='request'>
-			<description>召唤</description>
+			<description>招募</description>
+			<parameter>
+				<option>place</option>
+			</parameter>			
+		</command>
+		<command name='execute' class='org.cx.game.command.OptionExecuteCommand' parameter='request'>
+			<description>执行选项</description>
 			<parameter>
 				<option>place</option>
 			</parameter>			

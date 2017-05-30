@@ -7,6 +7,7 @@ import org.cx.game.card.TrickCard;
 import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
+import org.cx.game.widget.building.IBuilding;
 
 /**
  * 战场位置
@@ -44,7 +45,7 @@ public interface IPlace extends IInterceptable, Observable{
 	 * 是否可用，有一些因为地形原因而导致不可用
 	 * @return
 	 */
-	public Boolean isDisable();
+	public Boolean getDisable();
 	
 	public void setDisable(Boolean disable);
 	
@@ -55,4 +56,42 @@ public interface IPlace extends IInterceptable, Observable{
 	public IBuilding getBuilding();
 	
 	public void setBuilding(IBuilding building);
+	
+	/**
+	 * 草地
+	 */
+	public static final Integer Landform_Sward = 401;
+	
+	/**
+	 * 丘林
+	 */
+	public static final Integer Landform_Massif = 402;
+	
+	/**
+	 * 森林
+	 */
+	public static final Integer Landform_Forest = 403;
+	
+	/**
+	 * 河
+	 */
+	public static final Integer Landform_River = 404;
+	
+	/**
+	 * 山
+	 */
+	public static final Integer Landform_Hill = 405;
+	
+	/**
+	 * 沼泽
+	 */
+	public static final Integer Landform_marsh = 406;
+	
+	/**
+	 * 地形
+	 * @return
+	 */
+	public Integer getLandform();
+	
+	public void setLandform(Integer langform);
 }

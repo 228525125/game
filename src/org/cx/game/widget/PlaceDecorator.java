@@ -7,6 +7,7 @@ import java.util.Observer;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.widget.building.IBuilding;
 
 public class PlaceDecorator implements IPlace {
 
@@ -134,9 +135,9 @@ public class PlaceDecorator implements IPlace {
 	}
 
 	@Override
-	public Boolean isDisable() {
+	public Boolean getDisable() {
 		// TODO Auto-generated method stub
-		return original.isDisable();
+		return original.getDisable();
 	}
 
 	@Override
@@ -155,6 +156,18 @@ public class PlaceDecorator implements IPlace {
 	public void setBuilding(IBuilding building) {
 		// TODO Auto-generated method stub
 		original.setBuilding(building);
+	}
+
+	@Override
+	public Integer getLandform() {
+		// TODO Auto-generated method stub
+		return original.getLandform();
+	}
+
+	@Override
+	public void setLandform(Integer langform) {
+		// TODO Auto-generated method stub
+		original.setLandform(langform);
 	}
 
 }

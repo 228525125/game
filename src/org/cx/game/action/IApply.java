@@ -11,4 +11,6 @@ public interface IApply extends IAction {
 	public Integer getConsume();
 	
 	public void setConsume(Integer consume);
+	
+	public MagicCard getOwner();
 }

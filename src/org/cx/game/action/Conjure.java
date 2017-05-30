@@ -29,6 +29,12 @@ public class Conjure extends Action implements IConjure {
 	}
 	
 	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return (LifeCard) super.getOwner();
+	}
+	
+	@Override
 	public ConjureDecorator getDecorator() {
 		// TODO Auto-generated method stub
 		return (ConjureDecorator) super.getDecorator();

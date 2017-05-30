@@ -22,6 +22,12 @@ public class Chuck extends Action implements IChuck {
 	}
 	
 	@Override
+	public ICard getOwner() {
+		// TODO Auto-generated method stub
+		return (ICard) super.getOwner();
+	}
+	
+	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
