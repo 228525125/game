@@ -36,7 +36,7 @@ public class AttackRule implements IRule {
 				this.clone = getOwner().clone();
 				
 				IGround ground = getOwner().getOwner().getPlayer().getGround();
-				Integer distance = ground.easyDistance(attacked.getContainerPosition(), getOwner().getOwner().getContainerPosition());
+				Integer distance = ground.distance(attacked.getContainerPosition(), getOwner().getOwner().getContainerPosition());
 				if(IDeath.Status_Live == attacked.getDeath().getStatus()
 				&& 1==distance){                                           //近身
 					new AttackLockBuff(getOwner().getOwner(),attacked).effect();

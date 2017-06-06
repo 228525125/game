@@ -129,9 +129,9 @@ public class PlaceDecorator implements IPlace {
 	}
 
 	@Override
-	public Integer getStep(IPlace place) {
+	public Integer getStep(IPlace place, Integer moveType) {
 		// TODO Auto-generated method stub
-		return original.getStep(place);
+		return original.getStep(place, moveType);
 	}
 
 	@Override
@@ -168,6 +168,18 @@ public class PlaceDecorator implements IPlace {
 	public void setLandform(Integer langform) {
 		// TODO Auto-generated method stub
 		original.setLandform(langform);
+	}
+
+	@Override
+	public Boolean getEmpty() {
+		// TODO Auto-generated method stub
+		return original.getEmpty();
+	}
+
+	@Override
+	public void setEmpty(Boolean empty) {
+		// TODO Auto-generated method stub
+		original.setEmpty(empty);
 	}
 
 }

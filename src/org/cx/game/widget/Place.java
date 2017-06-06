@@ -27,6 +27,7 @@ public class Place extends Observable implements IPlace {
 	private IGround ground = null;
 	private IBuilding building  = null;
 	private Boolean disable = false;
+	private Boolean empty = true;
 	private Integer landform = IPlace.Landform_Sward;
 	
 	public Place(IGround ground,Integer position) {
@@ -36,7 +37,7 @@ public class Place extends Observable implements IPlace {
 		this.addObserver(new JsonOut());
 	}
 	
-	public IContainer getContainer(){
+	public IGround getContainer(){
 		return ground;
 	}
 
@@ -68,7 +69,9 @@ public class Place extends Observable implements IPlace {
 	public void in(LifeCard life) {
 		// TODO Auto-generated method stub
 		this.life = life;
-		this.disable = true;
+		
+		this.empty = false;
+		getContainer().getEmptyList().remove(position);
 		
 		//getContainer().add(position, life);          //他的作用是，给life.setContainer
 		
@@ -86,7 +89,9 @@ public class Place extends Observable implements IPlace {
 		// TODO Auto-generated method stub
 		LifeCard life = this.life;
 		this.life = null;
-		this.disable = false;
+		
+		this.empty = true;
+		getContainer().getEmptyList().add(position);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", life.getPlayer());
@@ -99,15 +104,27 @@ public class Place extends Observable implements IPlace {
 	}
 	
 	@Override
-	public Integer getStep(IPlace place) {
+	public Integer getStep(IPlace place, Integer moveType) {
 		// TODO Auto-generated method stub
-		return ground.distance(position, place.getPosition());
+		return ground.distance(position, place.getPosition(), moveType);
 	}
 
 	@Override
 	public Boolean getDisable() {
 		// TODO Auto-generated method stub
 		return this.disable;
+	}
+	
+	@Override
+	public Boolean getEmpty() {
+		// TODO Auto-generated method stub
+		return this.empty;
+	}
+	
+	@Override
+	public void setEmpty(Boolean empty) {
+		// TODO Auto-generated method stub
+		this.empty = empty;
 	}
 
 	@Override

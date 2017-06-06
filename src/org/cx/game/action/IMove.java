@@ -4,11 +4,15 @@ import org.cx.game.card.LifeCard;
 
 public interface IMove extends IAction{
 
-	public static final Integer Type_Walk = 0;    //步行
+	public static final Integer Type_Walk = 141;    //步行
 	
-	public static final Integer Type_Fly = 1;  //飞行
+	public static final Integer Type_Equitation = 142;  //骑行
 	
-	public static final Integer Type_Flash = 2;  //瞬移
+	public static final Integer Type_Drive = 143;   //驾驶
+	
+	public static final Integer Type_Fly = 144;  //飞行
+	
+	public static final Integer Type_Flash = 145;  //传送
 	
 	public static final Integer Consume = 1; //单格移动消耗
 	

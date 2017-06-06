@@ -1,6 +1,11 @@
 package org.cx.game.action;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +17,13 @@ import org.cx.game.out.JsonOut;
 import org.cx.game.rule.IRule;
 import org.cx.game.rule.MoveRule;
 import org.cx.game.tools.Debug;
+import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 public class Move extends Action implements IMove{
 
@@ -25,6 +35,8 @@ public class Move extends Action implements IMove{
 	private Boolean hide = false;           //隐形状态
 	
 	private MoveRule rule = new MoveRule(this);
+	
+	
 	
 	public Move() {
 		// TODO Auto-generated constructor stub

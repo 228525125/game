@@ -6,7 +6,7 @@ import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.LifeCardActivateValidator;
 import org.cx.game.validator.MoveTauntValidator;
 import org.cx.game.validator.SelectContainerValidator;
-import org.cx.game.validator.SelectPlaceDisableValidator;
+import org.cx.game.validator.SelectPlaceEmptyValidator;
 import org.cx.game.widget.IPlace;
 
 public class MoveCommand extends InteriorCommand {
@@ -23,7 +23,7 @@ public class MoveCommand extends InteriorCommand {
 	public void setParameter(Object parameter) {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
-		addValidator(new SelectPlaceDisableValidator((IPlace) parameter, false));
+		addValidator(new SelectPlaceEmptyValidator((IPlace) parameter, true));
 	}
 	
 	@Override

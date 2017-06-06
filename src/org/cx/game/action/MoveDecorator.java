@@ -1,5 +1,13 @@
 package org.cx.game.action;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.IBuff;
@@ -9,12 +17,19 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.validator.MoveRangeValidator;
 import org.cx.game.widget.IPlace;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 public class MoveDecorator extends ActionDecorator implements IMove {
 
 	private IMove move = null;
+	
+	
 	
 	public MoveDecorator(IMove move) {
 		// TODO Auto-generated constructor stub

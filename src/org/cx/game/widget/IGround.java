@@ -29,9 +29,10 @@ public interface IGround extends IContainer{
 	 * 两个坐标之间的最短距离，考虑障碍物
 	 * @param start 起始坐标
 	 * @param stop 终止坐标
+	 * @param moveType 移动类型
 	 * @return
 	 */
-	public Integer distance(Integer start, Integer stop);
+	public Integer distance(Integer start, Integer stop, Integer moveType);
 	
 	/**
 	 * 两个坐标之间的最短距离，不考虑障碍物
@@ -39,7 +40,7 @@ public interface IGround extends IContainer{
 	 * @param stop
 	 * @return
 	 */
-	public Integer easyDistance(Integer start, Integer stop);
+	public Integer distance(Integer start, Integer stop);
 	
 	/**
 	 * 边界上
@@ -56,9 +57,10 @@ public interface IGround extends IContainer{
 	 * @param position 指定坐标
 	 * @param step 距离，注意step必须大于0，否则无意义
 	 * @param type  0:刚好在边界上;1范围内;2范围外;
+	 * @param moveType  移动类型
 	 * @return
 	 */
-	public List<Integer> areaForDistance(Integer position, Integer step, Integer type);
+	public List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType);
 	
 	public final static Integer Shade_Range = 5;
 	
@@ -69,15 +71,16 @@ public interface IGround extends IContainer{
 	 * @param type
 	 * @return
 	 */
-	public List<Integer> easyAreaForDistance(Integer position, Integer step, Integer type);
+	public List<Integer> areaForDistance(Integer position, Integer step, Integer type);
 	
 	/**
 	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
 	 * @param start
 	 * @param stop
+	 * @param moveType 移动类型
 	 * @return
 	 */
-	public List<Integer> route(Integer start, Integer stop);
+	public List<Integer> route(Integer start, Integer stop, Integer moveType);
 	
 	/**
 	 * 获得两点之间的最短路线，不考虑障碍物
@@ -85,7 +88,7 @@ public interface IGround extends IContainer{
 	 * @param stop
 	 * @return
 	 */
-	public List<Integer> easyRoute(Integer start, Integer stop);
+	public List<Integer> route(Integer start, Integer stop);
 	
 	/**
 	 * 根据坐标
@@ -116,22 +119,16 @@ public interface IGround extends IContainer{
 	public Integer getMainTownPosition(IPlayer player);
 	
 	/**
-	 * 获得一个随机的入口 （改）
-	 * @return
-	 */
-	public Integer getRandomEntry(Town town, LifeCard life);
-	
-	/**
-	 * 获取入口位置 （改）
-	 * @return
-	 */
-	public List<Integer> getEntryList(LifeCard life);
-	
-	/**
-	 * 受地形限制的区域
+	 * 无效的区域
 	 * @return
 	 */
 	public List<Integer> getDisableList();
+	
+	/**
+	 * 空位置
+	 * @return
+	 */
+	public List<Integer> getEmptyList();
 	
 	/**
 	 * 设置地形

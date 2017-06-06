@@ -17,9 +17,9 @@ public interface IBuilding {
 	
 	public void setOwner(IPlace place);
 
-	public static final Integer TOWN = 1;
+	public static final Integer TOWN = 501;
 	
-	public static final Integer BRIDGE = 2;
+	public static final Integer BRIDGE = 502;
 	
 	/**
 	 * 类型：城镇/桥 等

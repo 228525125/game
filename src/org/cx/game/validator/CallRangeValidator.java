@@ -5,7 +5,9 @@ import java.util.List;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.building.Town;
 
 /**
  * 判断call位置是否超出范围
@@ -14,12 +16,12 @@ import org.cx.game.widget.IPlace;
  */
 public class CallRangeValidator extends Validator {
 
-	private LifeCard life;
+	private Town town;
 	private IPlace place;
 	
-	public CallRangeValidator(LifeCard life, IPlace place) {
+	public CallRangeValidator(Town town, IPlace place) {
 		// TODO Auto-generated constructor stub
-		this.life = life;
+		this.town = town;
 		this.place = place;
 	}
 	
@@ -27,9 +29,8 @@ public class CallRangeValidator extends Validator {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		Boolean ret = false;
-		IPlayer player = life.getPlayer();
-		List<Integer> entryList = player.getGround().getEntryList(life);
-		if(entryList.contains(place.getPosition()))
+		IGround ground = town.getPlayer().getGround();
+		if(Integer.valueOf(1).equals(ground.distance(town.getPosition(), place.getPosition())))
 			ret = true;
 		
 		if(!ret)

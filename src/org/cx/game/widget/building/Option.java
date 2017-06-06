@@ -21,7 +21,6 @@ import org.cx.game.widget.IGround;
 public abstract class Option implements IOption {
 
 	private String name = null;
-	protected Object parameter = null;
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	

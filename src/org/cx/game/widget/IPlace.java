@@ -37,17 +37,26 @@ public interface IPlace extends IInterceptable, Observable{
 	/**
 	 * 距离指定位置相隔步数
 	 * @param position 指定位置
+	 * @param moveType 移动类型
 	 * @return
 	 */
-	public Integer getStep(IPlace place);
+	public Integer getStep(IPlace place, Integer moveType);
 	
 	/**
-	 * 是否可用，有一些因为地形原因而导致不可用
+	 * 是否可用，有一些因为地形原因而导致不可用(暂时没用)
 	 * @return
 	 */
 	public Boolean getDisable();
 	
 	public void setDisable(Boolean disable);
+	
+	/**
+	 * 位置上是否为空
+	 * @return
+	 */
+	public Boolean getEmpty();
+	
+	public void setEmpty(Boolean empty);
 	
 	/**
 	 * 建筑物

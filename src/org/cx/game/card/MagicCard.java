@@ -154,7 +154,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		if(needConjurer()){    //如果需要施法者，就默认施法者的攻击距离
 			LifeCard conjure = getConjurer();
 			Integer position = conjure.getContainerPosition();
-			positionList = ground.easyAreaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
+			positionList = ground.areaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
 		}else{                //如果不需要施法者，就默认我方所有战场上的单位
 			List<LifeCard> cardList = ground.list(getPlayer());
 			for(LifeCard life : cardList){

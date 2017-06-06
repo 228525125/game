@@ -19,20 +19,6 @@ public class CallDecorator extends ActionDecorator implements ICall {
 		setParameterTypeValidator(new Class[]{IPlace.class});
 		addValidator(new CallConsumeValidator((LifeCard)call.getOwner()));
 	}
-	
-	private CallRangeValidator callRangeValidator = null;
-	
-	@Override
-	public void action(Object...objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub
-		IPlace place = (IPlace) objects[0];
-		
-		deleteValidator(callRangeValidator);
-		callRangeValidator = new CallRangeValidator(getOwner(),place);
-		addValidator(callRangeValidator);
-		
-		super.action(objects);
-	}
 
 	@Override
 	public Integer getConsume() {

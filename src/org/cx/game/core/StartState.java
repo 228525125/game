@@ -45,6 +45,14 @@ public class StartState extends PlayState {
 	public void start() {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
+		
+		Map<Integer, Integer> landformMap = context.getPlayer1().getGround().getLandformMap();
+		Map<String, Integer> landform = new HashMap<String, Integer>();
+		for(Integer i : landformMap.keySet())
+			landform.put(i.toString(), landformMap.get(i));
+		
+		map.put("landform", landform);
+		map.put("buildingList", context.getPlayer1().getGround().getBuildingList());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Start,map);
 		super.notifyObservers(info);
 		

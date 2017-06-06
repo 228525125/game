@@ -40,7 +40,7 @@ public class Cemetery extends Observable implements ICemetery {
 		notifyObservers(info);    //通知观察者
 
 		lifeList.add(life); 
-		getOwner().setDisable(false);
+		getOwner().setEmpty(true);
 	}
 	
 	/**

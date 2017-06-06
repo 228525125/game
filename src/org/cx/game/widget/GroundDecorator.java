@@ -32,6 +32,8 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 				Integer curPos = Integer.valueOf(""+i+IGround.space+j);
 				IPlace place = new Place(this, curPos);
 				ground.addPlace(new PlaceDecorator(place));
+				
+				getEmptyList().add(curPos);      //初始化空位置
 			}
 		}
 		
@@ -79,9 +81,9 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 
 
 	@Override
-	public Integer distance(Integer start, Integer stop) {
+	public Integer distance(Integer start, Integer stop, Integer moveType) {
 		// TODO Auto-generated method stub
-		return ground.distance(start, stop);
+		return ground.distance(start, stop, moveType);
 	}
 
 	@Override
@@ -92,9 +94,9 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 
 	@Override
 	public List<Integer> areaForDistance(Integer position, Integer step,
-			Integer type) {
+			Integer type, Integer moveType) {
 		// TODO Auto-generated method stub
-		return ground.areaForDistance(position, step, type);
+		return ground.areaForDistance(position, step, type, moveType);
 	}
 
 	@Override
@@ -146,28 +148,28 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public Integer easyDistance(Integer start, Integer stop) {
+	public Integer distance(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
-		return ground.easyDistance(start, stop);
+		return ground.distance(start, stop);
 	}
 
 	@Override
-	public List<Integer> easyAreaForDistance(Integer position, Integer step,
+	public List<Integer> areaForDistance(Integer position, Integer step,
 			Integer type) {
 		// TODO Auto-generated method stub
-		return ground.easyAreaForDistance(position, step, type);
+		return ground.areaForDistance(position, step, type);
+	}
+
+	@Override
+	public List<Integer> route(Integer start, Integer stop, Integer moveType) {
+		// TODO Auto-generated method stub
+		return ground.route(start, stop, moveType);
 	}
 
 	@Override
 	public List<Integer> route(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
 		return ground.route(start, stop);
-	}
-
-	@Override
-	public List<Integer> easyRoute(Integer start, Integer stop) {
-		// TODO Auto-generated method stub
-		return ground.easyRoute(start, stop);
 	}
 	
 	@Override
@@ -210,18 +212,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<IBuilding> getBuildingList() {
 		// TODO Auto-generated method stub
 		return ground.getBuildingList();
-	}
-	
-	@Override
-	public Integer getRandomEntry(Town town, LifeCard life) {
-		// TODO Auto-generated method stub
-		return ground.getRandomEntry(town, life);
-	}
-	
-	@Override
-	public List<Integer> getEntryList(LifeCard life) {
-		// TODO Auto-generated method stub
-		return ground.getEntryList(life);
 	}
 	
 	@Override
@@ -276,5 +266,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public Map<Integer, Integer> getLandformMap() {
 		// TODO Auto-generated method stub
 		return ground.getLandformMap();
+	}
+
+	@Override
+	public List<Integer> getEmptyList() {
+		// TODO Auto-generated method stub
+		return ground.getEmptyList();
 	}
 }

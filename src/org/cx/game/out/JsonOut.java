@@ -32,7 +32,7 @@ public class JsonOut extends Response implements Observer {
 			"heroCard",              //Player
 			"near",                  //Place
 			"index",                 //ControlQueue.Place
-			"strongHoldList","randomEntry",        //Ground
+			"strongHoldList","randomEntry","landformMap","emptyList","disableList",        //Ground
 			"appendCardList","hashCode","containerPosition","useCardPolicy","policy",        //LifeCard
 			"affectedList",                  //Skill
 			"cardIDList","lifeList",                             //StrongHold
