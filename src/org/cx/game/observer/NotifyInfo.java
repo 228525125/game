@@ -60,7 +60,9 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Mode = "Card_LifeCard_State_Mode";
 	public final static String Card_LifeCard_State_Type = "Card_LifeCard_State_Type";
 	public final static String Card_LifeCard_State_Flee = "Card_LifeCard_State_Flee";
-	public final static String Card_LifeCard_State_Consume = "Card_LifeCard_State_Consume"; 
+	public final static String Card_LifeCard_State_Consume = "Card_LifeCard_State_Consume";
+	public final static String Card_LifeCard_State_EmpiricValue = "Card_LifeCard_State_EmpiricValue";
+	
 	
 	public final static String Card_LifeCard_Weapon_Hand = "Card_LifeCard_Weapon_Hand";
 	public final static String Card_LifeCard_Weapon_Output = "Card_LifeCard_Weapon_Output";
@@ -74,6 +76,10 @@ public class NotifyInfo {
 	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";
 	
 	public final static String Building_Option_Execute = "Building_Option_Execute";
+	public final static String Building_Action_Upgrade_Begin = "Building_Action_Upgrade_Begin";
+	public final static String Building_Action_Upgrade_End = "Building_Action_Upgrade_End";
+	public final static String Building_Action_Upgrade_Product_Begin = "Building_Action_Upgrade_Product_Begin";
+	public final static String Building_Action_Upgrade_Product_End = "Building_Action_Upgrade_Product_End";
 	
 	/*
 	 * skill = "Skill_"+class.name; buff = "Buff_"+class.name;

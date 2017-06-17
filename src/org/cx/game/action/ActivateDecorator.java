@@ -31,4 +31,34 @@ public class ActivateDecorator extends ActionDecorator implements IActivate {
 		return this.activate.getOwner();
 	}
 
+	@Override
+	public Integer getSpeed() {
+		// TODO Auto-generated method stub
+		return activate.getSpeed();
+	}
+
+	@Override
+	public void setSpeed(Integer speed) {
+		// TODO Auto-generated method stub
+		activate.setSpeed(speed);
+	}
+
+	@Override
+	public void addToSpeed(Integer speed) {
+		// TODO Auto-generated method stub
+		activate.addToSpeed(speed);
+	}
+
+	@Override
+	public Integer getVigour() {
+		// TODO Auto-generated method stub
+		return activate.getVigour();
+	}
+
+	@Override
+	public void addToVigour(Integer vigour) {
+		// TODO Auto-generated method stub
+		activate.addToVigour(vigour);
+	}
+
 }

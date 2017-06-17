@@ -294,7 +294,7 @@ public class CommandBuffer {
 	
 	private void setBuilding(IBuilding building, Map<String, Object> bufferMap){
 		if(null!=building){
-			setPlace(building.getOwner(), bufferMap);
+			setPlace((IPlace) building.getOwner(), bufferMap);        //因为内部建筑物不能被select，所以这里可以直接转换
 			
 			bufferMap.put(BUILDING, building);
 		}

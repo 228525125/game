@@ -226,7 +226,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		}
 		if (place.getObject() instanceof LifeCard) {
 			LifeCard life = (LifeCard) place.getObject();
-			speed = life.getAttack().getSpeedChance();
+			speed = life.getActivate().getSpeed();
 		}
 		
 		place.setCount(count + speed);          //当加入下一个队列时，表示下一个回合，所以要增加一次活力
@@ -362,7 +362,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		public void loadSpeed(){
 			if (obj instanceof LifeCard) {
 				LifeCard life = (LifeCard) obj;
-				this.speed = life.getAttack().getSpeedChance();
+				this.speed = life.getActivate().getSpeed();
 			}
 			if (obj instanceof IPlayer) {
 				this.speed = 100;

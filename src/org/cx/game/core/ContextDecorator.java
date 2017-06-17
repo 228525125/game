@@ -145,12 +145,6 @@ public class ContextDecorator implements IContext {
 	}
 
 	@Override
-	public LifeCard getControlLife() {
-		// TODO Auto-generated method stub
-		return original.getControlLife();
-	}
-
-	@Override
 	public IPlayer getControlPlayer() {
 		// TODO Auto-generated method stub
 		return original.getControlPlayer();

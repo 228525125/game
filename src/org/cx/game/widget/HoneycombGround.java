@@ -33,7 +33,6 @@ import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.Util;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
-import org.cx.game.widget.building.Town;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -136,6 +135,28 @@ public class HoneycombGround extends Container implements IGround {
 	public List<IBuilding> getBuildingList() {
 		return buildingList;
 	}
+	
+	@Override
+	public List<IBuilding> getBuildingList(IPlayer player) {
+		// TODO Auto-generated method stub
+		List<IBuilding> list = new ArrayList<IBuilding>();
+		for(IBuilding building : buildingList){
+			if(null!=building.getPlayer() && player.equals(building.getPlayer()))
+				list.add(building);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<IBuilding> getBuildingList(IPlayer player, Integer type) {
+		// TODO Auto-generated method stub
+		List<IBuilding> list = new ArrayList<IBuilding>();
+		for(IBuilding building : getBuildingList(player)){
+			if(type.equals(building.getType()))
+				list.add(building);
+		}
+		return list;
+	}
 
 	public void setBuildingList(List<IBuilding> buildingList) {
 		for(IBuilding building : buildingList)
@@ -182,40 +203,35 @@ public class HoneycombGround extends Container implements IGround {
 	public List<Integer> getBuildingPosition(IPlayer player) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(IBuilding building : buildingList){
-			if(null!=building.getPlayer() && building.getPlayer().equals(player))
+		for(IBuilding building : getBuildingList(player)){
+			list.add(building.getPosition());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player,
+			Integer buildingType) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(IBuilding building : getBuildingList(player, buildingType)){
+			list.add(building.getPosition());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player, Integer buildingType, Integer level) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(IBuilding building : getBuildingList(player, buildingType)){
+			if(building.getUpgrade().getLevel()>=level)
 				list.add(building.getPosition());
 		}
 		
 		return list;
-	}
-	
-	@Override
-	public List<Integer> getTownPosition(IPlayer player, Integer level) {
-		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
-		for(IBuilding building : buildingList){
-			if (building instanceof Town) {
-				Town town = (Town) building;
-				if(null!=town.getPlayer() && town.getPlayer().equals(player) && town.getLevel()>=level)
-					list.add(town.getPosition());
-			}
-		}
-		
-		return list;
-	}
-	
-	@Override
-	public Integer getMainTownPosition(IPlayer player) {
-		// TODO Auto-generated method stub
-		for(IBuilding building : buildingList){
-			if (building instanceof Town) {
-				Town town = (Town) building;
-				if(null!=town.getPlayer() && town.getPlayer().equals(player) && town.isMain())
-					return town.getPosition();
-			}
-		}
-		return null;
 	}
 	
 	@Override

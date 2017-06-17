@@ -27,10 +27,8 @@ public class LifeCardStrongHold extends StrongHold {
 			List<Integer> list = new ArrayList<Integer>();
 			list.addAll(cardIDList);
 			list.removeAll(existCardIDList);
-			for(ICard card : CardFactory.getInstances(list)){
+			for(ICard card : CardFactory.getInstances(list, getPlayer())){
 				LifeCard life = (LifeCard) card;
-				life.setPlayer(getPlayer());
-				life.setPlayId(getPlayer().getContext().newCardPlayId());
 				IPlace place = getUsablePlace();
 				if(null!=place){
 					try {

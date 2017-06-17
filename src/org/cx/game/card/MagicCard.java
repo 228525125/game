@@ -195,7 +195,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	 * @return
 	 */
 	public LifeCard getConjurer() {
-		return getPlayer().getHeroCard();
+		return getPlayer().getHero();
 	}
 	
 	/**

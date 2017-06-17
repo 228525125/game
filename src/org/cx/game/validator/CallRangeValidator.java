@@ -1,26 +1,23 @@
 package org.cx.game.validator;
 
-import java.util.List;
-
-import org.cx.game.card.LifeCard;
-import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
-import org.cx.game.widget.building.Town;
+import org.cx.game.widget.building.IBuilding;
 
 /**
  * 判断call位置是否超出范围
  * @author chenxian
  *
  */
-public class CallRangeValidator extends Validator {
+public class CallRangeValidator extends SelectBuildingTypeValidator {
 
-	private Town town;
 	private IPlace place;
+	private IBuilding town = null;
 	
-	public CallRangeValidator(Town town, IPlace place) {
+	public CallRangeValidator(IBuilding town, IPlace place) {
 		// TODO Auto-generated constructor stub
+		super(town, IBuilding.Town);
 		this.town = town;
 		this.place = place;
 	}
@@ -28,13 +25,19 @@ public class CallRangeValidator extends Validator {
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		Boolean ret = false;
-		IGround ground = town.getPlayer().getGround();
-		if(Integer.valueOf(1).equals(ground.distance(town.getPosition(), place.getPosition())))
-			ret = true;
+		Boolean ret = super.validate();
 		
-		if(!ret)
+		if(ret){
+			IGround ground = town.getPlayer().getGround();
+			if(Integer.valueOf(1).equals(ground.distance(town.getPosition(), place.getPosition())))
+				ret = true;
+			else{
+				addMessage(I18n.getMessage(this));
+				ret = false;
+			}
+		}else{
 			addMessage(I18n.getMessage(this));
+		}
 		
 		return ret;
 	}

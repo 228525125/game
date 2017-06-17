@@ -2,18 +2,14 @@ package org.cx.game.widget;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
-import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
-import org.cx.game.out.JsonOut;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
-import org.cx.game.widget.building.Town;
 
 public class GroundDecorator extends ContainerDecorator implements IGround {
 	
@@ -42,7 +38,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		 */
 		for(IBuilding building : ground.getBuildingList()){
 			IPlace place = getPlace(building.getPosition());
-			building.setOwner(place);
 			place.setBuilding(building);
 			
 			for(IOption option : building.getOptions()){
@@ -109,12 +104,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<Integer> getBuildingPosition(IPlayer player) {
 		// TODO Auto-generated method stub
 		return ground.getBuildingPosition(player);
-	}
-	
-	@Override
-	public List<Integer> getTownPosition(IPlayer player, Integer level) {
-		// TODO Auto-generated method stub
-		return ground.getTownPosition(player, level);
 	}
 
 	@Override
@@ -215,6 +204,18 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 	
 	@Override
+	public List<IBuilding> getBuildingList(IPlayer player) {
+		// TODO Auto-generated method stub
+		return ground.getBuildingList(player);
+	}
+	
+	@Override
+	public List<IBuilding> getBuildingList(IPlayer player, Integer type) {
+		// TODO Auto-generated method stub
+		return ground.getBuildingList(player, type);
+	}
+	
+	@Override
 	public List<Integer> getDisableList() {
 		// TODO Auto-generated method stub
 		return ground.getDisableList();
@@ -245,12 +246,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public Integer getMainTownPosition(IPlayer player) {
-		// TODO Auto-generated method stub
-		return ground.getMainTownPosition(player);
-	}
-
-	@Override
 	public void captureBuilding(Integer townID, IPlayer player) {
 		// TODO Auto-generated method stub
 		ground.captureBuilding(townID, player);
@@ -272,5 +267,19 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<Integer> getEmptyList() {
 		// TODO Auto-generated method stub
 		return ground.getEmptyList();
+	}
+
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player,
+			Integer buildingType) {
+		// TODO Auto-generated method stub
+		return ground.getBuildingPosition(player, buildingType);
+	}
+
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player,
+			Integer buildingType, Integer level) {
+		// TODO Auto-generated method stub
+		return ground.getBuildingPosition(player, buildingType, level);
 	}
 }

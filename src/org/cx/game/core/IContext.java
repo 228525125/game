@@ -50,7 +50,7 @@ public interface IContext extends IInterceptable,Observable {
 	 */
 	public abstract void addBout();
 
-	public abstract LifeCard getControlLife();
+	//public abstract LifeCard getControlLife(); 半回合制
 
 	public abstract IPlayer getControlPlayer();
 

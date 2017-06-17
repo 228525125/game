@@ -23,18 +23,20 @@ public class ControlQueueRule implements IRule {
 		if (arg instanceof NotifyInfo) {
 			NotifyInfo info = (NotifyInfo) arg;
 			if(NotifyInfo.Card_LifeCard_Action_Death.equals(info.getType())){
-				Map bean = (Map) info.getInfo();
+				/* 半回合制
+				 * Map bean = (Map) info.getInfo();
 				LifeCard life = (LifeCard) bean.get("card");
-				getOwner().remove(life);
+				getOwner().remove(life);*/
 			}
 			
 			if(NotifyInfo.Card_LifeCard_State_Speed.equals(info.getType())){
-				Map bean = (Map) info.getInfo();
+				/* 半回合制
+				 * Map bean = (Map) info.getInfo();
 				LifeCard life = (LifeCard) bean.get("card");
 				Place place = getOwner().getPlace(life);
 				place.loadSpeed();
 				
-				getOwner().refurbish();
+				getOwner().refurbish();*/
 			}
 		}
 	}

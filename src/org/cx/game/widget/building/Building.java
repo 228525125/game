@@ -3,29 +3,35 @@ package org.cx.game.widget.building;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cx.game.action.IUpgrade;
+import org.cx.game.action.LifeUpgrade;
+import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.core.IPlayer;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
-public abstract class Building implements IBuilding {
+public class Building implements IBuilding {
 
 	private Integer position = 0;
 	private String name = null;
 	private IPlace place = null;
 	private Integer type = 0;
 	private IPlayer player = null;
+	private Integer tax = 0;
 	private List<IOption> options = new ArrayList<IOption>();
+	private List<IProduct> products = new ArrayList<IProduct>();
 	
-	public Building(Integer type, Integer position) {
+	public Building(Integer buildingType, Integer position) {
 		// TODO Auto-generated constructor stub
-		this.type = type;
+		this.type = buildingType;
 		this.position = position;
 	}
 	
 	public String getName() {
 		if(null==name)
-			name = I18n.getMessage(this, "name");
+			name = I18n.getMessage(this, this.type, "name");
 		return name;
 	}
 	
@@ -37,17 +43,11 @@ public abstract class Building implements IBuilding {
 	@Override
 	public IPlace getOwner() {
 		// TODO Auto-generated method stub
-		if(null==this.place){
+		if(null==place){
 			IGround ground = getPlayer().getGround();
-			this.place = ground.getPlace(getPosition());
+			place = ground.getPlace(getPosition());
 		}
 		return place;
-	}
-
-	@Override
-	public void setOwner(IPlace place) {
-		// TODO Auto-generated method stub
-		this.place = place;
 	}
 	
 	@Override
@@ -60,6 +60,18 @@ public abstract class Building implements IBuilding {
 	public void setPlayer(IPlayer player) {
 		// TODO Auto-generated method stub
 		this.player = player;
+	}
+	
+	@Override
+	public Integer getTax() {
+		// TODO Auto-generated method stub
+		return this.tax;
+	}
+	
+	@Override
+	public void setTax(Integer tax) {
+		// TODO Auto-generated method stub
+		this.tax = tax;
 	}
 
 	@Override
@@ -85,5 +97,47 @@ public abstract class Building implements IBuilding {
 		// TODO Auto-generated method stub
 		return this.options.get(index);
 	}
+	
+	@Override
+	public List<IProduct> getProducts() {
+		// TODO Auto-generated method stub
+		return this.products;
+	}
+	
+	@Override
+	public void setProducts(List<IProduct> products) {
+		// TODO Auto-generated method stub
+		this.products = products;
+	}
+	
+	@Override
+	public IProduct getProduct(Integer productType) {
+		// TODO Auto-generated method stub
+		for(IProduct product : this.products)
+			if(productType.equals(product.getType()))
+				return product;
+		return null;
+	}
+	
+	private IUpgrade upgrade = null;
 
+	public IUpgrade getUpgrade() {
+		if(null==upgrade){
+			IUpgrade upgrade = new BuildingUpgrade();
+			upgrade.setOwner(this);
+			this.upgrade = new UpgradeDecorator(upgrade);
+		}
+		return upgrade;
+	}
+
+	public void setUpgrade(IUpgrade upgrade) {
+		upgrade.setOwner(this);
+		this.upgrade = new UpgradeDecorator(upgrade);
+	}
+	
+	@Override
+	public void upgrade() throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		this.upgrade.action();
+	}
 }

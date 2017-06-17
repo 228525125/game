@@ -32,15 +32,10 @@ public class Call extends Action implements ICall {
 		// TODO Auto-generated method stub
 		IPlace place = (IPlace) objects[0];
 		
-		IPlayer player = getOwner().getPlayer();
-		if(!player.getUseCard().remove(getOwner()))           //出牌
-			player.getCardGroup().remove(getOwner());         //出牌有可能来自牌组
-		
-		
 		/* 召唤的动作应在place_in之前，因为place_in动作与移动时的place_in动作相同 */
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
+		map.put("container", place.getContainer());
 		map.put("card", getOwner());
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Call,map);
@@ -49,8 +44,10 @@ public class Call extends Action implements ICall {
 		IContainer ground = place.getContainer();
 		ground.add(place.getPosition(), getOwner());
 		
+		/*半回合制
+		IPlayer player = getOwner().getPlayer();
 		IControlQueue cq = player.getContext().getControlQueue();
-		cq.add(getOwner());   //插入队列
+		cq.add(getOwner());   //插入队列*/
 	}
 
 	@Override

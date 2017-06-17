@@ -1,6 +1,8 @@
 package org.cx.game.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.cx.game.card.ICard;
@@ -93,16 +95,16 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		
 		this.context = context;
 		
-		this.cardGroup = new CardGroup(decksList());
+		/*this.cardGroup = new CardGroup(decksList());
 		this.cardGroup = new CardGroupDecorator(this.cardGroup);
-		this.cardGroup.setPlayer(this);
+		this.cardGroup.setPlayer(this);*/
 		
 		this.useCard = new UseCard();
 		this.useCard = new UseCardDecorator(this.useCard);
 		this.useCard.setPlayer(this);
 		
 		//command会用到
-		data.put(CommandBuffer.CARDGROUP, this.cardGroup);
+		//data.put(CommandBuffer.CARDGROUP, this.cardGroup);
 		data.put(CommandBuffer.GROUND, this.ground);
 		data.put(CommandBuffer.OWN, this);
 		data.put(CommandBuffer.USECARD, this.useCard);
@@ -170,13 +172,27 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	
 	private LifeCard hero;
 	
-	public LifeCard getHeroCard() {
+	public LifeCard getHero() {
 		// TODO Auto-generated method stub
 		return this.hero;
 	}
-	public void setHeroCard(LifeCard hero) {
+	public void setHero(LifeCard hero) {
 		// TODO Auto-generated method stub
 		this.hero = hero;
+	}
+	
+	private Integer heroCardID = null;
+	
+	@Override
+	public Integer getHeroCardID() {
+		// TODO Auto-generated method stub
+		return this.heroCardID;
+	}
+	
+	@Override
+	public void setHeroCardID(Integer cardID) {
+		// TODO Auto-generated method stub
+		this.heroCardID = cardID;
 	}
 	
 	private Integer callCountPlay = 0;                        //玩家本次比赛召唤随从次数
@@ -212,14 +228,47 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		callCountPlay += time;
 	}
 	
+	private List<LifeCard> attendantList = new ArrayList<LifeCard>();
+	
 	@Override
-	public void takeCard() {
+	public List<LifeCard> getAttendantList() {
 		// TODO Auto-generated method stub
-		ICard card = cardGroup.out();
-		if(null!=card){
-	    	useCard.add(useCard.getSize(),card);
-		}else{
-			//如果牌抽完了
+		return attendantList;
+	}
+	
+	@Override
+	public List<LifeCard> getAttendantList(Boolean activate) {
+		// TODO Auto-generated method stub
+		List<LifeCard> list = new ArrayList<LifeCard>();
+		for(LifeCard life : getAttendantList()){
+			if(activate.equals(life.getActivate().getActivation()))
+				list.add(life);
 		}
+		return list;
+	}
+	
+	@Override
+	public void addAttendant(LifeCard life) {
+		// TODO Auto-generated method stub
+		attendantList.add(life);
+	}
+	
+	@Override
+	public void removeAttendant(LifeCard life) {
+		// TODO Auto-generated method stub
+		attendantList.remove(life);
+	}
+	
+	private Integer rationLimit = 10;
+	
+	@Override
+	public Integer getRationLimit() {
+		return rationLimit;
+	}
+	
+	@Override
+	public void setRationLimit(Integer ration) {
+		// TODO Auto-generated method stub
+		this.rationLimit = ration;
 	}
 }

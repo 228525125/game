@@ -50,16 +50,16 @@ public class CallOption extends Option implements IOption {
 	@Override
 	public void execute(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.execute();
+		super.execute(objects);
 		
 		IPlace place = (IPlace) objects[0];
-		addValidator(new CallRangeValidator((Town)getOwner(), place));
+		addValidator(new CallRangeValidator(getOwner(), place));
 		
 		doValidator();
 		if(hasError())
 			throw new RuleValidatorException(getErrors().getMessage());
 		
-		LifeCard life = (LifeCard) CardFactory.getInstance(cardId);
+		LifeCard life = (LifeCard) CardFactory.getInstance(cardId, getOwner().getPlayer());
 		life.call(place);
 	}
 }

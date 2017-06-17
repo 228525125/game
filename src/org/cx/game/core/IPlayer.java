@@ -60,12 +60,28 @@ public interface IPlayer
 	public IPlayerPolicy getPolicy();
 	
 	/**
-	 * 英雄卡
+	 * 英雄
 	 * @return
 	 */
-	public LifeCard getHeroCard();
+	public LifeCard getHero();
 	
-	public void setHeroCard(LifeCard hero);
+	public void setHero(LifeCard hero);
+	
+	/**
+	 * 英雄编号
+	 * @return
+	 */
+	public Integer getHeroCardID();
+	
+	public void setHeroCardID(Integer cardID);
+	
+	/**
+	 * 英雄入口，必须是玩家主城
+	 * @return
+	 */
+	public Integer getHeroEntry();
+	
+	public void setHeroEntry(Integer position);
 	
 	/**
 	 * 玩家本次比赛召唤随从次数
@@ -97,8 +113,36 @@ public interface IPlayer
 	public void resetCallCountOfBout();
 	
 	/**
-	 * 抽牌
+	 * 获取所有随从
+	 * @return
 	 */
-	public void takeCard();
+	public List<LifeCard> getAttendantList();
+	
+	/**
+	 * 增加随从
+	 * @param life 
+	 */
+	public void addAttendant(LifeCard life);
+	
+	/**
+	 * 减少随从
+	 * @param life
+	 */
+	public void removeAttendant(LifeCard life);
+	
+	/**
+	 * 获取激活状态的随从
+	 * @param activate
+	 * @return
+	 */
+	public List<LifeCard> getAttendantList(Boolean activate);
+	
+	/**
+	 * 人口限制
+	 * @return
+	 */
+	public Integer getRationLimit();
+	
+	public void setRationLimit(Integer ration);
 
 }

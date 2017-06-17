@@ -30,8 +30,10 @@ import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.ControlQueueDecorator;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IControlQueue;
+import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
+import org.cx.game.widget.building.IBuilding;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -58,6 +60,9 @@ public class Context extends Observable implements IContext
 		// TODO Auto-generated constructor stub
 		this.player1 = player1;
 		this.player2 = player2;
+		
+		this.queue.add(player1);
+		this.queue.add(player2);
 		
 		addObserver(new JsonOut());
 		
@@ -216,16 +221,18 @@ public class Context extends Observable implements IContext
 		bout++;
 	}
 	
-	/**
+	/** 
 	 * 获得行动权的life
 	 */
-	private LifeCard controlLife = null;
+	//private LifeCard controlLife = null;   半回合制
 	
-	public LifeCard getControlLife() {
+	/* 半回合制
+	 * public LifeCard getControlLife() {
 		return controlLife;
-	}
+	}*/
 
-	private void setControlLife(LifeCard controlLife) {
+	/* 半回合制
+	 * private void setControlLife(LifeCard controlLife) {
 		this.controlLife = controlLife;
 		setControlPlayer(controlLife.getPlayer());
 		
@@ -235,7 +242,7 @@ public class Context extends Observable implements IContext
 		map.put("position", getControlLife().getContainerPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Control,map);
 		notifyObservers(info);
-	}
+	}*/
 
 	/**
 	 * 当前操作比赛的玩家对象
@@ -251,7 +258,6 @@ public class Context extends Observable implements IContext
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("control", controlPlayer);
-		map.put("life", null);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Control,map);
 		notifyObservers(info);
 	}
@@ -269,26 +275,39 @@ public class Context extends Observable implements IContext
 	 * 切换控制权
 	 * @param object
 	 */
-	private void setControl(Object object){
-		/*if (object instanceof IPlayer) {
-			IPlayer control = (IPlayer) object;
-			
-			setControlPlayer(control);
+	private void setControl(IPlayer player){
+			setControlPlayer(player);
 			
 			boutCount += 1;
 			if(boutCount/playerNumber==1){
 				decorator.addBout();                        //增加回合
 				boutCount = 0;
 			}
-			getControlPlayer().addToResource(Bout_Power_Add);        //增加能量
+			
+			Integer tax = 0;
+			IGround ground = player.getGround();
+			List<IBuilding> list = ground.getBuildingList(player);
+			for(IBuilding building : list)
+				tax += building.getTax();
+			
+			getControlPlayer().addToResource(tax);              //征税
 			
 			getControlPlayer().resetCallCountOfBout();          //重置call计数器
 			
-			getControlPlayer().takeCard();                  //摸牌
+			for(LifeCard life : player.getAttendantList()){
+				Integer speed = life.getActivate().getSpeed();
+				life.getActivate().addToVigour(speed);
+				try {
+					life.activate(true);
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			
-			this.controlLife=null;      //如果ControlLife不为null就表示控制权在life
-		}*/
-		if (object instanceof LifeCard) {
+			//this.controlLife=null;  半回合制    //如果ControlLife不为null就表示控制权在life
+		
+		/*if (object instanceof LifeCard) {
 			LifeCard life = (LifeCard) object;
 			try {
 				life.activate(true);
@@ -313,12 +332,12 @@ public class Context extends Observable implements IContext
 				
 				getControlPlayer().takeCard();                  //摸牌
 			}
-		}
+		}*/
 	}
 	
 	public void switchControl(){
 		Object object = queue.out();
-		setControl(object);
+		setControl((IPlayer) object);
 	}
 	
 	public void addIntercepter(IIntercepter intercepter) {
@@ -336,11 +355,6 @@ public class Context extends Observable implements IContext
 	@Override
 	public void deleteIntercepter(IIntercepter intercepter) {
 		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
 		intercepter.delete();
 	}
 

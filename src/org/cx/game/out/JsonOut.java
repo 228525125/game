@@ -29,7 +29,7 @@ public class JsonOut extends Response implements Observer {
 		JsonConfig config = new JsonConfig();
 		config.setExcludes(new String[]{
 			"cards","password","context","decks","cardGroup","ground","useCard","commandBuffer",       //User
-			"heroCard",              //Player
+			"hero","attendantList",              //Player
 			"near",                  //Place
 			"index",                 //ControlQueue.Place
 			"strongHoldList","randomEntry","landformMap","emptyList","disableList",        //Ground

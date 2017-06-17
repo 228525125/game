@@ -12,7 +12,6 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
-import org.cx.game.widget.building.Town;
 
 /**
  * position用二维坐标系表示，中间用0000隔开，例如(1,2) = 100002
@@ -99,24 +98,27 @@ public interface IGround extends IContainer{
 	
 	/**
 	 * 获取建筑的坐标
+	 * @param player 玩家
 	 * @return
 	 */
 	public List<Integer> getBuildingPosition(IPlayer player);
 	
 	/**
-	 * 获取城镇的坐标
+	 * 获取建筑的坐标
 	 * @param player 玩家
+	 * @param buildingType 建筑类型
+	 * @return
+	 */
+	public List<Integer> getBuildingPosition(IPlayer player, Integer buildingType);
+	
+	/**
+	 * 获取建筑的坐标
+	 * @param player 玩家
+	 * @param buildingType 建筑类型
 	 * @param level 大于等于这个等级
 	 * @return
 	 */
-	public List<Integer> getTownPosition(IPlayer player, Integer level);
-	
-	/**
-	 * 获取主城镇的坐标
-	 * @param player 玩家 
-	 * @return
-	 */
-	public Integer getMainTownPosition(IPlayer player);
+	public List<Integer> getBuildingPosition(IPlayer player, Integer buildingType, Integer level);
 	
 	/**
 	 * 无效的区域
@@ -147,6 +149,21 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<IBuilding> getBuildingList();
+	
+	/**
+	 * 获取建筑物
+	 * @param player 玩家
+	 * @return
+	 */
+	public List<IBuilding> getBuildingList(IPlayer player);
+	
+	/**
+	 * 获取建筑物
+	 * @param type 建筑物类型
+	 * @param player 玩家
+	 * @return
+	 */
+	public List<IBuilding> getBuildingList(IPlayer player, Integer type);
 	
 	/**
 	 * 增加一个建筑物

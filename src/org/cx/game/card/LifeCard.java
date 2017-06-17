@@ -32,12 +32,15 @@ import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
 import org.cx.game.action.ISwap;
+import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.Renew;
 import org.cx.game.action.RenewDecorator;
 import org.cx.game.action.Swap;
 import org.cx.game.action.SwapDecorator;
+import org.cx.game.action.LifeUpgrade;
+import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
 import org.cx.game.card.skill.IActiveSkill;
@@ -132,6 +135,19 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setHp(Integer hp) {
 		this.hp = hp;
+	}
+	
+	/**
+	 * 人口
+	 */
+	private Integer ration = 1;
+
+	public Integer getRation() {
+		return ration;
+	}
+
+	public void setRation(Integer ration) {
+		this.ration = ration;
 	}
 
 	private Integer energy = 100;
@@ -240,17 +256,17 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attackMode = attackMode;
 	}
 	
-	private Integer speedChance = 100;
+	private Integer speed = 100;
 	
 	/**
 	 * 速度，基准100，为什么速度是int型，因为在ControlQueue中使用int方便计算
 	 */
-	public Integer getSpeedChance() {
-		return speedChance;
+	public Integer getSpeed() {
+		return speed;
 	}
 
-	public void setSpeedChance(Integer speed) {
-		this.speedChance = speed;
+	public void setSpeed(Integer speed) {
+		this.speed = speed;
 	}
 	
 	private Integer fleeChance = 0;
@@ -570,6 +586,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(null==activate){
 			IActivate activate = new Activate();
 			activate.setActivation(activation);
+			activate.setSpeed(speed);
 			activate.setOwner(this);
 			this.activate = new ActivateDecorator(activate);
 		}
@@ -577,6 +594,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	public void setActivate(IActivate activate) {
+		activate.setSpeed(speed);
 		activate.setOwner(this);
 		this.activate = new ActivateDecorator(activate);
 	}
@@ -591,7 +609,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 			IAttack attack = new Attack();
 			attack.setAtk(atk);
 			attack.setRange(attackRange);
-			attack.setSpeedChance(speedChance);
 			attack.setLockChance(lockChance);
 			attack.setMode(attackMode);
 			attack.setOwner(this);
@@ -603,7 +620,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setAttack(IAttack attack) {
 		attack.setAtk(atk);
 		attack.setRange(attackRange);
-		attack.setSpeedChance(speedChance);
 		attack.setLockChance(lockChance);
 		attack.setMode(attackMode);
 		attack.setOwner(this);
@@ -797,6 +813,25 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 升级
+	 */
+	private IUpgrade upgrade = null;
+	
+	public IUpgrade getUpgrade() {
+		if(null==upgrade){
+			IUpgrade upgrade = new LifeUpgrade();
+			upgrade.setOwner(this);
+			this.upgrade = new UpgradeDecorator(upgrade);
+		}
+		return this.upgrade;
+	}
+	
+	public void setUpgrade(IUpgrade upgrade) {
+		upgrade.setOwner(this);
+		this.upgrade = new UpgradeDecorator(upgrade);
+	}
+	
+	/**
 	 * 激活
 	 * @param activate
 	 * @throws RuleValidatorException
@@ -888,6 +923,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 升级
+	 * @throws RuleValidatorException
+	 */
+	public void upgrade() throws RuleValidatorException {
+		getUpgrade().action();
+	}
+	
+	/**
 	 * 初始化状态
 	 */
 	public void initState() {
@@ -899,10 +942,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		getAttack().setAtk(atk);
 		getAttack().setMode(attackMode);
-		if(Debug.isDebug)
-			getAttack().setSpeedChance(IControlQueue.consume);
-		else
-			getAttack().setSpeedChance(speedChance);
+		
+		getActivate().setSpeed(speed);
 		getAttack().setLockChance(lockChance);
 		
 		getCall().setConsume(consume);

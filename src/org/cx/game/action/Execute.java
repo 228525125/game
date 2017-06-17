@@ -25,7 +25,7 @@ public class Execute extends Action implements IExecute {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getOwner().getPlayer());
-		map.put("container", getOwner().getOwner().getOwner().getContainer());
+		map.put("container", getOwner().getOwner().getPlayer().getGround());
 		map.put("building", getOwner().getOwner());
 		map.put("option", getOwner());
 		map.put("position", getOwner().getOwner().getPosition());

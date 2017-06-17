@@ -12,6 +12,7 @@ import java.util.List;
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
 import org.cx.game.core.Context;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
@@ -58,16 +59,22 @@ public class CardFactory {
 		return null;
 	}
 	
-	public static ICard getInstance(Integer cid){
+	public static ICard getInstance(Integer cid, IPlayer player){
 		Element cardEl = getElement(cid);
-		return getInstance(cardEl);
+		ICard card = getInstance(cardEl);
+		card.setPlayer(player);
+		card.setPlayId(player.getContext().newCardPlayId());
+		return card;
 	}
 	
-	public static List<ICard> getInstances(List<Integer> cid){
+	public static List<ICard> getInstances(List<Integer> cid, IPlayer player){
 		List<ICard> list = new ArrayList<ICard>();
 		
 		for(Integer id : cid){
 			Element cardEl = getElement(id);
+			ICard card = getInstance(cardEl);
+			card.setPlayer(player);
+			card.setPlayId(player.getContext().newCardPlayId());
 			list.add(getInstance(cardEl));
 		}
 		return list;
@@ -109,9 +116,9 @@ public class CardFactory {
 		ids.add(1440019);
 		ids.add(1440020);
 		
-		List<ICard> list = getInstances(ids);
+		/*List<ICard> list = getInstances(ids);
 		for(ICard card : list){
 			System.out.println(card.getName());
-		}
+		}*/
 	}
 }

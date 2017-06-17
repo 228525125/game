@@ -23,10 +23,10 @@ public class Attack extends Action implements IAttack {
 	
 	private Integer mode = IAttack.Mode_Far;          //模式，近战/远程
 	private Integer range = 1;                        //距离
-	private Integer speedChance = 0;                  //速度
 	private Integer lockChance = 0;                   //锁定几率
 	private Integer atk = 0;                          //攻击力
 	private Boolean counterAttack = false;            //是否是反击
+	private Boolean attackable = false;
 	
 	private AttackRule rule = new AttackRule(this); 
 	
@@ -90,37 +90,7 @@ public class Attack extends Action implements IAttack {
 		}
 	}
 
-	@Override
-	public Integer getSpeedChance() {
-		// TODO Auto-generated method stub
-		return this.speedChance;
-	}
 	
-	@Override
-	public void setSpeedChance(Integer speedChance) {
-		// TODO Auto-generated method stub
-		if(this.speedChance!=speedChance){
-			this.speedChance = speedChance;
-		}
-	}
-	
-	@Override
-	public void addToSpeedChance(Integer speedChance) {
-		// TODO Auto-generated method stub
-		if(!Integer.valueOf(0).equals(speedChance)){
-			this.speedChance += speedChance;
-			this.speedChance = this.speedChance < 0 ? 0 : this.speedChance;		
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("change", speedChance);
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Speed,map);
-			super.notifyObservers(info);
-		}
-	}
 
 	public Integer getAtk() {
 		if(null!=getWeapon())
@@ -189,6 +159,18 @@ public class Attack extends Action implements IAttack {
 		this.counterAttack = counterAttack;
 	}
 	
+	@Override
+	public Boolean getAttackable() {
+		// TODO Auto-generated method stub
+		return this.attackable;
+	}
+	
+	@Override
+	public void setAttackable(Boolean attackable) {
+		// TODO Auto-generated method stub
+		this.attackable = attackable;
+	}
+	
 	/**
 	 * 武器
 	 */
@@ -230,6 +212,8 @@ public class Attack extends Action implements IAttack {
 		super.notifyObservers(info);
 		
 		attacked.attacked(getOwner(), this.rule.cloneForAttack());
+		
+		setAttackable(false);
 	}
 	
 	public IAttack clone() {

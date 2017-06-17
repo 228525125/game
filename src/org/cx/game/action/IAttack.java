@@ -40,16 +40,6 @@ public interface IAttack extends IAction {
 	
 	public void addToRange(Integer range);
 	
-	public Integer getSpeedChance();
-	
-	/**
-	 * 隐式使用，不涉及到模块以外的变更时使用；
-	 * @param speedChance
-	 */
-	public void setSpeedChance(Integer speedChance);
-	
-	public void addToSpeedChance(Integer speedChance);
-	
 	public Integer getAtk();
 
 	/**
@@ -77,6 +67,14 @@ public interface IAttack extends IAction {
 	public Boolean getCounterAttack();
 	
 	public void setCounterAttack(Boolean counterAttack);
+	
+	/**
+	 * 是否能够攻击
+	 * @return
+	 */
+	public Boolean getAttackable();
+	
+	public void setAttackable(Boolean attackable);
 	
 	/**
 	 * 武器

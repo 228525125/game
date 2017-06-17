@@ -35,8 +35,6 @@ public class Renew extends Action implements IRenew {
 		IPlayer player = getOwner().getPlayer();
 		IContainer ground = place.getContainer();
 		ground.add(place.getPosition(), getOwner());
-		
-		player.getContext().getControlQueue().add(getOwner());   //插入队列
 						
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());

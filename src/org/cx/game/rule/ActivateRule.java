@@ -32,13 +32,17 @@ public class ActivateRule implements IRule {
 				LifeCard owner = getOwner().getOwner();
 				
 				if(activate){
+					owner.getAttack().setAttackable(true);
 					owner.getMove().setMoveable(true);
 					owner.getAttacked().setFightBack(true);
 					List<IBuff> buffs = getOwner().getOwner().getNexusBuff(AttackLockBuff.class);  //清除锁定对象
 					for(IBuff buff : buffs){
 						buff.invalid();
 					}
+					
+					this.activate.addToVigour(-IActivate.ActivationConsume);
 				}else{
+					owner.getAttack().setAttackable(false);
 					owner.getMove().setMoveable(false);
 				}
 			}

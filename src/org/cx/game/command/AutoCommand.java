@@ -15,12 +15,7 @@ public class AutoCommand extends InteriorCommand {
 	public void execute() throws ValidatorException {
 		// TODO Auto-generated method stub
 		super.execute();
-		
-		if(null!=this.context.getControlLife()){
-			LifeCard life = context.getControlLife();
-			life.getPolicy().execute();
-		}else{
-			this.player.getPolicy().execute();
-		}
+
+		this.player.getPolicy().execute();
 	}
 }

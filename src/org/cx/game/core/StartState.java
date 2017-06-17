@@ -58,33 +58,15 @@ public class StartState extends PlayState {
 		
 		IPlayer player1 = context.getPlayer1();
 		IPlayer player2 = context.getPlayer2();
-		LifeCard hero1 = player1.getHeroCard();
-		LifeCard hero2 = player2.getHeroCard();
-		ICardGroup cardGroup1 = player1.getCardGroup();
-		ICardGroup cardGroup2 = player2.getCardGroup();
-		cardGroup1.out(cardGroup1.getPosition(hero1));
-		cardGroup2.out(cardGroup2.getPosition(hero2));
-		IUseCard useCard1 = player1.getUseCard();
-		IUseCard useCard2 = player2.getUseCard();
-		useCard1.add(useCard1.getSize(), hero1);
-		useCard2.add(useCard2.getSize(), hero2);
-		
-		/*
-		 * 游戏开始各抽5张牌
-		 */
-		for(int i=0;i<5;i++){
-			player1.takeCard();
-			
-			player2.takeCard();
-		}
+		LifeCard hero1 = player1.getHero();
+		LifeCard hero2 = player2.getHero();
 		
 		/*
 		 * 英雄登场
 		 */
-		
 		IGround ground = player1.getGround();
-		IPlace place1 = ground.getPlace(ground.getMainTownPosition(player1));
-		IPlace place2 = ground.getPlace(ground.getMainTownPosition(player2));
+		IPlace place1 = ground.getPlace(player1.getHeroEntry());
+		IPlace place2 = ground.getPlace(player2.getHeroEntry());
 		try {
 			hero1.call(place1);
 			hero2.call(place2);

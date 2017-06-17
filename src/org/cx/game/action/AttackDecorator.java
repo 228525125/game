@@ -67,25 +67,6 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	}
 
 	@Override
-	public Integer getSpeedChance() {
-		// TODO Auto-generated method stub
-		return attack.getSpeedChance();
-	}
-	
-	@Override
-	public void setSpeedChance(Integer speedChance) {
-		// TODO Auto-generated method stub
-		attack.setSpeedChance(speedChance);
-	}
-	
-	@Override
-	public void addToSpeedChance(Integer speedChance) {
-		// TODO Auto-generated method stub
-		attack.addToSpeedChance(speedChance);
-	}
-
-
-	@Override
 	public Integer getAtk() {
 		// TODO Auto-generated method stub
 		return attack.getAtk();
@@ -162,5 +143,17 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(this.attack);     
 		((IAttack)proxy).handWeapon(weapon);
+	}
+
+	@Override
+	public Boolean getAttackable() {
+		// TODO Auto-generated method stub
+		return this.attack.getAttackable();
+	}
+
+	@Override
+	public void setAttackable(Boolean attackable) {
+		// TODO Auto-generated method stub
+		this.attack.setAttackable(attackable);
 	}
 }
