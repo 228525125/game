@@ -20,6 +20,8 @@ import org.cx.game.widget.building.IOption;
  */
 public interface IGround extends IContainer{
 	
+	public static final Integer Landform = 1011;
+	
 	public static String space = "8008";                               //位置坐标间隔符
 	
 	public LifeCard getCard(Integer position);

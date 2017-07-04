@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.cx.game.action.IUpgrade;
+import org.cx.game.core.ContextFactory;
+import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -28,7 +30,10 @@ public class UpgradeProcess implements IIntercepter, IRecover {
 		this.waitBout = waitBout;
 		this.upgrade = upgrade;
 		
-		recordIntercepter(((IBuilding)upgrade.getOwner()).getPlayer().getContext(), this);
+		IContext context = ContextFactory.getInstance();
+		this.beginBout = context.getBout();
+		
+		recordIntercepter(context, this);
 	}
 	
 	public Integer getProcess(){
@@ -51,11 +56,9 @@ public class UpgradeProcess implements IIntercepter, IRecover {
 	@Override
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
-		IPlayer player = ((IBuilding)this.upgrade.getOwner()).getPlayer();
-		if(0==beginBout)
-			beginBout = player.getContext().getBout();
+		IContext context = ContextFactory.getInstance();
 		
-		curBout = player.getContext().getBout();
+		curBout = context.getBout();
 		if((curBout-beginBout)==this.waitBout){
 			try {
 				this.upgrade.action();
@@ -75,10 +78,7 @@ public class UpgradeProcess implements IIntercepter, IRecover {
 	@Override
 	public Boolean isInvoke() {
 		// TODO Auto-generated method stub
-		if(this.upgrade.getWaitBout()>0)
-			return false;
-		else
-			return true;
+		return true;
 	}
 
 	@Override
@@ -103,6 +103,10 @@ public class UpgradeProcess implements IIntercepter, IRecover {
 	public Boolean isDelete() {
 		// TODO Auto-generated method stub
 		return this.isDelete;
+	}
+	
+	public void invalid(){
+		resetIntercepter();
 	}
 	
 	public void resetIntercepter() {

@@ -27,6 +27,8 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 			for(int j=1;j<ground.getYBorder()+1;j++){
 				Integer curPos = Integer.valueOf(""+i+IGround.space+j);
 				IPlace place = new Place(this, curPos);
+				Integer landform = ground.getLandformMap().get(curPos);
+				place.setLandform(null!=landform ? landform : IPlace.Landform_Sward);
 				ground.addPlace(new PlaceDecorator(place));
 				
 				getEmptyList().add(curPos);      //初始化空位置

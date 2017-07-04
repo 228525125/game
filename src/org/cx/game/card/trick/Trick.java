@@ -122,7 +122,7 @@ public abstract class Trick extends Observable implements ITrick {
 	private final static String Affect = "_Affect";
 	
 	@Override
-	public void affect(Object...objects) throws RuleValidatorException {
+	public void affect(Object...objects) {
 		// TODO Auto-generated method stub
 		if(0==beginBout)
 			beginBout = getPlayer().getContext().getBout();
@@ -284,7 +284,7 @@ public abstract class Trick extends Observable implements ITrick {
 	}
 
 	@Override
-	public List<Integer> queryForCategory(Integer category) {
+	public List<Integer> queryTagForCategory(Integer category) {
 		// TODO Auto-generated method stub
 		return Context.queryForCategory(category);
 	}

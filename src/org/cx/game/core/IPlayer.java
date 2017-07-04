@@ -5,6 +5,7 @@ import java.util.List;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.policy.IPlayerPolicy;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.ICemetery;
@@ -17,17 +18,13 @@ import org.cx.game.widget.building.IBuilding;
  * @author chenxian
  *
  */
-public interface IPlayer
+public interface IPlayer extends IInterceptable
 {		
 	public Integer getId();
-	
-	public void setId(Integer id);
 	
 	public IContext getContext();
 	
 	public void setContext(IContext context);
-	
-	public ICardGroup getCardGroup();
 	
 	public IGround getGround();
 	
@@ -43,17 +40,15 @@ public interface IPlayer
 	 * 隐式的改变资源
 	 * @param power
 	 */
-	public void setResource(Integer power);
+	public void setResource(Integer res);
 	
 	/**
 	 * 显示的改变资源
 	 * @param resource
 	 */
-	public void addToResource(Integer power);
+	public void addToResource(Integer res);
 	
 	public CommandBuffer getCommandBuffer();
-	
-	public List<ICard> decksList();
 	
 	public String getName();
 	
@@ -119,18 +114,6 @@ public interface IPlayer
 	public List<LifeCard> getAttendantList();
 	
 	/**
-	 * 增加随从
-	 * @param life 
-	 */
-	public void addAttendant(LifeCard life);
-	
-	/**
-	 * 减少随从
-	 * @param life
-	 */
-	public void removeAttendant(LifeCard life);
-	
-	/**
 	 * 获取激活状态的随从
 	 * @param activate
 	 * @return
@@ -144,5 +127,20 @@ public interface IPlayer
 	public Integer getRationLimit();
 	
 	public void setRationLimit(Integer ration);
+
+	/**
+	 * 人口总数
+	 * @return
+	 */
+	public Integer getRation();
+
+	public void addToRation(Integer ration);
+	
+	/**
+	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
+	 */
+	public Integer getBout();
+	
+	public void addBout();
 
 }

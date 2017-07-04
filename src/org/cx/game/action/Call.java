@@ -15,10 +15,11 @@ import org.cx.game.widget.IPlace;
 public class Call extends Action implements ICall {
 	
 	private Integer consume = 1;
+	private Integer ration = 1;
 	
 	public Call() {
 		// TODO Auto-generated constructor stub
-		addObserver(new CallRule(this));;
+		addObserver(new CallRule(this));
 	}
 	
 	@Override
@@ -76,5 +77,17 @@ public class Call extends Action implements ICall {
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Consume,map);
 			super.notifyObservers(info);
 		}
+	}
+	
+	@Override
+	public Integer getRation() {
+		// TODO Auto-generated method stub
+		return this.ration;
+	}
+	
+	@Override
+	public void setRation(Integer ration) {
+		// TODO Auto-generated method stub
+		this.ration = ration;
 	}
 }

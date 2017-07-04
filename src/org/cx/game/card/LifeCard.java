@@ -31,14 +31,11 @@ import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
-import org.cx.game.action.ISwap;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.Renew;
 import org.cx.game.action.RenewDecorator;
-import org.cx.game.action.Swap;
-import org.cx.game.action.SwapDecorator;
 import org.cx.game.action.LifeUpgrade;
 import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.card.buff.IBuff;
@@ -61,16 +58,20 @@ import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.building.IOption;
 
 /**
  * 所有生物卡的父类，
  * 注意：在子类的构造函数中要添加动作（如IAttack）的装饰器（AttackDecorator）
  * this.attack = new AttackDecorator(attack);
- * @author cx
+ * @author chenxian
  *
  */
 public class LifeCard extends java.util.Observable implements ICard, Observable
 {
+	
+	public final static Integer Life = 1007; 
+	
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	
 	public LifeCard(Integer id) {
@@ -243,7 +244,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.attackRange = attackRange;
 	}
 
-	private Integer attackMode = 0;
+	private Integer attackMode = IAttack.Mode_Near;
 	
 	/**
 	 * 攻击模式，远/近
@@ -254,6 +255,20 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setAttackMode(Integer attackMode) {
 		this.attackMode = attackMode;
+	}
+	
+	private Integer def = 0;
+	
+	/**
+	 * 防御力
+	 * @return
+	 */
+	public Integer getDef(){
+		return this.def;
+	}
+	
+	public void setDef(Integer def){
+		this.def = def;
 	}
 	
 	private Integer speed = 100;
@@ -454,6 +469,19 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
+	 * 技能点
+	 */
+	private Integer skillCount = 0;
+	
+	public Integer getSkillCount() {
+		return skillCount;
+	}
+
+	public void setSkillCount(Integer skillCount) {
+		this.skillCount = skillCount;
+	}
+
+	/**
 	 * 种族
 	 */
 	public final static Integer Stirps = 1004;
@@ -509,6 +537,41 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public final static Integer Stirps_Fish = 180;
 	
 	/**
+	 * 职业
+	 */
+	public final static Integer Profession = 1006;
+	
+	/**
+	 * 战士
+	 */
+	public final static Integer Profession_Soldier = 301;
+	
+	/**
+	 * 法师
+	 */
+	public final static Integer Profession_Magic = 302;
+	
+	/**
+	 * 牧师
+	 */
+	public final static Integer Profession_Pastor = 303;
+	
+	/**
+	 * 圣骑士
+	 */
+	public final static Integer Profession_Paladin = 304;
+	
+	/**
+	 * 猎人
+	 */
+	public final static Integer Profession_Hunter = 305;
+	
+	/**
+	 * 盗贼
+	 */
+	public final static Integer Profession_Thief = 306;
+	
+	/**
 	 * 技能
 	 */
 	private List<ISkill> skillList = new ArrayList<ISkill>();
@@ -523,11 +586,23 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.skillList = skillList;
 	}
 
-	public ISkill getSkill(Integer index){
-		if(index<skillList.size())
-			return (ISkill) skillList.get(index);
-		else
-			return null;
+	/**
+	 * 
+	 * @param code skill的id，这里为了兼容一部分程序，增加code也作为index
+	 * @return
+	 */
+	public ISkill getSkill(Integer code){
+		ISkill skill = null;
+		if(code<skillList.size()){
+			skill = (ISkill) skillList.get(code);
+		}else{
+			for(ISkill s : skillList){
+				if(code.equals(s.getId()))
+					skill = s;
+			}
+		}
+		
+		return skill;
 	}
 	
 	public IActiveSkill getActiveSkill(Integer index){
@@ -634,6 +709,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public IAttacked getAttacked() {
 		if(null==attacked){
 			IAttacked attacked = new Attacked();
+			attacked.setDef(def);
 			attacked.setOwner(this);
 			this.attacked = new AttackedDecorator(attacked);
 		}
@@ -641,7 +717,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	public void setAttacked(IAttacked attacked) {
-		attacked.setOwner(this);
+		attacked.setDef(def);
+		attacked.setOwner(this);		
 		this.attacked = new AttackedDecorator(attacked);
 	}
 	
@@ -711,25 +788,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	/**
-	 * 交换
-	 */
-	private ISwap swap = null;
-	
-	public ISwap getSwap() {
-		if(null==swap){
-			ISwap swap = new Swap();
-			swap.setOwner(this);
-			this.swap = new SwapDecorator(swap);
-		}
-		return swap;
-	}
-
-	public void setSwap(ISwap swap) {
-		swap.setOwner(this);
-		this.swap = new SwapDecorator(swap);
-	}
-
-	/**
 	 * 召唤
 	 */
 	private ICall call = null;
@@ -738,6 +796,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(null==call){
 			ICall call = new Call();
 			call.setConsume(consume);
+			call.setRation(ration);
 			call.setOwner(this);
 			this.call = new CallDecorator(call);
 		}
@@ -747,6 +806,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setCall(ICall call) {
 		call.setConsume(consume);
+		call.setRation(ration);
 		call.setOwner(this);
 		this.call = new CallDecorator(call);
 	}
@@ -907,14 +967,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
-	 * 交换
-	 * @param life 用于交换的卡片
-	 */
-	public void swap(LifeCard life) throws RuleValidatorException {
-		getSwap().action(life);
-	}
-	
-	/**
 	 * 丢弃
 	 */
 	public void chuck() throws RuleValidatorException {
@@ -943,6 +995,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		getAttack().setAtk(atk);
 		getAttack().setMode(attackMode);
 		
+		getAttacked().setDef(def);
+		
 		getActivate().setSpeed(speed);
 		getAttack().setLockChance(lockChance);
 		
@@ -963,14 +1017,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		for(IBuff buff : buffs){
 			buff.invalid();
 		}
-		
-		/* 随从已取消主动技能，因此冷却也被取消
-		for(ISkill skill : skillList){            //刷新技能冷却时间
-			if (skill instanceof ActiveSkill) {
-				ActiveSkill as = (ActiveSkill) skill;
-				as.setCooldownBout(0);
-			}
-		}*/
 	}
 	
 	@Override
@@ -1051,9 +1097,18 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 
 	@Override
-	public List<Integer> queryForCategory(Integer category) {
+	public List<Integer> queryTagForCategory(Integer category) {
 		// TODO Auto-generated method stub
-		return Context.queryForCategory(category);
+		List<Integer> list1 =  Context.queryForCategory(category);
+		List<Integer> list2 = Context.queryForObject(getId());
+		list2.retainAll(list1);
+		return list2;
+	}
+	
+	@Override
+	public List<Integer> queryTagForObject() {
+		// TODO Auto-generated method stub
+		return Context.queryForObject(getId());
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Observable;
 
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IDeath;
+import org.cx.game.action.LifeUpgrade;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.card.buff.IBuff;
@@ -66,6 +67,12 @@ public class AttackRule implements IRule {
 				if(owner.getMove().getHide()){
 					owner.getMove().changeHide(false);
 				}
+				
+				//生命值与攻击力成正比
+				Integer scale = owner.getDeath().getHp()*100/owner.getHp();
+				Integer atk = clone.getAtk()*scale/100;
+				atk = 5>atk ? 5 : atk;
+				clone.setAtk(atk);
 			}
 		}
 	}

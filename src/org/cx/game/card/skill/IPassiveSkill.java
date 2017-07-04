@@ -10,7 +10,7 @@ import org.cx.game.observer.Observable;
  * @author chenxian
  *
  */
-public interface IPassiveSkill extends ISkill,IInterceptable,Observable,IIntercepter {
+public interface IPassiveSkill extends ISkill,IIntercepter {
 
 	/**
 	 * 激活

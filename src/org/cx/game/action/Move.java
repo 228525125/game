@@ -27,7 +27,7 @@ public class Move extends Action implements IMove{
 	
 	public Move() {
 		// TODO Auto-generated constructor stub
-		//addObserver(rule);         预留，暂没有内容
+		addObserver(rule);
 	}
 	
 	@Override

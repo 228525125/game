@@ -8,6 +8,7 @@ import java.util.Map;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
@@ -22,26 +23,43 @@ import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
 import org.cx.game.widget.UseCardDecorator;
 
-public abstract class Player extends java.util.Observable implements IPlayer ,Observable{
+public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
 	private Integer id = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一
+	
+	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();	
+	
+	public Player(Integer id, String name) {
+		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.id = id;
+	}
 	
 	@Override
 	public Integer getId() {
 		return id;
 	}
+	
+	private String name = null;
 
 	@Override
-	public void setId(Integer id) {
-		this.id = id;
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.name;
+	}
+	
+	private Integer heroEntry = null;
+
+	@Override
+	public Integer getHeroEntry() {
+		// TODO Auto-generated method stub
+		return heroEntry;
 	}
 
-	private ICardGroup cardGroup = null;
-	
 	@Override
-	public ICardGroup getCardGroup() {
+	public void setHeroEntry(Integer position) {
 		// TODO Auto-generated method stub
-		return cardGroup;
+		this.heroEntry = position;
 	}
 
 	private IGround ground = null;
@@ -95,52 +113,42 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		
 		this.context = context;
 		
-		/*this.cardGroup = new CardGroup(decksList());
-		this.cardGroup = new CardGroupDecorator(this.cardGroup);
-		this.cardGroup.setPlayer(this);*/
-		
-		this.useCard = new UseCard();
-		this.useCard = new UseCardDecorator(this.useCard);
-		this.useCard.setPlayer(this);
-		
 		//command会用到
-		//data.put(CommandBuffer.CARDGROUP, this.cardGroup);
 		data.put(CommandBuffer.GROUND, this.ground);
 		data.put(CommandBuffer.OWN, this);
-		data.put(CommandBuffer.USECARD, this.useCard);
 		data.put(CommandBuffer.OTHER, context.getOtherPlayer(this));
 		
 		commandBuffer = new CommandBuffer(this);
 	}
 	
-	private Integer power = 0;
+	private Integer resource = 0;
 
 	@Override
 	public Integer getResource() {
 		// TODO Auto-generated method stub
 		if(Debug.isDebug)
 			return Debug.power;
-		return power;
+		return resource;
 	}
 	
 	@Override
-	public void setResource(Integer power) {
+	public void setResource(Integer resource) {
 		// TODO Auto-generated method stub
-		this.power = power;
+		this.resource = resource;
 	}
 	
 	@Override
 	public void addToResource(Integer power) {
 		// TODO Auto-generated method stub
 		if(0!=power){
-			this.power += power;
-			this.power = this.power>0 ? this.power : 0;    //判断下限
+			this.resource += power;
+			this.resource = this.resource>0 ? this.resource : 0;    //判断下限
 			
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", this);
-			map.put("power", this.power);
+			map.put("resource", this.resource);
 			map.put("change", power);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Power,map);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
 			notifyObservers(info);
 		}
 	}
@@ -228,12 +236,10 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		callCountPlay += time;
 	}
 	
-	private List<LifeCard> attendantList = new ArrayList<LifeCard>();
-	
 	@Override
 	public List<LifeCard> getAttendantList() {
 		// TODO Auto-generated method stub
-		return attendantList;
+		return getGround().list(this);
 	}
 	
 	@Override
@@ -247,18 +253,6 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 		return list;
 	}
 	
-	@Override
-	public void addAttendant(LifeCard life) {
-		// TODO Auto-generated method stub
-		attendantList.add(life);
-	}
-	
-	@Override
-	public void removeAttendant(LifeCard life) {
-		// TODO Auto-generated method stub
-		attendantList.remove(life);
-	}
-	
 	private Integer rationLimit = 10;
 	
 	@Override
@@ -270,5 +264,80 @@ public abstract class Player extends java.util.Observable implements IPlayer ,Ob
 	public void setRationLimit(Integer ration) {
 		// TODO Auto-generated method stub
 		this.rationLimit = ration;
+	}
+	
+	private Integer ration = 0;
+	
+	@Override
+	public Integer getRation() {
+		// TODO Auto-generated method stub
+		return ration;
+	}
+	
+	@Override
+	public void addToRation(Integer ration) {
+		// TODO Auto-generated method stub
+		if(0<ration){
+			this.ration += ration;
+			this.ration = 0 > this.ration ? 0 : this.ration;			
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", this);
+			map.put("ration", this.ration);
+			map.put("change", ration);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Ration,map);
+			notifyObservers(info);
+		}
+	}
+	
+	private Integer bout = 0;
+	
+	@Override
+	public Integer getBout() {
+		// TODO Auto-generated method stub
+		return bout;
+	}
+	
+	@Override
+	public void addBout() {
+		// TODO Auto-generated method stub
+		this.bout++;
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", this);
+		map.put("bout", this.bout);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Bout,map);
+		notifyObservers(info);
+	}
+	
+	@Override
+	public void addIntercepter(IIntercepter intercepter) {
+		// TODO Auto-generated method stub
+		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
+		if(null!=intercepters){
+			intercepters.add(intercepter);
+		}else{
+			intercepters = new ArrayList<IIntercepter>();
+			intercepters.add(intercepter);
+			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
+		}
+	}
+
+	@Override
+	public void deleteIntercepter(IIntercepter intercepter) {
+		// TODO Auto-generated method stub
+		intercepter.delete();
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		intercepterList.clear();
+	}
+
+	@Override
+	public Map<String,List<IIntercepter>> getIntercepterList() {
+		// TODO Auto-generated method stub
+		return intercepterList;
 	}
 }

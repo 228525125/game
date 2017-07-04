@@ -2,8 +2,6 @@ package org.cx.game.action;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
-import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.validator.ConjurePowerValidator;
 
 public class ConjureDecorator extends ActionDecorator implements IConjure {
 
@@ -16,37 +14,11 @@ public class ConjureDecorator extends ActionDecorator implements IConjure {
 		
 		setParameterTypeValidator(new Class[]{IActiveSkill.class, Object[].class});
 	}
-
-	@Override
-	public Integer getPower() {
-		// TODO Auto-generated method stub
-		return this.conjure.getPower();
-	}
-
-	@Override
-	public void setPower(Integer power) {
-		// TODO Auto-generated method stub
-		this.conjure.setPower(power);
-	}
 	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return this.conjure.getOwner();
-	}
-	
-	private ConjurePowerValidator conjurePowerValidator = null;
-	
-	@Override
-	public void action(Object... objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub
-		IActiveSkill skill = (IActiveSkill) objects[0];
-		
-		deleteValidator(conjurePowerValidator);
-		conjurePowerValidator = new ConjurePowerValidator((LifeCard)getOwner(), skill);
-		addValidator(conjurePowerValidator);
-		
-		super.action(objects);
 	}
 
 }

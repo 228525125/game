@@ -44,8 +44,6 @@ public class CommandBuffer {
 	
 	public static final String OTHER = "other";
 	
-	public static final String CARDGROUP = "group";
-	
 	public static final String CEMETERY = "cemetery";
 	
 	public static final String TRICKLIST = "tricklist";
@@ -240,9 +238,6 @@ public class CommandBuffer {
 		}
 		if (item instanceof IUseCard) {
 			return USECARD;
-		}
-		if (item instanceof ICardGroup) {
-			return CARDGROUP;
 		}
 		if (item instanceof ICard) {
 			return CARD;

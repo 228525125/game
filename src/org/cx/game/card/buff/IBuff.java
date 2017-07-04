@@ -14,6 +14,8 @@ import org.cx.game.observer.Observable;
  */
 public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRecover{
 	
+	public final static Integer Buff = 1009;
+	
 	/**
 	 * 类名，不包含包名
 	 * @return

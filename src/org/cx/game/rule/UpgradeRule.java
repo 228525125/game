@@ -4,6 +4,8 @@ import java.util.Observable;
 
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.LifeUpgrade;
+import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -37,9 +39,16 @@ public class UpgradeRule implements IRule {
 						e.printStackTrace();
 					}
 				}
+				
 			}else if(NotifyInfo.Card_LifeCard_Action_Upgrade.equals(info.getType())) {
 				LifeUpgrade upgrade = (LifeUpgrade) this.upgrade;
 				upgrade.addToEmpiricValue(-upgrade.getConsume());
+				
+			}else if(NotifyInfo.Card_LifeCard_Skill_Upgrade.equals(info.getType())){
+				ISkill skill = (ISkill) this.upgrade.getOwner();
+				LifeCard life = skill.getOwner();
+				LifeUpgrade up = (LifeUpgrade) life.getUpgrade();
+				up.addToSkillCount(-this.upgrade.getConsume());
 				
 			}else if(NotifyInfo.Building_Action_Upgrade_Begin.equals(info.getType())){
 				IBuilding building = (IBuilding) this.upgrade.getOwner();
@@ -55,7 +64,6 @@ public class UpgradeRule implements IRule {
 				if(null!=player){
 					player.addToResource(-this.upgrade.getConsume());
 				}
-				
 			}
 		}
 	}

@@ -7,26 +7,13 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.IRule;
-import org.cx.game.tools.Debug;
-import org.cx.game.validator.ConjurePowerValidator;
 
 /**
- * 施法一个主动技能(停用)
+ * 施法一个主动技能
  * @author chenxian
  *
  */
 public class Conjure extends Action implements IConjure {
-
-	private Integer power = 0;
-
-	public Integer getPower() {
-		return power;
-	}
-
-	public void setPower(Integer power) {
-		this.power = power;
-	}
 	
 	@Override
 	public LifeCard getOwner() {
@@ -52,14 +39,9 @@ public class Conjure extends Action implements IConjure {
 		map.put("position", getOwner().getContainerPosition());
 		map.put("skill", skill);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Conjure,map);
-		super.notifyObservers(info);
-		
-		getDecorator().setPower(power-skill.getConsume());		
+		super.notifyObservers(info);	
 		
 		Object [] parameter = (Object[]) objects[1];
 		skill.useSkill(parameter);
-		
-		if(!Debug.isDebug)
-			getOwner().getPlayer().getContext().done();
 	}
 }

@@ -11,7 +11,9 @@ import org.cx.game.rule.UpgradeRule;
 
 public class LifeUpgrade extends Upgrade implements IUpgrade {
 	
-	private Integer empiricValue = 0;
+	private Integer empiricValue = 0;          //经验值
+	private Integer consume = IUpgrade.BasicConsume; 
+	private Integer skillCount = 0;            //技能点
 	
 	private IRule rule = new UpgradeRule(this);
 	
@@ -38,6 +40,18 @@ public class LifeUpgrade extends Upgrade implements IUpgrade {
 		return 0;
 	}
 	
+	@Override
+	public Integer getConsume() {
+		// TODO Auto-generated method stub
+		return this.consume+getLevel()*120/100;
+	}
+	
+	@Override
+	public void setConsume(Integer consume) {
+		// TODO Auto-generated method stub
+		this.consume = consume;
+	}
+	
 	public void addToEmpiricValue(Integer empiricValue) {
 		// TODO Auto-generated method stub
 		if(!Integer.valueOf(0).equals(empiricValue)){
@@ -50,6 +64,34 @@ public class LifeUpgrade extends Upgrade implements IUpgrade {
 			map.put("card", getOwner());
 			map.put("change", empiricValue);
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_EmpiricValue,map);
+			super.notifyObservers(info);
+		}
+	}
+	
+	/**
+	 * 技能点
+	 * @return
+	 */
+	public Integer getSkillCount() {
+		return skillCount;
+	}
+
+	public void setSkillCount(Integer skillCount) {
+		this.skillCount = skillCount;
+	}
+	
+	public void addToSkillCount(Integer skillCount){
+		if(0<skillCount){
+			this.skillCount += skillCount;
+			this.skillCount = this.skillCount < 0 ? 0 : this.skillCount;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", skillCount);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Range,map);
 			super.notifyObservers(info);
 		}
 	}
@@ -73,7 +115,7 @@ public class LifeUpgrade extends Upgrade implements IUpgrade {
 		map.put("position", getOwner().getContainerPosition());
 		map.put("card", getOwner());
 		map.put("level", getLevel());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Move,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Upgrade,map);
 		super.notifyObservers(info);
 	}
 

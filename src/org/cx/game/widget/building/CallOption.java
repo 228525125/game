@@ -9,7 +9,9 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.I18n;
+import org.cx.game.validator.CallConsumeValidator;
 import org.cx.game.validator.CallRangeValidator;
+import org.cx.game.validator.RationLimitValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
@@ -39,13 +41,12 @@ public class CallOption extends Option implements IOption {
 	@Override
 	public List<Integer> getExecuteRange(IGround ground) {
 		// TODO Auto-generated method stub
+		
 		List<Integer> positionList = new ArrayList<Integer>();
 		positionList = ground.areaForDistance(getOwner().getPosition(), 1, IGround.Contain);
 		positionList.retainAll(ground.getEmptyList());
 		return positionList;
 	}
-	
-	
 	
 	@Override
 	public void execute(Object...objects) throws RuleValidatorException {
@@ -53,13 +54,16 @@ public class CallOption extends Option implements IOption {
 		super.execute(objects);
 		
 		IPlace place = (IPlace) objects[0];
+		LifeCard life = (LifeCard) CardFactory.getInstance(cardId, getOwner().getPlayer());
+		
+		addValidator(new CallConsumeValidator(life));
 		addValidator(new CallRangeValidator(getOwner(), place));
+		addValidator(new RationLimitValidator(life));
 		
 		doValidator();
 		if(hasError())
 			throw new RuleValidatorException(getErrors().getMessage());
 		
-		LifeCard life = (LifeCard) CardFactory.getInstance(cardId, getOwner().getPlayer());
 		life.call(place);
 	}
 }

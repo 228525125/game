@@ -44,4 +44,16 @@ public class CallDecorator extends ActionDecorator implements ICall {
 		// TODO Auto-generated method stub
 		return this.call.getOwner();
 	}
+
+	@Override
+	public Integer getRation() {
+		// TODO Auto-generated method stub
+		return this.call.getRation();
+	}
+
+	@Override
+	public void setRation(Integer ration) {
+		// TODO Auto-generated method stub
+		this.call.setRation(ration);
+	}
 }

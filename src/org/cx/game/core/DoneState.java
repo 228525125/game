@@ -26,17 +26,6 @@ public class DoneState extends PlayState {
 	@Override
 	public void done() {
 		// TODO Auto-generated method stub
-		/* 半回合制
-		LifeCard life = context.getControlLife();   
-		if(null!=life && life.getActivate().getActivation()){           //结束回合，不管life是否已经完成操作
-			try {
-				life.activate(false);
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
-		
 		IPlayer curPlayer = context.getControlPlayer();
 		List<LifeCard> list = curPlayer.getAttendantList(true);
 		for(LifeCard life : list){

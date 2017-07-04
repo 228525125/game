@@ -16,5 +16,11 @@ public interface ITag {
 	 * @param category
 	 * @return
 	 */
-	public List<Integer> queryForCategory(Integer category);
+	public List<Integer> queryTagForCategory(Integer category);
+	
+	/**
+	 * 根据对象查找标签
+	 * @return
+	 */
+	public List<Integer> queryTagForObject();
 }

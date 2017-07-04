@@ -8,7 +8,7 @@ import org.cx.game.validator.IValidatable;
 import org.cx.game.widget.IGround;
 
 /**
- * 建筑物选项，例如Town的选项包含：升级、招募等
+ * 选项，例如Town的选项包含：升级、招募等
  * @author chenxian
  *
  */

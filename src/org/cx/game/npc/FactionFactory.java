@@ -13,7 +13,7 @@ public class FactionFactory {
 		if(map.containsKey(id)){
 			return map.get(id);
 		}else{
-			IPlayer faction = new Faction(id);
+			IPlayer faction = new Faction(id,"");
 			map.put(id, faction);
 			return faction;
 		}

@@ -23,5 +23,13 @@ public interface ICall extends IAction {
 	
 	public void addToConsume(Integer consume);
 	
+	/**
+	 * 人口
+	 * @return
+	 */
+	public Integer getRation();
+	
+	public void setRation(Integer ration);
+	
 	public LifeCard getOwner();
 }

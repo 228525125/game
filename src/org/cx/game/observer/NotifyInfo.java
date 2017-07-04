@@ -8,7 +8,9 @@ public class NotifyInfo {
 		this.info = info;
 	}
 
-	public final static String Player_Power = "Player_Power";
+	public final static String Player_Resource = "Player_Resource";
+	public final static String Player_Ration = "Player_Ration";
+	public final static String Player_Bout = "Player_Bout";
 	
 	public final static String Container_Remove = "Container_Remove";
 	public final static String Container_Add = "Container_Add";
@@ -53,6 +55,7 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Hp = "Card_LifeCard_State_Hp";
 	public final static String Card_LifeCard_State_Armour = "Card_LifeCard_State_Armour";
 	public final static String Card_LifeCard_State_Atk = "Card_LifeCard_State_Atk";
+	public final static String Card_LifeCard_State_Def = "Card_LifeCard_State_Def";
 	public final static String Card_LifeCard_State_Speed = "Card_LifeCard_State_Speed";
 	public final static String Card_LifeCard_State_Lock = "Card_LifeCard_State_Lock";
 	public final static String Card_LifeCard_State_Range = "Card_LifeCard_State_Range";
@@ -62,6 +65,7 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Flee = "Card_LifeCard_State_Flee";
 	public final static String Card_LifeCard_State_Consume = "Card_LifeCard_State_Consume";
 	public final static String Card_LifeCard_State_EmpiricValue = "Card_LifeCard_State_EmpiricValue";
+	public final static String Card_LifeCard_State_SkillCount = "Card_LifeCard_State_SkillCount";
 	
 	
 	public final static String Card_LifeCard_Weapon_Hand = "Card_LifeCard_Weapon_Hand";
@@ -69,6 +73,8 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Weapon_Bearkdown = "Card_LifeCard_Weapon_Bearkdown";
 	public final static String Card_LifeCard_Weapon_Atk = "Card_LifeCard_Weapon_Atk";
 	public final static String Card_LifeCard_Weapon_Wear = "Card_LifeCard_Weapon_Wear";
+	
+	public final static String Card_LifeCard_Skill_Upgrade = "Card_LifeCard_Skill_Upgrade";
 	
 	public final static String Card_TrickCard_Trigger = "Card_TrickCard_Trigger";
 	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";

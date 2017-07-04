@@ -1,6 +1,7 @@
 package org.cx.game.action;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.ContextDecorator;
 
 public interface IActivate extends IAction {
 

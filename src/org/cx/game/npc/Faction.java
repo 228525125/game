@@ -13,15 +13,9 @@ public class Faction extends Player {
 	private String name = "";
 	private LifeCard hero = null;
 	
-	public Faction(Integer id) {
+	public Faction(Integer id, String name) {
 		// TODO Auto-generated constructor stub
-		setId(id);
-	}
-	
-	@Override
-	public List<ICard> decksList() {
-		// TODO Auto-generated method stub
-		return new ArrayList<ICard>();
+		super(id, name);
 	}
 
 	@Override

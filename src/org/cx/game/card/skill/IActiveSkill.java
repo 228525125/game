@@ -12,7 +12,7 @@ import org.cx.game.validator.IValidatable;
  * @author 贤
  *
  */
-public interface IActiveSkill extends ISkill,IInterceptable,Observable,IValidatable {
+public interface IActiveSkill extends ISkill,IValidatable {
 
 	/**
 	 * 代号，用于command调用

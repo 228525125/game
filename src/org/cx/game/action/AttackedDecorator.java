@@ -55,4 +55,22 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		// TODO Auto-generated method stub
 		return attacked.addToArmour(armour);
 	}
+
+	@Override
+	public Integer getDef() {
+		// TODO Auto-generated method stub
+		return attacked.getDef();
+	}
+
+	@Override
+	public void setDef(Integer def) {
+		// TODO Auto-generated method stub
+		attacked.setDef(def);
+	}
+
+	@Override
+	public void addToDef(Integer def) {
+		// TODO Auto-generated method stub
+		attacked.addToDef(def);
+	}
 }

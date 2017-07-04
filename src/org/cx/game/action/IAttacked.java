@@ -20,4 +20,14 @@ public interface IAttacked extends IAction {
 	public void setArmour(Integer armour);
 	
 	public Integer addToArmour(Integer armour);
+	
+	/**
+	 * 防御力
+	 * @return
+	 */
+	public Integer getDef();
+	
+	public void setDef(Integer def);
+	
+	public void addToDef(Integer def);
 }

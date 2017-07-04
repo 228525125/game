@@ -4,15 +4,15 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.tools.I18n;
 
 /**
- * 判断随从是否为激活状态
+ * 判断是否可移动
  * @author chenxian
  *
  */
-public class LifeCardActivateValidator extends SelectLifeCardValidator {
-	
-	public LifeCardActivateValidator(CommandBuffer buffer) {
-		// TODO Auto-generated constructor stub
+public class LifeCardMoveableValidator extends LifeCardActivateValidator {
+
+	public LifeCardMoveableValidator(CommandBuffer buffer) {
 		super(buffer);
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -20,14 +20,14 @@ public class LifeCardActivateValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(getLifeCard().getActivate().getActivation()){
+			if(getLifeCard().getMove().getMoveable()){
 				ret = true;
 			}else{
 				addMessage(I18n.getMessage(this));
 				ret = false;
 			}
 		}
-		
 		return ret;
 	}
+
 }

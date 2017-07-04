@@ -27,7 +27,6 @@ public class ReloadCommand extends InteriorCommand {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		map.put("player", player);
-		map.put("group", player.getCardGroup().toList());
 		map.put("use", player.getUseCard().toList());
 		map.put("god", player.getGround().toList());      //ground已被屏蔽
 		list.add(map);
@@ -35,7 +34,6 @@ public class ReloadCommand extends InteriorCommand {
 		IPlayer other = player.getContext().getOtherPlayer(player);
 		map = new HashMap<String,Object>();
 		map.put("other", other);
-		map.put("othergroup", other.getCardGroup().toList());
 		map.put("otheruse", other.getUseCard().toList());
 		list.add(map);
 		

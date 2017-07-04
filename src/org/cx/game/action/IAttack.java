@@ -17,12 +17,12 @@ public interface IAttack extends IAction {
 	/**
 	 * 近战攻击
 	 */
-	public final static Integer Mode_Near = 0;
+	public final static Integer Mode_Near = 123;
 	
 	/**
 	 * 远程攻击
 	 */
-	public final static Integer Mode_Far = 1;
+	public final static Integer Mode_Far = 124;
 	
 	public Integer getMode();
 	

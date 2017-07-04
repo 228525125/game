@@ -78,12 +78,6 @@
 				<option>place</option>
 			</parameter>			
 		</command>
-		<command name='swap' class='org.cx.game.command.SwapCommand' parameter='request'>
-			<description>交换</description>
-			<parameter>
-				<option>card</option>
-			</parameter>			
-		</command>
 		<command name='move' class='org.cx.game.command.MoveCommand' parameter='request'>
 			<description>移动</description>
 			<parameter>
@@ -103,7 +97,9 @@
 				<option>card</option>
 			</parameter>
 		</command>
-		<command name='skill' class='org.cx.game.command.AttackCommand' parameter='request'>
+		
+		<command name='upgrade' class='org.cx.game.command.UpgradeCommand' parameter='no'>
+			<description>升级</description>
 		</command>
 		<!-- 命令转换例子：setup 1 = select group 1;setup = select group;select 1;setup -->
 		<command name='setup' class='org.cx.game.command.SetupCommand' parameter='request'>
@@ -121,6 +117,9 @@
 		</command>
 		<command name='chuck' class='org.cx.game.command.ChuckCommand' parameter='no'>
 			<description>丢弃</description>
+		</command>
+		<command name='guard' class='org.cx.game.command.GuardCommand' parameter='no'>
+			<description>原地防守</description>
 		</command>
 		<command name='done' class='org.cx.game.command.DoneCommand' parameter='no'>
 			<description>结束回合</description>

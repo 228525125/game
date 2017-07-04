@@ -12,10 +12,16 @@ import org.cx.game.rule.AttackRule;
 import org.cx.game.rule.AttackedRule;
 import org.cx.game.rule.IRule;
 
+/**
+ * 受到攻击
+ * @author chenxian
+ *
+ */
 public class Attacked extends Action implements IAttacked {
 
 	private Boolean fightBack = false;
 	private Integer armour = 0;
+	private Integer def = 0;
 	
 	public Attacked() {
 		// TODO Auto-generated constructor stub
@@ -26,6 +32,36 @@ public class Attacked extends Action implements IAttacked {
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return (LifeCard) super.getOwner();
+	}
+	
+	@Override
+	public Integer getDef() {
+		// TODO Auto-generated method stub
+		return this.def;
+	}
+	
+	@Override
+	public void setDef(Integer def) {
+		// TODO Auto-generated method stub
+		this.def = def;
+	}
+	
+	@Override
+	public void addToDef(Integer def) {
+		// TODO Auto-generated method stub
+		if(0<def){
+			this.def += def;
+			this.def = this.def<0 ? 0 : this.def;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("change", this.def);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Def,map);
+			super.notifyObservers(info);
+		}
 	}
 	
 	@Override
@@ -89,12 +125,5 @@ public class Attacked extends Action implements IAttacked {
 		map.put("ruleParam", attack);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
 		super.notifyObservers(info);
-		
-		/*
-		 * 先反击，再死亡
-		 */
-		IDeath death = getOwner().getDeath();
-		damage = addToArmour(damage);
-		death.addToHp(damage);
 	}
 }

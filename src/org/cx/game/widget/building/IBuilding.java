@@ -13,6 +13,8 @@ public interface IBuilding {
 	public String getName();
 
 	public IPlace getOwner();
+	
+	public static final Integer Building = 1010;
 
 	public static final Integer Town = 501;    //城镇
 	

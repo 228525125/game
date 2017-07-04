@@ -89,6 +89,8 @@ public class Building implements IBuilding {
 	@Override
 	public void setOptions(List<IOption> options) {
 		// TODO Auto-generated method stub
+		for(IOption option : options)
+			option.setOwner(this);
 		this.options = options;
 	}
 	
@@ -107,6 +109,8 @@ public class Building implements IBuilding {
 	@Override
 	public void setProducts(List<IProduct> products) {
 		// TODO Auto-generated method stub
+		for(IProduct product : products)
+			product.setOwner(this);
 		this.products = products;
 	}
 	

@@ -8,6 +8,7 @@ import org.cx.game.action.IActivate;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.card.buff.IBuff;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 
 public class ActivateRule implements IRule {
@@ -44,6 +45,18 @@ public class ActivateRule implements IRule {
 				}else{
 					owner.getAttack().setAttackable(false);
 					owner.getMove().setMoveable(false);
+					
+					/*
+					 * 当活力值大于一次行动消耗时，再次获得一次行动
+					 */
+					if(owner.getActivate().getVigour()>=IActivate.ActivationConsume){
+						try {
+							owner.activate(true);
+						} catch (RuleValidatorException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}

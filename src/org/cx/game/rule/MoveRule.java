@@ -5,9 +5,12 @@ import java.util.Observable;
 
 import org.cx.game.action.IMove;
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.IPlace;
+import org.cx.game.widget.LandformEffect;
 
 public class MoveRule implements IRule {
 
@@ -29,6 +32,19 @@ public class MoveRule implements IRule {
 				Boolean hide = (Boolean) bean.get("hide");
 				LifeCard owner = getOwner().getOwner();
 
+			}else if(NotifyInfo.Card_LifeCard_Action_Move.equals(info.getType())){
+				Map bean = (Map) info.getInfo();
+				Integer position = (Integer) bean.get("position");
+				IPlayer player = (IPlayer) bean.get("player");
+				IPlace place = player.getGround().getPlace(position);
+				
+				/*
+				 * 生成地形优势
+				 */
+				LifeCard life = getOwner().getOwner();
+				Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
+				life.getAttack().addToAtk(LandformEffect.getAttackAdvantage(profession, place.getLandform()));
+				life.getAttacked().addToDef(LandformEffect.getDefendAdvantage(profession, place.getLandform()));
 			}
 		}
 	}

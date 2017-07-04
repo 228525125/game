@@ -4,6 +4,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.LifeCardActivateValidator;
+import org.cx.game.validator.LifeCardMoveableValidator;
 import org.cx.game.validator.MoveTauntValidator;
 import org.cx.game.validator.SelectContainerValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
@@ -15,7 +16,7 @@ public class MoveCommand extends InteriorCommand {
 		super(player);
 		// TODO Auto-generated constructor stub
 		addValidator(new SelectContainerValidator(player.getGround(),buffer));
-		addValidator(new LifeCardActivateValidator(buffer));
+		addValidator(new LifeCardMoveableValidator(buffer));
 		addValidator(new MoveTauntValidator(buffer));
 	}
 	

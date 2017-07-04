@@ -59,18 +59,6 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 					getBuffer().setPlayer(other);
 				}
 				
-				if(CommandBuffer.CARDGROUP.equals(item)){
-					if(null==getBuffer().getPlayer()){
-						addMessage(I18n.getMessage(this));
-						ret = false;
-						break;
-					}else{
-						ICardGroup group = getBuffer().getPlayer().getCardGroup();
-						parameterObject = group;
-						getBuffer().setContainer(group);
-					}
-				}
-				
 				if(CommandBuffer.USECARD.equals(item)){
 					if(null==getBuffer().getPlayer()){
 						addMessage(I18n.getMessage(this));

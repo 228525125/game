@@ -6,7 +6,6 @@ public abstract class Upgrade extends Action implements IUpgrade {
 
 	private Integer level = 1;
 	private Integer waitBout = 0;
-	private Integer consume = IUpgrade.BasicConsume;
 
 	public Upgrade() {
 		// TODO Auto-generated constructor stub
@@ -23,18 +22,6 @@ public abstract class Upgrade extends Action implements IUpgrade {
 	public void setLevel(Integer level) {
 		// TODO Auto-generated method stub
 		this.level = level;
-	}
-	
-	@Override
-	public Integer getConsume() {
-		// TODO Auto-generated method stub
-		return this.consume*getLevel();
-	}
-	
-	@Override
-	public void setConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		this.consume = consume;
 	}
 	
 	@Override

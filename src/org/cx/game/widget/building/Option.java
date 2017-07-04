@@ -24,7 +24,7 @@ public abstract class Option implements IOption {
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
-	private IBuilding building = null;
+	private IBuilding owner = null;
 	
 	@Override
 	public String getName() {
@@ -37,21 +37,13 @@ public abstract class Option implements IOption {
 	@Override
 	public IBuilding getOwner() {
 		// TODO Auto-generated method stub
-		return this.building;
+		return this.owner;
 	}
 	
 	@Override
 	public void setOwner(IBuilding building) {
 		// TODO Auto-generated method stub
-		this.building = building;
-	}
-	
-	@Override
-	public List<Integer> getExecuteRange(IGround ground) {
-		// TODO Auto-generated method stub
-		List<Integer> positionList = new ArrayList<Integer>();
-		positionList.add(getOwner().getPosition());
-		return positionList;
+		this.owner = building;
 	}
 	
 	private ParameterTypeValidator parameterValidator = null;

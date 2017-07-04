@@ -46,14 +46,16 @@ public class Context extends Observable implements IContext
 	private IControlQueue queue = new ControlQueue();
 	private Long newCardPlayId = 1l;                          //用于记录本场比赛中生成的id
 	
-	private final static Integer Bout_Power_Add = 1;               //玩家每回合能量增加单位
-	
 	private ContextDecorator decorator = null; 
 	
 	private final static Map<Integer,Integer> TagCategory_1 = new HashMap<Integer,Integer>();
 	private final static Map<Integer,List<Integer>> TagCategory_2 = new HashMap<Integer,List<Integer>>();
 	private final static Map<Integer,List<Integer>> Tag_1 = new HashMap<Integer,List<Integer>>();
 	private final static Map<Integer,List<Integer>> Tag_2 = new HashMap<Integer,List<Integer>>();
+	
+	private int bout=0;  //游戏回合
+	
+	private IPlayer controlPlayer=null;
 	
 	
 	public Context(IPlayer player1, IPlayer player2) {
@@ -88,7 +90,7 @@ public class Context extends Observable implements IContext
 				TagCategory_2.get(categoryCode).add(tagCode);
 				
 				Tag_2.put(tagCode, new ArrayList<Integer>());
-				for(Iterator iter = category.elementIterator("object");iter.hasNext();){
+				for(Iterator iter = tag.elementIterator("object");iter.hasNext();){
 					Element object = (Element) iter.next();
 					Integer objectCode = Integer.valueOf(object.attribute("code").getText());
 					
@@ -124,7 +126,7 @@ public class Context extends Observable implements IContext
 	}
 	
 	/**
-	 * 根据对象，查询标签
+	 * 根据对象，查询tag
 	 * @param object
 	 * @return
 	 */
@@ -210,9 +212,9 @@ public class Context extends Observable implements IContext
 		return player2;
 	}
 	
-	private int playerNumber = 2;    //参赛人数
-	private int bout=0;  //游戏回合，
-	
+	/**
+	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
+	 */
 	public int getBout() {
 		return bout;
 	}
@@ -221,34 +223,9 @@ public class Context extends Observable implements IContext
 		bout++;
 	}
 	
-	/** 
-	 * 获得行动权的life
-	 */
-	//private LifeCard controlLife = null;   半回合制
-	
-	/* 半回合制
-	 * public LifeCard getControlLife() {
-		return controlLife;
-	}*/
-
-	/* 半回合制
-	 * private void setControlLife(LifeCard controlLife) {
-		this.controlLife = controlLife;
-		setControlPlayer(controlLife.getPlayer());
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("control", getControlPlayer());
-		map.put("life", getControlLife());
-		map.put("position", getControlLife().getContainerPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Control,map);
-		notifyObservers(info);
-	}*/
-
 	/**
 	 * 当前操作比赛的玩家对象
 	 */
-	private IPlayer controlPlayer=null;
-	
 	public IPlayer getControlPlayer() {
 		return controlPlayer;
 	}
@@ -269,21 +246,15 @@ public class Context extends Observable implements IContext
 			return player1;
 	}
 	
-	private Integer boutCount = 1;   //用于回合数的计算
-	
 	/**
 	 * 切换控制权
 	 * @param object
 	 */
 	private void setControl(IPlayer player){
+			decorator.addBout();                        //增加回合
+		
 			setControlPlayer(player);
-			
-			boutCount += 1;
-			if(boutCount/playerNumber==1){
-				decorator.addBout();                        //增加回合
-				boutCount = 0;
-			}
-			
+
 			Integer tax = 0;
 			IGround ground = player.getGround();
 			List<IBuilding> list = ground.getBuildingList(player);
@@ -304,35 +275,6 @@ public class Context extends Observable implements IContext
 					e.printStackTrace();
 				}
 			}
-			
-			//this.controlLife=null;  半回合制    //如果ControlLife不为null就表示控制权在life
-		
-		/*if (object instanceof LifeCard) {
-			LifeCard life = (LifeCard) object;
-			try {
-				life.activate(true);
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}             //设置为可以行动
-			setControlLife(life);
-			
-			if(life.getHero()){
-				boutCount += 1;
-				if(boutCount/playerNumber==1){
-					decorator.addBout();                        //增加回合
-					boutCount = 0;
-				}
-				
-				Integer addPower = getBout()<11 ? getBout() : 10;
-				
-				getControlPlayer().addToResource(addPower-getControlPlayer().getResource());        //增加能量
-				
-				getControlPlayer().resetCallCountOfBout();          //重置call计数器
-				
-				getControlPlayer().takeCard();                  //摸牌
-			}
-		}*/
 	}
 	
 	public void switchControl(){

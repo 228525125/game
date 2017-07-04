@@ -19,7 +19,8 @@ public interface IMagic extends ITag {
 	public Object getOwner();
 	
 	/**
-	 * 是否启动法术效果
+	 * 是否启动法术效果，因为有些法术是针对特定对象的，如果对象出错效果将取消，
+	 * 但法术动作不会取消
 	 * @param args 效果作用单位
 	 * @return
 	 */
@@ -31,7 +32,7 @@ public interface IMagic extends ITag {
 	 * 里面
 	 * @param objects
 	 */
-	public void affect(Object...objects) throws RuleValidatorException;		
+	public void affect(Object...objects);		
 	
 	/**
 	 * 物理buff

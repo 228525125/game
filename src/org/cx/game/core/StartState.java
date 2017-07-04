@@ -56,6 +56,10 @@ public class StartState extends PlayState {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Start,map);
 		super.notifyObservers(info);
 		
+		context.switchControl();
+		
+		deploy();
+		
 		IPlayer player1 = context.getPlayer1();
 		IPlayer player2 = context.getPlayer2();
 		LifeCard hero1 = player1.getHero();
@@ -74,9 +78,5 @@ public class StartState extends PlayState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		context.switchControl();
-		
-		deploy();
 	}
 }

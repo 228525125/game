@@ -13,6 +13,7 @@ import org.cx.game.rule.UpgradeRule;
 public class BuildingUpgrade extends Upgrade implements IUpgrade {
 
 	private UpgradeProcess process = null;
+	private Integer consume = IUpgrade.BasicConsume;
 	
 	private IRule rule = new UpgradeRule(this);
 
@@ -25,6 +26,18 @@ public class BuildingUpgrade extends Upgrade implements IUpgrade {
 	public Integer getProcess() {
 		// TODO Auto-generated method stub
 		return null!=this.process ? this.process.getProcess() : 100;          
+	}
+	
+	@Override
+	public Integer getConsume() {
+		// TODO Auto-generated method stub
+		return consume*getLevel();
+	}
+	
+	@Override
+	public void setConsume(Integer consume) {
+		// TODO Auto-generated method stub
+		this.consume = consume;
 	}
 	
 	@Override

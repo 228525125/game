@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import org.cx.game.action.IDeath;
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 
@@ -34,12 +35,13 @@ public class DeathRule implements IRule {
 			}
 			
 			if(NotifyInfo.Card_LifeCard_Action_Death.equals(info.getType())){
-				if (this.death.getOwner().getHero()) {
-					getOwner().getOwner().getPlayer().getContext().finish();
-				}
+				LifeCard owner = getOwner().getOwner();
+				IPlayer player = owner.getPlayer();
 				
 				getOwner().setStatus(IDeath.Status_Death);
-				getOwner().getOwner().initState();
+				owner.initState();
+				
+				player.addToRation(-owner.getRation());
 			}
 		}
 	}

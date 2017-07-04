@@ -526,29 +526,35 @@ public class HoneycombGround extends Container implements IGround {
 			Integer type, Integer moveType) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
-		for(int i=1;i<xBorder+1;i++){
-			for(int j=1;j<yBorder+1;j++){
-				Integer curPos = Integer.valueOf(i+space+j);
-				switch (type) {
-				case 0:
-					if(step==distance(curPos, position, moveType))
-						if(getPlace(curPos).getEmpty())
-							list.add(curPos);
-					break;
+		
+		/*
+		 * 删除不能到达的位置
+		 */
+		List<Integer> posList = new ArrayList<Integer>();
+		posList.addAll(this.ground.keySet());
+		List<Integer> disList = LandformEffect.getDisable(moveType, this.ground);
+		posList.removeAll(disList);
+		
+		for(Integer curPos : posList){
+			switch (type) {
+			case 0:
+				if(step==distance(curPos, position, moveType))
+					if(getPlace(curPos).getEmpty())
+						list.add(curPos);
+				break;
 					
-				case 1:
-					if(step>=distance(curPos, position, moveType))
-						if(getPlace(curPos).getEmpty())
-							list.add(curPos);
-					break;	
+			case 1:
+				if(step>=distance(curPos, position, moveType))
+					if(getPlace(curPos).getEmpty())
+						list.add(curPos);
+				break;	
 					
-				default:
-					break;
-				}
+			default:
+				break;
 			}
 		}
-		return list;
-		
+
+		return list;		
 	}
 	
 	/**
