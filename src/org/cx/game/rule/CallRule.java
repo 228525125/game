@@ -40,7 +40,6 @@ public class CallRule implements IRule {
 				/*
 				 * 增加召唤计数器
 				 */
-				player.addCallCountOfBout(1);
 				player.addCallCountOfPlay(1);
 				
 				/*

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.skill.IActiveSkill;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
@@ -31,8 +33,8 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
 	public Player(Integer id, String name) {
 		// TODO Auto-generated constructor stub
-		this.name = name;
 		this.id = id;
+		this.name = name;
 	}
 	
 	@Override
@@ -204,25 +206,6 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	}
 	
 	private Integer callCountPlay = 0;                        //玩家本次比赛召唤随从次数
-	private Integer callCountBout = 0;                        //玩家本回合召唤随从次数
-	
-	@Override
-	public Integer getCallCountOfBout() {
-		// TODO Auto-generated method stub
-		return callCountBout;
-	}
-	
-	@Override
-	public void addCallCountOfBout(Integer time) {
-		// TODO Auto-generated method stub
-		callCountBout += time;
-	}
-
-	@Override
-	public void resetCallCountOfBout() {
-		// TODO Auto-generated method stub
-		callCountBout = 0;
-	}
 	
 	@Override
 	public Integer getCallCountOfPlay() {
@@ -308,6 +291,21 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		map.put("bout", this.bout);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Bout,map);
 		notifyObservers(info);
+		
+		/*
+		 * 计算技能冷却
+		 */
+		List<LifeCard> list = getAttendantList();
+		for(LifeCard life : list){
+			for(ISkill skill : life.getSkillList()){
+				if (skill instanceof IActiveSkill) {
+					IActiveSkill as = (IActiveSkill) skill;
+					Integer cooldown = as.getCooldownRemain();
+					cooldown = cooldown>0 ? --cooldown : 0;
+					as.setCooldownRemain(cooldown);
+				}
+			}
+		}
 	}
 	
 	@Override

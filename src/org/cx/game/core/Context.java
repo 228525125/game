@@ -254,6 +254,8 @@ public class Context extends Observable implements IContext
 			decorator.addBout();                        //增加回合
 		
 			setControlPlayer(player);
+			
+			player.addBout();
 
 			Integer tax = 0;
 			IGround ground = player.getGround();
@@ -262,8 +264,6 @@ public class Context extends Observable implements IContext
 				tax += building.getTax();
 			
 			getControlPlayer().addToResource(tax);              //征税
-			
-			getControlPlayer().resetCallCountOfBout();          //重置call计数器
 			
 			for(LifeCard life : player.getAttendantList()){
 				Integer speed = life.getActivate().getSpeed();

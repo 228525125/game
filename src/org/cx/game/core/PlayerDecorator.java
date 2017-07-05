@@ -92,7 +92,7 @@ public class PlayerDecorator implements IPlayer {
 		// TODO Auto-generated method stub
 		return player.getName();
 	}
-
+	
 	@Override
 	public IPlayerPolicy getPolicy() {
 		// TODO Auto-generated method stub
@@ -145,24 +145,6 @@ public class PlayerDecorator implements IPlayer {
 	public void addCallCountOfPlay(Integer time) {
 		// TODO Auto-generated method stub
 		player.addCallCountOfPlay(time);
-	}
-
-	@Override
-	public Integer getCallCountOfBout() {
-		// TODO Auto-generated method stub
-		return player.getCallCountOfBout();
-	}
-
-	@Override
-	public void addCallCountOfBout(Integer time) {
-		// TODO Auto-generated method stub
-		player.addCallCountOfBout(time);
-	}
-
-	@Override
-	public void resetCallCountOfBout() {
-		// TODO Auto-generated method stub
-		player.resetCallCountOfBout();
 	}
 
 	@Override

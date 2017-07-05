@@ -7,6 +7,8 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.rule.ConjureRule;
+import org.cx.game.rule.IRule;
 
 /**
  * 施法一个主动技能
@@ -14,6 +16,13 @@ import org.cx.game.observer.NotifyInfo;
  *
  */
 public class Conjure extends Action implements IConjure {
+	
+	private IRule rule = new ConjureRule(this);
+	
+	public Conjure() {
+		// TODO Auto-generated constructor stub
+		addObserver(rule);
+	}
 	
 	@Override
 	public LifeCard getOwner() {

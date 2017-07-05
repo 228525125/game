@@ -22,6 +22,8 @@ public interface IPlayer extends IInterceptable
 {		
 	public Integer getId();
 	
+	public String getName();
+	
 	public IContext getContext();
 	
 	public void setContext(IContext context);
@@ -49,8 +51,6 @@ public interface IPlayer extends IInterceptable
 	public void addToResource(Integer res);
 	
 	public CommandBuffer getCommandBuffer();
-	
-	public String getName();
 	
 	public IPlayerPolicy getPolicy();
 	
@@ -89,23 +89,6 @@ public interface IPlayer extends IInterceptable
 	 * @param time
 	 */
 	public void addCallCountOfPlay(Integer time);
-	
-	/**
-	 * 玩家本回合召唤随从次数
-	 * @return
-	 */
-	public Integer getCallCountOfBout();
-	
-	/**
-	 * call计数器增加time次
-	 * @param time
-	 */
-	public void addCallCountOfBout(Integer time);
-	
-	/**
-	 * 重置call计数器
-	 */
-	public void resetCallCountOfBout();
 	
 	/**
 	 * 获取所有随从

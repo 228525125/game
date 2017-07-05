@@ -78,5 +78,18 @@ public class StartState extends PlayState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		/*
+		 * 控制player的hero被激活
+		 */
+		LifeCard hero = context.getControlPlayer().getHero();		
+		Integer speed = hero.getActivate().getSpeed();
+		hero.getActivate().addToVigour(speed);
+		try {
+			hero.activate(true);
+		} catch (RuleValidatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

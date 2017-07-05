@@ -1,6 +1,5 @@
 package org.cx.game.rule;
 
-import java.util.Map;
 import java.util.Observable;
 
 import org.cx.game.action.IApply;

@@ -23,10 +23,10 @@ public interface IActiveSkill extends ISkill,IValidatable {
 	/**
 	 * 消耗法力值
 	 * @return
-	 */
+	 
 	public Integer getConsume();
 	
-	public void setConsume(Integer power);
+	public void setConsume(Integer power);*/
 	
 	public Integer getRange();
 	
@@ -45,6 +45,22 @@ public interface IActiveSkill extends ISkill,IValidatable {
 	 * @return
 	 
 	public Integer getVelocity(); */
+	
+	/**
+	 * 技能冷却周期
+	 * @return
+	 */
+	public Integer getCooldown();
+
+	public void setCooldown(Integer cooldown);
+	
+	/**
+	 * 剩余冷却回合
+	 * @return
+	 */
+	public Integer getCooldownRemain();
+	
+	public void setCooldownRemain(Integer cooldownRemain);
 	
 	/**
 	 * 使用技能

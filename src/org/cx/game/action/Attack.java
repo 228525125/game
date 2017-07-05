@@ -169,6 +169,11 @@ public class Attack extends Action implements IAttack {
 	public void setAttackable(Boolean attackable) {
 		// TODO Auto-generated method stub
 		this.attackable = attackable;
+		
+		//判断移动攻击
+		if(!getOwner().getMobile() && getOwner().getMove().getMoveable()){
+			getOwner().getMove().setMoveable(false);
+		}
 	}
 	
 	/**

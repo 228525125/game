@@ -256,7 +256,21 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setAttackMode(Integer attackMode) {
 		this.attackMode = attackMode;
 	}
+
+	private Boolean mobile = false;
 	
+	/**
+	 * 移动攻击，例如，骑兵
+	 * @return
+	 */
+	public Boolean getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(Boolean mobile) {
+		this.mobile = mobile;
+	}
+
 	private Integer def = 0;
 	
 	/**
