@@ -2,6 +2,7 @@ package org.cx.game.command;
 
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
+import org.cx.game.validator.OptionSpacingValidate;
 import org.cx.game.validator.SelectOptionValidator;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.building.IOption;
@@ -11,7 +12,7 @@ public class OptionExecuteCommand extends InteriorCommand {
 	public OptionExecuteCommand(IPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		addValidator(new SelectOptionValidator(buffer));
+		addValidator(new OptionSpacingValidate(buffer));
 	}
 	
 	@Override

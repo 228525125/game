@@ -24,6 +24,9 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
 import org.cx.game.widget.UseCardDecorator;
+import org.cx.game.widget.building.Building;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
 
 public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
@@ -295,8 +298,8 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		/*
 		 * 计算技能冷却
 		 */
-		List<LifeCard> list = getAttendantList();
-		for(LifeCard life : list){
+		List<LifeCard> lList = getAttendantList();
+		for(LifeCard life : lList){
 			for(ISkill skill : life.getSkillList()){
 				if (skill instanceof IActiveSkill) {
 					IActiveSkill as = (IActiveSkill) skill;
@@ -306,6 +309,19 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 				}
 			}
 		}
+		
+		/*
+		 * 计算建筑物的选项间隔，例如招募选项的间隔
+		 */
+		List<IBuilding> bList = getGround().getBuildingList(this);
+		for(IBuilding building : bList){
+			for(IOption option : building.getOptions()){
+				Integer spacing = option.getSpacingRemain();
+				spacing = spacing>0 ? --spacing : 0;
+				option.setSpacingRemain(spacing);
+			}
+		}
+		
 	}
 	
 	@Override

@@ -66,4 +66,10 @@ public class CallOption extends Option implements IOption {
 		
 		life.call(place);
 	}
+	
+	@Override
+	public void setSpacing(Integer spacing) {
+		// TODO Auto-generated method stub
+		super.setSpacing(spacing);
+	}
 }

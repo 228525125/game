@@ -24,6 +24,9 @@ public abstract class Option implements IOption {
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
+	private Integer spacing = 0;
+	private Integer spacingRemain = 0;
+	
 	private IBuilding owner = null;
 	
 	@Override
@@ -44,6 +47,30 @@ public abstract class Option implements IOption {
 	public void setOwner(IBuilding building) {
 		// TODO Auto-generated method stub
 		this.owner = building;
+	}
+	
+	@Override
+	public Integer getSpacing() {
+		// TODO Auto-generated method stub
+		return this.spacing;
+	}
+	
+	@Override
+	public void setSpacing(Integer spacing) {
+		// TODO Auto-generated method stub
+		this.spacing = spacing;
+	}
+	
+	@Override
+	public Integer getSpacingRemain() {
+		// TODO Auto-generated method stub
+		return this.spacingRemain;
+	}
+	
+	@Override
+	public void setSpacingRemain(Integer spacingRemain) {
+		// TODO Auto-generated method stub
+		this.spacingRemain = spacingRemain;
 	}
 	
 	private ParameterTypeValidator parameterValidator = null;
@@ -97,6 +124,8 @@ public abstract class Option implements IOption {
 			throw new RuleValidatorException(getErrors().getMessage());
 		
 		this.execute.action(objects);
+		
+		this.spacingRemain = this.spacing;
 	}
 	
 	@Override

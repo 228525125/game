@@ -16,6 +16,22 @@ public interface IOption extends IValidatable{
 
 	public String getName();
 	
+	/**
+	 * 使用间隔
+	 * @return
+	 */
+	public Integer getSpacing();
+	
+	public void setSpacing(Integer spacing);
+	
+	/**
+	 * 间隔剩余周期
+	 * @return
+	 */
+	public Integer getSpacingRemain();
+	
+	public void setSpacingRemain(Integer spacingRemain);
+	
 	public IBuilding getOwner();
 	
 	public void setOwner(IBuilding building);
