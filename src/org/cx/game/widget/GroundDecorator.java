@@ -78,12 +78,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 
 
 	@Override
-	public Integer distance(Integer start, Integer stop, Integer moveType) {
-		// TODO Auto-generated method stub
-		return ground.distance(start, stop, moveType);
-	}
-
-	@Override
 	public IPlace getPlace(Integer position) {
 		// TODO Auto-generated method stub
 		return ground.getPlace(position);
@@ -149,18 +143,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 			Integer type) {
 		// TODO Auto-generated method stub
 		return ground.areaForDistance(position, step, type);
-	}
-
-	@Override
-	public List<Integer> route(Integer start, Integer stop, Integer moveType) {
-		// TODO Auto-generated method stub
-		return ground.route(start, stop, moveType);
-	}
-
-	@Override
-	public List<Integer> route(Integer start, Integer stop) {
-		// TODO Auto-generated method stub
-		return ground.route(start, stop);
 	}
 	
 	@Override
@@ -283,5 +265,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 			Integer buildingType, Integer level) {
 		// TODO Auto-generated method stub
 		return ground.getBuildingPosition(player, buildingType, level);
+	}
+
+	@Override
+	public Integer distance(Integer start, Integer stop, Integer moveType) {
+		// TODO Auto-generated method stub
+		return ground.distance(start, stop, moveType);
 	}
 }

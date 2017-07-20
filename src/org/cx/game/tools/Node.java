@@ -10,8 +10,10 @@ import java.util.LinkedList;
  */
 public class Node implements Comparable {
 	public Point _Pos; // position of the node
-	public int sourcePoint;
-	public int destiPoint;
+	public int sourcePoint;   //起点到该点的距离
+	public int destiPoint;    //该点到终点的距离
+	public int consume = 0;       //根据地形不同，消耗不同
+	
 	// public Node _parentnode; //the parent node
 	public Node _parentnode;
 
@@ -39,8 +41,8 @@ public class Node implements Comparable {
 
 	// get the minist cost
 	public int compareTo(Object node) {
-		int a1 = sourcePoint + destiPoint;
-		int a2 = ((Node) node).sourcePoint + ((Node) node).destiPoint;
+		int a1 = sourcePoint + destiPoint + consume;
+		int a2 = ((Node) node).sourcePoint + ((Node) node).destiPoint + ((Node) node).consume;
 		if (a1 < a2) {
 			return -1;
 		} else if (a1 == a2) {

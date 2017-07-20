@@ -27,21 +27,21 @@ public interface IGround extends IContainer{
 	public LifeCard getCard(Integer position);
 	
 	/**
-	 * 两个坐标之间的最短距离，考虑障碍物
-	 * @param start 起始坐标
-	 * @param stop 终止坐标
-	 * @param moveType 移动类型
-	 * @return
-	 */
-	public Integer distance(Integer start, Integer stop, Integer moveType);
-	
-	/**
-	 * 两个坐标之间的最短距离，不考虑障碍物
+	 * 两个坐标之间的最短距离，不考虑地形
 	 * @param start
 	 * @param stop
 	 * @return
 	 */
 	public Integer distance(Integer start, Integer stop);
+	
+	/**
+	 * 两个坐标之间的最短距离，考虑地形
+	 * @param start
+	 * @param stop
+	 * @param moveType
+	 * @return
+	 */
+	public Integer distance(Integer start, Integer stop, Integer moveType);
 	
 	/**
 	 * 边界上
@@ -74,22 +74,6 @@ public interface IGround extends IContainer{
 	 */
 	public List<Integer> areaForDistance(Integer position, Integer step, Integer type);
 	
-	/**
-	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
-	 * @param start
-	 * @param stop
-	 * @param moveType 移动类型
-	 * @return
-	 */
-	public List<Integer> route(Integer start, Integer stop, Integer moveType);
-	
-	/**
-	 * 获得两点之间的最短路线，不考虑障碍物
-	 * @param start
-	 * @param stop
-	 * @return
-	 */
-	public List<Integer> route(Integer start, Integer stop);
 	
 	/**
 	 * 根据坐标

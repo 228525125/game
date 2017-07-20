@@ -23,6 +23,7 @@ public class PathFinding {
 		closedList = new LinkedList();
 	}
 
+	/* 原方法 
 	public List searchPath(Point startPos, Point destiPos) {
 		Node startNode = new Node(startPos);
 		Node destiNode = new Node(destiPos);
@@ -61,6 +62,67 @@ public class PathFinding {
 						// set the costToObject
 						neighborNode.destiPoint = neighborNode
 								.GetCost(destiNode);
+						// change the neighborNode's parent nodes
+						neighborNode._parentnode = firstNode;
+						// add to level
+						openedList.add(neighborNode);
+					}
+				}
+			}
+		}
+		// clear the data
+		openedList.clear();
+		closedList.clear();
+		//
+		return null;
+	}*/
+	
+	/**
+	 * 计算路径
+	 * @param startPos
+	 * @param destiPos
+	 * @return
+	 */
+	public List searchPath(Point startPos, Point destiPos) {
+		Node startNode = new Node(startPos);
+		Node destiNode = new Node(destiPos);
+		startNode.sourcePoint = 0;
+		startNode.destiPoint = startNode.GetCost(destiNode);
+		startNode._parentnode = null;
+		openedList.add(startNode);
+		while (!openedList.isEmpty()) {
+			// remove the initialized component
+			Node firstNode = (Node) openedList.removeFirst();
+			// check the equality
+			if (firstNode.equals(destiNode)) {
+				//
+				return makePath(firstNode);
+			} else {
+				//
+				// add to the closedList
+				closedList.add(firstNode);
+				// get the mobile area of firstNode
+				LinkedList _limit = firstNode.getLimit();
+				// visit
+				for (int i = 0; i < _limit.size(); i++) {
+					// get the adjacent node
+					Node neighborNode = (Node) _limit.get(i);
+					//
+					boolean isOpen = openedList.contains(neighborNode);
+					// check if it can work
+					boolean isClosed = closedList.contains(neighborNode);
+					//
+					boolean isHit = isHit(neighborNode._Pos.x,
+							neighborNode._Pos.y);
+					// all of them are negative
+					if (!isOpen && !isClosed && !isHit) {
+						// set the costFromStart
+						neighborNode.sourcePoint = firstNode.sourcePoint + (firstNode.consume==0 ? 1 : firstNode.consume);   //
+						// set the costToObject
+						neighborNode.destiPoint = neighborNode
+								.GetCost(destiNode);
+						// set the consume
+						neighborNode.consume = this._map[neighborNode._Pos.x][neighborNode._Pos.y];
 						// change the neighborNode's parent nodes
 						neighborNode._parentnode = firstNode;
 						// add to level

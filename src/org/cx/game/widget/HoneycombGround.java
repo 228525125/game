@@ -22,6 +22,8 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.ISkill;
+import org.cx.game.core.ContextFactory;
+import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
@@ -52,7 +54,7 @@ public class HoneycombGround extends Container implements IGround {
 	private List<IStrongHold> strongHoldList = new ArrayList<IStrongHold>();           //据点
 	private Map<Integer, Integer> landformMap = new HashMap<Integer, Integer>();
 	private int [][] MAP = null;               //用于查询路线
-	private int[] hit = new int []{1};                                  //1表示障碍物
+	private int[] hit = new int []{-1};                                  //-1表示障碍物
 	
 	private CellularDistrict cellularDistrict = new CellularDistrict();
 	private Map<Integer, Integer> coordinateMap = new HashMap<Integer, Integer>();       //序号与坐标系映射
@@ -75,7 +77,7 @@ public class HoneycombGround extends Container implements IGround {
 		this.MAP = new int[xBorder+2][yBorder+2];
 		for(int i=0;i<xBorder+2;i++)
 			for(int j=0;j<yBorder+2;j++)
-				MAP[i][j] = 1;
+				MAP[i][j] = -1;
 		
 		/*
 		 * 初始化六边形地图算法
@@ -289,6 +291,7 @@ public class HoneycombGround extends Container implements IGround {
 			switch (life.getMove().getType()) {
 			case 141:    //步行
 				positionList = areaForDistance(life.getContainerPosition(), step, Contain, IMove.Type_Walk);
+				//distance(380082, 280083, IMove.Type_Walk);
 				break;
 			case 142:    //骑行
 				positionList = areaForDistance(life.getContainerPosition(), step, Contain, IMove.Type_Equitation);
@@ -388,20 +391,18 @@ public class HoneycombGround extends Container implements IGround {
 	public List<Integer> move(LifeCard life, Integer position, Integer type) {
 		// TODO Auto-generated method stub
 		List<Integer> route = new ArrayList<Integer>();
-		if(IMove.Type_Walk.equals(type) || IMove.Type_Equitation.equals(type) || IMove.Type_Drive.equals(type)){
-			route = route(getPosition(life), position, life.getMoveType());
-		}else if(IMove.Type_Fly.equals(type)){
-			route = route(getPosition(life), position);
-		}
 		
-		for(Integer p : route){
+		List path = route(getPosition(life), position, type);
+		path.remove(0);                         //路径包含起点
+		
+		for(int i=0;i<path.size();i++){
 			Integer curPos = getPosition(life);
-			if(null!=p){
-				IPlace place = getPlace(curPos);
-				place.out();
-				place = getPlace(p);
-				place.in(life);
-			}
+			Node node = (Node) path.get(i);
+			
+			IPlace place = getPlace(curPos);
+			place.out();
+			place = getPlace(pointToInteger(node._Pos.x, node._Pos.y));
+			place.in(life);
 		}
 		
 		return route;
@@ -483,21 +484,61 @@ public class HoneycombGround extends Container implements IGround {
 		
 		return ls;
 	}
-
+	
+	/**
+	 * 与distance方法类似，区别在于dis方法会去调用updateMAP
+	 * @param start
+	 * @param stop
+	 * @return
+	
+	private Integer interval(Integer start, Integer stop){
+		Integer ret = 0;
+		
+		if(!start.equals(stop)){
+			List path = route(start, stop); 
+			path.remove(0);                     //因为path包含起始位置，因此这里要删除
+			path.remove(path.size()-1);         //不计算终点地形，只+1；
+			ret += 1;
+			
+			for(int i=0;i<path.size();i++){
+				Node node = (Node) path.get(i);
+				ret += node.consume;
+			}
+		}
+		
+		return ret;
+	} */
+	
+	@Override
 	public Integer distance(Integer start, Integer stop) {
 		// TODO Auto-generated method stub
-    	return cellularDistrict.getShortestPathLength(getSerialNumber(start), getSerialNumber(stop));
+		return CellularDistrict.getShortPathLength(start, stop);
 	}
 	
 	@Override
 	public Integer distance(Integer start, Integer stop, Integer moveType) {
 		// TODO Auto-generated method stub
-		return route(start, stop, moveType).size();
+		Integer ret = 0;
+		
+		if(!start.equals(stop)){
+			List path = route(start, stop, moveType); 
+			path.remove(0);                     //因为path包含起始位置，因此这里要删除
+			path.remove(path.size()-1);         //不计算终点地形，只+1；
+			ret += 1;
+			
+			for(int i=0;i<path.size();i++){
+				Node node = (Node) path.get(i);
+				ret += node.consume;
+			}
+		}
+		
+		return ret;
 	}
 
 	public List<Integer> areaForDistance(Integer position, Integer step, Integer type) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
+		
 		for(int i=1;i<xBorder+1;i++){
 			for(int j=1;j<yBorder+1;j++){
 				Integer curPos = Integer.valueOf(""+i+space+j);
@@ -528,18 +569,15 @@ public class HoneycombGround extends Container implements IGround {
 		List<Integer> list = new ArrayList<Integer>();
 		
 		/*
-		 * 删除不能到达的位置
+		 * 缩小计算范围
 		 */
-		List<Integer> posList = new ArrayList<Integer>();
-		posList.addAll(this.ground.keySet());
-		List<Integer> disList = LandformEffect.getDisable(moveType, this.ground);
-		posList.removeAll(disList);
+		List<Integer> posList = areaForDistance(position, step, type);
 		
 		for(Integer curPos : posList){
 			switch (type) {
 			case 0:
 				if(step==distance(curPos, position, moveType))
-					if(getPlace(curPos).getEmpty())
+					if(getPlace(curPos).getEmpty())             //友方可以穿人，因此在计算路径时，不考虑友军站位，但这里就要判断
 						list.add(curPos);
 				break;
 					
@@ -579,57 +617,77 @@ public class HoneycombGround extends Container implements IGround {
 		return list;
 	}
 	
-	public List<Integer> route(Integer start, Integer stop, Integer moveType){
+	/**
+	 * 更新MAP，它做下面的事，a、加载地形；b、加载敌方单位站位信息
+	 */
+	private void updateMAP(Integer moveType){
+		
 		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
-		
-		
-		IPlace place = getPlace(stop);
-		Boolean empty = place.getEmpty();
-		place.setEmpty(true);                //终点必须可以到达才有意义
 		
 		for(Integer i : m){
 			String [] is = i.toString().split(space);
 			Integer ix = Integer.valueOf(is[0]);
 			Integer iy = Integer.valueOf(is[1]);
 			IPlace p = getPlace(i);
-			if(Integer.valueOf(-1).equals(LandformEffect.getConsume(moveType, p.getLandform())))
-				MAP[ix][iy] = 1;
-			else
-				MAP[ix][iy] = 0;
+			MAP[ix][iy] = LandformEffect.getConsume(moveType, p.getLandform());
 		}
-
-		place.setEmpty(empty);              //恢复终点状态
 		
-		PathFinding pathFinding = new PathFinding(MAP,hit);
+		/*
+		 * 加载战场敌方单位的站位
+		 */
+		IContext context = ContextFactory.getInstance();
+		IPlayer control = context.getControlPlayer();
+		IPlayer enemy = context.getOtherPlayer(control);
 		
-		Integer[] starts = integerToPoint(start);
-		Integer[] stops = integerToPoint(stop);
-		Point startPos = new Point(starts[0], starts[1]);
-		Point stopPos = new Point(stops[0],stops[1]);
-		List path = pathFinding.searchPath(startPos, stopPos);
+		List<Integer> pList = new ArrayList<Integer>();         //敌方单位的站位，友方允许穿过
+		List<Integer> nList = new ArrayList<Integer>();         //敌方单位附近1个单元格
 		
-		List<Integer> list = new ArrayList<Integer>();
-		for(int i=0;null!=path&&i<path.size();i++){
-			Node node = (Node) path.get(i);
-			Point point = node._Pos;
-			Integer pos = pointToInteger(point.x,point.y);
-			list.add(pos);
+		List<LifeCard> eList = list(enemy);
+		eList.remove(control.getHero());
+		for(LifeCard life : eList){
+			pList.add(life.getContainerPosition());
+			
+			List<Integer> list = areaForDistance(life.getContainerPosition(), 1, IGround.Contain);
+			list.removeAll(nList);
+			nList.addAll(list);
 		}
-		list.remove(start);  //结果包含起点，因此要删除
-		return list;
+		
+		for(Integer p : pList){
+			Integer [] point = integerToPoint(p);
+			MAP[point[0]][point[1]] = -1;
+		}
+		
+		for(Integer p : nList){
+			Integer [] point = integerToPoint(p);
+			if(-1!=MAP[point[0]][point[1]])
+				MAP[point[0]][point[1]] += 1;
+		}
 	}
 	
-	@Override
-	public List<Integer> route(Integer start, Integer stop) {
-		// TODO Auto-generated method stub
+	/**
+	 * 初始化MAP，不加载地形等信息
+	 */
+	private void updateMAP(){
 		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
 		
 		for(Integer i : m){
 			String [] is = i.toString().split(space);
 			Integer ix = Integer.valueOf(is[0]);
 			Integer iy = Integer.valueOf(is[1]);
-			MAP[ix][iy] = 0;
+			MAP[ix][iy] = 1;
 		}
+	}
+	
+	/**
+	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
+	 * 注意，在调用该方法之前，必须调用updateMAP，之所以将两个方法分开，也是为了提高
+	 * 计算效率，例如在一次areaForDistance方法调用，只更新一次MAP
+	 * @param start
+	 * @param stop
+	 * @return LinkedList<Node> 包含启动和终点
+	 */
+	private List route(Integer start, Integer stop){
+		updateMAP();
 		
 		PathFinding pathFinding = new PathFinding(MAP,hit);
 		
@@ -639,15 +697,21 @@ public class HoneycombGround extends Container implements IGround {
 		Point stopPos = new Point(stops[0],stops[1]);
 		List path = pathFinding.searchPath(startPos, stopPos);
 		
-		List<Integer> list = new ArrayList<Integer>();
-		for(int i=0;null!=path&&i<path.size();i++){
-			Node node = (Node) path.get(i);
-			Point point = node._Pos;
-			Integer pos = pointToInteger(point.x,point.y);
-			list.add(pos);
-		}
-		list.remove(start);  //结果包含起点，因此要删除
-		return list;
+		return path;
+	}
+	
+	private List route(Integer start, Integer stop, Integer moveType){
+		updateMAP(moveType);           //加载战场敌方单位站位
+		
+		PathFinding pathFinding = new PathFinding(MAP,hit);
+		
+		Integer[] starts = integerToPoint(start);
+		Integer[] stops = integerToPoint(stop);
+		Point startPos = new Point(starts[0], starts[1]);
+		Point stopPos = new Point(stops[0],stops[1]);
+		List path = pathFinding.searchPath(startPos, stopPos);
+		
+		return path;
 	}
 	
 	@Override
