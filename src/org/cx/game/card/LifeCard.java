@@ -49,16 +49,12 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.ILifeCardPolicy;
-import org.cx.game.policy.IUseCardPolicy;
-import org.cx.game.policy.LifeCardPolicy;
-import org.cx.game.tag.ITag;
-import org.cx.game.tools.Debug;
+import org.cx.game.policy.GroupPolicyFactory;
+import org.cx.game.policy.IGroupPolicy;
+import org.cx.game.policy.IPolicy;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
-import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IPlace;
-import org.cx.game.widget.building.IOption;
 
 /**
  * 所有生物卡的父类，
@@ -641,6 +637,33 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		return false;
 	}
 	
+	private IGroupPolicy groupPolicy = null;
+	
+	public void setGroupPolicy(Integer pId){
+		this.groupPolicy = GroupPolicyFactory.createGroupPolicy(pId);
+		this.groupPolicy.setOwner(this);
+	}
+	
+	/**
+	 * 使用AI自动操作
+	 */
+	public void automation(){
+		while (true) {
+			IPolicy policy = this.groupPolicy.getPolicy();
+			if(null!=policy)
+				policy.execute();
+			else
+				break;
+		}
+		
+		try {
+			activate(false);
+		} catch (RuleValidatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 容器（手牌、战场、墓地等）
 	 */
@@ -1081,27 +1104,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated method stub
 		return intercepterList;
 	}
-	
-	private IUseCardPolicy useCardPolicy = null;
-	
-	@Override
-	public IUseCardPolicy getUseCardPolicy() {
-		// TODO Auto-generated method stub
-		return this.useCardPolicy;
-	}
-	
-	@Override
-	public void setUseCardPolicy(IUseCardPolicy useCardPolicy) {
-		// TODO Auto-generated method stub
-		useCardPolicy.setOwner(this);
-		this.useCardPolicy = useCardPolicy;
-	}
-	
-	private ILifeCardPolicy policy = new LifeCardPolicy();
-	
-	public ILifeCardPolicy getPolicy() {
-		return policy;
-	}
 
 	@Override
 	public Boolean contains(Integer tag) {
@@ -1133,7 +1135,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 			return getPlayId().equals(life.getPlayId());
 		}else{
 			return false;
-		}		
+		}
 	}
 	
 }

@@ -2,12 +2,15 @@ package org.cx.game.widget;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.cx.game.card.CardFactory;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -47,15 +50,19 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 			}
 		}
 		
-		for(IStrongHold strongHold : ground.getStrongHoldList())
-			strongHold.setGround(this);
-		
 		/*
 		 * 设置地形
 		 */
 		for(Integer disable : ground.getDisableList()){
 			ground.getPlace(disable).setDisable(true);
 		}
+		
+		/*
+		 * 创建Neutral
+		 */
+		IPlayer neutral = ground.getNeutral();
+		neutral.setGround(this);
+		neutral.setResource(10000);
 	}
 	
 	@Override
@@ -168,12 +175,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		// TODO Auto-generated method stub
 		return ground.getYBorder();
 	}
-	
-	@Override
-	public List<IStrongHold> getStrongHoldList() {
-		// TODO Auto-generated method stub
-		return ground.getStrongHoldList();
-	}
 
 	@Override
 	public void addPlace(IPlace place) {
@@ -271,5 +272,30 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public Integer distance(Integer start, Integer stop, Integer moveType) {
 		// TODO Auto-generated method stub
 		return ground.distance(start, stop, moveType);
+	}
+
+	@Override
+	public Integer getPointByWay(Integer stand, Integer dest, Integer step,
+			Integer moveType) {
+		// TODO Auto-generated method stub
+		return ground.getPointByWay(stand, dest, step, moveType);
+	}
+
+	@Override
+	public IPlayer getNeutral() {
+		// TODO Auto-generated method stub
+		return ground.getNeutral();
+	}
+
+	@Override
+	public Map<Integer, Integer> getNpcMap() {
+		// TODO Auto-generated method stub
+		return ground.getNpcMap();
+	}
+
+	@Override
+	public Map<Integer, Integer> getPolicyMap() {
+		// TODO Auto-generated method stub
+		return ground.getPolicyMap();
 	}
 }

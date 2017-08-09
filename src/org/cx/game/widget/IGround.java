@@ -181,12 +181,6 @@ public interface IGround extends IContainer{
 	public void loadMap();
 	
 	/**
-	 * 据点
-	 * @return
-	 */
-	public List<IStrongHold> getStrongHoldList();
-	
-	/**
 	 * 查询卡片操作范围
 	 * @param card
 	 * @param action
@@ -276,5 +270,33 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<LifeCard> list(Integer stand, Integer step, Integer type);
+	
+	/**
+	 * 从起点到终点的最短路径，根据移动范围来获取路径上的那个点
+	 * @param stand 当前位置
+	 * @param dest 目标位置
+	 * @param step 步数
+	 * @param moveType 移动类型
+	 * @return
+	 */
+	public Integer getPointByWay(Integer stand, Integer dest, Integer step, Integer moveType);
+	
+	/**
+	 * 
+	 * @return 中立生物position/Id
+	 */
+	public Map<Integer, Integer> getNpcMap();
+	
+	/**
+	 * 
+	 * @return 中立生物的策略position/policyId
+	 */
+	public Map<Integer, Integer> getPolicyMap();
+	
+	/**
+	 * 中立部队
+	 * @return
+	 */
+	public IPlayer getNeutral();
 
 }

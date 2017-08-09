@@ -18,7 +18,6 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.IUseCardPolicy;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
@@ -118,21 +117,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	public Integer getContainerPosition() {
 		// TODO Auto-generated method stub
 		return container.getPosition(this);
-	}
-	
-	private IUseCardPolicy useCardPolicy = null;
-	
-	@Override
-	public IUseCardPolicy getUseCardPolicy() {
-		// TODO Auto-generated method stub
-		return this.useCardPolicy;
-	}
-	
-	@Override
-	public void setUseCardPolicy(IUseCardPolicy useCardPolicy) {
-		// TODO Auto-generated method stub
-		useCardPolicy.setOwner(this);
-		this.useCardPolicy = useCardPolicy;
 	}
 	
 	private Integer consume =1;

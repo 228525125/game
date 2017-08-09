@@ -14,17 +14,9 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.IPlayerPolicy;
-import org.cx.game.policy.PlayerPolicy;
 import org.cx.game.tools.Debug;
-import org.cx.game.widget.CardGroup;
-import org.cx.game.widget.CardGroupDecorator;
-import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
-import org.cx.game.widget.UseCard;
-import org.cx.game.widget.UseCardDecorator;
-import org.cx.game.widget.building.Building;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -173,14 +165,6 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 			return player.getId().equals(getId());
 		}
 		return super.equals(arg0);
-	}
-	
-	private IPlayerPolicy policy = new PlayerPolicy(this); 
-	
-	@Override
-	public IPlayerPolicy getPolicy() {
-		// TODO Auto-generated method stub
-		return policy;
 	}
 	
 	private LifeCard hero;

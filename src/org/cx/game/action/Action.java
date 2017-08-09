@@ -6,12 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.card.ICard;
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.IActionPolicy;
-import org.cx.game.rule.IRule;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 
@@ -128,20 +124,5 @@ public abstract class Action extends Observable implements IAction {
 	public Boolean hasError() {
 		// TODO Auto-generated method stub
 		return errors.hasError();
-	}
-	
-	private IActionPolicy policy = null;
-	
-	@Override
-	public IActionPolicy getPolicy() {
-		// TODO Auto-generated method stub
-		return this.policy;
-	}
-	
-	@Override
-	public void setPolicy(IActionPolicy actionPolicy) {
-		// TODO Auto-generated method stub
-		actionPolicy.setOwner(this);
-		this.policy = actionPolicy;
 	}
 }

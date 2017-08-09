@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
-import org.cx.game.core.Context;
+import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
@@ -63,7 +63,7 @@ public class CardFactory {
 		Element cardEl = getElement(cid);
 		ICard card = getInstance(cardEl);
 		card.setPlayer(player);
-		card.setPlayId(player.getContext().newCardPlayId());
+		card.setPlayId(ContextFactory.getInstance().newCardPlayId());
 		return card;
 	}
 	
@@ -74,7 +74,7 @@ public class CardFactory {
 			Element cardEl = getElement(id);
 			ICard card = getInstance(cardEl);
 			card.setPlayer(player);
-			card.setPlayId(player.getContext().newCardPlayId());
+			card.setPlayId(ContextFactory.getInstance().newCardPlayId());
 			list.add(getInstance(cardEl));
 		}
 		return list;

@@ -8,8 +8,6 @@ import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
-import org.cx.game.policy.IActionPolicy;
-import org.cx.game.policy.IFormula;
 import org.cx.game.rule.IRule;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
@@ -204,17 +202,5 @@ public abstract class ActionDecorator implements IAction {
 	public Boolean hasError() {
 		// TODO Auto-generated method stub
 		return original.hasError();
-	}
-	
-	@Override
-	public IActionPolicy getPolicy() {
-		// TODO Auto-generated method stub
-		return original.getPolicy();
-	}
-	
-	@Override
-	public void setPolicy(IActionPolicy actionPolicy) {
-		// TODO Auto-generated method stub
-		original.setPolicy(actionPolicy);
 	}
 }

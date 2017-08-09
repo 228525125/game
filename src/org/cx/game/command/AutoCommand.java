@@ -16,6 +16,6 @@ public class AutoCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 
-		this.player.getPolicy().execute();
+		//
 	}
 }

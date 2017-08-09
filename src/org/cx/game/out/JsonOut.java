@@ -32,8 +32,8 @@ public class JsonOut extends Response implements Observer {
 			"hero","attendantList",              //Player
 			"near",                  //Place
 			"index",                 //ControlQueue.Place
-			"strongHoldList","randomEntry","landformMap","emptyList","disableList",        //Ground
-			"appendCardList","hashCode","containerPosition","useCardPolicy","policy",        //LifeCard
+			"strongHoldList","randomEntry","landformMap","emptyList","disableList","npcMap","policyMap",        //Ground
+			"appendCardList","hashCode","containerPosition","useCardPolicy",        //LifeCard
 			"affectedList",                  //Skill
 			"cardIDList","lifeList",                             //StrongHold
 			"pri",                                              //Priority
@@ -41,6 +41,7 @@ public class JsonOut extends Response implements Observer {
 			"conjureRange",                                     //MagicCard
 			"unitNumber",                                       //HuntUnits
 			"controlLife","controlPlayer","player1","player2","controlQueue",          //Context
+			"policy",                                           //GroupPolicy
 			"ruleParam",                                        //用于传递一些参数给rule，与前台无关
 			"owner","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
 		});

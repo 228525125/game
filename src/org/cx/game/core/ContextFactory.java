@@ -1,5 +1,7 @@
 package org.cx.game.core;
 
+import java.util.List;
+
 import org.cx.game.card.CardFactory;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.Intercepter;
@@ -17,15 +19,14 @@ public class ContextFactory {
 		return context;
 	}
 
-	public static IContext createContext(IPlayer player1, IPlayer player2){
-		context = new ContextDecorator(new Context(player1,player2));
+	public static IContext createContext(List<IPlayer> playerList){
+		context = new ContextDecorator(new Context(playerList));
 
-		player1.setContext(context);
-		player1.setHero((LifeCard) CardFactory.getInstance(player1.getHeroCardID(), player1));
-		
-		player2.setContext(context);
-		player2.setHero((LifeCard) CardFactory.getInstance(player2.getHeroCardID(), player2));
-		
+		for(IPlayer player : playerList){
+			player.setContext(context);
+			player1.setHero((LifeCard) CardFactory.getInstance(player1.getHeroCardID(), player1));
+		}
+
 		/*for(final IStrongHold strongHold : player1.getGround().getStrongHoldList()){
 			strongHold.getPlayer().setContext(context);
 			

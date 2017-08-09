@@ -1,11 +1,8 @@
 package org.cx.game.action;
 
-import org.cx.game.card.ICard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
-import org.cx.game.policy.IActionPolicy;
-import org.cx.game.rule.IRule;
 import org.cx.game.validator.IValidatable;
 
 /**
@@ -29,13 +26,5 @@ public interface IAction extends IInterceptable, Observable, IValidatable, Clone
 	 * @throws RuleValidatorException
 	 */
 	public void action(Object...objects) throws RuleValidatorException;
-	
-	/**
-	 * 操作策略
-	 * @return
-	 */
-	public IActionPolicy getPolicy();
-	
-	public void setPolicy(IActionPolicy actionPolicy);
 	
 }

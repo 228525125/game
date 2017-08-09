@@ -1,0 +1,69 @@
+package org.cx.game.policy;
+
+import org.cx.game.card.LifeCard;
+import org.cx.game.command.CommandFactory;
+import org.cx.game.command.Invoker;
+import org.cx.game.exception.ValidatorException;
+import org.cx.game.policy.formula.NotLockFormula;
+import org.cx.game.policy.formula.NotStagnantFormula;
+import org.cx.game.widget.GroundFactory;
+import org.cx.game.widget.IGround;
+
+/**
+ * 回防策略
+ * @author chenxian
+ *
+ */
+public class RunbackPolicy extends Policy {
+
+	private Integer guardPosition = null;
+	private String cmdStr = "";
+	
+	public void setGuardPoistion(Integer guardPosition){
+		this.guardPosition = guardPosition;
+	}
+	
+	@Override
+	public void calculate() {
+		// TODO Auto-generated method stub
+		LifeCard owner = (LifeCard) getOwner().getOwner();
+		
+		IGround ground = GroundFactory.getInstance();
+		Integer position = ground.getPointByWay(owner.getContainerPosition(), this.guardPosition, owner.getMove().getEnergy(), owner.getMove().getType());
+		
+		this.cmdStr = "move ground place"+position+";";
+		
+		setPri(IPolicy.PRI_Min);
+		
+		/*
+		 * 判断是否被锁定
+		 */
+		addValidator(new NotLockFormula(owner));
+		
+		/*
+		 * 是否在原点
+		 */
+		addValidator(new NotStagnantFormula(owner, this.guardPosition));
+		
+		doValidator();		
+
+		if(hasError()){
+			System.out.println(getErrors().getMessage());
+		}else{
+			Invoker invoker = new Invoker();
+			String cmd = "select ground place"+owner.getContainerPosition()+" card;";
+			try {
+				invoker.receiveCommand(owner.getPlayer(), cmd);
+				
+				super.command = CommandFactory.createCommand(owner.getPlayer(),this.cmdStr);
+				super.command.doValidator();
+				if(!super.command.hasError()){
+					setPri(IPolicy.PRI_High);
+				}
+			} catch (ValidatorException e) {
+				// TODO Auto-generated catch block
+				return;
+			}
+		}
+	}
+}

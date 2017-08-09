@@ -3,7 +3,6 @@ package org.cx.game.card;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.policy.IUseCardPolicy;
 import org.cx.game.tag.ITag;
 import org.cx.game.widget.IContainer;
 
@@ -82,13 +81,4 @@ public interface ICard extends IInterceptable, ITag
 	 * @return
 	 */
 	public Integer getContainerPosition();
-	
-	/**
-	 * 出牌策略
-	 * @return
-	 */
-	public IUseCardPolicy getUseCardPolicy();
-	
-	public void setUseCardPolicy(IUseCardPolicy useCardPolicy);
-
 }

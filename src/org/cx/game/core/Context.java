@@ -55,16 +55,16 @@ public class Context extends Observable implements IContext
 	
 	private int bout=0;  //游戏回合
 	
+	private List<IPlayer> playerList = new ArrayList<IPlayer>();
+	
 	private IPlayer controlPlayer=null;
 	
-	
-	public Context(IPlayer player1, IPlayer player2) {
+	public Context(List<IPlayer> playerList) {
 		// TODO Auto-generated constructor stub
-		this.player1 = player1;
-		this.player2 = player2;
+		this.playerList = playerList;
 		
-		this.queue.add(player1);
-		this.queue.add(player2);
+		for(IPlayer player : playerList)
+			this.queue.add(player);
 		
 		addObserver(new JsonOut());
 		
@@ -200,18 +200,6 @@ public class Context extends Observable implements IContext
 		this.playState.finish();
 	}
 	
-	private IPlayer player1;
-	
-	public IPlayer getPlayer1() {
-		return player1;
-	}	
-
-	private IPlayer player2;
-	
-	public IPlayer getPlayer2() {
-		return player2;
-	}
-	
 	/**
 	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
 	 */
@@ -221,6 +209,12 @@ public class Context extends Observable implements IContext
 	
 	public void addBout(){
 		bout++;
+	}
+	
+	@Override
+	public List<IPlayer> getPlayerList() {
+		// TODO Auto-generated method stub
+		return this.playerList;
 	}
 	
 	/**
@@ -239,12 +233,12 @@ public class Context extends Observable implements IContext
 		notifyObservers(info);
 	}
 	
-	public IPlayer getOtherPlayer(IPlayer player){
+	/*public IPlayer getOtherPlayer(IPlayer player){
 		if(player.getId()==player1.getId())
 			return player2;
 		else
 			return player1;
-	}
+	}*/
 	
 	/**
 	 * 切换控制权

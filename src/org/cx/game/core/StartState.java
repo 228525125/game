@@ -2,13 +2,18 @@ package org.cx.game.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import org.cx.game.card.CardFactory;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.policy.GroupPolicyFactory;
+import org.cx.game.policy.IGroupPolicy;
 import org.cx.game.widget.ControlQueue;
+import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
@@ -60,15 +65,37 @@ public class StartState extends PlayState {
 		
 		deploy();
 		
+		IGround ground = GroundFactory.getInstance();
+		
+		/*
+		 * NPC登场
+		 */
+		IPlayer neutral = ground.getNeutral();
+		Set<Integer> posSet = ground.getNpcMap().keySet();
+		for(Integer pos : posSet){
+			Integer npcId = ground.getNpcMap().get(pos);
+			LifeCard npc = (LifeCard) CardFactory.getInstance(npcId, neutral);
+			Integer policyId = ground.getPolicyMap().get(pos);
+			if(null!=policyId)
+				npc.setGroupPolicy(policyId);
+			
+			IPlace place = ground.getPlace(pos);
+			try {
+				npc.call(place);
+			} catch (RuleValidatorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		/*
+		 * 英雄登场
+		 */
 		IPlayer player1 = context.getPlayer1();
 		IPlayer player2 = context.getPlayer2();
 		LifeCard hero1 = player1.getHero();
 		LifeCard hero2 = player2.getHero();
 		
-		/*
-		 * 英雄登场
-		 */
-		IGround ground = player1.getGround();
 		IPlace place1 = ground.getPlace(player1.getHeroEntry());
 		IPlace place2 = ground.getPlace(player2.getHeroEntry());
 		try {

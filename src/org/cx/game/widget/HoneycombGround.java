@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IMove;
+import org.cx.game.card.CardFactory;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.MagicCard;
@@ -25,6 +26,8 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
+import org.cx.game.core.Player;
+import org.cx.game.core.PlayerDecorator;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
@@ -51,7 +54,6 @@ public class HoneycombGround extends Container implements IGround {
 	private Map<Integer, IBuilding> buildingMap = new HashMap<Integer, IBuilding>();   //位置 - 建筑
 	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格（暂时没用），当地图中间需要被镂空时，会用到
 	private List<Integer> emptyList = new ArrayList<Integer>();         //空位
-	private List<IStrongHold> strongHoldList = new ArrayList<IStrongHold>();           //据点
 	private Map<Integer, Integer> landformMap = new HashMap<Integer, Integer>();
 	private int [][] MAP = null;               //用于查询路线
 	private int[] hit = new int []{-1};                                  //-1表示障碍物
@@ -59,6 +61,10 @@ public class HoneycombGround extends Container implements IGround {
 	private CellularDistrict cellularDistrict = new CellularDistrict();
 	private Map<Integer, Integer> coordinateMap = new HashMap<Integer, Integer>();       //序号与坐标系映射
 	private Map<Integer, Integer> serialNumberMap = new HashMap<Integer, Integer>();     //坐标系与序号映射
+
+	private Map<Integer, Integer> npcMap = new HashMap<Integer, Integer>();
+	private Map<Integer, Integer> policyMap = new HashMap<Integer, Integer>();
+	private IPlayer neutral = null;
 	
 	public HoneycombGround(Integer xBorder, Integer yBorder, String imagePath) {
 		// TODO Auto-generated constructor stub
@@ -84,6 +90,12 @@ public class HoneycombGround extends Container implements IGround {
 		 */
 		cellularDistrict.initCellularDistrict(getMaxSerial(Math.max(xBorder, yBorder)));
 		initCoordinateSystem(getCentrePoint(xBorder, yBorder),Math.max(xBorder, yBorder));
+		
+		/*
+		 * 创建中立部队
+		 */
+		this.neutral = new Player(9, "neutral");
+		neutral = new PlayerDecorator(neutral);
 	}
 
 	public void add(Integer position, ICard card) {
@@ -180,13 +192,24 @@ public class HoneycombGround extends Container implements IGround {
 		// TODO Auto-generated method stub
 		return this.emptyList;
 	}
-
-	public List<IStrongHold> getStrongHoldList() {
-		return strongHoldList;
+	
+	@Override
+	public Map<Integer, Integer> getNpcMap(){
+		return npcMap;
 	}
 
-	public void setStrongHoldList(List<IStrongHold> strongHoldList) {
-		this.strongHoldList = strongHoldList;
+	public void setNpcMap(Map<Integer, Integer> npcMap){
+		this.npcMap = npcMap;
+	}
+	
+	@Override
+	public Map<Integer, Integer> getPolicyMap() {
+		// TODO Auto-generated method stub
+		return this.policyMap;
+	}
+	
+	public void setPolicyMap(Map<Integer, Integer> policyMap){
+		this.policyMap = policyMap;
 	}
 	
 	@Override
@@ -259,6 +282,10 @@ public class HoneycombGround extends Container implements IGround {
 	public String getName() {
 		// TODO Auto-generated method stub
 		return Container.Ground;
+	}
+	
+	public IPlayer getNeutral(){
+		return this.neutral;
 	}
 	
 	public List<Integer> queryRange(ICard card, String action){
@@ -896,6 +923,21 @@ public class HoneycombGround extends Container implements IGround {
 		}
 		
 		return list;
+	}
+	
+	@Override
+	public Integer getPointByWay(Integer stand, Integer dest, Integer step,
+			Integer moveType) {
+		// TODO Auto-generated method stub
+		List path = route(stand, dest, moveType);
+		for(int i=0;i<path.size();i++){
+			Node node = (Node) path.get(i);
+			Integer pos = pointToInteger(node._Pos.x, node._Pos.y);
+			if(dest.equals(pos)         //在移动范围内
+			|| node.sourcePoint>step)   //在移动范围外
+				return pos;
+		}
+		return null;
 	}
 
 	/**

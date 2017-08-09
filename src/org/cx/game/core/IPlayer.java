@@ -2,16 +2,11 @@ package org.cx.game.core;
 
 import java.util.List;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.policy.IPlayerPolicy;
-import org.cx.game.widget.ICardGroup;
-import org.cx.game.widget.ICemetery;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
-import org.cx.game.widget.building.IBuilding;
 
 /**
  * 游戏玩家
@@ -51,8 +46,6 @@ public interface IPlayer extends IInterceptable
 	public void addToResource(Integer res);
 	
 	public CommandBuffer getCommandBuffer();
-	
-	public IPlayerPolicy getPolicy();
 	
 	/**
 	 * 英雄

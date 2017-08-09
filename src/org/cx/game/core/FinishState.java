@@ -28,8 +28,9 @@ public class FinishState extends PlayState {
 	@Override
 	public void finish() {
 		// TODO Auto-generated method stub
-		context.getPlayer1().getCommandBuffer().clear();
-		context.getPlayer2().getCommandBuffer().clear();
+		for(IPlayer player : context.getPlayerList()){
+			player.getCommandBuffer().clear();
+		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Finish,map);
 		super.notifyObservers(info);

@@ -4,9 +4,9 @@ import java.util.Observable;
 
 public abstract class PlayState extends Observable implements org.cx.game.observer.Observable{
 
-	protected Context context;
+	protected IContext context;
 
-	public void setContext(Context context) {
+	public void setContext(IContext context) {
 		this.context = context;
 	}
 	

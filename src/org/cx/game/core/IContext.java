@@ -1,5 +1,7 @@
 package org.cx.game.core;
 
+import java.util.List;
+
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
@@ -51,6 +53,8 @@ public interface IContext extends IInterceptable,Observable {
 	public abstract void addBout();
 
 	//public abstract LifeCard getControlLife(); 半回合制
+	
+	public List<IPlayer> getPlayerList();
 
 	public abstract IPlayer getControlPlayer();
 
@@ -58,8 +62,8 @@ public interface IContext extends IInterceptable,Observable {
 	 * 得到对方比赛者对象
 	 * @param player
 	 * @return
-	 */
-	public abstract IPlayer getOtherPlayer(IPlayer player);
+	
+	public abstract IPlayer getOtherPlayer(IPlayer player); */
 
 	/**
 	 * 交换比赛控制权

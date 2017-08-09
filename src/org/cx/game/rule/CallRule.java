@@ -41,17 +41,6 @@ public class CallRule implements IRule {
 				 * 增加召唤计数器
 				 */
 				player.addCallCountOfPlay(1);
-				
-				/*
-				 * 生成地形优势
-				 */
-				Map bean = (Map) info.getInfo();
-				Integer position = (Integer) bean.get("position");
-				IPlace place = player.getGround().getPlace(position);
-				LifeCard life = getOwner().getOwner();
-				Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
-				life.getAttack().addToAtk(LandformEffect.getAttackAdvantage(profession, place.getLandform()));
-				life.getAttacked().addToDef(LandformEffect.getDefendAdvantage(profession, place.getLandform()));
 			}
 		}
 	}

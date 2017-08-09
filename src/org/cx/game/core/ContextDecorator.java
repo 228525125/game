@@ -151,12 +151,6 @@ public class ContextDecorator implements IContext {
 	}
 
 	@Override
-	public IPlayer getOtherPlayer(IPlayer player) {
-		// TODO Auto-generated method stub
-		return original.getOtherPlayer(player);
-	}
-
-	@Override
 	public void switchControl() {
 		// TODO Auto-generated method stub
 		original.switchControl();
@@ -178,6 +172,12 @@ public class ContextDecorator implements IContext {
 	public Long newCardPlayId() {
 		// TODO Auto-generated method stub
 		return original.newCardPlayId();
+	}
+
+	@Override
+	public List<IPlayer> getPlayerList() {
+		// TODO Auto-generated method stub
+		return original.getPlayerList();
 	}
 
 }

@@ -15,6 +15,8 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.CallRule;
+import org.cx.game.rule.PlaceRule;
 import org.cx.game.widget.building.IBuilding;
 
 public class Place extends Observable implements IPlace {
@@ -34,7 +36,8 @@ public class Place extends Observable implements IPlace {
 		// TODO Auto-generated constructor stub
 		this.ground = ground;
 		this.position = position;
-		this.addObserver(new JsonOut());
+		addObserver(new PlaceRule(this));
+		addObserver(new JsonOut());
 	}
 	
 	public IGround getContainer(){
