@@ -25,12 +25,6 @@ public interface IControlQueue extends Observable, IInterceptable{
 	public Object out();
 	
 	/**
-	 * 子类需要提供适合自己的Observer（观察者），来适应不同的环境；该方法减少了多余的接口，又增加了扩展性；
-	 * @return
-	 */
-	public IRule getRule();
-	
-	/**
 	 * 刷新，当place中的life的speed发生变化时，立即刷新，该方法只用于rule
 	 */
 	public void refurbish();

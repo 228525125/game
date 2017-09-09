@@ -3,12 +3,12 @@ package org.cx.game.policy;
 import java.util.Collections;
 import java.util.List;
 
-public class GroupPolicy implements IGroupPolicy {
+public class PolicyGroup implements IPolicyGroup {
 
-	private List<IPolicy> policyList = null;
+	protected List<IPolicy> policyList = null;
 	private Integer id = null;
 
-	public GroupPolicy(Integer id) {
+	public PolicyGroup(Integer id) {
 		// TODO Auto-generated constructor stub
 		this.id = id;
 	}
@@ -17,6 +17,8 @@ public class GroupPolicy implements IGroupPolicy {
 	public void setPolicyList(List<IPolicy> policyList) {
 		// TODO Auto-generated method stub
 		this.policyList = policyList;
+		for(IPolicy policy : policyList)
+			policy.setOwner(this);
 	}
 	
 	@Override

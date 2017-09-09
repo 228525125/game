@@ -23,11 +23,6 @@ public class Attacked extends Action implements IAttacked {
 	private Integer armour = 0;
 	private Integer def = 0;
 	
-	public Attacked() {
-		// TODO Auto-generated constructor stub
-		addObserver(new AttackedRule(this));
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub

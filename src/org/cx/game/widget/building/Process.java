@@ -6,37 +6,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.cx.game.action.IUpgrade;
+import org.cx.game.action.IAction;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
-import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
+import org.cx.game.observer.NotifyInfo;
+import org.cx.game.observer.Observable;
 
-public class UpgradeProcess implements IIntercepter, IRecover {
+public abstract class Process implements IIntercepter, IRecover {
 
 	private Integer waitBout = 0;
 	private Integer beginBout = 0;
 	private Integer curBout = 0;
 	private Boolean isDelete = false;
-	private IUpgrade upgrade = null;
 	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
-	public UpgradeProcess(Integer waitBout, IUpgrade upgrade) {
+	private Object owner = null;
+	
+	public Process(Integer waitBout, Object owner) {
 		// TODO Auto-generated constructor stub
 		this.waitBout = waitBout;
-		this.upgrade = upgrade;
+		this.owner = owner;
 		
-		IContext context = ContextFactory.getInstance();
+		IContext context = ContextFactory.getContext();
 		this.beginBout = context.getBout();
 		
 		recordIntercepter(context, this);
 	}
 	
 	public Integer getProcess(){
+		if(Integer.valueOf(0).equals(waitBout))
+			return 100;
 		Integer bout = curBout-beginBout;
 		return bout*100/waitBout;
 	}
@@ -54,25 +58,14 @@ public class UpgradeProcess implements IIntercepter, IRecover {
 	}
 
 	@Override
-	public void finish(Object[] args) {
-		// TODO Auto-generated method stub
-		IContext context = ContextFactory.getInstance();
-		
-		curBout = context.getBout();
-		if((curBout-beginBout)==this.waitBout){
-			try {
-				this.upgrade.action();
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-
+		IContext context = ContextFactory.getContext();
+		this.curBout = context.getBout();
+	}
+	
+	public Object getOwner(){
+		return this.owner;
 	}
 
 	@Override

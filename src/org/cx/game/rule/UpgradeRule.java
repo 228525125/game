@@ -9,31 +9,28 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.building.BuildingUpgrade;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IProduct;
+import org.cx.game.widget.building.ProductUpgrade;
+import org.cx.game.widget.building.ReviveOption;
 
 public class UpgradeRule implements IRule {
-	
-	private IUpgrade upgrade = null;
 
-	public UpgradeRule(IUpgrade upgrade) {
-		// TODO Auto-generated constructor stub
-		this.upgrade = upgrade;
-	}
-	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		
 		if (arg instanceof NotifyInfo) {
 			NotifyInfo info = (NotifyInfo) arg;
 			
 			if(NotifyInfo.Card_LifeCard_State_EmpiricValue.equals(info.getType())) {
-				if(this.upgrade.getProcess()>=100){
-					
-					LifeUpgrade up = (LifeUpgrade) this.upgrade;
+				LifeUpgrade upgrade = (LifeUpgrade) ((RuleGroup) o).getMessageSource();
+				
+				if(upgrade.getProcess()>=100){
 					
 					try {
-						up.getOwner().upgrade();
+						upgrade.getOwner().upgrade();
 					} catch (RuleValidatorException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -41,37 +38,37 @@ public class UpgradeRule implements IRule {
 				}
 				
 			}else if(NotifyInfo.Card_LifeCard_Action_Upgrade.equals(info.getType())) {
-				LifeUpgrade upgrade = (LifeUpgrade) this.upgrade;
-				upgrade.addToEmpiricValue(-upgrade.getConsume());
+				LifeUpgrade upgrade = (LifeUpgrade) ((RuleGroup) o).getMessageSource();
+				
 				
 			}else if(NotifyInfo.Card_LifeCard_Skill_Upgrade.equals(info.getType())){
-				ISkill skill = (ISkill) this.upgrade.getOwner();
+				IUpgrade upgrade = (IUpgrade) ((RuleGroup) o).getMessageSource();
+				
+				ISkill skill = (ISkill) upgrade.getOwner();
 				LifeCard life = skill.getOwner();
 				LifeUpgrade up = (LifeUpgrade) life.getUpgrade();
-				up.addToSkillCount(-this.upgrade.getConsume());
+				up.addToSkillCount(-upgrade.getConsume());
 				
-			}else if(NotifyInfo.Building_Action_Upgrade_Begin.equals(info.getType())){
-				IBuilding building = (IBuilding) this.upgrade.getOwner();
+			}else if(NotifyInfo.Building_Action_Upgrade.equals(info.getType())){
+				BuildingUpgrade upgrade = (BuildingUpgrade) ((RuleGroup) o).getMessageSource();
+				
+				IBuilding building = (IBuilding) upgrade.getOwner();
 				IPlayer player = building.getPlayer();
 				if(null!=player){
-					player.addToResource(-this.upgrade.getConsume());
+					player.addToResource(-upgrade.getConsume());
 				}
 				
-			}else if(NotifyInfo.Building_Action_Upgrade_Product_Begin.equals(info.getType())){
-				IProduct product = (IProduct) this.upgrade.getOwner();
+			}else if(NotifyInfo.Building_Action_Upgrade_Product.equals(info.getType())){
+				ProductUpgrade upgrade = (ProductUpgrade) ((RuleGroup) o).getMessageSource();
+				
+				IProduct product = (IProduct) upgrade.getOwner();
 				IBuilding building = product.getOwner();
 				IPlayer player = building.getPlayer();
 				if(null!=player){
-					player.addToResource(-this.upgrade.getConsume());
+					player.addToResource(-upgrade.getConsume());
 				}
 			}
 		}
-	}
-
-	@Override
-	public IUpgrade getOwner() {
-		// TODO Auto-generated method stub
-		return this.upgrade;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Observable;
 
 import org.cx.game.action.IAttack;
+import org.cx.game.action.IAttacked;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.LifeUpgrade;
 import org.cx.game.card.LifeCard;
@@ -14,77 +15,32 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
 
 public class AttackRule implements IRule {
-
-	private IAttack attack = null;
-	private IAttack clone = null;
-	
-	public AttackRule(IAttack attack) {
-		// TODO Auto-generated constructor stub
-		this.attack = attack;
-	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		
 		if (arg instanceof NotifyInfo) {
 			NotifyInfo info = (NotifyInfo) arg;
 			
 			//判断攻击距离，决定是否上锁
 			if(NotifyInfo.Card_LifeCard_Action_Attack.equals(info.getType())){
+				IAttack attack = (IAttack) ((RuleGroup) o).getMessageSource();
+				
 				Map bean = (Map) info.getInfo();
 				LifeCard attacked = (LifeCard) bean.get("attacked");
 				
-				this.clone = getOwner().clone();
-				
-				IGround ground = getOwner().getOwner().getPlayer().getGround();
-				Integer distance = ground.distance(attacked.getContainerPosition(), getOwner().getOwner().getContainerPosition());
-				if(IDeath.Status_Live == attacked.getDeath().getStatus()
-				&& 1==distance){                                           //近身
-					new AttackLockBuff(getOwner().getOwner(),attacked).effect();
-					
-					this.clone.setMode(IAttack.Mode_Near);             //如果是远程，这里要设置为近身攻击模式
-				}
-				
-				//判断是否装备武器
-				if(null!=clone.getWeapon()){
-					clone.getWeapon().addToWear(-1);
-				}
-				
-				//判断攻击模式，远程近战攻击减半
-				if(IAttack.Mode_Far.equals(getOwner().getMode()) && 1==distance){
-					clone.setMode(IAttack.Mode_Near);
-					Integer atk = clone.getAtk()/2;
-					clone.setAtk(atk);
-				}
-				
 				//判断是否为反击
-				if(getOwner().getCounterAttack()){
-					getOwner().setCounterAttack(false);
+				if(attack.getCounterAttack()){
+					attack.setCounterAttack(false);
 				}
 				
 				//判断潜行状态
-				LifeCard owner = getOwner().getOwner();
+				LifeCard owner = attack.getOwner();
 				if(owner.getMove().getHide()){
 					owner.getMove().changeHide(false);
 				}
-				
-				//生命值与攻击力成正比
-				Integer scale = owner.getDeath().getHp()*100/owner.getHp();
-				Integer atk = clone.getAtk()*scale/100;
-				atk = 5>atk ? 5 : atk;
-				clone.setAtk(atk);
 			}
 		}
 	}
-
-	@Override
-	public IAttack getOwner() {
-		// TODO Auto-generated method stub
-		return this.attack;
-	}
-	
-	public IAttack cloneForAttack(){
-		return this.clone;
-	}
-
 }

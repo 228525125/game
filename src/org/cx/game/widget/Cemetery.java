@@ -21,7 +21,7 @@ public class Cemetery extends Observable implements ICemetery {
 	
 	public Cemetery(IPlace place) {
 		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
+		super();
 		this.place = place;
 	}
 	

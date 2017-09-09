@@ -4,14 +4,9 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.building.IOption;
 
-/**
- * 验证选项间隔周期
- * @author chenxian
- *
- */
-public class OptionSpacingValidate extends SelectOptionValidator {
+public class OptionExecuteValidator extends SelectOptionValidator {
 
-	public OptionSpacingValidate(CommandBuffer buffer) {
+	public OptionExecuteValidator(CommandBuffer buffer) {
 		super(buffer);
 		// TODO Auto-generated constructor stub
 	}
@@ -23,7 +18,7 @@ public class OptionSpacingValidate extends SelectOptionValidator {
 		
 		if(ret){
 			IOption option = getOption();
-			if(Integer.valueOf(100).equals(option.getSpacingProcess())){
+			if(Integer.valueOf(100).equals(option.getExecuteProcess())){
 				ret = true;
 			}else{
 				addMessage(I18n.getMessage(this));

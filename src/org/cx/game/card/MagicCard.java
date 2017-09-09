@@ -18,6 +18,7 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
@@ -37,7 +38,8 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	
 	public MagicCard(Integer id, Integer consume) {
 		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
 		this.id = id;
 		this.consume = consume;
 		
@@ -179,7 +181,8 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	 * @return
 	 */
 	public LifeCard getConjurer() {
-		return getPlayer().getHero();
+		//return getOwner().getHero();
+		return null;
 	}
 	
 	/**

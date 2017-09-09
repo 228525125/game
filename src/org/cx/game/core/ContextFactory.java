@@ -15,16 +15,15 @@ public class ContextFactory {
 	 * 该方法必须在createContext被调用后，才有效；
 	 * @return
 	 */
-	public static IContext getInstance(){
+	public static IContext getContext(){
 		return context;
 	}
 
-	public static IContext createContext(List<IPlayer> playerList){
-		context = new ContextDecorator(new Context(playerList));
+	public static IContext getInstance(IPlayer... players){
+		context = new ContextDecorator(new Context(players));
 
-		for(IPlayer player : playerList){
-			player.setContext(context);
-			player1.setHero((LifeCard) CardFactory.getInstance(player1.getHeroCardID(), player1));
+		for(int i=0;i<players.length;i++){
+			players[i].setContext(context);
 		}
 
 		/*for(final IStrongHold strongHold : player1.getGround().getStrongHoldList()){

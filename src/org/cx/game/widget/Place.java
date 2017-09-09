@@ -17,6 +17,7 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 import org.cx.game.rule.CallRule;
 import org.cx.game.rule.PlaceRule;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.building.IBuilding;
 
 public class Place extends Observable implements IPlace {
@@ -34,10 +35,11 @@ public class Place extends Observable implements IPlace {
 	
 	public Place(IGround ground,Integer position) {
 		// TODO Auto-generated constructor stub
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
+		
 		this.ground = ground;
 		this.position = position;
-		addObserver(new PlaceRule(this));
-		addObserver(new JsonOut());
 	}
 	
 	public IGround getContainer(){

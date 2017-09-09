@@ -19,11 +19,6 @@ public class Apply extends Action implements IApply {
 
 	private Integer consume = 1;
 	
-	public Apply() {
-		// TODO Auto-generated constructor stub
-		addObserver(new ApplyRule(this));
-	}
-	
 	@Override
 	public MagicCard getOwner() {
 		// TODO Auto-generated method stub

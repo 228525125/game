@@ -4,7 +4,6 @@
 	<types> <!-- 类型定义 -->
 		<type name = "player">
 			<item>own</item>
-			<item>other</item>
 		</type>
 		<type name = "container">
 			<item>group</item>  <!-- 这里的text必须与CommandBuffer一致 -->

@@ -23,7 +23,7 @@ public class TrickList extends Observable implements ITrickList {
 	
 	public TrickList(IPlace place) {
 		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
+		super();
 		this.place = place;
 	}
 	

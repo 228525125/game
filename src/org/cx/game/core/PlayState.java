@@ -2,8 +2,17 @@ package org.cx.game.core;
 
 import java.util.Observable;
 
+import org.cx.game.out.JsonOut;
+import org.cx.game.rule.RuleGroupFactory;
+
 public abstract class PlayState extends Observable implements org.cx.game.observer.Observable{
 
+	public PlayState() {
+		// TODO Auto-generated constructor stub
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
+	}
+	
 	protected IContext context;
 
 	public void setContext(IContext context) {

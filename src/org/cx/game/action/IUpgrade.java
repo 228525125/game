@@ -22,18 +22,4 @@ public interface IUpgrade extends IAction {
 	public Integer getConsume();
 	
 	public void setConsume(Integer consume);
-	
-	/**
-	 * 升级需要等待的回合数
-	 * @return
-	 */
-	public Integer getWaitBout();
-	
-	public void setWaitBout(Integer bout);
-	
-	/**
-	 * 当前升级进度
-	 * @return
-	 */
-	public Integer getProcess();
 }

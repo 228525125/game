@@ -91,41 +91,29 @@ public class PlayerDecorator implements IPlayer {
 		// TODO Auto-generated method stub
 		return player.getName();
 	}
-
+	
 	@Override
-	public LifeCard getHero() {
+	public List<Integer> getHeroCardIDList() {
 		// TODO Auto-generated method stub
-		return player.getHero();
+		return player.getHeroCardIDList();
+	}
+	
+	@Override
+	public void addHeroCardID(Integer cardID) {
+		// TODO Auto-generated method stub
+		player.addHeroCardID(cardID);
 	}
 
 	@Override
-	public void setHero(LifeCard hero) {
+	public Integer getHomePosition() {
 		// TODO Auto-generated method stub
-		player.setHero(hero);
+		return player.getHomePosition();
 	}
 
 	@Override
-	public Integer getHeroCardID() {
+	public void setHomePosition(Integer position) {
 		// TODO Auto-generated method stub
-		return player.getHeroCardID();
-	}
-
-	@Override
-	public void setHeroCardID(Integer cardID) {
-		// TODO Auto-generated method stub
-		player.setHeroCardID(cardID);
-	}
-
-	@Override
-	public Integer getHeroEntry() {
-		// TODO Auto-generated method stub
-		return player.getHeroEntry();
-	}
-
-	@Override
-	public void setHeroEntry(Integer position) {
-		// TODO Auto-generated method stub
-		player.setHeroEntry(position);
+		player.setHomePosition(position);
 	}
 
 	@Override
@@ -211,6 +199,36 @@ public class PlayerDecorator implements IPlayer {
 	public void clear() {
 		// TODO Auto-generated method stub
 		player.clear();
+	}
+
+	@Override
+	public Boolean isComputer() {
+		// TODO Auto-generated method stub
+		return player.isComputer();
+	}
+
+	@Override
+	public void setComputer(Boolean isComputer) {
+		// TODO Auto-generated method stub
+		player.setComputer(isComputer);
+	}
+
+	@Override
+	public void automation() {
+		// TODO Auto-generated method stub
+		player.automation();
+	}
+
+	@Override
+	public List<LifeCard> getHeroList() {
+		// TODO Auto-generated method stub
+		return player.getHeroList();
+	}
+
+	@Override
+	public void addHero(LifeCard hero) {
+		// TODO Auto-generated method stub
+		player.addHero(hero);
 	}
 
 }

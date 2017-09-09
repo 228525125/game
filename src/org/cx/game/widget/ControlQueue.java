@@ -7,16 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
-import org.cx.game.rule.ControlQueueRule;
-import org.cx.game.rule.IRule;
+import org.cx.game.rule.RuleGroupFactory;
 
 public class ControlQueue extends Observable implements IControlQueue {
 
@@ -32,24 +29,19 @@ public class ControlQueue extends Observable implements IControlQueue {
 	
 	public ControlQueue() {
 		// TODO Auto-generated constructor stub
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
+		
 		map.put(1, queue1);
 		map.put(2, queue2);
 		this.queue = this.queue1;
 		this.curQueue = 1;
-		
-		addObserver(new JsonOut());
 	}
 	
 	@Override
 	public void add(Object object) {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
-		
-		if (object instanceof LifeCard) {
-			LifeCard life = (LifeCard) object;
-			life.getAttack().addObserver(getRule());
-			life.getDeath().addObserver(getRule());
-		}
 		
 		/*
 		 * 这里为什么直接插入第二队列，它的效果就像你排队办事一样，你总是从最后一个排起
@@ -64,12 +56,6 @@ public class ControlQueue extends Observable implements IControlQueue {
 		// TODO Auto-generated method stub
 		Place place = new Place(object);
 		takeOut(place);
-		
-		if (object instanceof LifeCard) {
-			LifeCard life = (LifeCard) object;
-			life.getAttack().deleteObserver(getRule());
-			life.getDeath().deleteObserver(getRule());
-		}
 		
 		this.queueList.remove(place);
 	}
@@ -113,17 +99,6 @@ public class ControlQueue extends Observable implements IControlQueue {
 		}
 		
 		return object;
-	}
-	
-	private IRule rule = null;
-	
-	@Override
-	public IRule getRule() {
-		// TODO Auto-generated method stub
-		if(null==rule){
-			this.rule = new ControlQueueRule(this);
-		}
-		return rule;
 	}
 	
 	public void refurbish() {

@@ -100,12 +100,6 @@ public class ControlQueueDecorator implements IControlQueue {
 	}
 
 	@Override
-	public IRule getRule() {
-		// TODO Auto-generated method stub
-		return original.getRule();
-	}
-
-	@Override
 	public void refurbish() {
 		// TODO Auto-generated method stub
 		original.refurbish();

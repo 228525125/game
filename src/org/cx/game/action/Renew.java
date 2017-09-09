@@ -16,11 +16,6 @@ import org.cx.game.widget.IPlace;
 
 public class Renew extends Action implements IRenew {
 	
-	public Renew() {
-		// TODO Auto-generated constructor stub
-		addObserver(new RenewRule(this));
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub

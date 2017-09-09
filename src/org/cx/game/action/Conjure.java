@@ -17,13 +17,6 @@ import org.cx.game.rule.IRule;
  */
 public class Conjure extends Action implements IConjure {
 	
-	private IRule rule = new ConjureRule(this);
-	
-	public Conjure() {
-		// TODO Auto-generated constructor stub
-		addObserver(rule);
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub

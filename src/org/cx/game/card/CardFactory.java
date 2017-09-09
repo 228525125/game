@@ -63,7 +63,7 @@ public class CardFactory {
 		Element cardEl = getElement(cid);
 		ICard card = getInstance(cardEl);
 		card.setPlayer(player);
-		card.setPlayId(ContextFactory.getInstance().newCardPlayId());
+		card.setPlayId(ContextFactory.getContext().newCardPlayId());
 		return card;
 	}
 	
@@ -74,7 +74,7 @@ public class CardFactory {
 			Element cardEl = getElement(id);
 			ICard card = getInstance(cardEl);
 			card.setPlayer(player);
-			card.setPlayId(ContextFactory.getInstance().newCardPlayId());
+			card.setPlayId(ContextFactory.getContext().newCardPlayId());
 			list.add(getInstance(cardEl));
 		}
 		return list;

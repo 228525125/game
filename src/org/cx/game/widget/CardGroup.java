@@ -16,8 +16,8 @@ public class CardGroup extends Container implements ICardGroup
 	 */
 	public CardGroup(List<ICard> list) {
 		// TODO 自动生成构造函数存根
+		super();
 		super.cardList = shuffle(list);
-		addObserver(new JsonOut());
 	}
 	
 	private List<ICard> shuffle(List<ICard> list){

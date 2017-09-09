@@ -29,11 +29,11 @@ public class ChujifanweineidedirenFormula extends Validator implements IFormula 
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		Integer range = this.life.getMove().getEnergy() + this.life.getAttackRange();
-		IGround ground = GroundFactory.getInstance();
+		IGround ground = GroundFactory.getGround();
 		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Contain);
 		for(Integer p : list){
 			LifeCard life = ground.getCard(p);
-			if(null!=life)
+			if(null!=life && !this.life.getPlayer().equals(life.getPlayer()))
 				this.enemyList.add(life);
 		}
 		
@@ -52,7 +52,7 @@ public class ChujifanweineidedirenFormula extends Validator implements IFormula 
 	 * @return 最近敌人附近的位置
 	 */
 	public Integer getPosition(){
-		IGround ground = GroundFactory.getInstance();
+		IGround ground = GroundFactory.getGround();
 		Integer distance = this.life.getAttackRange();
 		LifeCard enemy = null;
 		for(LifeCard life : this.enemyList){

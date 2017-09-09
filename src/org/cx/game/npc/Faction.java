@@ -27,25 +27,13 @@ public class Faction extends Player {
 	}
 
 	@Override
-	public LifeCard getHero() {
-		// TODO Auto-generated method stub
-		return this.hero;
-	}
-
-	@Override
-	public void setHero(LifeCard hero) {
-		// TODO Auto-generated method stub
-		this.hero = hero;
-	}
-
-	@Override
-	public Integer getHeroEntry() {
+	public Integer getHomePosition() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void setHeroEntry(Integer position) {
+	public void setHomePosition(Integer position) {
 		// TODO Auto-generated method stub
 		
 	}

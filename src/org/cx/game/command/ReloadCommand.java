@@ -31,12 +31,6 @@ public class ReloadCommand extends InteriorCommand {
 		map.put("god", player.getGround().toList());      //ground已被屏蔽
 		list.add(map);
 		
-		IPlayer other = player.getContext().getOtherPlayer(player);
-		map = new HashMap<String,Object>();
-		map.put("other", other);
-		map.put("otheruse", other.getUseCard().toList());
-		list.add(map);
-		
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Command_Reload,list); 
 		super.notifyObservers(info);    //通知观察者
 	}

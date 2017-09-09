@@ -4,6 +4,11 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Validator;
 
+/**
+ * 是否在原地
+ * @author chenxian
+ *
+ */
 public class StagnantFormula extends Validator implements IFormula {
 	
 	private LifeCard life = null;

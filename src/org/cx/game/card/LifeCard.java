@@ -49,9 +49,12 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.GroupPolicyFactory;
-import org.cx.game.policy.IGroupPolicy;
+import org.cx.game.policy.DonePolicy;
+import org.cx.game.policy.PolicyGroupFactory;
+import org.cx.game.policy.GuardPolicy;
+import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.policy.IPolicy;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IPlace;
@@ -72,7 +75,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public LifeCard(Integer id) {
 		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
 		this.id = id;
 	}
 	
@@ -637,10 +641,10 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		return false;
 	}
 	
-	private IGroupPolicy groupPolicy = null;
+	private IPolicyGroup groupPolicy = null;
 	
-	public void setGroupPolicy(Integer pId){
-		this.groupPolicy = GroupPolicyFactory.createGroupPolicy(pId);
+	public void setGroupPolicy(IPolicyGroup gp){
+		this.groupPolicy = gp;
 		this.groupPolicy.setOwner(this);
 	}
 	
@@ -650,17 +654,13 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void automation(){
 		while (true) {
 			IPolicy policy = this.groupPolicy.getPolicy();
-			if(null!=policy)
+			if(null!=policy){
 				policy.execute();
-			else
+				
+				if(policy instanceof GuardPolicy)
+					break;
+			}else
 				break;
-		}
-		
-		try {
-			activate(false);
-		} catch (RuleValidatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	

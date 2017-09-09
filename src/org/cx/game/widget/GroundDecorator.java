@@ -11,6 +11,7 @@ import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -61,6 +62,7 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		 * 创建Neutral
 		 */
 		IPlayer neutral = ground.getNeutral();
+		neutral.setComputer(true);
 		neutral.setGround(this);
 		neutral.setResource(10000);
 	}
@@ -294,8 +296,14 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public Map<Integer, Integer> getPolicyMap() {
+	public Map<Integer, IPolicyGroup> getPolicyMap() {
 		// TODO Auto-generated method stub
 		return ground.getPolicyMap();
+	}
+
+	@Override
+	public IBuilding getBuilding(Integer position) {
+		// TODO Auto-generated method stub
+		return ground.getBuilding(position);
 	}
 }

@@ -15,11 +15,6 @@ public class Activate extends Action implements IActivate {
 	private Integer speed = 100;
 	private Integer vigour = 0;       //活力，活力为100时，可以行动一次，活力值越多，行动次数越多
 	
-	public Activate() {
-		// TODO Auto-generated constructor stub
-		addObserver(new ActivateRule(this));
-	}
-	
 	@Override
 	public Boolean getActivation() {
 		// TODO Auto-generated method stub

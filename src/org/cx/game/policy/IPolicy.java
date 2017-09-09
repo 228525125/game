@@ -20,9 +20,9 @@ public interface IPolicy {
 	public final static Integer PRI_Bottom = 20;
 	public final static Integer PRI_Min = 0;
 	
-	public IGroupPolicy getOwner();
+	public IPolicyGroup getOwner();
 	
-	public void setOwner(IGroupPolicy owner);
+	public void setOwner(IPolicyGroup owner);
 	
 	/**
 	 * 优先值

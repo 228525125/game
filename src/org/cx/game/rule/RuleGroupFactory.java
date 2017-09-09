@@ -1,7 +1,8 @@
-package org.cx.game.widget;
+package org.cx.game.rule;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -16,15 +17,28 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class GroundFactory {
+public class RuleGroupFactory {
+
+	private static RuleGroup ruleGroup = null;
+	private static Integer groupId = 10500001;
+	
+	public static RuleGroup getRuleGroup(){
+		if(null==ruleGroup)
+			ruleGroup = getInstance(groupId);
+		return ruleGroup;
+	}
 	
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
 		try {
-			InputStream is = new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("map.path")));
+			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("rule.path"))); 
+		
 			Document document = saxReader.read(is);
 			return document.getRootElement();
 		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -34,30 +48,20 @@ public class GroundFactory {
 		return null;
 	}
 	
-	private static IGround ground = null;
-	
-	/**
-	 * 该方法必须在createGround被调用后，才有效；
-	 * @return
-	 */
-	public static IGround getGround(){
-		return ground;
-	}
-	
-	public static IGround getInstance(String mapId){
-		Element mapEl = null;
+	public static RuleGroup getInstance(Integer groupId){
+		Element groupEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			if(mapId.equals(el.attribute("id").getText()))
-				mapEl = el;
+			if(groupId.equals(Integer.valueOf(el.attribute("id").getText())))
+				groupEl = el;
 		}
 		
-		if(null!=mapEl){
+		if(null!=groupEl){
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
-				new ObjectTypeParse(otb).parse(mapEl);
-				ground = new GroundDecorator((IGround) otb.builder());
-				return ground;
+				new ObjectTypeParse(otb).parse(groupEl);
+				RuleGroup rg = (RuleGroup) otb.builder();
+				return rg;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

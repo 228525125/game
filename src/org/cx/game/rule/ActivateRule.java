@@ -12,36 +12,31 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 
 public class ActivateRule implements IRule {
-
-	private IActivate activate = null;
-	
-	public ActivateRule(IActivate activate) {
-		// TODO Auto-generated constructor stub
-		this.activate = activate;
-	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		
 		if (arg instanceof NotifyInfo) {
 			NotifyInfo info = (NotifyInfo) arg;
 			
 			if(NotifyInfo.Card_LifeCard_Action_Activate.equals(info.getType())){
+				IActivate activate = (IActivate) ((RuleGroup) o).getMessageSource();
 				Map bean = (Map) info.getInfo();
 				
-				Boolean activate = (Boolean) bean.get("activate");
-				LifeCard owner = getOwner().getOwner();
+				Boolean activation = (Boolean) bean.get("activate");
+				LifeCard owner = activate.getOwner();
 				
-				if(activate){
+				if(activation){
 					owner.getAttack().setAttackable(true);
 					owner.getMove().setMoveable(true);
 					owner.getAttacked().setFightBack(true);
-					List<IBuff> buffs = getOwner().getOwner().getNexusBuff(AttackLockBuff.class);  //清除锁定对象
+					List<IBuff> buffs = activate.getOwner().getNexusBuff(AttackLockBuff.class);  //清除锁定对象
 					for(IBuff buff : buffs){
 						buff.invalid();
 					}
 					
-					this.activate.addToVigour(-IActivate.ActivationConsume);
+					activate.addToVigour(-IActivate.ActivationConsume);
 				}else{
 					owner.getAttack().setAttackable(false);
 					owner.getMove().setMoveable(false);
@@ -61,12 +56,6 @@ public class ActivateRule implements IRule {
 			}
 		}
 		
-	}
-
-	@Override
-	public IActivate getOwner() {
-		// TODO Auto-generated method stub
-		return this.activate;
 	}
 
 }

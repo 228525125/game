@@ -21,15 +21,6 @@ public class Move extends Action implements IMove{
 	private Integer flee = 0;         //逃离成功率
 	private Boolean hide = false;           //隐形状态
 	
-	private MoveRule rule = new MoveRule(this);
-	
-	
-	
-	public Move() {
-		// TODO Auto-generated constructor stub
-		addObserver(rule);
-	}
-	
 	@Override
 	public MoveDecorator getDecorator() {
 		// TODO Auto-generated method stub

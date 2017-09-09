@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 
@@ -30,7 +31,8 @@ public abstract class Action extends Observable implements IAction {
 
 	public Action() {
 		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
 	}
 	
 	@Override

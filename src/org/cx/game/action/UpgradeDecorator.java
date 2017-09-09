@@ -34,22 +34,4 @@ public class UpgradeDecorator extends ActionDecorator implements IUpgrade {
 		this.upgrade.setConsume(consume);
 	}
 
-	@Override
-	public Integer getWaitBout() {
-		// TODO Auto-generated method stub
-		return this.upgrade.getWaitBout();
-	}
-	
-	@Override
-	public void setWaitBout(Integer bout) {
-		// TODO Auto-generated method stub
-		this.upgrade.setWaitBout(bout);
-	}
-
-	@Override
-	public Integer getProcess() {
-		// TODO Auto-generated method stub
-		return this.upgrade.getProcess();
-	}
-
 }

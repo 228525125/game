@@ -10,6 +10,8 @@ import org.cx.game.card.ICard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.out.JsonOut;
+import org.cx.game.rule.RuleGroupFactory;
 
 public abstract class Container extends Observable implements IContainer {
 
@@ -23,6 +25,12 @@ public abstract class Container extends Observable implements IContainer {
 	public static final String Ground = "Ground";
 	public static final String UseCard = "UseCard";
 	public static final String TrickList = "TrickList";
+	
+	public Container() {
+		// TODO Auto-generated constructor stub
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
+	}
 	
 	private ContainerDecorator decorator = null;
 

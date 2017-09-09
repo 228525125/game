@@ -15,11 +15,6 @@ public class Call extends Action implements ICall {
 	private Integer consume = 1;
 	private Integer ration = 1;
 	
-	public Call() {
-		// TODO Auto-generated constructor stub
-		addObserver(new CallRule(this));
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
@@ -40,6 +35,10 @@ public class Call extends Action implements ICall {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Call,map);
 		super.notifyObservers(info);           //通知所有卡片对象，召唤事件
 		
+		/*
+		 * 加入战场
+		 * 因为顺序问题，没有写在Rule中
+		 */
 		IContainer ground = place.getContainer();
 		ground.add(place.getPosition(), getOwner());
 		

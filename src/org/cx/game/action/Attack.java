@@ -1,21 +1,16 @@
 package org.cx.game.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.buff.IBuff;
+import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
 import org.cx.game.rule.AttackRule;
-import org.cx.game.rule.IRule;
-import org.cx.game.tools.Debug;
-import org.cx.game.validator.AttackRangeValidator;
-import org.cx.game.widget.IControlQueue;
+import org.cx.game.rule.RuleGroup;
+import org.cx.game.rule.RuleGroupFactory;
+import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IWeapon;
 
@@ -27,13 +22,6 @@ public class Attack extends Action implements IAttack {
 	private Integer atk = 0;                          //攻击力
 	private Boolean counterAttack = false;            //是否是反击
 	private Boolean attackable = false;
-	
-	private AttackRule rule = new AttackRule(this); 
-	
-	public Attack() {
-		// TODO Auto-generated constructor stub
-		addObserver(rule);
-	}
 	
 	@Override
 	public LifeCard getOwner() {
@@ -216,7 +204,36 @@ public class Attack extends Action implements IAttack {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attack,map);
 		super.notifyObservers(info);
 		
-		attacked.attacked(getOwner(), this.rule.cloneForAttack());
+		IAttack clone = clone();
+		
+		IGround ground = GroundFactory.getGround();
+		Integer distance = ground.distance(attacked.getContainerPosition(), getOwner().getContainerPosition());
+		if(IDeath.Status_Live == attacked.getDeath().getStatus()
+		&& 1==distance){                                           //近身
+			new AttackLockBuff(getOwner(),attacked).effect();
+			
+			clone.setMode(IAttack.Mode_Near);             //如果是远程，这里要设置为近身攻击模式
+		}
+		
+		//判断是否装备武器
+		if(null!=getWeapon()){
+			getWeapon().addToWear(-1);
+		}
+		
+		//判断攻击模式，远程近战攻击减半
+		if(IAttack.Mode_Far.equals(getMode()) && 1==distance){
+			clone.setMode(IAttack.Mode_Near);
+			Integer atk = clone.getAtk()/2;
+			clone.setAtk(atk);
+		}
+		
+		//生命值与攻击力成正比
+		Integer scale = getOwner().getDeath().getHp()*100/getOwner().getHp();
+		Integer atk = clone.getAtk()*scale/100;
+		atk = 5>atk ? 5 : atk;
+		clone.setAtk(atk);
+		
+		attacked.attacked(getOwner(), clone);
 		
 		setAttackable(false);
 	}

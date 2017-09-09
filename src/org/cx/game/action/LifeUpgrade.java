@@ -13,37 +13,23 @@ public class LifeUpgrade extends Upgrade implements IUpgrade {
 	
 	private Integer empiricValue = 0;          //经验值
 	private Integer consume = IUpgrade.BasicConsume; 
+	private static final Double RATIO = 1.2;   //每次升级递增20%经验
 	private Integer skillCount = 0;            //技能点
-	
-	private IRule rule = new UpgradeRule(this);
-	
-	public LifeUpgrade() {
-		// TODO Auto-generated constructor stub
-		addObserver(rule);
-	}
-	
 	
 	public Integer getEmpiricValue() {
 		// TODO Auto-generated method stub
 		return this.empiricValue;
 	}
 	
-	@Override
 	public Integer getProcess() {
 		// TODO Auto-generated method stub
 		return getEmpiricValue()*100/getConsume();
 	}
 	
 	@Override
-	public Integer getWaitBout() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	@Override
 	public Integer getConsume() {
 		// TODO Auto-generated method stub
-		return this.consume+getLevel()*120/100;
+		return Double.valueOf(this.consume*Math.pow(RATIO,  getLevel())).intValue();
 	}
 	
 	@Override

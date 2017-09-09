@@ -9,6 +9,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.magic.WeaponMagicCard;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.I18n;
 
 /**
@@ -40,12 +41,13 @@ public class Weapon extends Observable implements IWeapon {
 	 */
 	public Weapon(Integer atk, Integer wear, WeaponMagicCard weaponMagicCard, LifeCard hero) {
 		// TODO Auto-generated constructor stub
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
+		
 		this.atk = atk;
 		this.wear = wear;
 		this.hero = hero;
 		this.weaponMagicCard = weaponMagicCard;
-		
-		addObserver(new JsonOut());
 	}
 	
 	@Override

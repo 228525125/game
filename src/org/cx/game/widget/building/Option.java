@@ -24,10 +24,12 @@ public abstract class Option implements IOption {
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
-	private Integer spacing = 0;
-	private Integer spacingRemain = 0;
-	
 	private IBuilding owner = null;
+	
+	private Integer spacingWait = 0;                   //间隔等待
+	private Integer executeWait = 0;                   //执行等待
+	private Process spacingProcess = null;
+	private Process executeProcess = null;
 	
 	@Override
 	public String getName() {
@@ -50,29 +52,58 @@ public abstract class Option implements IOption {
 	}
 	
 	@Override
-	public Integer getSpacing() {
+	public void setSpacingWait(Integer spacingWait) {
 		// TODO Auto-generated method stub
-		return this.spacing;
+		this.spacingWait = spacingWait;
+	}
+	
+	public void setExecuteWait(Integer executeWait) {
+		this.executeWait = executeWait;
 	}
 	
 	@Override
-	public void setSpacing(Integer spacing) {
+	public Integer getSpacingProcess() {
 		// TODO Auto-generated method stub
-		this.spacing = spacing;
+		return null!=this.spacingProcess ? this.spacingProcess.getProcess() : 100;
 	}
 	
 	@Override
-	public Integer getSpacingRemain() {
+	public Integer getExecuteProcess() {
 		// TODO Auto-generated method stub
-		return this.spacingRemain;
+		return null!=this.executeProcess ? this.executeProcess.getProcess() : 100;
 	}
 	
 	@Override
-	public void setSpacingRemain(Integer spacingRemain) {
-		// TODO Auto-generated method stub
-		this.spacingRemain = spacingRemain;
+	public void cooling() {
+		// TODO Auto-generated method stub		
+		if(!Integer.valueOf(0).equals(this.spacingWait)){
+			setAllow(false);
+			this.spacingProcess = new OptionSpacingProcess(spacingWait, this);
+		}else
+			setAllow(true);
 	}
 	
+	/**
+	 * 开始Execute方法进度
+	 */
+	private void firing() {
+		if(!Integer.valueOf(0).equals(this.executeWait)){
+			setAllow(false);
+			this.executeProcess = new OptionExecuteProcess(executeWait, this);
+		}else
+			setAllow(true);
+	}
+	
+	private Boolean allow = true;
+
+	public Boolean isAllow() {
+		return allow;
+	}
+
+	public void setAllow(Boolean allow) {
+		this.allow = allow;
+	}
+
 	private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
 	private String[] proertyName = null;
@@ -120,12 +151,12 @@ public abstract class Option implements IOption {
 		 */
 		doValidator();
 		
-		if(hasError())
+		if(hasError() && isAllow())
 			throw new RuleValidatorException(getErrors().getMessage());
 		
-		this.execute.action(objects);
+		firing();
 		
-		this.spacingRemain = this.spacing;
+		this.execute.action(objects);
 	}
 	
 	@Override

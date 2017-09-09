@@ -42,7 +42,7 @@ public class Invoker {
 			intergrityValidate(cmd);    //验证命令完整性
 			
 			for(String c : cmd.split(";")){
-				InteriorCommand command = CommandFactory.createCommand(player,c);
+				InteriorCommand command = CommandFactory.getInstance(player,c);
 				setCommand(command);
 				action();
 			}
@@ -59,7 +59,7 @@ public class Invoker {
 			intergrityValidate(cmd);    //验证命令完整性
 		
 			for(String c : cmd.split(";")){
-				OutsideCommand command = CommandFactory.createCommand(c);
+				OutsideCommand command = CommandFactory.getInstance(c);
 				command.setExternal(external);
 				setCommand(command);
 				action();

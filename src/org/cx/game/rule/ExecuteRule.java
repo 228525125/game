@@ -2,27 +2,27 @@ package org.cx.game.rule;
 
 import java.util.Observable;
 
+import org.cx.game.action.IAttacked;
 import org.cx.game.action.IExecute;
+import org.cx.game.observer.NotifyInfo;
 
 public class ExecuteRule implements IRule {
 
-	private IExecute execute = null;
-	
-	public ExecuteRule(IExecute execute) {
-		// TODO Auto-generated constructor stub
-		this.execute = execute;
-	}
-	
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub		
+		
+		if (arg instanceof NotifyInfo) {
+			NotifyInfo info = (NotifyInfo) arg;
+			
+			if(NotifyInfo.Building_Option_Execute.equals(info.getType())){
+				IExecute execute = (IExecute) ((RuleGroup) o).getMessageSource();
+				
+				/*
+				 * 执行选项间隔周期
+				 */
+				execute.getOwner().cooling();
+			}
+		}
 	}
-
-	@Override
-	public Object getOwner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

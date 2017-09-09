@@ -25,6 +25,7 @@ import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.npc.NPC;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.ControlQueueDecorator;
@@ -59,14 +60,17 @@ public class Context extends Observable implements IContext
 	
 	private IPlayer controlPlayer=null;
 	
-	public Context(List<IPlayer> playerList) {
+	public Context(IPlayer[] players) {
 		// TODO Auto-generated constructor stub
-		this.playerList = playerList;
+		for(int i=0;i<players.length;i++){
+			playerList.add(players[i]);
+		}
 		
 		for(IPlayer player : playerList)
 			this.queue.add(player);
 		
-		addObserver(new JsonOut());
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
 		
 		loadResource();
 	}

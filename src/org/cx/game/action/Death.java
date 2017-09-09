@@ -22,11 +22,6 @@ public class Death extends Action implements IDeath {
 	private Integer status = IDeath.Status_Exist;
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
-	public Death() {
-		// TODO Auto-generated constructor stub
-		addObserver(new DeathRule(this));
-	}
-	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub

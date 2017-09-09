@@ -11,11 +11,6 @@ import org.cx.game.out.JsonOut;
 
 public class DoneState extends PlayState {
 
-	public DoneState() {
-		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
-	}
-	
 	@Override
 	public void deploy() {
 		// TODO Auto-generated method stub

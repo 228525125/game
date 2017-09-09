@@ -48,28 +48,28 @@ public interface IPlayer extends IInterceptable
 	public CommandBuffer getCommandBuffer();
 	
 	/**
-	 * 英雄
-	 * @return
-	 */
-	public LifeCard getHero();
-	
-	public void setHero(LifeCard hero);
-	
-	/**
 	 * 英雄编号
 	 * @return
 	 */
-	public Integer getHeroCardID();
+	public List<Integer> getHeroCardIDList();
 	
-	public void setHeroCardID(Integer cardID);
+	public void addHeroCardID(Integer cardID);
 	
 	/**
-	 * 英雄入口，必须是玩家主城
+	 * 玩家主城坐标
 	 * @return
 	 */
-	public Integer getHeroEntry();
+	public Integer getHomePosition();
 	
-	public void setHeroEntry(Integer position);
+	public void setHomePosition(Integer position);
+	
+	/**
+	 * 玩家拥有的英雄
+	 * @return
+	 */
+	public List<LifeCard> getHeroList();
+	
+	public void addHero(LifeCard hero);
 	
 	/**
 	 * 玩家本次比赛召唤随从次数
@@ -118,5 +118,18 @@ public interface IPlayer extends IInterceptable
 	public Integer getBout();
 	
 	public void addBout();
+	
+	/**
+	 * 是否为非玩家控制角色
+	 * @return
+	 */
+	public Boolean isComputer();
+	
+	public void setComputer(Boolean isComputer);
+	
+	/**
+	 * AI自动操作
+	 */
+	public void automation();
 
 }

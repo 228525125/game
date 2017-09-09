@@ -64,7 +64,7 @@ public class AttackPolicy extends Policy {
 		try {
 			invoker.receiveCommand(owner.getPlayer(), cmd);
 			
-			super.command = CommandFactory.createCommand(owner.getPlayer(),this.cmdStr);
+			super.command = CommandFactory.getInstance(owner.getPlayer(),this.cmdStr);
 			super.command.doValidator();
 			if(!super.command.hasError()){
 				setPri(IPolicy.PRI_High);

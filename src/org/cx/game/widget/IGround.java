@@ -10,6 +10,7 @@ import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -152,6 +153,13 @@ public interface IGround extends IContainer{
 	public List<IBuilding> getBuildingList(IPlayer player, Integer type);
 	
 	/**
+	 * 根据坐标查找建筑
+	 * @param position
+	 * @return
+	 */
+	public IBuilding getBuilding(Integer position);
+	
+	/**
 	 * 增加一个建筑物
 	 * @param position
 	 * @param building
@@ -291,7 +299,7 @@ public interface IGround extends IContainer{
 	 * 
 	 * @return 中立生物的策略position/policyId
 	 */
-	public Map<Integer, Integer> getPolicyMap();
+	public Map<Integer, IPolicyGroup> getPolicyMap();
 	
 	/**
 	 * 中立部队

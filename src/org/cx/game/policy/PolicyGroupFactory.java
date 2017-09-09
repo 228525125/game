@@ -19,7 +19,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class GroupPolicyFactory {
+public class PolicyGroupFactory {
 
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
@@ -41,7 +41,7 @@ public class GroupPolicyFactory {
 		return null;
 	}
 	
-	public static IGroupPolicy createGroupPolicy(Integer groupId){
+	public static IPolicyGroup getInstance(Integer groupId){
 		Element groupEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
@@ -53,7 +53,7 @@ public class GroupPolicyFactory {
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
 				new ObjectTypeParse(otb).parse(groupEl);
-				IGroupPolicy gp = (IGroupPolicy) otb.builder();
+				IPolicyGroup gp = (IPolicyGroup) otb.builder();
 				return gp;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

@@ -21,19 +21,19 @@ public abstract class Policy implements IPolicy,IValidatable {
 	
 	protected Command command = null;
 	
-	private IGroupPolicy groupPolicy = null;
+	private IPolicyGroup groupPolicy = null;
 	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 
 	@Override
-	public IGroupPolicy getOwner() {
+	public IPolicyGroup getOwner() {
 		// TODO Auto-generated method stub
 		return this.groupPolicy;
 	}
 
 	@Override
-	public void setOwner(IGroupPolicy groupPolicy) {
+	public void setOwner(IPolicyGroup groupPolicy) {
 		// TODO Auto-generated method stub
 		this.groupPolicy = groupPolicy;
 	}

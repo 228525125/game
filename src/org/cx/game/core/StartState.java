@@ -1,6 +1,7 @@
 package org.cx.game.core;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,8 +11,8 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.GroupPolicyFactory;
-import org.cx.game.policy.IGroupPolicy;
+import org.cx.game.policy.PolicyGroupFactory;
+import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.ICardGroup;
@@ -19,13 +20,10 @@ import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.IUseCard;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.ReviveOption;
 
 public class StartState extends PlayState {
-
-	public StartState() {
-		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
-	}
 	
 	@Override
 	public void deploy() {
@@ -49,74 +47,74 @@ public class StartState extends PlayState {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		
-		Map<Integer, Integer> landformMap = context.getPlayer1().getGround().getLandformMap();
-		Map<String, Integer> landform = new HashMap<String, Integer>();
-		for(Integer i : landformMap.keySet())
-			landform.put(i.toString(), landformMap.get(i));
-		
-		map.put("landform", landform);
-		map.put("buildingList", context.getPlayer1().getGround().getBuildingList());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Start,map);
-		super.notifyObservers(info);
+		provision();
 		
 		context.switchControl();
 		
 		deploy();
 		
-		IGround ground = GroundFactory.getInstance();
+		
+	}
+	
+	/**
+	 * 游戏开始前的准备工作
+	 */
+	private void provision(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		IGround ground = GroundFactory.getGround();
+		Map<Integer, Integer> landformMap = ground.getLandformMap();
+		Map<String, Integer> landform = new HashMap<String, Integer>();
+		for(Integer i : landformMap.keySet())
+			landform.put(i.toString(), landformMap.get(i));
+		
+		map.put("landform", landform);
+		map.put("buildingList", ground.getBuildingList());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Start,map);
+		super.notifyObservers(info);
 		
 		/*
-		 * NPC登场
+		 * 英雄登场
+		 
+		for(IPlayer player : context.getPlayerList()){
+			LifeCard hero = player.getHero();
+			if(null!=hero){
+				IPlace place = ground.getPlace(player.getHeroEntry());
+				try {
+					hero.call(place);
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}*/
+		
+		/*
+		 * 登记英雄
 		 */
-		IPlayer neutral = ground.getNeutral();
-		Set<Integer> posSet = ground.getNpcMap().keySet();
-		for(Integer pos : posSet){
-			Integer npcId = ground.getNpcMap().get(pos);
-			LifeCard npc = (LifeCard) CardFactory.getInstance(npcId, neutral);
-			Integer policyId = ground.getPolicyMap().get(pos);
-			if(null!=policyId)
-				npc.setGroupPolicy(policyId);
-			
-			IPlace place = ground.getPlace(pos);
+		for(IPlayer player : context.getPlayerList()){
+			for(Integer heroCardID : player.getHeroCardIDList()){
+				LifeCard hero = (LifeCard) CardFactory.getInstance(heroCardID, player);
+				IBuilding town = ground.getBuilding(player.getHomePosition());
+				town.getOptions().add(new ReviveOption(hero));
+				
+				player.addHero(hero);
+			}
+		}
+		
+		
+		/*
+		 * 控制player的hero被激活
+		 
+		LifeCard hero = context.getControlPlayer().getHero();
+		if(null!=hero){
+			Integer speed = hero.getActivate().getSpeed();
+			hero.getActivate().addToVigour(speed);
 			try {
-				npc.call(place);
+				hero.activate(true);
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
-		/*
-		 * 英雄登场
-		 */
-		IPlayer player1 = context.getPlayer1();
-		IPlayer player2 = context.getPlayer2();
-		LifeCard hero1 = player1.getHero();
-		LifeCard hero2 = player2.getHero();
-		
-		IPlace place1 = ground.getPlace(player1.getHeroEntry());
-		IPlace place2 = ground.getPlace(player2.getHeroEntry());
-		try {
-			hero1.call(place1);
-			hero2.call(place2);
-		} catch (RuleValidatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		/*
-		 * 控制player的hero被激活
-		 */
-		LifeCard hero = context.getControlPlayer().getHero();		
-		Integer speed = hero.getActivate().getSpeed();
-		hero.getActivate().addToVigour(speed);
-		try {
-			hero.activate(true);
-		} catch (RuleValidatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}*/
 	}
 }

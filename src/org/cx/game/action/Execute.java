@@ -12,11 +12,6 @@ import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
 public class Execute extends Action implements IExecute {
-
-	public Execute() {
-		// TODO Auto-generated constructor stub
-		addObserver(new ExecuteRule(this));
-	}
 	
 	public IOption getOwner() {
 		// TODO Auto-generated method stub

@@ -9,12 +9,12 @@ import org.cx.game.exception.SyntaxValidatorException;
 
 public class CommandFactory {
 	
-	public static InteriorCommand createCommand(IPlayer player, String cmd) throws SyntaxValidatorException{
+	public static InteriorCommand getInstance(IPlayer player, String cmd) throws SyntaxValidatorException{
 		Calculator helper = new Calculator();
 		return helper.parseForCommand(player, cmd);
 	}
 	
-	public static OutsideCommand createCommand(String cmd) throws SyntaxValidatorException{
+	public static OutsideCommand getInstance(String cmd) throws SyntaxValidatorException{
 		Calculator helper = new Calculator();
 		return helper.parseForCommand(cmd);
 	}
@@ -26,7 +26,7 @@ public class CommandFactory {
 	 * @return
 	 * @throws SyntaxValidatorException
 	 */
-	public static List<InteriorCommand> createCommands(IPlayer player, String cmd) throws SyntaxValidatorException{
+	public static List<InteriorCommand> getInstanceList(IPlayer player, String cmd) throws SyntaxValidatorException{
 		Calculator helper = new Calculator();
 		List<InteriorCommand> list = new ArrayList<InteriorCommand>();
 		list = helper.parseForList(player, cmd);
@@ -40,7 +40,7 @@ public class CommandFactory {
 	 * @return
 	 * @throws SyntaxValidatorException
 	 */
-	public static List<OutsideCommand> createCommands(String cmd, IExternalCommand external) throws SyntaxValidatorException{
+	public static List<OutsideCommand> getInstanceList(String cmd, IExternalCommand external) throws SyntaxValidatorException{
 		Calculator helper = new Calculator();
 		List<OutsideCommand> list = new ArrayList<OutsideCommand>();
 		list = helper.parseForList(cmd, external);

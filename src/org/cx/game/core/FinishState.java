@@ -8,11 +8,6 @@ import org.cx.game.out.JsonOut;
 
 public class FinishState extends PlayState {
 
-	public FinishState() {
-		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
-	}
-	
 	@Override
 	public void deploy() {
 		// TODO Auto-generated method stub

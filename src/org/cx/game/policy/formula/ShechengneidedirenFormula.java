@@ -29,7 +29,7 @@ public class ShechengneidedirenFormula extends Validator implements IFormula {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		Integer range = this.life.getAttackRange();
-		IGround ground = GroundFactory.getInstance();
+		IGround ground = GroundFactory.getGround();
 		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Contain);
 		for(Integer p : list){
 			LifeCard life = ground.getCard(p);
@@ -48,7 +48,7 @@ public class ShechengneidedirenFormula extends Validator implements IFormula {
 	}
 	
 	public LifeCard getNearEnemy(){
-		IGround ground = GroundFactory.getInstance();
+		IGround ground = GroundFactory.getGround();
 		Integer distance = this.life.getAttackRange();
 		LifeCard enemy = null;
 		for(LifeCard life : this.enemyList){

@@ -7,7 +7,7 @@ import java.util.List;
  * @author chenxian
  *
  */
-public interface IGroupPolicy {
+public interface IPolicyGroup {
 	
 	public Integer getId();
 	

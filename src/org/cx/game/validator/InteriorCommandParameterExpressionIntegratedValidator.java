@@ -53,12 +53,6 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 					getBuffer().setPlayer(player);
 				}
 				
-				if(CommandBuffer.OTHER.equals(item)){
-					IPlayer other = player.getContext().getOtherPlayer(player);
-					parameterObject = other;
-					getBuffer().setPlayer(other);
-				}
-				
 				if(CommandBuffer.USECARD.equals(item)){
 					if(null==getBuffer().getPlayer()){
 						addMessage(I18n.getMessage(this));

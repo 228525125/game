@@ -14,6 +14,12 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
+import org.cx.game.policy.DonePolicy;
+import org.cx.game.policy.PolicyGroupFactory;
+import org.cx.game.policy.IPolicyGroup;
+import org.cx.game.policy.IPolicy;
+import org.cx.game.policy.NeutralPolicyGroup;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
@@ -28,8 +34,14 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
 	public Player(Integer id, String name) {
 		// TODO Auto-generated constructor stub
+		addObserver(JsonOut.getInstance());
+		addObserver(RuleGroupFactory.getRuleGroup());
+		
 		this.id = id;
 		this.name = name;
+		
+		this.groupPolicy = PolicyGroupFactory.getInstance(10450001);
+		this.groupPolicy.setOwner(this);
 	}
 	
 	@Override
@@ -45,18 +57,46 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		return this.name;
 	}
 	
-	private Integer heroEntry = null;
+	private Boolean isComputer = false;
+	
+	@Override
+	public Boolean isComputer() {
+		// TODO Auto-generated method stub
+		return this.isComputer;
+	}
+	
+	@Override
+	public void setComputer(Boolean isComputer) {
+		// TODO Auto-generated method stub
+		this.isComputer = isComputer;
+	}
+	
+	private Integer heroPosition = null;
 
 	@Override
-	public Integer getHeroEntry() {
+	public Integer getHomePosition() {
 		// TODO Auto-generated method stub
-		return heroEntry;
+		return heroPosition;
 	}
 
 	@Override
-	public void setHeroEntry(Integer position) {
+	public void setHomePosition(Integer position) {
 		// TODO Auto-generated method stub
-		this.heroEntry = position;
+		this.heroPosition = position;
+	}
+	
+	private List<LifeCard> heroList = new ArrayList<LifeCard>();
+	
+	@Override
+	public void addHero(LifeCard hero) {
+		// TODO Auto-generated method stub
+		this.heroList.add(hero);
+	}
+	
+	@Override
+	public List<LifeCard> getHeroList() {
+		// TODO Auto-generated method stub
+		return this.heroList;
 	}
 
 	private IGround ground = null;
@@ -106,14 +146,11 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	@Override
 	public void setContext(IContext context) {
 		// TODO Auto-generated method stub
-		addObserver(new JsonOut());
-		
 		this.context = context;
 		
 		//command会用到
 		data.put(CommandBuffer.GROUND, this.ground);
 		data.put(CommandBuffer.OWN, this);
-		data.put(CommandBuffer.OTHER, context.getOtherPlayer(this));
 		
 		commandBuffer = new CommandBuffer(this);
 	}
@@ -167,29 +204,18 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		return super.equals(arg0);
 	}
 	
-	private LifeCard hero;
-	
-	public LifeCard getHero() {
-		// TODO Auto-generated method stub
-		return this.hero;
-	}
-	public void setHero(LifeCard hero) {
-		// TODO Auto-generated method stub
-		this.hero = hero;
-	}
-	
-	private Integer heroCardID = null;
+	private List<Integer> heroCardIDList = new ArrayList<Integer>();
 	
 	@Override
-	public Integer getHeroCardID() {
+	public List<Integer> getHeroCardIDList() {
 		// TODO Auto-generated method stub
-		return this.heroCardID;
+		return this.heroCardIDList;
 	}
 	
 	@Override
-	public void setHeroCardID(Integer cardID) {
+	public void addHeroCardID(Integer cardID) {
 		// TODO Auto-generated method stub
-		this.heroCardID = cardID;
+		this.heroCardIDList.add(cardID);
 	}
 	
 	private Integer callCountPlay = 0;                        //玩家本次比赛召唤随从次数
@@ -293,19 +319,25 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 				}
 			}
 		}
-		
-		/*
-		 * 计算建筑物的选项间隔，例如招募选项的间隔
-		 */
-		List<IBuilding> bList = getGround().getBuildingList(this);
-		for(IBuilding building : bList){
-			for(IOption option : building.getOptions()){
-				Integer spacing = option.getSpacingRemain();
-				spacing = spacing>0 ? --spacing : 0;
-				option.setSpacingRemain(spacing);
+	}
+	
+	private IPolicyGroup groupPolicy = null;
+	
+	/**
+	 * 使用AI自动操作
+	 */
+	public void automation(){
+		while (true) {
+			IPolicy policy = this.groupPolicy.getPolicy();
+			if(null!=policy){
+				policy.execute();
+				
+				if(policy instanceof DonePolicy)
+					break;
 			}
+			else
+				break;
 		}
-		
 	}
 	
 	@Override

@@ -7,19 +7,20 @@ import java.util.List;
  * @author chenxian
  *
  */
-public class GuardGroupPolicy extends GroupPolicy {
+public class GuardPolicyGroup extends PolicyGroup {
 
 	private Integer guardPosition = null;
 	
-	public GuardGroupPolicy(Integer guardPosition) {
+	public static final Integer gpId = 10400001;
+	
+	public GuardPolicyGroup() {
 		// TODO Auto-generated constructor stub
-		super(10400001);
-		this.guardPosition = guardPosition;
+		super(gpId);
 	}
 	
-	@Override
-	public void setPolicyList(List<IPolicy> policyList) {
+	public void setGuardPosition(Integer gp) {
 		// TODO Auto-generated method stub
+		this.guardPosition = gp;
 		for(IPolicy policy : policyList){
 			if (policy instanceof RunbackPolicy) {
 				RunbackPolicy rp = (RunbackPolicy) policy;
@@ -28,9 +29,14 @@ public class GuardGroupPolicy extends GroupPolicy {
 			
 			if (policy instanceof SallyPolicy) {
 				SallyPolicy sp = (SallyPolicy) policy;
-				sp.setGuardPoistion(this.guardPosition);
+				sp.setGuardPosition(this.guardPosition);
 			}
 		}
+	}
+	
+	@Override
+	public void setPolicyList(List<IPolicy> policyList) {
+		// TODO Auto-generated method stub 反射需要
 		super.setPolicyList(policyList);
 	}
 }

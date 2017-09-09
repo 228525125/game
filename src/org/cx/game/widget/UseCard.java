@@ -11,11 +11,6 @@ import org.cx.game.out.JsonOut;
  */
 public class UseCard extends Container implements IUseCard {
 	
-	public UseCard() {
-		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
-	}
-	
 	@Override
 	public void add(Integer position, ICard card) {
 		// TODO Auto-generated method stub

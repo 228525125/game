@@ -82,10 +82,10 @@ public class NotifyInfo {
 	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";
 	
 	public final static String Building_Option_Execute = "Building_Option_Execute";
-	public final static String Building_Action_Upgrade_Begin = "Building_Action_Upgrade_Begin";
-	public final static String Building_Action_Upgrade_End = "Building_Action_Upgrade_End";
-	public final static String Building_Action_Upgrade_Product_Begin = "Building_Action_Upgrade_Product_Begin";
-	public final static String Building_Action_Upgrade_Product_End = "Building_Action_Upgrade_Product_End";
+	public final static String Building_Option_Spacing_Process = "Building_Option_Spacing_Process";
+	public final static String Building_Option_Execute_Process = "Building_Option_Execute_Process";
+	public final static String Building_Action_Upgrade = "Building_Action_Upgrade";
+	public final static String Building_Action_Upgrade_Product = "Building_Action_Upgrade_Product";
 	
 	/*
 	 * skill = "Skill_"+class.name; buff = "Buff_"+class.name;

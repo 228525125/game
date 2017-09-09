@@ -13,11 +13,6 @@ import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
 
 public class DeployState extends PlayState {
-
-	public DeployState() {
-		// TODO Auto-generated constructor stub
-		addObserver(new JsonOut());
-	}
 	
 	@Override
 	public void deploy() {
@@ -29,6 +24,9 @@ public class DeployState extends PlayState {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Deploy,map);
 		super.notifyObservers(info);
 		
+		//判断是否电脑玩家，如果是就启动AI
+		if(curPlayer.isComputer())
+			curPlayer.automation();
 	}
 
 	@Override

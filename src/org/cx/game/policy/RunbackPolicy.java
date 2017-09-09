@@ -28,7 +28,7 @@ public class RunbackPolicy extends Policy {
 		// TODO Auto-generated method stub
 		LifeCard owner = (LifeCard) getOwner().getOwner();
 		
-		IGround ground = GroundFactory.getInstance();
+		IGround ground = GroundFactory.getGround();
 		Integer position = ground.getPointByWay(owner.getContainerPosition(), this.guardPosition, owner.getMove().getEnergy(), owner.getMove().getType());
 		
 		this.cmdStr = "move ground place"+position+";";
@@ -55,7 +55,7 @@ public class RunbackPolicy extends Policy {
 			try {
 				invoker.receiveCommand(owner.getPlayer(), cmd);
 				
-				super.command = CommandFactory.createCommand(owner.getPlayer(),this.cmdStr);
+				super.command = CommandFactory.getInstance(owner.getPlayer(),this.cmdStr);
 				super.command.doValidator();
 				if(!super.command.hasError()){
 					setPri(IPolicy.PRI_High);

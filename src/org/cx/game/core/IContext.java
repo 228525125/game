@@ -59,13 +59,6 @@ public interface IContext extends IInterceptable,Observable {
 	public abstract IPlayer getControlPlayer();
 
 	/**
-	 * 得到对方比赛者对象
-	 * @param player
-	 * @return
-	
-	public abstract IPlayer getOtherPlayer(IPlayer player); */
-
-	/**
 	 * 交换比赛控制权
 	 */
 	public abstract void switchControl();

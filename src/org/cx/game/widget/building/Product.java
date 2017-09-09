@@ -45,10 +45,10 @@ public class Product implements IProduct {
 	private IUpgrade upgrade = null;
 	
 	public IUpgrade getUpgrade() {
-		if(null==upgrade){
+		if(null==this.upgrade){
 			IUpgrade upgrade = new ProductUpgrade();
 			upgrade.setOwner(this);
-			upgrade = new UpgradeDecorator(upgrade);
+			this.upgrade = new UpgradeDecorator(upgrade);
 		}
 		return upgrade;
 	}

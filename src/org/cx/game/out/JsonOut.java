@@ -10,6 +10,18 @@ import org.cx.game.observer.NotifyInfo;
 
 public class JsonOut extends Response implements Observer {
 	
+	private static JsonOut jsonOut = null;
+	
+	public static JsonOut getInstance(){
+		if(null==jsonOut)
+			jsonOut = new JsonOut();
+		return jsonOut;
+	}
+	
+	private JsonOut() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -28,8 +40,8 @@ public class JsonOut extends Response implements Observer {
 		// TODO Auto-generated method stub
 		JsonConfig config = new JsonConfig();
 		config.setExcludes(new String[]{
-			"cards","password","context","decks","cardGroup","ground","useCard","commandBuffer",       //User
-			"hero","attendantList",              //Player
+			"cards","password","decks","cardGroup","useCard","commandBuffer",       //User
+			"attendantList","context","ground","heroList",              //Player
 			"near",                  //Place
 			"index",                 //ControlQueue.Place
 			"strongHoldList","randomEntry","landformMap","emptyList","disableList","npcMap","policyMap",        //Ground
@@ -41,9 +53,10 @@ public class JsonOut extends Response implements Observer {
 			"conjureRange",                                     //MagicCard
 			"unitNumber",                                       //HuntUnits
 			"controlLife","controlPlayer","player1","player2","controlQueue",          //Context
-			"policy",                                           //GroupPolicy
+			"policy",                                           //PolicyGroup
+			"messageSource",                                    //RuleGroup
 			"ruleParam",                                        //用于传递一些参数给rule，与前台无关
-			"owner","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
+			"owner","instance","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
 		});
 		return JSONObject.fromObject(resp,config);
 	}

@@ -19,7 +19,7 @@ public class SallyPolicy extends Policy {
 	private Integer guardPosition = null;
 	private String cmdStr = "";
 	
-	public void setGuardPoistion(Integer guardPosition){
+	public void setGuardPosition(Integer guardPosition){
 		this.guardPosition = guardPosition;
 	}
 	
@@ -42,7 +42,7 @@ public class SallyPolicy extends Policy {
 		 * 是否在原点
 		 */
 		StagnantFormula sf = new StagnantFormula(owner, this.guardPosition);
-		addValidator(sf);
+		doValidator(sf);
 		if(hasError())
 			return ;
 		
@@ -67,7 +67,7 @@ public class SallyPolicy extends Policy {
 		try {
 			invoker.receiveCommand(owner.getPlayer(), cmd);
 			
-			super.command = CommandFactory.createCommand(owner.getPlayer(),this.cmdStr);
+			super.command = CommandFactory.getInstance(owner.getPlayer(),this.cmdStr);
 			super.command.doValidator();
 			if(!super.command.hasError()){
 				setPri(IPolicy.PRI_High);

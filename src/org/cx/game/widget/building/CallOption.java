@@ -41,7 +41,6 @@ public class CallOption extends Option implements IOption {
 	@Override
 	public List<Integer> getExecuteRange(IGround ground) {
 		// TODO Auto-generated method stub
-		
 		List<Integer> positionList = new ArrayList<Integer>();
 		positionList = ground.areaForDistance(getOwner().getPosition(), 1, IGround.Contain);
 		positionList.retainAll(ground.getEmptyList());
@@ -68,8 +67,8 @@ public class CallOption extends Option implements IOption {
 	}
 	
 	@Override
-	public void setSpacing(Integer spacing) {
+	public void setSpacingWait(Integer spacing) {
 		// TODO Auto-generated method stub
-		super.setSpacing(spacing);
+		super.setSpacingWait(spacing);
 	}
 }
