@@ -30,10 +30,10 @@ public class ShechengneidedirenFormula extends Validator implements IFormula {
 		// TODO Auto-generated method stub
 		Integer range = this.life.getAttackRange();
 		IGround ground = GroundFactory.getGround();
-		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Contain);
+		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Equal);
 		for(Integer p : list){
 			LifeCard life = ground.getCard(p);
-			if(null!=life)
+			if(null!=life && !this.life.getPlayer().equals(life.getPlayer()))
 				this.enemyList.add(life);
 		}
 		

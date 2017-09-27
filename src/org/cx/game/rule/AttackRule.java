@@ -30,11 +30,6 @@ public class AttackRule implements IRule {
 				Map bean = (Map) info.getInfo();
 				LifeCard attacked = (LifeCard) bean.get("attacked");
 				
-				//判断是否为反击
-				if(attack.getCounterAttack()){
-					attack.setCounterAttack(false);
-				}
-				
 				//判断潜行状态
 				LifeCard owner = attack.getOwner();
 				if(owner.getMove().getHide()){

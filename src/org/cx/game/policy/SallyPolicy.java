@@ -1,6 +1,7 @@
 package org.cx.game.policy;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.command.Command;
 import org.cx.game.command.CommandFactory;
 import org.cx.game.command.Invoker;
 import org.cx.game.exception.ValidatorException;
@@ -26,6 +27,8 @@ public class SallyPolicy extends Policy {
 	@Override
 	public void calculate() {
 		// TODO Auto-generated method stub
+		super.calculate();
+		
 		LifeCard owner = (LifeCard) getOwner().getOwner();
 		
 		setPri(IPolicy.PRI_Min);
@@ -62,10 +65,10 @@ public class SallyPolicy extends Policy {
 	
 	private void validator(){
 		LifeCard owner = (LifeCard) getOwner().getOwner();
-		Invoker invoker = new Invoker();
 		String cmd = "select ground place"+owner.getContainerPosition()+" card;";
 		try {
-			invoker.receiveCommand(owner.getPlayer(), cmd);
+			Command command= CommandFactory.getInstance(owner.getPlayer(),cmd);
+			command.execute();
 			
 			super.command = CommandFactory.getInstance(owner.getPlayer(),this.cmdStr);
 			super.command.doValidator();

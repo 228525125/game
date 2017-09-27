@@ -16,6 +16,8 @@ public class DonePolicy extends Policy {
 	@Override
 	public void calculate() {
 		// TODO Auto-generated method stub
+		super.calculate();
+		
 		IPlayer owner = (IPlayer) getOwner().getOwner();
 		this.cmdStr = "done";
 		

@@ -7,6 +7,10 @@ public interface IAttacked extends IAction {
 	
 	public LifeCard getOwner();
 	
+	/**
+	 * 是否可以反击
+	 * @return
+	 */
 	public Boolean getFightBack();
 	
 	public void setFightBack(Boolean fightBack);
@@ -30,4 +34,14 @@ public interface IAttacked extends IAction {
 	public void setDef(Integer def);
 	
 	public void addToDef(Integer def);
+	
+	/**
+	 * 地形防御力
+	 * @return
+	 */
+	public Integer getLandformDef();
+
+	public void setLandformDef(Integer landformDef);
+	
+	
 }

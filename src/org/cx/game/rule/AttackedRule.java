@@ -7,6 +7,8 @@ import org.cx.game.action.IApply;
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IAttacked;
 import org.cx.game.action.IDeath;
+import org.cx.game.action.ILifeUpgrade;
+import org.cx.game.action.IUpgrade;
 import org.cx.game.action.LifeUpgrade;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.TauntBuff;
@@ -33,7 +35,7 @@ public class AttackedRule implements IRule {
 				
 				//增加经验值
 				Integer damage = (Integer) bean.get("damage");
-				LifeUpgrade lu =(LifeUpgrade)attackLife.getUpgrade();
+				ILifeUpgrade lu = (ILifeUpgrade) attackLife.getUpgrade();
 				lu.addToEmpiricValue(damage);
 				
 				/*
@@ -51,13 +53,13 @@ public class AttackedRule implements IRule {
 					try {
 						attackedLife.getAttack().setCounterAttack(true);      //设置为反击
 						attackedLife.attack(attackLife);
+						attackedLife.getAttack().setCounterAttack(false);     //反击结束
 						attackedLife.getAttacked().setFightBack(false);
 					} catch (RuleValidatorException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				
 			}
 		}
 	}

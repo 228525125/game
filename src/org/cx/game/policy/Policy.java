@@ -67,6 +67,12 @@ public abstract class Policy implements IPolicy,IValidatable {
 	}
 	
 	@Override
+	public void calculate() {
+		// TODO Auto-generated method stub
+		this.errors.clearErrors();
+	}
+	
+	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {

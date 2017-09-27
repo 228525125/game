@@ -20,6 +20,7 @@ public class Attack extends Action implements IAttack {
 	private Integer range = 1;                        //距离
 	private Integer lockChance = 0;                   //锁定几率
 	private Integer atk = 0;                          //攻击力
+	private Integer landformAtk = 0;                  //地形攻击力
 	private Boolean counterAttack = false;            //是否是反击
 	private Boolean attackable = false;
 	
@@ -83,7 +84,7 @@ public class Attack extends Action implements IAttack {
 	public Integer getAtk() {
 		if(null!=getWeapon())
 			return atk+this.weapon.getAtk();
-		return atk;
+		return atk+getLandformAtk();
 	}
 
 	public void setAtk(Integer atk) {
@@ -108,6 +109,14 @@ public class Attack extends Action implements IAttack {
 		}
 	}
 	
+	public Integer getLandformAtk() {
+		return landformAtk;
+	}
+
+	public void setLandformAtk(Integer landformAtk) {
+		this.landformAtk = landformAtk;
+	}
+
 	@Override
 	public Integer getLockChance() {
 		// TODO Auto-generated method stub
@@ -230,12 +239,11 @@ public class Attack extends Action implements IAttack {
 		//生命值与攻击力成正比
 		Integer scale = getOwner().getDeath().getHp()*100/getOwner().getHp();
 		Integer atk = clone.getAtk()*scale/100;
-		atk = 5>atk ? 5 : atk;
 		clone.setAtk(atk);
 		
 		attacked.attacked(getOwner(), clone);
 		
-		setAttackable(false);
+		setAttackable(false);                   //反击同样适用
 	}
 	
 	public IAttack clone() {

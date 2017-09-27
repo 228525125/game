@@ -1,7 +1,9 @@
 package org.cx.game.rule;
 
+import java.util.Map;
 import java.util.Observable;
 
+import org.cx.game.action.ILifeUpgrade;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.LifeUpgrade;
 import org.cx.game.card.LifeCard;
@@ -23,14 +25,17 @@ public class UpgradeRule implements IRule {
 		
 		if (arg instanceof NotifyInfo) {
 			NotifyInfo info = (NotifyInfo) arg;
+			Map bean = (Map) info.getInfo(); 
+			LifeCard owner = (LifeCard) bean.get("card");
 			
 			if(NotifyInfo.Card_LifeCard_State_EmpiricValue.equals(info.getType())) {
-				LifeUpgrade upgrade = (LifeUpgrade) ((RuleGroup) o).getMessageSource();
+				ILifeUpgrade upgrade = (ILifeUpgrade) ((RuleGroup) o).getMessageSource();
+				 
 				
-				if(upgrade.getProcess()>=100){
+				if(upgrade.getEmpiricValue()>=upgrade.getConsume()){
 					
 					try {
-						upgrade.getOwner().upgrade();
+						owner.upgrade();
 					} catch (RuleValidatorException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -40,6 +45,18 @@ public class UpgradeRule implements IRule {
 			}else if(NotifyInfo.Card_LifeCard_Action_Upgrade.equals(info.getType())) {
 				LifeUpgrade upgrade = (LifeUpgrade) ((RuleGroup) o).getMessageSource();
 				
+				LifeCard life = upgrade.getOwner();
+				Integer hplimit = life.getDeath().getHplimit();
+				Integer atk = life.getAttack().getAtk();
+				Integer def = life.getAttacked().getDef();
+				Integer consume = life.getCall().getConsume();
+				
+				life.getDeath().setHplimit(hplimit+hplimit*IUpgrade.LifeCardRiseRatio/100);    //增加HP上限
+				life.getDeath().addToHp(hplimit*IUpgrade.LifeCardRiseRatio/100);               //增加HP
+				life.getAttack().addToAtk(atk*IUpgrade.LifeCardRiseRatio/100);                 //增加Atk
+				life.getAttacked().addToDef(def*IUpgrade.LifeCardRiseRatio/100);               //增加Def
+				
+				life.getCall().addToConsume(consume*IUpgrade.LifeCardRiseRatio/100);           //增加call消耗
 				
 			}else if(NotifyInfo.Card_LifeCard_Skill_Upgrade.equals(info.getType())){
 				IUpgrade upgrade = (IUpgrade) ((RuleGroup) o).getMessageSource();

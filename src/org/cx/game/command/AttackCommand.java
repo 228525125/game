@@ -8,7 +8,6 @@ import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackAtkValidator;
 import org.cx.game.validator.AttackTauntValidator;
 import org.cx.game.validator.AttackableValidator;
-import org.cx.game.validator.LifeCardActivateValidator;
 import org.cx.game.validator.SelectContainerValidator;
 import org.cx.game.validator.SelectLifeCardNotHideValidator;
 

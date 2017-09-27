@@ -19,7 +19,7 @@ public class OptionSpacingProcess extends Process {
 	@Override
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
-		if(Integer.valueOf(100).equals(getProcess())){
+		if(Integer.valueOf(0).equals(getRemainBout())){
 			invalid();
 			this.option.setAllow(true);
 		}

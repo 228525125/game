@@ -297,7 +297,7 @@ public class HoneycombGround extends Container implements IGround {
 	
 	public List<Integer> queryRange(ICard card, String action){
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Attack == action && card instanceof LifeCard){
+		if(NotifyInfo.Command_Query_Attack.equals(action) && card instanceof LifeCard){
 			LifeCard life = (LifeCard) card;
 			Integer range = life.getAttack().getRange();
 			/*
@@ -319,7 +319,7 @@ public class HoneycombGround extends Container implements IGround {
 			positionList.remove(life.getContainerPosition());
 		}
 		
-		if(NotifyInfo.Command_Query_Move == action && card instanceof LifeCard){
+		if(NotifyInfo.Command_Query_Move.equals(action) && card instanceof LifeCard){
 			LifeCard life = (LifeCard) card;
 			Integer step = life.getMove().getEnergy()/life.getMove().getConsume();
 			switch (life.getMove().getType()) {
@@ -347,7 +347,7 @@ public class HoneycombGround extends Container implements IGround {
 	
 	public List<Integer> queryRange(ISkill skill, String action){
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Conjure == action && skill.getOwner() instanceof LifeCard){
+		if(NotifyInfo.Command_Query_Conjure.equals(action) && skill.getOwner() instanceof LifeCard){
 			
 			//ActiveSkill的技能范围由自己给出逻辑
 			if (skill instanceof ActiveSkill) {
@@ -366,7 +366,7 @@ public class HoneycombGround extends Container implements IGround {
 	public List<Integer> queryRange(MagicCard magic, String action) {
 		// TODO Auto-generated method stub
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Apply == action){
+		if(NotifyInfo.Command_Query_Apply.equals(action)){
 			positionList = magic.getApplyRange(this);
 		}
 		return positionList;
@@ -376,7 +376,7 @@ public class HoneycombGround extends Container implements IGround {
 	public List<Integer> queryRange(IOption option, String action) {
 		// TODO Auto-generated method stub
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Execute == action){
+		if(NotifyInfo.Command_Query_Execute.equals(action)){
 			positionList = option.getExecuteRange(this);
 		}
 		return positionList;
@@ -578,7 +578,7 @@ public class HoneycombGround extends Container implements IGround {
 				Integer curPos = Integer.valueOf(""+i+space+j);
 				switch (type) {
 				case 0:
-					if(step==distance(curPos, position))
+					if(step.equals(distance(curPos, position)))
 						list.add(curPos);
 					break;
 					
@@ -610,7 +610,7 @@ public class HoneycombGround extends Container implements IGround {
 		for(Integer curPos : posList){
 			switch (type) {
 			case 0:
-				if(step==distance(curPos, position, moveType))
+				if(step.equals(distance(curPos, position, moveType)))
 					if(getPlace(curPos).getEmpty())             //友方可以穿人，因此在计算路径时，不考虑友军站位，但这里就要判断
 						list.add(curPos);
 				break;

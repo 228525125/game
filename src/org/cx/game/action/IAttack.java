@@ -50,6 +50,14 @@ public interface IAttack extends IAction {
 	
 	public void addToAtk(Integer atk);
 	
+	/**
+	 * 地形攻击力
+	 * @return
+	 */
+	public Integer getLandformAtk();
+
+	public void setLandformAtk(Integer landformAtk);
+	
 	public Integer getLockChance();
 	
 	/**

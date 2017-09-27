@@ -53,7 +53,7 @@ public class ChujifanweineidedirenFormula extends Validator implements IFormula 
 	 */
 	public Integer getPosition(){
 		IGround ground = GroundFactory.getGround();
-		Integer distance = this.life.getAttackRange();
+		Integer distance = this.life.getMove().getEnergy() + this.life.getAttackRange();
 		LifeCard enemy = null;
 		for(LifeCard life : this.enemyList){
 			Integer d = ground.distance(this.life.getContainerPosition(), life.getContainerPosition());

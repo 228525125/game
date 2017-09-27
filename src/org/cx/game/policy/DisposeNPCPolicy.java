@@ -24,6 +24,8 @@ public class DisposeNPCPolicy extends Policy {
 	@Override
 	public void calculate() {
 		// TODO Auto-generated method stub
+		super.calculate();
+		
 		IContext context = ContextFactory.getContext();
 		setPri(IPolicy.PRI_Min);
 		

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -36,7 +37,7 @@ public class ReviveOption extends Option implements IOption {
 		// TODO Auto-generated method stub
 		if(null==name){
 			name = super.getName();
-			name += I18n.getMessage(LifeCard.class, hero.getId(), "name");
+			name += I18n.getMessage(HeroCard.class, hero.getId(), "name");
 		}
 		return name;
 	}
@@ -59,7 +60,7 @@ public class ReviveOption extends Option implements IOption {
 		
 		IPlace place = (IPlace) objects[0];
 		
-		//复活英雄
+		this.hero.call(place);
 	}
 	
 	class OptionObserver implements Observer {

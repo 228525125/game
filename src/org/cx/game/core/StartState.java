@@ -21,6 +21,7 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.building.ReviveOption;
 
 public class StartState extends PlayState {
@@ -51,9 +52,7 @@ public class StartState extends PlayState {
 		
 		context.switchControl();
 		
-		deploy();
-		
-		
+		deploy();		
 	}
 	
 	/**
@@ -95,7 +94,9 @@ public class StartState extends PlayState {
 			for(Integer heroCardID : player.getHeroCardIDList()){
 				LifeCard hero = (LifeCard) CardFactory.getInstance(heroCardID, player);
 				IBuilding town = ground.getBuilding(player.getHomePosition());
-				town.getOptions().add(new ReviveOption(hero));
+				IOption reviveOption = new ReviveOption(hero);
+				reviveOption.setOwner(town);
+				town.getOptions().add(reviveOption);
 				
 				player.addHero(hero);
 			}

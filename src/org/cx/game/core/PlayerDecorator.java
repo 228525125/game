@@ -202,9 +202,9 @@ public class PlayerDecorator implements IPlayer {
 	}
 
 	@Override
-	public Boolean isComputer() {
+	public Boolean getComputer() {
 		// TODO Auto-generated method stub
-		return player.isComputer();
+		return player.getComputer();
 	}
 
 	@Override

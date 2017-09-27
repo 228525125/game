@@ -17,6 +17,8 @@ public class ArmyPolicy extends Policy {
 	@Override
 	public void calculate() {
 		// TODO Auto-generated method stub
+		super.calculate();
+		
 		IPlayer owner = (IPlayer) getOwner().getOwner();
 		setPri(IPolicy.PRI_Min);
 		

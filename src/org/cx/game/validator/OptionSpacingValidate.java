@@ -23,7 +23,7 @@ public class OptionSpacingValidate extends SelectOptionValidator {
 		
 		if(ret){
 			IOption option = getOption();
-			if(Integer.valueOf(100).equals(option.getSpacingProcess())){
+			if(Integer.valueOf(0).equals(option.getSpacingRemainBout())){
 				ret = true;
 			}else{
 				addMessage(I18n.getMessage(this));

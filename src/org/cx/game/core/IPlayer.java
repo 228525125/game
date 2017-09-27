@@ -123,7 +123,7 @@ public interface IPlayer extends IInterceptable
 	 * 是否为非玩家控制角色
 	 * @return
 	 */
-	public Boolean isComputer();
+	public Boolean getComputer();
 	
 	public void setComputer(Boolean isComputer);
 	

@@ -60,7 +60,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	private Boolean isComputer = false;
 	
 	@Override
-	public Boolean isComputer() {
+	public Boolean getComputer() {
 		// TODO Auto-generated method stub
 		return this.isComputer;
 	}
@@ -327,7 +327,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	 * 使用AI自动操作
 	 */
 	public void automation(){
-		while (true) {
+		while (this.equals(getContext().getControlPlayer())) {
 			IPolicy policy = this.groupPolicy.getPolicy();
 			if(null!=policy){
 				policy.execute();

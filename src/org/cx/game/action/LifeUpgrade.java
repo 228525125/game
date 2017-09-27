@@ -9,7 +9,7 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
 import org.cx.game.rule.UpgradeRule;
 
-public class LifeUpgrade extends Upgrade implements IUpgrade {
+public class LifeUpgrade extends Upgrade implements ILifeUpgrade {
 	
 	private Integer empiricValue = 0;          //经验值
 	private Integer consume = IUpgrade.BasicConsume; 
@@ -36,6 +36,10 @@ public class LifeUpgrade extends Upgrade implements IUpgrade {
 	public void setConsume(Integer consume) {
 		// TODO Auto-generated method stub
 		this.consume = consume;
+	}
+	
+	public void setEmpiricValue(Integer empiricValue){
+		this.empiricValue = empiricValue;
 	}
 	
 	public void addToEmpiricValue(Integer empiricValue) {

@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.cx.game.action.IAction;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
@@ -25,24 +26,22 @@ public abstract class Process implements IIntercepter, IRecover {
 	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
-	private Object owner = null;
+	private IOption owner = null;
 	
-	public Process(Integer waitBout, Object owner) {
+	public Process(Integer waitBout, IOption owner) {
 		// TODO Auto-generated constructor stub
 		this.waitBout = waitBout;
 		this.owner = owner;
 		
-		IContext context = ContextFactory.getContext();
-		this.beginBout = context.getBout();
+		IPlayer player = owner.getOwner().getPlayer();
+		this.beginBout = player.getBout();
+		this.curBout = player.getBout();
 		
-		recordIntercepter(context, this);
+		recordIntercepter(player, this);
 	}
 	
-	public Integer getProcess(){
-		if(Integer.valueOf(0).equals(waitBout))
-			return 100;
-		Integer bout = curBout-beginBout;
-		return bout*100/waitBout;
+	public Integer getRemainBout(){
+		return this.waitBout-(this.curBout-this.beginBout);
 	}
 	
 	@Override
@@ -60,11 +59,10 @@ public abstract class Process implements IIntercepter, IRecover {
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		IContext context = ContextFactory.getContext();
-		this.curBout = context.getBout();
+		this.curBout = getOwner().getOwner().getPlayer().getBout();
 	}
 	
-	public Object getOwner(){
+	public IOption getOwner(){
 		return this.owner;
 	}
 

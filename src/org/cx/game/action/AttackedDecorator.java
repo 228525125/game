@@ -73,4 +73,16 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		// TODO Auto-generated method stub
 		attacked.addToDef(def);
 	}
+
+	@Override
+	public Integer getLandformDef() {
+		// TODO Auto-generated method stub
+		return this.attacked.getLandformDef();
+	}
+
+	@Override
+	public void setLandformDef(Integer landformDef) {
+		// TODO Auto-generated method stub
+		this.attacked.setLandformDef(landformDef);
+	}
 }

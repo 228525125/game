@@ -37,7 +37,11 @@ public class DeathRule implements IRule {
 				LifeCard owner = death.getOwner();
 				IPlayer player = owner.getPlayer();
 				
-				death.setStatus(IDeath.Status_Death);
+				if(owner.getHero())
+					death.setStatus(IDeath.Status_Exist);
+				else
+					death.setStatus(IDeath.Status_Death);
+				
 				owner.initState();
 				
 				player.addToRation(-owner.getRation());

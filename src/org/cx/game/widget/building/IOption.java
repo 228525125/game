@@ -35,13 +35,13 @@ public interface IOption extends IValidatable {
 	 * 间隔剩余回合数
 	 * @return
 	 */
-	public Integer getSpacingProcess();
+	public Integer getSpacingRemainBout();
 	
 	/**
 	 * 距离执行完成还有多少回合
 	 * @return
 	 */
-	public Integer getExecuteProcess();
+	public Integer getExecuteRemainBout();
 	
 	/**
 	 * 开始执行间隔周期
@@ -54,7 +54,7 @@ public interface IOption extends IValidatable {
 	 * 是否可以执行
 	 * @return
 	 */
-	public Boolean isAllow();
+	public Boolean getAllow();
 	
 	public IBuilding getOwner();
 	

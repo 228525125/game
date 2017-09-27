@@ -64,11 +64,15 @@ public class Errors {
 		for(IValidator validator: errors){
 			ret += validator.getErrorMessage();
 		}
-		errors.clear();
+		clearErrors();
 		return ret;
 	}
 
 	public List<IValidator> getErrors() {
 		return errors;
+	}
+	
+	public void clearErrors(){
+		errors.clear();
 	}
 }

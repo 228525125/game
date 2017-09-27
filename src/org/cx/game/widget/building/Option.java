@@ -62,15 +62,15 @@ public abstract class Option implements IOption {
 	}
 	
 	@Override
-	public Integer getSpacingProcess() {
+	public Integer getSpacingRemainBout() {
 		// TODO Auto-generated method stub
-		return null!=this.spacingProcess ? this.spacingProcess.getProcess() : 100;
+		return null!=this.spacingProcess ? this.spacingProcess.getRemainBout() : 0;
 	}
 	
 	@Override
-	public Integer getExecuteProcess() {
+	public Integer getExecuteRemainBout() {
 		// TODO Auto-generated method stub
-		return null!=this.executeProcess ? this.executeProcess.getProcess() : 100;
+		return null!=this.executeProcess ? this.executeProcess.getRemainBout() : 0;
 	}
 	
 	@Override
@@ -78,7 +78,7 @@ public abstract class Option implements IOption {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
 			setAllow(false);
-			this.spacingProcess = new OptionSpacingProcess(spacingWait, this);
+			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, this);
 		}else
 			setAllow(true);
 	}
@@ -96,7 +96,7 @@ public abstract class Option implements IOption {
 	
 	private Boolean allow = true;
 
-	public Boolean isAllow() {
+	public Boolean getAllow() {
 		return allow;
 	}
 
@@ -151,7 +151,7 @@ public abstract class Option implements IOption {
 		 */
 		doValidator();
 		
-		if(hasError() && isAllow())
+		if(hasError() && getAllow())
 			throw new RuleValidatorException(getErrors().getMessage());
 		
 		firing();

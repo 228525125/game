@@ -25,7 +25,7 @@ public class DeployState extends PlayState {
 		super.notifyObservers(info);
 		
 		//判断是否电脑玩家，如果是就启动AI
-		if(curPlayer.isComputer())
+		if(curPlayer.getComputer())
 			curPlayer.automation();
 	}
 

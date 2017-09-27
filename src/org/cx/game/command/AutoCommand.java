@@ -1,6 +1,5 @@
 package org.cx.game.command;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
 
@@ -16,6 +15,6 @@ public class AutoCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 
-		//
+		player.automation();
 	}
 }

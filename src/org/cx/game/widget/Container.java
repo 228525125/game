@@ -134,7 +134,9 @@ public abstract class Container extends Observable implements IContainer {
 	@Override
 	public List<ICard> list() {
 		// TODO Auto-generated method stub
-		return cardList;
+		List<ICard> list = new ArrayList<ICard>();
+		list.addAll(this.cardList);
+		return list;
 	}
 	
 	@Override

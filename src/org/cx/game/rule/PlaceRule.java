@@ -28,8 +28,8 @@ public class PlaceRule implements IRule {
 				Map bean = (Map) info.getInfo();
 				LifeCard life = (LifeCard) bean.get("card");
 				Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
-				life.getAttack().addToAtk(LandformEffect.getAttackAdvantage(profession, place.getLandform()));
-				life.getAttacked().addToDef(LandformEffect.getDefendAdvantage(profession, place.getLandform()));
+				life.getAttack().setLandformAtk(life.getAtk()*LandformEffect.getAttackAdvantage(profession, place.getLandform())/100);
+				life.getAttacked().setLandformDef(life.getDef()*LandformEffect.getDefendAdvantage(profession, place.getLandform())/100);
 			}
 		}
 	}

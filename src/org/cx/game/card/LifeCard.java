@@ -29,9 +29,11 @@ import org.cx.game.action.ICall;
 import org.cx.game.action.IChuck;
 import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
+import org.cx.game.action.ILifeUpgrade;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
 import org.cx.game.action.IUpgrade;
+import org.cx.game.action.LifeUpgradeDecorator;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.Renew;
@@ -324,7 +326,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.lockChance = lockChance;
 	}
 	
-	private List<IBuff> nexusBuffList = new ArrayList<IBuff>();
+	protected List<IBuff> nexusBuffList = new ArrayList<IBuff>();
 	
 	/**
 	 * 发起方状态
@@ -480,6 +482,20 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setConsume(Integer consume) {
 		// TODO Auto-generated method stub
 		this.consume = consume;
+	}
+	
+	private Integer level = 1;
+	
+	/**
+	 * 等级
+	 * @return
+	 */
+	public Integer getLevel(){
+		return level;
+	}
+	
+	public void setLevel(Integer level){
+		this.level = level;
 	}
 	
 	/**
@@ -916,9 +932,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			IUpgrade upgrade = new LifeUpgrade();
+			ILifeUpgrade upgrade = new LifeUpgrade();
 			upgrade.setOwner(this);
-			this.upgrade = new UpgradeDecorator(upgrade);
+			this.upgrade = new LifeUpgradeDecorator(upgrade);
 		}
 		return this.upgrade;
 	}
@@ -1046,6 +1062,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		getDeath().setHp(hp);
 		getDeath().setHplimit(hp);
+		
+		ILifeUpgrade up = (ILifeUpgrade) getUpgrade();
+		
+		up.setLevel(level);
+		up.setEmpiricValue(0);
 		
 		setHide(false);
 		

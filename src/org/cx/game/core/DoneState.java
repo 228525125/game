@@ -39,7 +39,7 @@ public class DoneState extends PlayState {
 
 		context.switchControl();                   //转换控制权
 		
-		deploy();         //部署
+		deploy();                //部署
 	}
 
 	@Override

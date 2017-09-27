@@ -1,11 +1,7 @@
 package org.cx.game.widget.building;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.Intercepter;
-import org.cx.game.observer.NotifyInfo;
 
 public class OptionExecuteProcess extends Process {
 
@@ -28,7 +24,7 @@ public class OptionExecuteProcess extends Process {
 			@Override
 			public Boolean isInvoke() {
 				// TODO Auto-generated method stub
-				return Integer.valueOf(100).equals(getProcess());
+				return Integer.valueOf(0).equals(getRemainBout());
 			}
 		});
 	}
@@ -42,7 +38,7 @@ public class OptionExecuteProcess extends Process {
 	@Override
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
-		if(Integer.valueOf(100).equals(getProcess())){
+		if(Integer.valueOf(0).equals(getRemainBout())){
 			invalid();
 
 			try {
