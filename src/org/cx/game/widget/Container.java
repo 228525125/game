@@ -29,10 +29,9 @@ public abstract class Container extends Observable implements IContainer {
 	public Container() {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 	}
 	
-	private ContainerDecorator decorator = null;
+	/*private ContainerDecorator decorator = null;
 
 	public void setDecorator(ContainerDecorator decorator) {
 		this.decorator = decorator;
@@ -40,7 +39,7 @@ public abstract class Container extends Observable implements IContainer {
 
 	public ContainerDecorator getDecorator() {
 		return decorator;
-	}
+	}*/
 
 
 
@@ -168,8 +167,6 @@ public abstract class Container extends Observable implements IContainer {
 			cardList.add(card);
 		else
 			cardList.add(position, card);
-		
-		card.setContainer(decorator);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", card.getPlayer());

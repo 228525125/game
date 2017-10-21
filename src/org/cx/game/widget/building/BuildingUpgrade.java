@@ -8,7 +8,6 @@ import org.cx.game.action.Upgrade;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
-import org.cx.game.rule.UpgradeRule;
 
 public class BuildingUpgrade extends Upgrade implements IUpgrade {
 

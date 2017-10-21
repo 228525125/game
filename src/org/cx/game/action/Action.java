@@ -32,7 +32,6 @@ public abstract class Action extends Observable implements IAction {
 	public Action() {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 	}
 	
 	@Override

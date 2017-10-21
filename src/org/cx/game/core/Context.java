@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.UUID;
 
+import org.cx.game.action.Death;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
@@ -70,7 +71,6 @@ public class Context extends Observable implements IContext
 			this.queue.add(player);
 		
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		
 		loadResource();
 	}
@@ -228,7 +228,7 @@ public class Context extends Observable implements IContext
 		return controlPlayer;
 	}
 
-	private void setControlPlayer(IPlayer controlPlayer) {
+	public void setControlPlayer(IPlayer controlPlayer) {
 		this.controlPlayer = controlPlayer;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -244,40 +244,9 @@ public class Context extends Observable implements IContext
 			return player1;
 	}*/
 	
-	/**
-	 * 切换控制权
-	 * @param object
-	 */
-	private void setControl(IPlayer player){
-			decorator.addBout();                        //增加回合
-		
-			setControlPlayer(player);
-			
-			player.addBout();
-
-			Integer tax = 0;
-			IGround ground = player.getGround();
-			List<IBuilding> list = ground.getBuildingList(player);
-			for(IBuilding building : list)
-				tax += building.getTax();
-			
-			getControlPlayer().addToResource(tax);              //征税
-			
-			for(LifeCard life : player.getAttendantList()){
-				Integer speed = life.getActivate().getSpeed();
-				life.getActivate().addToVigour(speed);
-				try {
-					life.activate(true);
-				} catch (RuleValidatorException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-	}
-	
 	public void switchControl(){
 		Object object = queue.out();
-		setControl((IPlayer) object);
+		decorator.setControlPlayer((IPlayer) object);
 	}
 	
 	public void addIntercepter(IIntercepter intercepter) {

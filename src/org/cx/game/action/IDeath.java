@@ -28,8 +28,9 @@ public interface IDeath extends IAction, IRecover{
 	/**
 	 * 改变HP值，可能是受到伤害，也可能是接收治疗
 	 * @param hp
+	 * @return 增加和减少的实际数据，例如hp=10，damage=-100，return=10；
 	 */
-	public void addToHp(Integer hp);
+	public Integer addToHp(Integer hp);
 	
 	/**
 	 * HP上限

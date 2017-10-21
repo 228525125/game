@@ -10,28 +10,37 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.LandformEffect;
 
-public class PlaceRule implements IRule {
+public class PlaceRule extends Rule implements IRule {
+	
+	@Override
+	public String getIntercepterMethod() {
+		// TODO Auto-generated method stub
+		return "in";
+	}
+	
+	public void after(Object[] args) {
+		IPlace place = getOwner();
+		
+		/*
+		 * 生成地形优势
+		 */
+		LifeCard life = (LifeCard) args[0];
+		Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
+		life.getAttack().setLandformAtk(life.getAtk()*LandformEffect.getAttackAdvantage(profession, place.getLandform())/100);
+		life.getAttacked().setLandformDef(life.getDef()*LandformEffect.getDefendAdvantage(profession, place.getLandform())/100);
+	};
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		
-		if (arg instanceof NotifyInfo) {
-			NotifyInfo info = (NotifyInfo) arg;
-			
-			if(NotifyInfo.Container_Place_In.equals(info.getType())){
-				IPlace place = (IPlace) ((RuleGroup) o).getMessageSource();
-				
-				/*
-				 * 生成地形优势
-				 */
-				Map bean = (Map) info.getInfo();
-				LifeCard life = (LifeCard) bean.get("card");
-				Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
-				life.getAttack().setLandformAtk(life.getAtk()*LandformEffect.getAttackAdvantage(profession, place.getLandform())/100);
-				life.getAttacked().setLandformDef(life.getDef()*LandformEffect.getDefendAdvantage(profession, place.getLandform())/100);
-			}
-		}
+		return IPlace.class;
 	}
+	
+	@Override
+	public IPlace getOwner() {
+		// TODO Auto-generated method stub
+		return (IPlace) super.getOwner();
+	}
+	
 
 }

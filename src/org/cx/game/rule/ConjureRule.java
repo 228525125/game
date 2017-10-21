@@ -8,21 +8,30 @@ import org.cx.game.action.IConjure;
 import org.cx.game.card.LifeCard;
 import org.cx.game.observer.NotifyInfo;
 
-public class ConjureRule implements IRule {
+public class ConjureRule extends Rule implements IRule {
 	
 	@Override
-	public void update(Observable o, Object arg) {
+	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
-		
-		if (arg instanceof NotifyInfo) {
-			NotifyInfo info = (NotifyInfo) arg;
-			
-			if(NotifyInfo.Card_LifeCard_Action_Conjure.equals(info.getType())){
-				IConjure conjure = (IConjure) ((RuleGroup) o).getMessageSource();
-				
-				conjure.getOwner().getAttack().setAttackable(false);
-			}
-		}
+		return "action";
+	}
+	
+	@Override
+	public void after(Object[] args) {
+		// TODO Auto-generated method stub
+		IConjure conjure = getOwner();
+		conjure.getOwner().getAttack().setAttackable(false);
 	}
 
+	@Override
+	public IConjure getOwner() {
+		// TODO Auto-generated method stub
+		return (IConjure) super.getOwner();
+	}
+
+	@Override
+	public Class getInterceptable() {
+		// TODO Auto-generated method stub
+		return IConjure.class;
+	}
 }

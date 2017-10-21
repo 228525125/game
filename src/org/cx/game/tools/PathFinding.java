@@ -80,7 +80,7 @@ public class PathFinding {
 	/**
 	 * 计算路径
 	 * @param startPos
-	 * @param destiPos
+	 * @param destiPos 目标位置，如果为不可到达则返回null
 	 * @return
 	 */
 	public List searchPath(Point startPos, Point destiPos) {

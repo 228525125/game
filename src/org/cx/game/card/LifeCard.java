@@ -73,12 +73,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public final static Integer Life = 1007; 
 	
-	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	
 	public LifeCard(Integer id) {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		this.id = id;
 	}
 	
@@ -1088,42 +1085,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg0);
-	}
-
-	@Override
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
 	}
 
 	@Override

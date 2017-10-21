@@ -1,14 +1,14 @@
 package org.cx.game.rule;
 
 import org.cx.game.action.IDeath;
-import org.cx.game.card.LifeCard;
+import org.cx.game.exception.RuleValidatorException;
 
-public class DeathRule extends Rule implements IRule {
-	
+public class DeathHpRule extends Rule implements IRule {
+
 	@Override
 	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
-		return "action";
+		return "addToHp";
 	}
 	
 	@Override
@@ -16,18 +16,16 @@ public class DeathRule extends Rule implements IRule {
 		// TODO Auto-generated method stub
 		IDeath death = getOwner();
 		
-		LifeCard owner = death.getOwner();
-		
-		if(owner.getHero()){
-			death.setStatus(IDeath.Status_Exist);
-			owner.getAttack().handWeapon(null);
-		}else{
-			death.setStatus(IDeath.Status_Death);
+		if(death.getHp().equals(0)){
+			try {
+				death.getOwner().death();
+			} catch (RuleValidatorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		owner.initState();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
@@ -39,6 +37,5 @@ public class DeathRule extends Rule implements IRule {
 		// TODO Auto-generated method stub
 		return (IDeath) super.getOwner();
 	}
-	
-	
+
 }

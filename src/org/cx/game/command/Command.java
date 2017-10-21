@@ -21,7 +21,6 @@ public class Command extends Observable implements IValidatable{
 	public Command() {
 		// TODO Auto-generated constructor stub
 		super.addObserver(JsonOut.getInstance());
-		super.addObserver(RuleGroupFactory.getRuleGroup());
 	}
 	
 	public void execute() throws ValidatorException {

@@ -7,6 +7,7 @@ import java.util.Observer;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.building.IBuilding;
 
 public class PlaceDecorator implements IPlace {
@@ -16,6 +17,8 @@ public class PlaceDecorator implements IPlace {
 	public PlaceDecorator(IPlace place) {
 		// TODO Auto-generated constructor stub
 		this.original = place;
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 	
 	@Override

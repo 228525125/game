@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.action.Death;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
@@ -35,7 +36,6 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	public Player(Integer id, String name) {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		
 		this.id = id;
 		this.name = name;
@@ -233,16 +233,16 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	}
 	
 	@Override
-	public List<LifeCard> getAttendantList() {
+	public List<LifeCard> getAttendantList(Integer status) {
 		// TODO Auto-generated method stub
-		return getGround().list(this);
+		return getGround().list(this, status);
 	}
 	
 	@Override
 	public List<LifeCard> getAttendantList(Boolean activate) {
 		// TODO Auto-generated method stub
 		List<LifeCard> list = new ArrayList<LifeCard>();
-		for(LifeCard life : getAttendantList()){
+		for(LifeCard life : getAttendantList(Death.Status_Live)){
 			if(activate.equals(life.getActivate().getActivation()))
 				list.add(life);
 		}
@@ -308,7 +308,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		/*
 		 * 计算技能冷却
 		 */
-		List<LifeCard> lList = getAttendantList();
+		List<LifeCard> lList = getAttendantList(Death.Status_Live);
 		for(LifeCard life : lList){
 			for(ISkill skill : life.getSkillList()){
 				if (skill instanceof IActiveSkill) {

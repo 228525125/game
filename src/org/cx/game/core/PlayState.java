@@ -10,7 +10,6 @@ public abstract class PlayState extends Observable implements org.cx.game.observ
 	public PlayState() {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 	}
 	
 	protected IContext context;

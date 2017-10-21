@@ -91,9 +91,9 @@ public interface IContainer extends IInterceptable, Observable
 	/**
 	 * 保存一个该类的装饰类，当该类内部需要使用this的时候，只能使用装饰类的引用
 	 * @param decorator 装饰
-	 */
+	
 	public void setDecorator(ContainerDecorator decorator);
 	
-	public ContainerDecorator getDecorator();
+	public ContainerDecorator getDecorator(); */
 
 }

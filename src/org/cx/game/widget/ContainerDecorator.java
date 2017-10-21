@@ -8,6 +8,7 @@ import org.cx.game.card.ICard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.rule.RuleGroupFactory;
 
 public class ContainerDecorator implements IContainer {
 
@@ -15,8 +16,10 @@ public class ContainerDecorator implements IContainer {
 	
 	public ContainerDecorator(IContainer container) {
 		// TODO Auto-generated constructor stub
-		container.setDecorator(this);
+		//container.setDecorator(this);
 		this.original = container;
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 
 	@Override
@@ -77,6 +80,8 @@ public class ContainerDecorator implements IContainer {
 	@Override
 	public void add(Integer position, ICard card) {
 		// TODO Auto-generated method stub
+		card.setContainer(this);
+		
 		Object proxy = ProxyFactory.getProxy(original);  
 		((IContainer)proxy).add(position, card);
 	}
@@ -163,18 +168,6 @@ public class ContainerDecorator implements IContainer {
 	public List<ICard> toList() {
 		// TODO Auto-generated method stub
 		return original.toList();
-	}
-
-	@Override
-	public void setDecorator(ContainerDecorator decorator) {
-		// TODO Auto-generated method stub
-		original.setDecorator(decorator);
-	}
-
-	@Override
-	public ContainerDecorator getDecorator() {
-		// TODO Auto-generated method stub
-		return original.getDecorator();
 	}
 	
 }

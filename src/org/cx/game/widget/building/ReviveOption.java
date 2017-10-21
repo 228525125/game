@@ -27,7 +27,7 @@ public class ReviveOption extends Option implements IOption {
 	public ReviveOption(LifeCard hero) {
 		// TODO Auto-generated constructor stub
 		this.hero = hero;
-		this.hero.addObserver(new OptionObserver());
+		this.hero.getDeath().addObserver(new OptionObserver());
 		
 		setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
 	}

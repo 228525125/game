@@ -30,7 +30,6 @@ public class ControlQueue extends Observable implements IControlQueue {
 	public ControlQueue() {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		
 		map.put(1, queue1);
 		map.put(2, queue2);

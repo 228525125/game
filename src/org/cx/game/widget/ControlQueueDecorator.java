@@ -7,6 +7,7 @@ import java.util.Observer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.rule.IRule;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.ControlQueue.Place;
 import org.cx.game.widget.ControlQueue.PlaceComparator;
 
@@ -17,6 +18,8 @@ public class ControlQueueDecorator implements IControlQueue {
 	public ControlQueueDecorator(IControlQueue queue) {
 		// TODO Auto-generated constructor stub
 		this.original = queue;
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 	
 	@Override

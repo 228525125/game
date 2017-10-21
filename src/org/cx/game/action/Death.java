@@ -48,22 +48,29 @@ public class Death extends Action implements IDeath {
 	 * 显式的改变HP
 	 * @param hp
 	 */
-	public void addToHp(Integer hp) {
+	public Integer addToHp(Integer hp) {
 		// TODO Auto-generated method stub
+		Integer change = 0;
 		if(!Integer.valueOf(0).equals(hp)){
+			Integer before = this.hp;
+			
 			this.hp += hp;
 			this.hp = this.hp>0 ? this.hp : 0;       //判断下限
 			this.hp = this.hp<this.hplimit ? this.hp : this.hplimit; //判断上限
+			
+			change = this.hp - before;
 			
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
-			map.put("change", hp);
+			map.put("change", change);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
 			super.notifyObservers(info);
 		}
+		
+		return change;
 	}
 	
 	public Integer getStatus() {

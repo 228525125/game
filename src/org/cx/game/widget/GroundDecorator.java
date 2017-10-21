@@ -215,9 +215,9 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public List<LifeCard> list(IPlayer player) {
+	public List<LifeCard> list(IPlayer player, Integer status) {
 		// TODO Auto-generated method stub
-		return ground.list(player);
+		return ground.list(player, status);
 	}
 	
 	@Override
@@ -305,5 +305,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public IBuilding getBuilding(Integer position) {
 		// TODO Auto-generated method stub
 		return ground.getBuilding(position);
+	}
+
+	@Override
+	public List<LifeCard> list(Integer status) {
+		// TODO Auto-generated method stub
+		return ground.list(status);
 	}
 }

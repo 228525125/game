@@ -85,9 +85,10 @@ public interface IPlayer extends IInterceptable
 	
 	/**
 	 * 获取所有随从
+	 * @param status
 	 * @return
 	 */
-	public List<LifeCard> getAttendantList();
+	public List<LifeCard> getAttendantList(Integer status);
 	
 	/**
 	 * 获取激活状态的随从

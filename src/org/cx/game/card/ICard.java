@@ -6,7 +6,7 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.tag.ITag;
 import org.cx.game.widget.IContainer;
 
-public interface ICard extends IInterceptable, ITag
+public interface ICard extends ITag
 {
 	/**
 	 * 主键/唯一标识

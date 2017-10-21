@@ -42,7 +42,6 @@ public class Weapon extends Observable implements IWeapon {
 	public Weapon(Integer atk, Integer wear, WeaponMagicCard weaponMagicCard, LifeCard hero) {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		
 		this.atk = atk;
 		this.wear = wear;

@@ -1,39 +1,50 @@
 package org.cx.game.rule;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-public class RuleGroup extends Observable implements Observer {
+import org.cx.game.action.Attack;
+import org.cx.game.action.IAction;
+import org.cx.game.intercepter.IInterceptable;
+
+/**
+ * 一整套规则；
+ * @author chenxian
+ *
+ */
+public class RuleGroup {
+
+	public final static Integer RuleGroup_System = 10500001;
 	
-	private Observable messageSource = null;
+	private List<IRule> ruleList = new ArrayList<IRule>();
 	
 	public void setRuleList(List<IRule> ruleList) {
-		for(IRule rule : ruleList)
-			this.addObserver(rule);
-	}
-
-	/**
-	 * 发起消息的对象
-	 * @return
-	 */
-	public Observable getMessageSource() {
-		return messageSource;
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		this.messageSource = o;
-		notifyObservers(arg);
-		this.messageSource = null;
+		this.ruleList = ruleList;
 	}
 	
-	@Override
-	public void notifyObservers(Object arg) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg);
+	public void bindingRule(IInterceptable interceptable){
+		Class [] interfaces = interceptable.getClass().getInterfaces();
+		
+		for(IRule rule : ruleList){
+			
+			for(Class clazz : interfaces){
+				
+				if(rule.getInterceptable().equals(clazz)){
+					interceptable.addIntercepter(rule);
+					rule.setOwner(interceptable);
+					break;
+				}
+			}
+		}
+		
+		this.ruleList.clear();          //清除多余规则，释放内存
 	}
 	
+	public static void main(String[] args) {
+		IAction ac = new Attack();
+		Class acl = ac.getClass();
+		System.out.println("Attack的父类是："+acl.getSuperclass());
+		for(Class clazz : acl.getInterfaces())
+			System.out.println("Attack的接口包括："+clazz);
+	}
 }

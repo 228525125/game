@@ -7,6 +7,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
@@ -18,6 +19,8 @@ public class PlayerDecorator implements IPlayer {
 	public PlayerDecorator(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 	
 	@Override
@@ -129,9 +132,9 @@ public class PlayerDecorator implements IPlayer {
 	}
 
 	@Override
-	public List<LifeCard> getAttendantList() {
+	public List<LifeCard> getAttendantList(Integer status) {
 		// TODO Auto-generated method stub
-		return player.getAttendantList();
+		return player.getAttendantList(status);
 	}
 
 	@Override

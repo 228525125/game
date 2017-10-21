@@ -15,7 +15,7 @@ public interface IUpgrade extends IAction {
 	
 	public static final Integer BuildingConsume = 200;
 	
-	public static final Integer LifeCardRiseRatio = 120;
+	public static final Integer LifeCardRiseRatio = 20;
 	
 	/**
 	 * 升级需要耗费的资源数

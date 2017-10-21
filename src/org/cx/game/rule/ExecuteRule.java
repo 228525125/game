@@ -1,28 +1,35 @@
 package org.cx.game.rule;
 
-import java.util.Observable;
-
-import org.cx.game.action.IAttacked;
 import org.cx.game.action.IExecute;
-import org.cx.game.observer.NotifyInfo;
 
-public class ExecuteRule implements IRule {
-
+public class ExecuteRule extends Rule implements IRule {
+	
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub		
+	public String getIntercepterMethod() {
+		// TODO Auto-generated method stub
+		return "action";
+	}
+	
+	@Override
+	public void after(Object[] args) {
+		// TODO Auto-generated method stub
+		IExecute execute = getOwner();
 		
-		if (arg instanceof NotifyInfo) {
-			NotifyInfo info = (NotifyInfo) arg;
-			
-			if(NotifyInfo.Building_Option_Execute.equals(info.getType())){
-				IExecute execute = (IExecute) ((RuleGroup) o).getMessageSource();
-				
-				/*
-				 * 执行选项间隔周期
-				 */
-				execute.getOwner().cooling();
-			}
-		}
+		/*
+		 * 执行选项间隔周期
+		 */
+		execute.getOwner().cooling();
+	}
+	
+	@Override
+	public Class getInterceptable() {
+		// TODO Auto-generated method stub
+		return IExecute.class;
+	}
+	
+	@Override
+	public IExecute getOwner() {
+		// TODO Auto-generated method stub
+		return (IExecute) super.getOwner();
 	}
 }

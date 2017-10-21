@@ -37,10 +37,10 @@ public interface IGround extends IContainer{
 	
 	/**
 	 * 两个坐标之间的最短距离，考虑地形
-	 * @param start
-	 * @param stop
+	 * @param start 必须为起点
+	 * @param stop 必须为需要测试的点
 	 * @param moveType
-	 * @return
+	 * @return 返回9999，stop不可到达
 	 */
 	public Integer distance(Integer start, Integer stop, Integer moveType);
 	
@@ -268,7 +268,14 @@ public interface IGround extends IContainer{
 	 * @param player
 	 * @return
 	 */
-	public List<LifeCard> list(IPlayer player);
+	public List<LifeCard> list(IPlayer player, Integer status);
+	
+	/**
+	 * 获取战场上所有生物
+	 * @param player
+	 * @return
+	 */
+	public List<LifeCard> list(Integer status);
 	
 	/**
 	 * 获取指定范围内的随从

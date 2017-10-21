@@ -8,6 +8,7 @@ import org.cx.game.action.IAction;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.IControlQueue;
 
 public class ContextDecorator implements IContext {
@@ -18,6 +19,8 @@ public class ContextDecorator implements IContext {
 		// TODO Auto-generated constructor stub
 		this.original = context;
 		context.setDecorator(this);
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 	
 	@Override
@@ -178,6 +181,13 @@ public class ContextDecorator implements IContext {
 	public List<IPlayer> getPlayerList() {
 		// TODO Auto-generated method stub
 		return original.getPlayerList();
+	}
+
+	@Override
+	public void setControlPlayer(IPlayer player) {
+		// TODO Auto-generated method stub
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IContext)proxy).setControlPlayer(player);
 	}
 
 }

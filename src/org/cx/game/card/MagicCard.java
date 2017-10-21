@@ -8,6 +8,7 @@ import java.util.Map;
 import org.cx.game.action.ApplyDecorator;
 import org.cx.game.action.Chuck;
 import org.cx.game.action.ChuckDecorator;
+import org.cx.game.action.Death;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
 import org.cx.game.card.magic.IMagic;
@@ -29,8 +30,6 @@ import org.cx.game.widget.IGround;
 
 public abstract class MagicCard extends java.util.Observable implements ICard, IMagic, Observable, IValidatable {
 	
-	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	
 	private String action = null;
 	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
@@ -39,7 +38,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	public MagicCard(Integer id, Integer consume) {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		this.id = id;
 		this.consume = consume;
 		
@@ -142,7 +140,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 			Integer position = conjure.getContainerPosition();
 			positionList = ground.areaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
 		}else{                //如果不需要施法者，就默认我方所有战场上的单位
-			List<LifeCard> cardList = ground.list(getPlayer());
+			List<LifeCard> cardList = ground.list(getPlayer(), Death.Status_Live);
 			for(LifeCard life : cardList){
 				positionList.add(life.getContainerPosition());
 			}
@@ -332,42 +330,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg0);
-	}
-
-	@Override
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
-		intercepter.delete();
-	}
-	
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
 	}
 	
 	@Override

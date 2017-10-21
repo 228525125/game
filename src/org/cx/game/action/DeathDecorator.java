@@ -36,10 +36,10 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 	}
 
 	@Override
-	public void addToHp(Integer hp) {
+	public Integer addToHp(Integer hp) {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(this.death);     
-		((IDeath)proxy).addToHp(hp);
+		return ((IDeath)proxy).addToHp(hp);
 	}
 	
 	@Override

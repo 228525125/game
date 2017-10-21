@@ -124,7 +124,14 @@ public class Attacked extends Action implements IAttacked {
 		 */
 		Integer atk = attack.getAtk();
 		Integer damage = (atk-getDef())<0 ? 0 : atk-getDef();
-		damage = 5>damage ? 5 : damage; 
+		damage = 5>damage ? 5 : damage;
+		damage = -damage;
+		
+		/*
+		 * 攻击有先后顺序
+		 */
+		IDeath death = getOwner().getDeath();
+		damage = addToArmour(damage);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -132,9 +139,15 @@ public class Attacked extends Action implements IAttacked {
 		map.put("attack", attack.getOwner());
 		map.put("attacked", getOwner());
 		map.put("position", getOwner().getContainerPosition());
-		map.put("damage", -damage);
-		map.put("ruleParam", attack);
+		map.put("damage", damage);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
 		super.notifyObservers(info);
+		
+		//造成的实际伤害
+		damage = death.addToHp(damage);
+		
+		//增加经验值
+		ILifeUpgrade lu = (ILifeUpgrade) attack.getOwner().getUpgrade();
+		lu.addToEmpiricValue(Math.abs(damage));
 	}
 }

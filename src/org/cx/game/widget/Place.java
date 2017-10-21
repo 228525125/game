@@ -36,7 +36,6 @@ public class Place extends Observable implements IPlace {
 	public Place(IGround ground,Integer position) {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
-		addObserver(RuleGroupFactory.getRuleGroup());
 		
 		this.ground = ground;
 		this.position = position;
@@ -77,8 +76,6 @@ public class Place extends Observable implements IPlace {
 		
 		this.empty = false;
 		getContainer().getEmptyList().remove(position);
-		
-		//getContainer().add(position, life);          //他的作用是，给life.setContainer
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", life.getPlayer());

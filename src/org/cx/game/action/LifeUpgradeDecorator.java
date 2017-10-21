@@ -1,6 +1,7 @@
 package org.cx.game.action;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.intercepter.ProxyFactory;
 
 public class LifeUpgradeDecorator extends UpgradeDecorator implements
 		ILifeUpgrade {
@@ -28,7 +29,8 @@ public class LifeUpgradeDecorator extends UpgradeDecorator implements
 	@Override
 	public void addToEmpiricValue(Integer empiricValue) {
 		// TODO Auto-generated method stub
-		this.upgrade.addToEmpiricValue(empiricValue);
+		Object proxy = ProxyFactory.getProxy(this.upgrade);     
+		((ILifeUpgrade)proxy).addToEmpiricValue(empiricValue);
 	}
 
 	@Override

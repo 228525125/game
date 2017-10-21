@@ -6,8 +6,6 @@ import java.util.Map;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.IRule;
-import org.cx.game.rule.UpgradeRule;
 
 public class LifeUpgrade extends Upgrade implements ILifeUpgrade {
 	

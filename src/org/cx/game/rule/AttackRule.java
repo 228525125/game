@@ -14,28 +14,37 @@ import org.cx.game.card.buff.IBuff;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
 
-public class AttackRule implements IRule {
+public class AttackRule extends Rule implements IRule {
 	
 	@Override
-	public void update(Observable o, Object arg) {
+	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
+		return "action";
+	}
+	
+	@Override
+	public void after(Object[] args) {
+		// TODO Auto-generated method stub
+		//LifeCard attacked = (LifeCard) ((Object[]) args[0])[0];
 		
-		if (arg instanceof NotifyInfo) {
-			NotifyInfo info = (NotifyInfo) arg;
-			
-			//判断攻击距离，决定是否上锁
-			if(NotifyInfo.Card_LifeCard_Action_Attack.equals(info.getType())){
-				IAttack attack = (IAttack) ((RuleGroup) o).getMessageSource();
-				
-				Map bean = (Map) info.getInfo();
-				LifeCard attacked = (LifeCard) bean.get("attacked");
-				
-				//判断潜行状态
-				LifeCard owner = attack.getOwner();
-				if(owner.getMove().getHide()){
-					owner.getMove().changeHide(false);
-				}
-			}
+		IAttack attack = getOwner();
+		
+		//判断潜行状态
+		LifeCard owner = attack.getOwner();
+		if(owner.getMove().getHide()){
+			owner.getMove().changeHide(false);
 		}
+	}
+	
+	@Override
+	public IAttack getOwner() {
+		// TODO Auto-generated method stub
+		return (IAttack) super.getOwner();
+	}
+
+	@Override
+	public Class getInterceptable() {
+		// TODO Auto-generated method stub
+		return IAttack.class;
 	}
 }

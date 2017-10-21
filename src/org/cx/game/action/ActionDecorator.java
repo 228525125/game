@@ -9,6 +9,8 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.rule.IRule;
+import org.cx.game.rule.RuleGroup;
+import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
@@ -22,6 +24,8 @@ public abstract class ActionDecorator implements IAction {
 		this.original = action;
 		
 		action.setDecorator(this);
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 	
 	@Override
