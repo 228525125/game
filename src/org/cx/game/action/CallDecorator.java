@@ -34,12 +34,6 @@ public class CallDecorator extends ActionDecorator implements ICall {
 	}
 	
 	@Override
-	public void addToConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		this.call.addToConsume(consume);
-	}
-	
-	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return this.call.getOwner();
@@ -55,5 +49,11 @@ public class CallDecorator extends ActionDecorator implements ICall {
 	public void setRation(Integer ration) {
 		// TODO Auto-generated method stub
 		this.call.setRation(ration);
+	}
+
+	@Override
+	public void updateConsume() {
+		// TODO Auto-generated method stub
+		this.call.updateConsume();
 	}
 }

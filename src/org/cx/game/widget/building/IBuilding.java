@@ -55,6 +55,14 @@ public interface IBuilding {
 	public void setTax(Integer tax);
 	
 	/**
+	 * 升级标准
+	 * @return
+	 */
+	public Integer getStandard();
+	
+	public void setStandard(Integer standard);
+	
+	/**
 	 * 选项
 	 * @return
 	 */

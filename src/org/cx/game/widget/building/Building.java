@@ -3,6 +3,7 @@ package org.cx.game.widget.building;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cx.game.action.UpgradeBuilding;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.core.IPlayer;
@@ -21,6 +22,7 @@ public class Building implements IBuilding {
 	private Integer tax = 0;
 	private List<IOption> options = new ArrayList<IOption>();
 	private List<IProduct> products = new ArrayList<IProduct>();
+	private Integer standard = IUpgrade.BasicStandard;
 	
 	public Building(Integer buildingType, Integer position) {
 		// TODO Auto-generated constructor stub
@@ -38,7 +40,7 @@ public class Building implements IBuilding {
 		// TODO Auto-generated method stub
 		return position;
 	}
-	
+
 	@Override
 	public IPlace getOwner() {
 		// TODO Auto-generated method stub
@@ -71,6 +73,14 @@ public class Building implements IBuilding {
 	public void setTax(Integer tax) {
 		// TODO Auto-generated method stub
 		this.tax = tax;
+	}
+	
+	public Integer getStandard() {
+		return standard;
+	}
+
+	public void setStandard(Integer standard) {
+		this.standard = standard;
 	}
 
 	@Override
@@ -126,7 +136,7 @@ public class Building implements IBuilding {
 
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			IUpgrade upgrade = new BuildingUpgrade();
+			IUpgrade upgrade = new UpgradeBuilding();
 			upgrade.setOwner(this);
 			this.upgrade = new UpgradeDecorator(upgrade);
 		}

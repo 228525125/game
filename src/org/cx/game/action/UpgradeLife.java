@@ -7,12 +7,9 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 
-public class LifeUpgrade extends Upgrade implements ILifeUpgrade {
+public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	
 	private Integer empiricValue = 0;          //经验值
-	private Integer consume = IUpgrade.BasicConsume; 
-	private static final Double RATIO = 1.2;   //每次升级递增20%经验
-	private Integer skillCount = 0;            //技能点
 	
 	public Integer getEmpiricValue() {
 		// TODO Auto-generated method stub
@@ -21,19 +18,12 @@ public class LifeUpgrade extends Upgrade implements ILifeUpgrade {
 	
 	public Integer getProcess() {
 		// TODO Auto-generated method stub
-		return getEmpiricValue()*100/getConsume();
+		return getEmpiricValue()*100/getStandard();
 	}
 	
-	@Override
-	public Integer getConsume() {
-		// TODO Auto-generated method stub
-		return Double.valueOf(this.consume*Math.pow(RATIO,  getLevel())).intValue();
-	}
-	
-	@Override
-	public void setConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		this.consume = consume;
+	public void updateStandard(){
+		Double riseRatio = getLevel()>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, getLevel()) * 100 : 100d;
+		setStandard(getOwner().getStandard() * riseRatio.intValue() / 100);
 	}
 	
 	public void setEmpiricValue(Integer empiricValue){
@@ -45,44 +35,16 @@ public class LifeUpgrade extends Upgrade implements ILifeUpgrade {
 		if(!Integer.valueOf(0).equals(empiricValue)){
 			this.empiricValue += empiricValue;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("position", getOwner().getContainerPosition());
 			map.put("card", getOwner());
 			map.put("change", empiricValue);
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_EmpiricValue,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
-	}
-	
-	/**
-	 * 技能点
-	 * @return
-	 */
-	public Integer getSkillCount() {
-		return skillCount;
-	}
-
-	public void setSkillCount(Integer skillCount) {
-		this.skillCount = skillCount;
-	}
-	
-	public void addToSkillCount(Integer skillCount){
-		if(0<skillCount){
-			this.skillCount += skillCount;
-			this.skillCount = this.skillCount < 0 ? 0 : this.skillCount;
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("change", skillCount);
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Range,map);
-			super.notifyObservers(info);
-		}
-	}
+	}	
 	
 	@Override
 	public LifeCard getOwner() {
@@ -105,6 +67,19 @@ public class LifeUpgrade extends Upgrade implements ILifeUpgrade {
 		map.put("level", getLevel());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Upgrade,map);
 		super.notifyObservers(info);
+	}
+	
+	@Override
+	public void setLevel(Integer level) {
+		// TODO Auto-generated method stub
+		super.setLevel(level);
+		
+		if(null!=getOwner()){
+			getOwner().getAttack().updateAtk();
+			getOwner().getAttacked().updateDef();
+			getOwner().getDeath().updateHpLimit();
+			getOwner().getCall().updateConsume();
+		}
 	}
 
 }

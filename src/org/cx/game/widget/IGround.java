@@ -40,7 +40,7 @@ public interface IGround extends IContainer{
 	 * @param start 必须为起点
 	 * @param stop 必须为需要测试的点
 	 * @param moveType
-	 * @return 返回9999，stop不可到达
+	 * @return 如果stop不可到达，即MAP中为-1，则返回9999
 	 */
 	public Integer distance(Integer start, Integer stop, Integer moveType);
 	

@@ -1,10 +1,10 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.IUpgradeProduct;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.core.IPlayer;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IProduct;
-import org.cx.game.widget.building.ProductUpgrade;
 
 public class UpgradeBuildingProductRule extends Rule implements IRule {
 
@@ -23,20 +23,20 @@ public class UpgradeBuildingProductRule extends Rule implements IRule {
 		IBuilding building = product.getOwner();
 		IPlayer player = building.getPlayer();
 		if(null!=player){
-			player.addToResource(-upgrade.getConsume());
+			player.addToResource(-upgrade.getStandard());
 		}
 	}
 	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgrade.class;
+		return IUpgradeProduct.class;
 	}
 	
 	@Override
-	public IUpgrade getOwner() {
+	public IUpgradeProduct getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgrade) super.getOwner();
+		return (IUpgradeProduct) super.getOwner();
 	}
 
 }

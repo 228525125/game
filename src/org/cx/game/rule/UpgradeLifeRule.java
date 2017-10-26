@@ -1,9 +1,14 @@
 package org.cx.game.rule;
 
-import org.cx.game.action.ILifeUpgrade;
+import org.cx.game.action.IDeath;
+import org.cx.game.action.IUpgradeHero;
+import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IUpgrade;
-import org.cx.game.action.LifeUpgrade;
+import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.IPlayer;
+import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.IProduct;
 
 public class UpgradeLifeRule extends Rule implements IRule {
 
@@ -13,36 +18,39 @@ public class UpgradeLifeRule extends Rule implements IRule {
 		return "action";
 	}
 	
+	private Integer hpLimit = 0;
+	private Integer standard = 0;
+	
+	@Override
+	public void before(Object[] args) {
+		// TODO Auto-generated method stub
+		IDeath death = getOwner().getOwner().getDeath();
+		this.hpLimit = death.getHpLimit();
+		this.standard = getOwner().getStandard();
+	}
+	
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
+		LifeCard life = getOwner().getOwner();
+		IDeath death = life.getDeath();
 		
-		ILifeUpgrade upgrade = getOwner();
+		death.addToHp(death.getHpLimit()-hpLimit);
 		
-		LifeCard life = upgrade.getOwner();
-		Integer hplimit = life.getDeath().getHplimit();
-		Integer atk = life.getAttack().getAtk();
-		Integer def = life.getAttacked().getDef();
-		Integer consume = life.getCall().getConsume();
-		
-		life.getDeath().setHplimit(hplimit+hplimit*IUpgrade.LifeCardRiseRatio/100);    //增加HP上限
-		life.getDeath().addToHp(hplimit*IUpgrade.LifeCardRiseRatio/100);               //增加HP
-		life.getAttack().addToAtk(atk*IUpgrade.LifeCardRiseRatio/100);                 //增加Atk
-		life.getAttacked().addToDef(def*IUpgrade.LifeCardRiseRatio/100);               //增加Def
-		
-		life.getCall().addToConsume(consume*IUpgrade.LifeCardRiseRatio/100);           //增加call消耗
+		IUpgradeLife upgrade = getOwner();
+		upgrade.addToEmpiricValue(-this.standard);
 	}
 	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return ILifeUpgrade.class;
+		return IUpgradeLife.class;
 	}
 	
 	@Override
-	public ILifeUpgrade getOwner() {
+	public IUpgradeLife getOwner() {
 		// TODO Auto-generated method stub
-		return (ILifeUpgrade) super.getOwner();
+		return (IUpgradeLife) super.getOwner();
 	}
 
 }

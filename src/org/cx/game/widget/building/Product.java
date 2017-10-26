@@ -1,6 +1,7 @@
 package org.cx.game.widget.building;
 
 import org.cx.game.action.IUpgrade;
+import org.cx.game.action.UpgradeProduct;
 import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
@@ -10,6 +11,8 @@ public class Product implements IProduct {
 	private String name = null;
 	private IBuilding building = null;
 	private Integer type = 0;
+	
+	private Integer standard = IUpgrade.BasicStandard;
 	
 	public Product(Integer type) {
 		// TODO Auto-generated constructor stub
@@ -46,7 +49,7 @@ public class Product implements IProduct {
 	
 	public IUpgrade getUpgrade() {
 		if(null==this.upgrade){
-			IUpgrade upgrade = new ProductUpgrade();
+			IUpgrade upgrade = new UpgradeProduct();
 			upgrade.setOwner(this);
 			this.upgrade = new UpgradeDecorator(upgrade);
 		}
@@ -62,6 +65,14 @@ public class Product implements IProduct {
 	public void upgrade() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		this.upgrade.action();
+	}
+	
+	public Integer getStandard() {
+		return standard;
+	}
+
+	public void setStandard(Integer standard) {
+		this.standard = standard;
 	}
 
 }

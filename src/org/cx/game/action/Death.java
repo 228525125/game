@@ -18,7 +18,8 @@ import org.cx.game.widget.IPlace;
 public class Death extends Action implements IDeath {
 	
 	private Integer hp = 0;
-	private Integer hplimit = 0;
+	private Integer hpLimit = 0;
+	private Integer extraHp = 0;
 	private Integer status = IDeath.Status_Exist;
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
@@ -26,14 +27,6 @@ public class Death extends Action implements IDeath {
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return (LifeCard) super.getOwner();
-	}
-	
-	public Integer getHplimit() {
-		return hplimit;
-	}
-
-	public void setHplimit(Integer hplimit) {
-		this.hplimit = hplimit;
 	}
 
 	public Integer getHp() {
@@ -43,7 +36,7 @@ public class Death extends Action implements IDeath {
 	public void setHp(Integer hp) {
 		this.hp = hp;
 	}
-	
+
 	/**
 	 * 显式的改变HP
 	 * @param hp
@@ -56,7 +49,7 @@ public class Death extends Action implements IDeath {
 			
 			this.hp += hp;
 			this.hp = this.hp>0 ? this.hp : 0;       //判断下限
-			this.hp = this.hp<this.hplimit ? this.hp : this.hplimit; //判断上限
+			this.hp = this.hp<getHpLimit() ? this.hp : getHpLimit(); //判断上限
 			
 			change = this.hp - before;
 			
@@ -71,6 +64,32 @@ public class Death extends Action implements IDeath {
 		}
 		
 		return change;
+	}
+	
+	public Integer getHpLimit() {
+		return hpLimit;
+	}
+
+	public void setHpLimit(Integer hpLimit) {
+		this.hpLimit = hpLimit;
+	}
+
+	public Integer getExtraHp() {
+		return extraHp;
+	}
+
+	public void setExtraHp(Integer extraHp) {
+		this.extraHp = extraHp;
+		
+		 updateHpLimit();
+	}
+	
+	public void updateHpLimit(){
+		Integer level = getOwner().getUpgrade().getLevel();
+		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
+		Integer hp = getOwner().getHp() * riseRatio.intValue() / 100;
+		Integer extraHp = getExtraHp();
+		this.hpLimit = hp + extraHp;
 	}
 	
 	public Integer getStatus() {

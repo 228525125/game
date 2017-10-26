@@ -45,14 +45,14 @@ public class Move extends Action implements IMove{
 		if(!this.type.equals(type)){
 			this.type = type;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", type);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Type,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 	
@@ -77,14 +77,14 @@ public class Move extends Action implements IMove{
 			this.energy += energy;
 			this.energy = this.energy < 1 ? 1 : this.energy;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", energy);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Energy,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 	
@@ -107,14 +107,14 @@ public class Move extends Action implements IMove{
 			this.flee += flee;
 			this.flee = this.flee < 0 ? 0 : this.flee;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", flee);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Energy,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 	
@@ -142,14 +142,14 @@ public class Move extends Action implements IMove{
 			 * 隐身状态的改变在战场上才有意义
 			 */
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("position", getOwner().getContainerPosition());
 			map.put("hide", hide);
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hide,map);
-			notifyObservers(info);
+			notifyObservers(info);*/
 		}
 	}
 

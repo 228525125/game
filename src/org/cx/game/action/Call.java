@@ -42,6 +42,18 @@ public class Call extends Action implements ICall {
 		IContainer ground = place.getContainer();
 		ground.add(place.getPosition(), getOwner());
 		
+		/*
+		 * 玩家可能直接召唤高等级单位
+		 */
+		IDeath death = getOwner().getDeath();
+		getOwner().getAttack().updateAtk();
+		getOwner().getAttacked().updateDef();
+		death.updateHpLimit();
+		updateConsume();
+		getOwner().getUpgrade().updateStandard();
+		
+		death.setHp(death.getHpLimit());
+		
 		/*半回合制
 		IPlayer player = getOwner().getPlayer();
 		IControlQueue cq = player.getContext().getControlQueue();
@@ -57,8 +69,14 @@ public class Call extends Action implements ICall {
 	public void setConsume(Integer consume) {
 		this.consume = consume;
 	}
+	
+	public void updateConsume(){
+		Integer level = getOwner().getUpgrade().getLevel();
+		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
+		this.consume = getOwner().getConsume() * riseRatio.intValue() / 100;
+	}
 
-	@Override
+	/*@Override
 	public void addToConsume(Integer consume) {
 		// TODO Auto-generated method stub
 		if(!Integer.valueOf(0).equals(consume)){
@@ -74,7 +92,7 @@ public class Call extends Action implements ICall {
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Consume,map);
 			super.notifyObservers(info);
 		}
-	}
+	}*/
 	
 	@Override
 	public Integer getRation() {

@@ -39,4 +39,12 @@ public interface IProduct {
 	 * @throws RuleValidatorException
 	 */
 	public void upgrade() throws RuleValidatorException;
+	
+	/**
+	 * 升级标准
+	 * @return
+	 */
+	public Integer getStandard();
+	
+	public void setStandard(Integer standard);
 }

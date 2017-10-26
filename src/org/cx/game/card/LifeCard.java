@@ -29,16 +29,16 @@ import org.cx.game.action.ICall;
 import org.cx.game.action.IChuck;
 import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
-import org.cx.game.action.ILifeUpgrade;
+import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
 import org.cx.game.action.IUpgrade;
-import org.cx.game.action.LifeUpgradeDecorator;
+import org.cx.game.action.UpgradeLifeDecorator;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
 import org.cx.game.action.Renew;
 import org.cx.game.action.RenewDecorator;
-import org.cx.game.action.LifeUpgrade;
+import org.cx.game.action.UpgradeLife;
 import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
@@ -125,10 +125,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
-	 * 生命值
+	 * 初始生命值
 	 */
 	private Integer hp = 0;
 	
+	/**
+	 * 初始生命值
+	 * @return
+	 */
 	public Integer getHp() {
 		return hp;
 	}
@@ -216,10 +220,13 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.immunePhysical = immunePhysical;
 	}
 
+	/**
+	 * 初始攻击力
+	 */
 	private Integer atk=0;
 
 	/**
-	 * 攻击力
+	 * 初始攻击力
 	 */
 	public Integer getAtk() {
 		// TODO 自动生成方法存根
@@ -269,11 +276,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setMobile(Boolean mobile) {
 		this.mobile = mobile;
 	}
-
+	
+	/**
+	 * 初始防御力
+	 */
 	private Integer def = 0;
 	
 	/**
-	 * 防御力
+	 * 初始防御力
 	 * @return
 	 */
 	public Integer getDef(){
@@ -496,16 +506,16 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
-	 * 技能点
+	 * 达到等级的标准
 	 */
-	private Integer skillCount = 0;
+	private Integer standard = IUpgrade.BasicStandard;
 	
-	public Integer getSkillCount() {
-		return skillCount;
+	public Integer getStandard() {
+		return standard;
 	}
 
-	public void setSkillCount(Integer skillCount) {
-		this.skillCount = skillCount;
+	public void setStandard(Integer standard) {
+		this.standard = standard;
 	}
 
 	/**
@@ -889,7 +899,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(null==death){
 			IDeath death = new Death();
 			death.setHp(hp);
-			death.setHplimit(hp);
 			death.setOwner(this);
 			this.death = new DeathDecorator(death);
 		}
@@ -898,7 +907,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setDeath(IDeath death) {
 		death.setHp(hp);
-		death.setHplimit(hp);
 		death.setOwner(this);
 		this.death = new DeathDecorator(death);
 	}
@@ -925,18 +933,20 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 升级
 	 */
-	private IUpgrade upgrade = null;
+	protected IUpgrade upgrade = null;
 	
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			ILifeUpgrade upgrade = new LifeUpgrade();
+			IUpgradeLife upgrade = new UpgradeLife();
+			upgrade.setLevel(level);
 			upgrade.setOwner(this);
-			this.upgrade = new LifeUpgradeDecorator(upgrade);
+			this.upgrade = new UpgradeLifeDecorator(upgrade);
 		}
 		return this.upgrade;
 	}
 	
 	public void setUpgrade(IUpgrade upgrade) {
+		upgrade.setLevel(level);
 		upgrade.setOwner(this);
 		this.upgrade = new UpgradeDecorator(upgrade);
 	}
@@ -1042,10 +1052,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		getActivate().setActivation(activation);
 		
-		getAttack().setAtk(atk);
 		getAttack().setMode(attackMode);
-		
-		getAttacked().setDef(def);
 		
 		getActivate().setSpeed(speed);
 		getAttack().setLockChance(lockChance);
@@ -1058,9 +1065,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		getMove().setHide(hide);
 		
 		getDeath().setHp(hp);
-		getDeath().setHplimit(hp);
 		
-		ILifeUpgrade up = (ILifeUpgrade) getUpgrade();
+		IUpgradeLife up = (IUpgradeLife) getUpgrade();
 		
 		up.setLevel(level);
 		up.setEmpiricValue(0);

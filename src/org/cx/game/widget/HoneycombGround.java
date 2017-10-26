@@ -575,7 +575,7 @@ public class HoneycombGround extends Container implements IGround {
 		
 		if(!start.equals(stop)){
 			List path = route(start, stop, moveType);
-			if(null!=path){
+			if(null!=path){                        //如果stop不可到达，即MAP为-1，则path为null
 				path.remove(0);                     //因为path包含起始位置，因此这里要删除
 				
 				for(int i=0;i<path.size();i++){
@@ -673,9 +673,9 @@ public class HoneycombGround extends Container implements IGround {
 	}
 	
 	/**
-	 * 更新MAP，它做下面的事，a、加载地形；b、加载敌方单位站位信息
+	 * 更新MAP加载地形；
 	 */
-	private void updateMAP(Integer moveType){
+	private void updateMAP_Landform(Integer moveType){
 		
 		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
 		
@@ -686,11 +686,13 @@ public class HoneycombGround extends Container implements IGround {
 			IPlace p = getPlace(i);
 			MAP[ix][iy] = LandformEffect.getConsume(moveType, p.getLandform());
 		}
-		
-		
-		/*
-		 * 加载战场敌方单位的站位
-		 */
+	}
+	
+	/**
+	 * 加载战场单位的站位情况；
+	 * 为什么是独立为一个方法，主要考虑hide状态下系统不会去加载站位情况
+	 */
+	private void updateMAP_Stance(){
 		IContext context = ContextFactory.getContext();
 		IPlayer control = context.getControlPlayer();
 		
@@ -762,10 +764,11 @@ public class HoneycombGround extends Container implements IGround {
 	 * @param start
 	 * @param stop 
 	 * @param moveType 移动类型
-	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达则返回null
+	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达，即MAP中为-1，则返回null
 	 */
 	private List route(Integer start, Integer stop, Integer moveType){
-		updateMAP(moveType);           //加载战场敌方单位站位
+		updateMAP_Landform(moveType);           //加载地形
+		updateMAP_Stance();                     //加载站位
 		
 		PathFinding pathFinding = new PathFinding(MAP,hit);
 		

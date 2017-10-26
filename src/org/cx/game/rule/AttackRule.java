@@ -1,18 +1,7 @@
 package org.cx.game.rule;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Observable;
-
 import org.cx.game.action.IAttack;
-import org.cx.game.action.IAttacked;
-import org.cx.game.action.IDeath;
-import org.cx.game.action.LifeUpgrade;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.buff.AttackLockBuff;
-import org.cx.game.card.buff.IBuff;
-import org.cx.game.observer.NotifyInfo;
-import org.cx.game.widget.IGround;
 
 public class AttackRule extends Rule implements IRule {
 	

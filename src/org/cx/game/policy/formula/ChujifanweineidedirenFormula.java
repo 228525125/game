@@ -28,14 +28,24 @@ public class ChujifanweineidedirenFormula extends Validator implements IFormula 
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		Integer range = this.life.getMove().getEnergy() + this.life.getAttackRange();
+		Integer range = this.life.getMove().getEnergy();
 		IGround ground = GroundFactory.getGround();
-		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Contain);
-		for(Integer p : list){
-			LifeCard life = ground.getCard(p);
+		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Contain, this.life.getMove().getType());
+		for(Integer pos : list){            //移动范围内的敌人
+			LifeCard life = ground.getCard(pos);
 			if(null!=life && !this.life.getPlayer().equals(life.getPlayer()))
 				this.enemyList.add(life);
+			
+			List<Integer> attackRangeList = ground.areaForDistance(pos, 1, IGround.Contain);
+			attackRangeList.removeAll(list);
+			for(Integer p : attackRangeList){       //移动距离+攻击距离范围内的敌人
+				life = ground.getCard(p);
+				if(null!=life && !this.life.getPlayer().equals(life.getPlayer()))
+					this.enemyList.add(life);
+			}
 		}
+		
+		
 		
 		Boolean ret = false;
 		if(this.enemyList.isEmpty()){

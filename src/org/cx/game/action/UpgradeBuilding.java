@@ -1,4 +1,4 @@
-package org.cx.game.widget.building;
+package org.cx.game.action;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,21 +8,15 @@ import org.cx.game.action.Upgrade;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
+import org.cx.game.widget.building.IBuilding;
 
-public class BuildingUpgrade extends Upgrade implements IUpgrade {
-
-	private Integer consume = IUpgrade.BasicConsume;
+public class UpgradeBuilding extends Upgrade implements IUpgradeBuilding {
 	
 	@Override
-	public Integer getConsume() {
+	public void updateStandard() {
 		// TODO Auto-generated method stub
-		return consume*getLevel();
-	}
-	
-	@Override
-	public void setConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		this.consume = consume;
+		Double riseRatio = getLevel()>1 ? Math.pow(IUpgrade.DefaultBuildingRiseRatio, getLevel()) * 100 : 100d;
+		this.standard = getOwner().getStandard() * riseRatio.intValue() / 100;
 	}
 	
 	@Override

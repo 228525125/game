@@ -1,7 +1,10 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.IUpgradeHero;
+import org.cx.game.action.IUpgradeLife;
+import org.cx.game.action.IUpgradeSkill;
 import org.cx.game.action.IUpgrade;
-import org.cx.game.action.LifeUpgrade;
+import org.cx.game.action.UpgradeLife;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ISkill;
 
@@ -20,20 +23,21 @@ public class UpgradeSkillRule extends Rule implements IRule {
 		
 		ISkill skill = (ISkill) upgrade.getOwner();
 		LifeCard life = skill.getOwner();
-		LifeUpgrade up = (LifeUpgrade) life.getUpgrade();
-		up.addToSkillCount(-upgrade.getConsume());
+		IUpgradeHero up = (IUpgradeHero) life.getUpgrade();
+		Integer standard = up.getStandard();
+		up.addToSkillCount(-standard);
 	}
 	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgrade.class;
+		return IUpgradeSkill.class;
 	}
 	
 	@Override
-	public IUpgrade getOwner() {
+	public IUpgradeSkill getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgrade) super.getOwner();
+		return (IUpgradeSkill) super.getOwner();
 	}
 
 }

@@ -1,6 +1,5 @@
 package org.cx.game.action;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 
 public interface IAttacked extends IAction {
@@ -26,7 +25,7 @@ public interface IAttacked extends IAction {
 	public Integer addToArmour(Integer armour);
 	
 	/**
-	 * 防御力
+	 * 真实防御力 = 初始防御力 + 等级防御力 + 地形防御力 + 额外防御力
 	 * @return
 	 */
 	public Integer getDef();
@@ -43,5 +42,17 @@ public interface IAttacked extends IAction {
 
 	public void setLandformDef(Integer landformDef);
 	
+	/**
+	 * 额外防御力
+	 * @return
+	 */
+	public Integer getExtraDef();
 	
+	public void setExtraDef(Integer extraDef);
+	
+	/**
+	 * 更新防御力
+	 */
+	public void updateDef();
+
 }

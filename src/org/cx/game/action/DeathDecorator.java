@@ -41,18 +41,6 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 		Object proxy = ProxyFactory.getProxy(this.death);     
 		return ((IDeath)proxy).addToHp(hp);
 	}
-	
-	@Override
-	public Integer getHplimit() {
-		// TODO Auto-generated method stub
-		return death.getHplimit();
-	}
-
-	@Override
-	public void setHplimit(Integer hplimit) {
-		// TODO Auto-generated method stub
-		death.setHplimit(hplimit);
-	}
 
 	@Override
 	public void recordIntercepter(IInterceptable interceptable,
@@ -83,6 +71,36 @@ public class DeathDecorator extends ActionDecorator implements IDeath {
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return death.getOwner();
+	}
+
+	@Override
+	public Integer getHpLimit() {
+		// TODO Auto-generated method stub
+		return death.getHpLimit();
+	}
+
+	@Override
+	public void setHpLimit(Integer hpLimit) {
+		// TODO Auto-generated method stub
+		death.setHpLimit(hpLimit);
+	}
+
+	@Override
+	public Integer getExtraHp() {
+		// TODO Auto-generated method stub
+		return death.getExtraHp();
+	}
+
+	@Override
+	public void setExtraHp(Integer extraHp) {
+		// TODO Auto-generated method stub
+		death.setExtraHp(extraHp);
+	}
+
+	@Override
+	public void updateHpLimit() {
+		// TODO Auto-generated method stub
+		death.updateHpLimit();
 	}
 
 }

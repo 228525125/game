@@ -62,25 +62,6 @@ public class Weapon extends Observable implements IWeapon {
 	}
 	
 	@Override
-	public void addToAtk(Integer atk) {
-		// TODO Auto-generated method stub
-		if(!Integer.valueOf(0).equals(atk)){
-			this.atk += atk;
-			this.atk = this.atk < 0 ? 0 : this.atk;
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("position", getOwner().getContainerPosition());
-			map.put("weapon", this);
-			map.put("change", atk);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Weapon_Atk,map);
-			super.notifyObservers(info);
-		}
-	}
-	
-	@Override
 	public Integer getWear() {
 		// TODO Auto-generated method stub
 		return this.wear;

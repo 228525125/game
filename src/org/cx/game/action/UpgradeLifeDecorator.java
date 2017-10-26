@@ -3,12 +3,12 @@ package org.cx.game.action;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.ProxyFactory;
 
-public class LifeUpgradeDecorator extends UpgradeDecorator implements
-		ILifeUpgrade {
+public class UpgradeLifeDecorator extends UpgradeDecorator implements
+		IUpgradeLife {
 
-	private ILifeUpgrade upgrade = null;
+	private IUpgradeLife upgrade = null;
 	
-	public LifeUpgradeDecorator(ILifeUpgrade upgrade) {
+	public UpgradeLifeDecorator(IUpgradeLife upgrade) {
 		super(upgrade);
 		// TODO Auto-generated constructor stub
 		this.upgrade = upgrade;
@@ -30,25 +30,7 @@ public class LifeUpgradeDecorator extends UpgradeDecorator implements
 	public void addToEmpiricValue(Integer empiricValue) {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(this.upgrade);     
-		((ILifeUpgrade)proxy).addToEmpiricValue(empiricValue);
-	}
-
-	@Override
-	public Integer getSkillCount() {
-		// TODO Auto-generated method stub
-		return this.upgrade.getSkillCount();
-	}
-
-	@Override
-	public void setSkillCount(Integer skillCount) {
-		// TODO Auto-generated method stub
-		this.upgrade.setSkillCount(skillCount);
-	}
-
-	@Override
-	public void addToSkillCount(Integer skillCount) {
-		// TODO Auto-generated method stub
-		this.upgrade.addToSkillCount(skillCount);
+		((IUpgradeLife)proxy).addToEmpiricValue(empiricValue);
 	}
 	
 	@Override
@@ -64,15 +46,15 @@ public class LifeUpgradeDecorator extends UpgradeDecorator implements
 	}
 
 	@Override
-	public Integer getConsume() {
+	public Integer getStandard() {
 		// TODO Auto-generated method stub
-		return this.upgrade.getConsume();
+		return this.upgrade.getStandard();
 	}
 	
 	@Override
-	public void setConsume(Integer consume) {
+	public void setStandard(Integer consume) {
 		// TODO Auto-generated method stub
-		this.upgrade.setConsume(consume);
+		this.upgrade.setStandard(consume);
 	}
 	
 	@Override

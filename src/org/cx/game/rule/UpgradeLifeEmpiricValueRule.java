@@ -1,6 +1,6 @@
 package org.cx.game.rule;
 
-import org.cx.game.action.ILifeUpgrade;
+import org.cx.game.action.IUpgradeLife;
 import org.cx.game.exception.RuleValidatorException;
 
 public class UpgradeLifeEmpiricValueRule extends Rule implements IRule {
@@ -15,16 +15,19 @@ public class UpgradeLifeEmpiricValueRule extends Rule implements IRule {
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		ILifeUpgrade upgrade = getOwner();
-		 
+		Integer empiricValue = (Integer) args[0];
 		
-		if(upgrade.getEmpiricValue()>=upgrade.getConsume()){
+		if(0<empiricValue){
+			IUpgradeLife upgrade = getOwner();
 			
-			try {
-				upgrade.getOwner().upgrade();
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(upgrade.getEmpiricValue()>=upgrade.getStandard()){
+				
+				try {
+					upgrade.getOwner().upgrade();
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -32,13 +35,13 @@ public class UpgradeLifeEmpiricValueRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return ILifeUpgrade.class;
+		return IUpgradeLife.class;
 	}
 	
 	@Override
-	public ILifeUpgrade getOwner() {
+	public IUpgradeLife getOwner() {
 		// TODO Auto-generated method stub
-		return (ILifeUpgrade) super.getOwner();
+		return (IUpgradeLife) super.getOwner();
 	}
 
 }

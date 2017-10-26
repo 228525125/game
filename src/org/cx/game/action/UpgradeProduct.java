@@ -1,4 +1,4 @@
-package org.cx.game.widget.building;
+package org.cx.game.action;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,21 +7,15 @@ import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Upgrade;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.building.IProduct;
 
-public class ProductUpgrade extends Upgrade implements IUpgrade {
-
-	private Integer consume = IUpgrade.BasicConsume;
+public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 	
 	@Override
-	public Integer getConsume() {
+	public void updateStandard() {
 		// TODO Auto-generated method stub
-		return consume*getLevel();
-	}
-	
-	@Override
-	public void setConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		this.consume = consume;
+		Double riseRatio = getLevel()>1 ? Math.pow(IUpgrade.DefaultProductRiseRatio, getLevel()) * 100 : 100d;
+		this.standard = getOwner().getStandard() * riseRatio.intValue() / 100;
 	}
 	
 	@Override

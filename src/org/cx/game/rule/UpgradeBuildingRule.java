@@ -1,8 +1,8 @@
 package org.cx.game.rule;
 
 import org.cx.game.action.IUpgrade;
+import org.cx.game.action.IUpgradeBuilding;
 import org.cx.game.core.IPlayer;
-import org.cx.game.widget.building.BuildingUpgrade;
 import org.cx.game.widget.building.IBuilding;
 
 public class UpgradeBuildingRule extends Rule implements IRule {
@@ -21,20 +21,20 @@ public class UpgradeBuildingRule extends Rule implements IRule {
 		IBuilding building = (IBuilding) upgrade.getOwner();
 		IPlayer player = building.getPlayer();
 		if(null!=player){
-			player.addToResource(-upgrade.getConsume());
+			player.addToResource(-upgrade.getStandard());
 		}
 	}
 	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgrade.class;
+		return IUpgradeBuilding.class;
 	}
 	
 	@Override
-	public IUpgrade getOwner() {
+	public IUpgradeBuilding getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgrade) super.getOwner();
+		return (IUpgradeBuilding) super.getOwner();
 	}
 
 }

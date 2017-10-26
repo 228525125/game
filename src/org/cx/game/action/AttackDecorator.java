@@ -77,12 +77,6 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated method stub
 		attack.setAtk(atk);
 	}
-	
-	@Override
-	public void addToAtk(Integer atk) {
-		// TODO Auto-generated method stub
-		attack.addToAtk(atk);
-	}
 
 	@Override
 	public Integer getLockChance() {
@@ -167,5 +161,29 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void setLandformAtk(Integer landformAtk) {
 		// TODO Auto-generated method stub
 		this.attack.setLandformAtk(landformAtk);
+	}
+
+	@Override
+	public void updateAtk() {
+		// TODO Auto-generated method stub
+		this.attack.updateAtk();
+	}
+
+	@Override
+	public Integer getExtraAtk() {
+		// TODO Auto-generated method stub
+		return this.attack.getExtraAtk();
+	}
+
+	@Override
+	public void setExtraAtk(Integer extraAtk) {
+		// TODO Auto-generated method stub
+		this.attack.setExtraAtk(extraAtk);
+	}
+
+	@Override
+	public void addToExtraAtk(Integer extraAtk) {
+		// TODO Auto-generated method stub
+		this.attack.addToExtraAtk(extraAtk);
 	}
 }

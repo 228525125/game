@@ -14,8 +14,6 @@ public interface IWeapon {
 	
 	public void setAtk(Integer atk);
 	
-	public void addToAtk(Integer atk);
-	
 	/**
 	 * 耐久
 	 * @return

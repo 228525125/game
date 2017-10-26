@@ -14,7 +14,7 @@ import org.cx.game.widget.IGround;
  * @author chenxian
  *
  */
-public class MirageDeath extends Death {
+public class DeathMirage extends Death {
 	
 	@Override
 	public void action(Object...objects) {

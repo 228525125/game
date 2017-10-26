@@ -3,6 +3,14 @@ package org.cx.game.card;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cx.game.action.UpgradeHero;
+import org.cx.game.action.UpgradeHeroDecorator;
+import org.cx.game.action.IUpgradeHero;
+import org.cx.game.action.IUpgradeLife;
+import org.cx.game.action.IUpgrade;
+import org.cx.game.action.UpgradeLife;
+import org.cx.game.action.UpgradeLifeDecorator;
+import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.skill.ISkill;
 
@@ -21,7 +29,7 @@ public class HeroCard extends LifeCard {
 		
 		getActivate().setActivation(false);
 		
-		getDeath().setHp(getDeath().getHplimit());
+		getDeath().setHp(getHp());
 		
 		setHide(false);
 		
@@ -30,6 +38,36 @@ public class HeroCard extends LifeCard {
 		for(IBuff buff : buffs){
 			buff.invalid();
 		}
+	}
+	
+	/**
+	 * 技能点
+	 */
+	private Integer skillCount = 1;
+	
+	public Integer getSkillCount() {
+		return skillCount;
+	}
+
+	public void setSkillCount(Integer skillCount) {
+		this.skillCount = skillCount;
+	}
+	
+	public IUpgrade getUpgrade() {
+		if(null==upgrade){
+			IUpgradeHero upgrade = new UpgradeHero();
+			upgrade.setLevel(getLevel());
+			upgrade.setSkillCount(skillCount);
+			upgrade.setOwner(this);
+			this.upgrade = new UpgradeHeroDecorator(upgrade);
+		}
+		return this.upgrade;
+	}
+	
+	public void setUpgrade(IUpgrade upgrade) {
+		upgrade.setLevel(getLevel());
+		upgrade.setOwner(this);
+		this.upgrade = new UpgradeDecorator(upgrade);
 	}
 	
 	@Override
@@ -108,6 +146,10 @@ public class HeroCard extends LifeCard {
 	public void setSkillList(List<ISkill> skillList) {
 		// TODO Auto-generated method stub
 		super.setSkillList(skillList);
+	}
+	
+	public void setLevel(Integer level){
+		super.setLevel(level);
 	}
 
 }

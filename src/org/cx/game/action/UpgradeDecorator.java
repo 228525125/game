@@ -23,15 +23,21 @@ public class UpgradeDecorator extends ActionDecorator implements IUpgrade {
 	}
 
 	@Override
-	public Integer getConsume() {
+	public Integer getStandard() {
 		// TODO Auto-generated method stub
-		return this.upgrade.getConsume();
+		return this.upgrade.getStandard();
 	}
 	
 	@Override
-	public void setConsume(Integer consume) {
+	public void setStandard(Integer consume) {
 		// TODO Auto-generated method stub
-		this.upgrade.setConsume(consume);
+		this.upgrade.setStandard(consume);
+	}
+
+	@Override
+	public void updateStandard() {
+		// TODO Auto-generated method stub
+		this.upgrade.updateStandard();
 	}
 
 }

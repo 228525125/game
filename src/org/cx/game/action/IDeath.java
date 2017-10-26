@@ -14,7 +14,7 @@ import org.cx.game.observer.Observable;
 public interface IDeath extends IAction, IRecover{
 	
 	/**
-	 * hp
+	 * 当前生命值
 	 * @return
 	 */
 	public Integer getHp();
@@ -33,16 +33,25 @@ public interface IDeath extends IAction, IRecover{
 	public Integer addToHp(Integer hp);
 	
 	/**
-	 * HP上限
+	 * 生命值上限 = 初始生命值 + 等级生命值 + 额外生命值
 	 * @return
 	 */
-	public Integer getHplimit();
+	public Integer getHpLimit();
+	
+	public void setHpLimit(Integer hpLimit);
 	
 	/**
-	 * 这里仅提供setHplimit方法，是因为hp上限不需要显示的操作，它是一个隐含的游戏规则；
-	 * @param hplimit
+	 * 额外生命值 
+	 * @return
 	 */
-	public void setHplimit(Integer hplimit);
+	public Integer getExtraHp();
+	
+	public void setExtraHp(Integer extraHp);
+	
+	/**
+	 * 更新生命值上限
+	 */
+	public void updateHpLimit();
 	
 	public final static Integer Status_Live = 0;         //战斗
 	public final static Integer Status_Death = 1;        //死亡

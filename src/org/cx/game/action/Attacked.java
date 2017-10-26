@@ -22,7 +22,7 @@ public class Attacked extends Action implements IAttacked {
 	private Boolean fightBack = false;
 	private Integer armour = 0;
 	private Integer def = 0;         //防御力
-	
+	private Integer extraDef = 0;    //额外防御力
 	private Integer landformDef = 0; //地形防御力
 	
 	@Override
@@ -50,14 +50,14 @@ public class Attacked extends Action implements IAttacked {
 			this.def += def;
 			this.def = this.def<0 ? 0 : this.def;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", this.def);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Def,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 	
@@ -67,6 +67,23 @@ public class Attacked extends Action implements IAttacked {
 
 	public void setLandformDef(Integer landformDef) {
 		this.landformDef = landformDef;
+	}
+
+	public Integer getExtraDef() {
+		return extraDef;
+	}
+
+	public void setExtraDef(Integer extraDef) {
+		this.extraDef = extraDef;
+	}
+	
+	public void updateDef(){
+		Integer level = getOwner().getUpgrade().getLevel();
+		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
+		Integer def = getOwner().getDef() * riseRatio.intValue() / 100;
+		Integer landformDef = getLandformDef();
+		Integer extraDef = getExtraDef();
+		this.def = def + landformDef + extraDef;
 	}
 
 	@Override
@@ -102,14 +119,14 @@ public class Attacked extends Action implements IAttacked {
 			ret = this.armour<0 ? this.armour : 0;
 			this.armour = this.armour>0 ? this.armour : 0;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", armour);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Armour,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 		return ret;
 	}
@@ -147,7 +164,7 @@ public class Attacked extends Action implements IAttacked {
 		damage = death.addToHp(damage);
 		
 		//增加经验值
-		ILifeUpgrade lu = (ILifeUpgrade) attack.getOwner().getUpgrade();
+		IUpgradeLife lu = (IUpgradeLife) attack.getOwner().getUpgrade();
 		lu.addToEmpiricValue(Math.abs(damage));
 	}
 }

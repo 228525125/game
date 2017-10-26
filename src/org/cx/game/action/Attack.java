@@ -19,7 +19,8 @@ public class Attack extends Action implements IAttack {
 	private Integer mode = IAttack.Mode_Far;          //模式，近战/远程
 	private Integer range = 1;                        //距离
 	private Integer lockChance = 0;                   //锁定几率
-	private Integer atk = 0;                          //攻击力
+	private Integer atk = 0;                          //真实攻击力
+	private Integer extraAtk = 0;                     //额外攻击力
 	private Integer landformAtk = 0;                  //地形攻击力
 	private Boolean counterAttack = false;            //是否是反击
 	private Boolean attackable = false;
@@ -45,14 +46,14 @@ public class Attack extends Action implements IAttack {
 			this.range += range;
 			this.range = this.range < 1 ? 1 : this.range;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", range);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Range,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 	
@@ -68,44 +69,57 @@ public class Attack extends Action implements IAttack {
 		if(!this.mode.equals(mode)){
 			this.mode = mode;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", range);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Mode,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 
-	
-
 	public Integer getAtk() {
-		if(null!=getWeapon())
-			return atk+this.weapon.getAtk();
-		return atk+getLandformAtk();
+		return this.atk;
 	}
-
+	
+	@Override
 	public void setAtk(Integer atk) {
+		// TODO Auto-generated method stub
 		this.atk = atk;
 	}
 	
 	@Override
-	public void addToAtk(Integer atk) {
+	public void updateAtk() {
+		// TODO Auto-generated method stub
+		Integer level = getOwner().getUpgrade().getLevel();
+		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
+		Integer atk = getOwner().getAtk() * riseRatio.intValue() / 100;
+		Integer weaponAtk = null!=getWeapon() ? this.weapon.getAtk() : 0;
+		Integer landformAtk = getLandformAtk();
+		Integer extraAtk = getExtraAtk();
+		this.atk = atk + weaponAtk + landformAtk + extraAtk;
+	}
+	
+	public Integer getExtraAtk() {
+		// TODO Auto-generated method stub
+		return this.extraAtk;
+	}
+
+	public void setExtraAtk(Integer extraAtk) {
+		this.extraAtk = extraAtk;
+		
+		updateAtk();
+	}
+	
+	@Override
+	public void addToExtraAtk(Integer atk) {
 		// TODO Auto-generated method stub
 		if(!Integer.valueOf(0).equals(atk)){
-			this.atk += atk;
-			this.atk = this.atk < 0 ? 0 : this.atk;
+			this.extraAtk += atk;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("change", atk);
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Atk,map);
-			super.notifyObservers(info);
+			updateAtk();
 		}
 	}
 	
@@ -115,6 +129,8 @@ public class Attack extends Action implements IAttack {
 
 	public void setLandformAtk(Integer landformAtk) {
 		this.landformAtk = landformAtk;
+		
+		updateAtk();
 	}
 
 	@Override
@@ -137,14 +153,14 @@ public class Attack extends Action implements IAttack {
 			this.lockChance = this.lockChance < 0 ? 0 : this.lockChance;
 			this.lockChance = this.lockChance > 100 ? 100 : this.lockChance;
 			
-			Map<String,Object> map = new HashMap<String,Object>();
+			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", lockChance);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Lock,map);
-			super.notifyObservers(info);
+			super.notifyObservers(info);*/
 		}
 	}
 	
@@ -188,6 +204,8 @@ public class Attack extends Action implements IAttack {
 	public void handWeapon(IWeapon weapon) {
 		// TODO Auto-generated method stub
 		this.weapon = weapon;
+		
+		updateAtk();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
@@ -233,13 +251,16 @@ public class Attack extends Action implements IAttack {
 		if(IAttack.Mode_Far.equals(getMode()) && 1==distance){
 			clone.setMode(IAttack.Mode_Near);
 			Integer atk = clone.getAtk()/2;
-			clone.setAtk(atk);
+			clone.addToExtraAtk(-atk);
 		}
 		
 		//生命值与攻击力成正比
-		Integer scale = getOwner().getDeath().getHp()*100/getOwner().getHp();
-		Integer atk = clone.getAtk()*scale/100;
-		clone.setAtk(atk);
+		IDeath death = getOwner().getDeath();
+		Integer scale = death.getHp()*100/death.getHpLimit();
+		if(scale<100){
+			Integer atk = clone.getAtk()*(100-scale)/100;
+			clone.addToExtraAtk(-atk);
+		}
 		
 		attacked.attacked(getOwner(), clone);
 		
