@@ -17,7 +17,7 @@ import org.cx.game.validator.ApplyConsumeValidator;
 
 public class Apply extends Action implements IApply {
 
-	private Integer consume = 1;
+	private Map<String,Integer> consume = new HashMap<String,Integer>();
 	
 	@Override
 	public MagicCard getOwner() {
@@ -34,6 +34,8 @@ public class Apply extends Action implements IApply {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		super.action(objects);
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
@@ -44,12 +46,12 @@ public class Apply extends Action implements IApply {
 	}
 	
 	@Override
-	public Integer getConsume() {
+	public Map<String,Integer> getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Integer consume) {
+	public void setConsume(Map<String,Integer> consume) {
 		this.consume = consume;
 	}
 }

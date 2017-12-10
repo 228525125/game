@@ -134,14 +134,23 @@ public class Attacked extends Action implements IAttacked {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		
+		super.action(objects);
+		
 		IAttack attack = (IAttack) objects[1];
 		
 		/*
-		 * 伤害 = 攻击力 - 防御力
+		 * 伤害 使用H3计算规则
 		 */
 		Integer atk = attack.getAtk();
-		Integer damage = (atk-getDef())<0 ? 0 : atk-getDef();
-		damage = 5>damage ? 5 : damage;
+		Integer def = getDef();
+		Integer temp = atk - def;
+		Integer ratio = temp<0 ? temp*25 : temp*50;
+		ratio += 1000;
+		Integer[] dmg = attack.getDmg();
+		Integer result = Random.nextInt(dmg[1]-dmg[0]);
+		Integer damage =  dmg[0]+result;
+		damage = damage*ratio/1000;
 		damage = -damage;
 		
 		/*

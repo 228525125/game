@@ -1,5 +1,7 @@
 package org.cx.game.rule;
 
+import java.util.Map;
+
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.IUpgradeBuilding;
 import org.cx.game.core.IPlayer;
@@ -21,7 +23,8 @@ public class UpgradeBuildingRule extends Rule implements IRule {
 		IBuilding building = (IBuilding) upgrade.getOwner();
 		IPlayer player = building.getPlayer();
 		if(null!=player){
-			player.addToResource(-upgrade.getStandard());
+			Map<String,Integer> req = upgrade.getRequirement();
+			player.addToResource(req);
 		}
 	}
 	

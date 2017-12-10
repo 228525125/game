@@ -7,6 +7,7 @@ import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeLife;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ISkill;
+import org.cx.game.core.IPlayer;
 
 public class UpgradeSkillRule extends Rule implements IRule {
 
@@ -24,8 +25,8 @@ public class UpgradeSkillRule extends Rule implements IRule {
 		ISkill skill = (ISkill) upgrade.getOwner();
 		LifeCard life = skill.getOwner();
 		IUpgradeHero up = (IUpgradeHero) life.getUpgrade();
-		Integer standard = up.getStandard();
-		up.addToSkillCount(-standard);
+		Integer skillCountReq = up.getRequirement().get(IPlayer.SkillCount);
+		up.addToSkillCount(skillCountReq);
 	}
 	
 	@Override

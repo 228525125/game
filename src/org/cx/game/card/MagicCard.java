@@ -35,13 +35,20 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 	
-	public MagicCard(Integer id, Integer consume) {
+	public MagicCard(Integer id) {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
 		this.id = id;
-		this.consume = consume;
 		
 		setAction("Magic");
+		
+		/*
+		 * 初始化
+		 */
+		this.consume.put(IPlayer.Gold, 0);
+		this.consume.put(IPlayer.Wood, 0);
+		this.consume.put(IPlayer.Stone, 0);
+		this.consume.put(IPlayer.Ore, 0);
 	}
 	
 	private final static String Apply = "_Apply";
@@ -119,13 +126,13 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		return container.getPosition(this);
 	}
 	
-	private Integer consume =1;
+	private Map<String,Integer> consume = new HashMap<String,Integer>();
 	
-	public Integer getConsume() {
+	public Map<String,Integer> getConsume() {
 		return consume;
 	}
 
-	public void setConsume(Integer consume) {
+	public void setConsume(Map<String,Integer> consume) {
 		this.consume = consume;
 	}
 	

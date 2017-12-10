@@ -32,6 +32,8 @@ public class Conjure extends Action implements IConjure {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		super.action(objects);
+		
 		IActiveSkill skill = (IActiveSkill) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();

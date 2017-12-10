@@ -10,6 +10,9 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.ExecuteRule;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.ProcessOptionExecute;
+import org.cx.game.widget.building.ProcessOptionSpacing;
+import org.cx.game.widget.building.Process;
 
 public class Execute extends Action implements IExecute {
 	
@@ -21,6 +24,8 @@ public class Execute extends Action implements IExecute {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		super.action(objects);
+		
 		IPlayer player = null;
 		Integer position = null;
 		

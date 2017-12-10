@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Upgrade;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.building.IProduct;
@@ -12,15 +13,28 @@ import org.cx.game.widget.building.IProduct;
 public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 	
 	@Override
-	public void updateStandard() {
+	public void updateRequirement() {
 		// TODO Auto-generated method stub
-		Double riseRatio = getLevel()>1 ? Math.pow(IUpgrade.DefaultProductRiseRatio, getLevel()) * 100 : 100d;
-		this.standard = getOwner().getStandard() * riseRatio.intValue() / 100;
+		Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultProductRiseRatio*getLevel() : 100;
+		for(String key : getRequirement().keySet()){
+			Integer value = getRequirement().get(key);
+			value = value * riseRatio / 100;
+			getRequirement().put(key, value);
+		}
+	}
+	
+	@Override
+	public Map<String, Integer> getRequirement() {
+		// TODO Auto-generated method stub
+		if(super.getRequirement().isEmpty())
+			super.getRequirement().put(IPlayer.Gold, DefaultProductUpgradeGoldRequirement);
+		return super.getRequirement();
 	}
 	
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		super.action(objects);
 		
 		Integer level = getLevel();
 		level += 1;

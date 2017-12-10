@@ -29,22 +29,16 @@ public interface IProduct {
 	/**
 	 * 产品类型
 	 * @return
-	 */
+	 */ 
 	public Integer getType();
 	
-	public IUpgrade getUpgrade(); 
+	public IUpgrade getUpgrade();
+	 
 	
 	/**
 	 * 产品升级
 	 * @throws RuleValidatorException
-	 */
+	 */ 
 	public void upgrade() throws RuleValidatorException;
 	
-	/**
-	 * 升级标准
-	 * @return
-	 */
-	public Integer getStandard();
-	
-	public void setStandard(Integer standard);
 }

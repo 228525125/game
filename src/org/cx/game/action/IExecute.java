@@ -8,6 +8,6 @@ import org.cx.game.widget.building.IOption;
  *
  */
 public interface IExecute extends IAction {
-
+	
 	public IOption getOwner();
 }

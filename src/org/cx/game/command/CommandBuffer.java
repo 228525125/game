@@ -60,6 +60,8 @@ public class CommandBuffer {
 	
 	public static final String OPTION = "option";
 	
+	public static final String PROPERTY = "property";
+	
 	public static final String CARD = "card";
 	
 	public static final String SKILL = "skill";
@@ -209,6 +211,43 @@ public class CommandBuffer {
 		return (ICard) last().get(CARD);
 	}
 	
+	public Object get(String item){
+		if(PLAYER.equals(item)){
+			return getPlayer();
+		}
+		if (GROUND.equals(item)) {
+			return getGround();
+		}
+		if (PLACE.equals(item)) {
+			return getPlace();
+		}
+		if (BUILDING.equals(item)) {
+			return getBuilding();
+		}
+		if (OPTION.equals(item)) {
+			return getOption();
+		}
+		if(CEMETERY.equals(item)){
+			return getCemetery();
+		}
+		if(TRICKLIST.equals(item)){
+			return getTrickList();
+		}
+		if (USECARD.equals(item)) {
+			return getUseCard();
+		}
+		if (CARD.equals(item)) {
+			return getCard();
+		}
+		if (SKILL.equals(item)) {
+			return getSkill();
+		}
+		if (TRICK.equals(item)) {
+			return getTrick();
+		}
+		return null;
+	}
+	
 	/**
 	 * 将object翻译成item
 	 * @param item
@@ -255,6 +294,8 @@ public class CommandBuffer {
 		if(null!=player){
 			bufferMap.remove(CONTAINER);
 			bufferMap.remove(PLACE);
+			bufferMap.remove(BUILDING);
+			bufferMap.remove(OPTION);
 			bufferMap.remove(CEMETERY);
 			bufferMap.remove(TRICKLIST);
 			bufferMap.remove(CARD);
@@ -289,7 +330,7 @@ public class CommandBuffer {
 	
 	private void setBuilding(IBuilding building, Map<String, Object> bufferMap){
 		if(null!=building){
-			setPlace((IPlace) building.getOwner(), bufferMap);        //因为内部建筑物不能被select，所以这里可以直接转换
+			setPlace(building.getPlace(), bufferMap);
 			
 			bufferMap.put(BUILDING, building);
 		}

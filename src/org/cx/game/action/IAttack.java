@@ -17,12 +17,12 @@ public interface IAttack extends IAction {
 	/**
 	 * 近战攻击
 	 */
-	public final static Integer Mode_Near = 123;
+	public final static Integer Mode_Near = 115;
 	
 	/**
 	 * 远程攻击
 	 */
-	public final static Integer Mode_Far = 124;
+	public final static Integer Mode_Far = 116;
 	
 	public Integer getMode();
 	
@@ -78,6 +78,14 @@ public interface IAttack extends IAction {
 	public Integer getLandformAtk();
 
 	public void setLandformAtk(Integer landformAtk);
+	
+	/**
+	 * 伤害
+	 * @return
+	 */
+	public Integer [] getDmg();
+	
+	public void setDmg(Integer dmg);
 	
 	public Integer getLockChance();
 	

@@ -19,6 +19,7 @@ import org.cx.game.widget.ITrickList;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.BuildingTown;
 
 /**
  * 验证参数是否能够通过buffer进行完整的解析
@@ -46,7 +47,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 			String [] ps = getParameter().split(Calculator.SPACE);
 			for(String param : ps){                            //所有的位置信息都这样表示：类型+位置 = 字母+数字
 				String item = Util.filterAlphabet(param);
-				String position = Util.filterNumber(param);    //如果没有找到，返回“”
+				String position = Util.filterNumber(param);    //如果没有找到，返回""
 				
 				if(CommandBuffer.OWN.equals(item)){
 					parameterObject = player;
@@ -95,9 +96,22 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						ret = false;
 						break;
 					}else{
-						IBuilding building = getBuffer().getPlace().getBuilding();
-						parameterObject = building;
-						getBuffer().setBuilding(building);
+						if("".equals(position)){              //position=""表示只缓存外部建筑
+							IBuilding building = getBuffer().getPlace().getBuilding();
+							parameterObject = building;
+							getBuffer().setBuilding(building);
+						}else{                                //否则缓存内部建筑
+							if(null!=getBuffer().getBuilding() && getBuffer().getBuilding() instanceof BuildingTown){
+								BuildingTown town = (BuildingTown) getBuffer().getBuilding();
+								IBuilding building = town.getBuilding(Integer.valueOf(position));
+								parameterObject = building;
+								getBuffer().setBuilding(building);
+							}else{
+								addMessage(I18n.getMessage(this));
+								ret = false;
+								break;
+							}
+						}
 					}
 				}
 				
@@ -209,6 +223,5 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 	protected Object getParameterObject() {
 		return parameterObject;
 	}
-	
 	
 }

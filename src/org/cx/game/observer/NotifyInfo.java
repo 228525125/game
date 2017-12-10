@@ -66,6 +66,7 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_State_Consume = "Card_LifeCard_State_Consume";
 	public final static String Card_LifeCard_State_EmpiricValue = "Card_LifeCard_State_EmpiricValue";
 	public final static String Card_LifeCard_State_SkillCount = "Card_LifeCard_State_SkillCount";
+	public final static String Card_LifeCard_State_Direction = "Card_LifeCard_State_Direction";
 	
 	
 	public final static String Card_LifeCard_Weapon_Hand = "Card_LifeCard_Weapon_Hand";
@@ -86,6 +87,28 @@ public class NotifyInfo {
 	public final static String Building_Option_Execute_Process = "Building_Option_Execute_Process";
 	public final static String Building_Action_Upgrade = "Building_Action_Upgrade";
 	public final static String Building_Action_Upgrade_Product = "Building_Action_Upgrade_Product";
+	
+	public final static String Command_Error = "Command_Error";
+	public final static String Command_Select = "Command_Select";
+	public final static String Command_Show = "Command_Show";
+	public final static String Command_Query_Call = "Command_Query_Call";
+	public final static String Command_Query_Move = "Command_Query_Move";
+	public final static String Command_Query_Attack = "Command_Query_Attack";
+	public final static String Command_Query_Conjure = "Command_Query_Conjure";
+	public final static String Command_Query_Swap = "Command_Query_Swap";
+	public final static String Command_Query_Apply = "Command_Query_Apply";
+	public final static String Command_Query_Execute = "Command_Query_Execute";
+	public final static String Command_Reload = "Command_Reload";
+	
+	public final static String Context_Control = "Context_Control";
+	public final static String Context_Start = "Context_Start";
+	public final static String Context_Deploy = "Context_Deploy";
+	public final static String Context_Done = "Context_Done";
+	public final static String Context_Finish = "Context_Finish";	
+	public final static String Context_ControlQueue_Remove = "Context_ControlQueue_Remove";
+	public final static String Context_ControlQueue_Insert = "Context_ControlQueue_Insert";
+	public final static String Context_ControlQueue_Refurbish = "Context_ControlQueue_Refurbish";
+	public final static String Context_ControlQueue_Move = "Context_ControlQueue_Move";
 	
 	/*
 	 * skill = "Skill_"+class.name; buff = "Buff_"+class.name;
@@ -168,28 +191,6 @@ public class NotifyInfo {
 	
 	public final static String Card_LifeCard_Skill_Trick_FreezeTrick = "Card_LifeCard_Skill_Trick_FreezeTrick";
 	public final static String Card_LifeCard_Skill_Trick_PrickTrick = "Card_LifeCard_Skill_Trick_PrickTrick";*/
-	
-	public final static String Command_Error = "Command_Error";
-	public final static String Command_Select = "Command_Select";
-	public final static String Command_Show = "Command_Show";
-	public final static String Command_Query_Call = "Command_Query_Call";
-	public final static String Command_Query_Move = "Command_Query_Move";
-	public final static String Command_Query_Attack = "Command_Query_Attack";
-	public final static String Command_Query_Conjure = "Command_Query_Conjure";
-	public final static String Command_Query_Swap = "Command_Query_Swap";
-	public final static String Command_Query_Apply = "Command_Query_Apply";
-	public final static String Command_Query_Execute = "Command_Query_Execute";
-	public final static String Command_Reload = "Command_Reload";
-	
-	public final static String Context_Control = "Context_Control";
-	public final static String Context_Start = "Context_Start";
-	public final static String Context_Deploy = "Context_Deploy";
-	public final static String Context_Done = "Context_Done";
-	public final static String Context_Finish = "Context_Finish";	
-	public final static String Context_ControlQueue_Remove = "Context_ControlQueue_Remove";
-	public final static String Context_ControlQueue_Insert = "Context_ControlQueue_Insert";
-	public final static String Context_ControlQueue_Refurbish = "Context_ControlQueue_Refurbish";
-	public final static String Context_ControlQueue_Move = "Context_ControlQueue_Move";
 	
 	private String type;
 	private Object info;

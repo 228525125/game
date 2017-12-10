@@ -64,25 +64,26 @@ public class PlayerDecorator implements IPlayer {
 		// TODO Auto-generated method stub
 		return player.getObject(type);
 	}
+	
 
 	@Override
-	public Integer getResource() {
+	public Map<String, Integer> getResource() {
 		// TODO Auto-generated method stub
 		return player.getResource();
 	}
 
 	@Override
-	public void setResource(Integer res) {
-		// TODO Auto-generated method stub
-		player.setResource(res);
-	}
-
-	@Override
-	public void addToResource(Integer res) {
+	public void addToResource(Map<String,Integer> res) {
 		// TODO Auto-generated method stub
 		player.addToResource(res);
 	}
-
+	
+	@Override
+	public void addToResource(String resType, Integer res) {
+		// TODO Auto-generated method stub
+		player.addToResource(resType, res);
+	}
+	
 	@Override
 	public CommandBuffer getCommandBuffer() {
 		// TODO Auto-generated method stub
@@ -117,18 +118,6 @@ public class PlayerDecorator implements IPlayer {
 	public void setHomePosition(Integer position) {
 		// TODO Auto-generated method stub
 		player.setHomePosition(position);
-	}
-
-	@Override
-	public Integer getCallCountOfPlay() {
-		// TODO Auto-generated method stub
-		return player.getCallCountOfPlay();
-	}
-
-	@Override
-	public void addCallCountOfPlay(Integer time) {
-		// TODO Auto-generated method stub
-		player.addCallCountOfPlay(time);
 	}
 
 	@Override
@@ -232,6 +221,12 @@ public class PlayerDecorator implements IPlayer {
 	public void addHero(LifeCard hero) {
 		// TODO Auto-generated method stub
 		player.addHero(hero);
+	}
+
+	@Override
+	public void setResource(Map<String, Integer> res) {
+		// TODO Auto-generated method stub
+		player.setResource(res);
 	}
 
 }

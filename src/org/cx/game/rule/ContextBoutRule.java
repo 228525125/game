@@ -11,36 +11,34 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
+import org.cx.game.widget.building.BuildingCall;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.building.BuildingTown;
 
-public class ContextRule extends Rule implements IRule {
+public class ContextBoutRule extends Rule implements IRule {
 	
 	@Override
 	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
-		return "setControlPlayer";
-	}
-	
-	@Override
-	public void before(Object[] args) {
-		// TODO Auto-generated method stub
-		getOwner().addBout();
+		return "addBout";
 	}
 	
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		IPlayer player = (IPlayer) args[0];
+		IPlayer player = getOwner().getControlPlayer();
 		
 		player.addBout();
-
+		
 		Integer tax = 0;
 		IGround ground = player.getGround();
 		List<IBuilding> list = ground.getBuildingList(player);
-		for(IBuilding building : list)
-			tax += building.getTax();
-		
-		player.addToResource(tax);              //征税
+		for(IBuilding building : list){
+			if(building instanceof BuildingTown){
+				BuildingTown town = (BuildingTown) building;
+				tax += town.getTax();
+			}
+		}        
 		
 		/*
 		 * 获得控制权的玩家单位被激活
@@ -68,5 +66,4 @@ public class ContextRule extends Rule implements IRule {
 		// TODO Auto-generated method stub
 		return IContext.class;
 	}
-
 }

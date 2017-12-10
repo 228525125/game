@@ -8,13 +8,18 @@ import org.cx.game.validator.SelectLifeCardValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
 import org.cx.game.widget.IPlace;
 
+/**
+ * 暂停使用，已被CallOption替代
+ * @author chenxian
+ *
+ */
+@Deprecated
 public class CallCommand extends InteriorCommand {
 
 	public CallCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
 		addValidator(new SelectLifeCardValidator(buffer));
-		addValidator(new SelectContainerValidator(player.getUseCard(),buffer));
 	}
 	
 	@Override
@@ -31,7 +36,7 @@ public class CallCommand extends InteriorCommand {
 		
 		IPlace place = (IPlace) parameter;
 		LifeCard life = (LifeCard) buffer.getCard();
-		life.call(place);
+		//life.call(place);
 		buffer.clear();
 	}
 }

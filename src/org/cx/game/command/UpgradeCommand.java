@@ -23,7 +23,7 @@ public class UpgradeCommand extends InteriorCommand {
 		if(null!=buffer.getSkill()){
 			ISkill skill = buffer.getSkill();
 			
-			addValidator(new UpgradeConsumeValidator(skill.getUpgrade()));
+			addValidator(new UpgradeConsumeValidator(skill.getUpgrade(), skill.getOwner().getPlayer()));
 			
 			doValidator();
 			if(hasError())

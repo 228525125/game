@@ -8,6 +8,7 @@ import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
+import org.cx.game.validator.ParameterTypeValidator;
 
 public class ExternalCommand implements IExternalCommand, IValidatable {
 

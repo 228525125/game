@@ -17,6 +17,6 @@ public class SetupDecorator extends ActionDecorator implements ISetup {
 		super(setup);
 		this.setup = setup;
 		
-		setParameterTypeValidator(new Class[]{IPlace.class});
+		//setParameterTypeValidator(new Class[]{IPlace.class});
 	}
 }

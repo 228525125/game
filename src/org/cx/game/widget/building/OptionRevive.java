@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.cx.game.action.Execute;
+import org.cx.game.action.ExecuteDecorator;
+import org.cx.game.action.IExecute;
+import org.cx.game.card.CardFactory;
 import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
@@ -13,23 +17,24 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.building.OptionCall.OptionCallExecute;
 
 /**
  * 英雄复活
  * @author chenxian
  *
  */
-public class ReviveOption extends Option implements IOption {
+public class OptionRevive extends Option implements IOption {
 
 	private String name = null;
 	private LifeCard hero = null;
 
-	public ReviveOption(LifeCard hero) {
+	public OptionRevive(LifeCard hero) {
 		// TODO Auto-generated constructor stub
 		this.hero = hero;
 		this.hero.getDeath().addObserver(new OptionObserver());
 		
-		setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
+		//setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
 	}
 	
 	@Override
@@ -51,16 +56,15 @@ public class ReviveOption extends Option implements IOption {
 		return positionList;
 	}
 	
-	@Override
-	public void execute(Object... objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub
-		setSpacingWait(10000);              //英雄复活后，该选项被锁
-		
-		super.execute(objects);
-		
-		IPlace place = (IPlace) objects[0];
-		
-		this.hero.call(place);
+	private IExecute execute = null;
+
+	public IExecute getExecute() {
+		if(null==this.execute){
+			IExecute execute = new OptionReviveExecute(this.hero);
+			execute.setOwner(this);
+			this.execute = new ExecuteDecorator(execute);
+		}
+		return this.execute;
 	}
 	
 	class OptionObserver implements Observer {
@@ -81,9 +85,27 @@ public class ReviveOption extends Option implements IOption {
 				}
 			}
 			
+		}	
+	}
+	
+	public class OptionReviveExecute extends Execute {
+		
+		private LifeCard hero = null;
+
+		public OptionReviveExecute(LifeCard hero) {
+			// TODO Auto-generated constructor stub
+			this.hero = hero;
 		}
 		
-		
+		@Override
+		public void action(Object... objects) throws RuleValidatorException {
+			// TODO Auto-generated method stub
+			setSpacingWait(10000);              //英雄复活后，该选项被锁
+			
+			super.action(objects);
+			
+			IPlace place = (IPlace) objects[0];
+			this.hero.call(place,1);
+		}
 	}
-
 }

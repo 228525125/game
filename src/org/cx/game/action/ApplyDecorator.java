@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import java.util.Map;
+
 import org.cx.game.card.ICard;
 import org.cx.game.card.MagicCard;
 import org.cx.game.exception.RuleValidatorException;
@@ -14,18 +16,18 @@ public class ApplyDecorator extends ActionDecorator implements IApply {
 		super(apply);
 		this.apply = apply;
 		
-		setParameterTypeValidator(new Class[]{Object.class});
+		//setParameterTypeValidator(new Class[]{Object.class});
 		addValidator(new ApplyConsumeValidator(getOwner()));
 	}
 
 	@Override
-	public Integer getConsume() {
+	public Map<String,Integer> getConsume() {
 		// TODO Auto-generated method stub
 		return this.apply.getConsume();
 	}
 
 	@Override
-	public void setConsume(Integer consume) {
+	public void setConsume(Map<String,Integer> consume) {
 		// TODO Auto-generated method stub
 		this.apply.setConsume(consume);
 	}

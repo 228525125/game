@@ -2,6 +2,7 @@ package org.cx.game.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.cx.game.action.UpgradeHero;
 import org.cx.game.action.UpgradeHeroDecorator;
@@ -89,7 +90,7 @@ public class HeroCard extends LifeCard {
 	}
 	
 	@Override
-	public void setConsume(Integer consume) {
+	public void setConsume(Map<String,Integer> consume) {
 		// TODO Auto-generated method stub
 		super.setConsume(consume);
 	}

@@ -19,14 +19,14 @@ public class UpgradeLifeRule extends Rule implements IRule {
 	}
 	
 	private Integer hpLimit = 0;
-	private Integer standard = 0;
+	private Integer empRequirement = 0;
 	
 	@Override
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
 		IDeath death = getOwner().getOwner().getDeath();
 		this.hpLimit = death.getHpLimit();
-		this.standard = getOwner().getStandard();
+		this.empRequirement = getOwner().getRequirement().get(IPlayer.EmpiricValue);
 	}
 	
 	@Override
@@ -38,7 +38,7 @@ public class UpgradeLifeRule extends Rule implements IRule {
 		death.addToHp(death.getHpLimit()-hpLimit);
 		
 		IUpgradeLife upgrade = getOwner();
-		upgrade.addToEmpiricValue(-this.standard);
+		upgrade.addToEmpiricValue(this.empRequirement);
 	}
 	
 	@Override

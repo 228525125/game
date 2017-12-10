@@ -19,7 +19,7 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		super(attack);
 		this.attack = attack;
 		
-		setParameterTypeValidator(new Class[]{LifeCard.class});
+		//setParameterTypeValidator(new Class[]{LifeCard.class});
 	}
 	
 	private AttackRangeValidator attackRangeValidator = null;
@@ -185,5 +185,17 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 	public void addToExtraAtk(Integer extraAtk) {
 		// TODO Auto-generated method stub
 		this.attack.addToExtraAtk(extraAtk);
+	}
+
+	@Override
+	public Integer[] getDmg() {
+		// TODO Auto-generated method stub
+		return attack.getDmg();
+	}
+
+	@Override
+	public void setDmg(Integer dmg) {
+		// TODO Auto-generated method stub
+		attack.setDmg(dmg);
 	}
 }

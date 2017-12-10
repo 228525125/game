@@ -78,6 +78,8 @@ public class Activate extends Action implements IActivate {
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
+		super.action(objects);
+		
 		Boolean activate = (Boolean) objects[0];
 		
 		setActivation(activate);
@@ -90,8 +92,6 @@ public class Activate extends Action implements IActivate {
 		map.put("activate", activate);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Activate,map);
 		notifyObservers(info);
-		
-		
 	}
 	
 	@Override

@@ -3,12 +3,12 @@ package org.cx.game.widget.building;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.Intercepter;
 
-public class OptionExecuteProcess extends Process {
+public class ProcessOptionExecute extends Process {
 
 	private IOption option = null;
 	private Object[] parameter = null; 
 	
-	public OptionExecuteProcess(Integer waitBout, IOption option) {
+	public ProcessOptionExecute(Integer waitBout, IOption option) {
 		super(waitBout, option);
 		// TODO Auto-generated constructor stub
 		this.option = option;
@@ -18,7 +18,7 @@ public class OptionExecuteProcess extends Process {
 			@Override
 			public void before(Object[] args) {
 				// TODO Auto-generated method stub
-				OptionExecuteProcess.this.parameter = (Object[]) args[0];
+				ProcessOptionExecute.this.parameter = (Object[]) args[0];
 			}
 			
 			@Override
@@ -42,7 +42,7 @@ public class OptionExecuteProcess extends Process {
 			invalid();
 
 			try {
-				this.option.execute(parameter);         //参数 可能有问题
+				this.option.getExecute().action(parameter);         //参数 可能有问题
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -297,16 +297,10 @@ public interface IGround extends IContainer{
 	public Integer getPointByWay(Integer stand, Integer dest, Integer step, Integer moveType);
 	
 	/**
-	 * 
-	 * @return 中立生物position/Id
+	 * 采用String格式来表示中立生物的信息："ID,位置,数量,策略"
+	 * @return
 	 */
-	public Map<Integer, Integer> getNpcMap();
-	
-	/**
-	 * 
-	 * @return 中立生物的策略position/policyId
-	 */
-	public Map<Integer, IPolicyGroup> getPolicyMap();
+	public List<String> getNpcData();
 	
 	/**
 	 * 中立部队

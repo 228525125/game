@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.cx.game.action.Death;
 import org.cx.game.card.ICard;
@@ -42,6 +43,11 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		
 		this.groupPolicy = PolicyGroupFactory.getInstance(10450001);
 		this.groupPolicy.setOwner(this);
+		
+		this.resource.put(IPlayer.Gold, 1000);
+		this.resource.put(IPlayer.Wood, 0);
+		this.resource.put(IPlayer.Stone, 0);
+		this.resource.put(IPlayer.Ore, 0);
 	}
 	
 	@Override
@@ -155,38 +161,58 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		commandBuffer = new CommandBuffer(this);
 	}
 	
-	private Integer resource = 0;
-
-	@Override
-	public Integer getResource() {
-		// TODO Auto-generated method stub
-		if(Debug.isDebug)
-			return Debug.power;
+	private Map<String,Integer> resource = new HashMap<String,Integer>();
+	
+	public Map<String, Integer> getResource() {
 		return resource;
 	}
-	
+
 	@Override
-	public void setResource(Integer resource) {
+	public void addToResource(Map<String, Integer> res) {
 		// TODO Auto-generated method stub
-		this.resource = resource;
+		for(Entry<String,Integer> entry : res.entrySet()){
+			String resType = entry.getKey();
+			Integer resValue = this.resource.get(resType);
+			resValue += entry.getValue();
+			resValue = resValue>0 ? resValue : 0;
+			this.resource.put(resType, resValue);
+		}
+			
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", this);
+		map.put("resource", res);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
+		notifyObservers(info);
 	}
 	
 	@Override
-	public void addToResource(Integer power) {
+	public void addToResource(String resType, Integer res) {
 		// TODO Auto-generated method stub
-		if(0!=power){
-			this.resource += power;
-			this.resource = this.resource>0 ? this.resource : 0;    //判断下限
+		if(0!=res){
+			Integer value = this.resource.get(resType);
+			value += res;
+			value = value>0 ? value : 0;
+			this.resource.put(resType, value);
 			
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", this);
-			map.put("resource", this.resource);
-			map.put("change", power);
+			Map<String,Integer> resMap = new HashMap<String,Integer>();
+			resMap.put(resType, res);
+			map.put("resource", resMap);
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
 			notifyObservers(info);
 		}
 	}
 	
+	/**
+	 * 用于xml配置
+	 * @param res
+	 */
+	public void setResource(Map<String, Integer> res){
+		for(String resType : res.keySet())
+			getResource().put(resType, res.get(resType));
+	}
+
 	@Override
 	public void notifyObservers(Object arg0) {
 		// TODO Auto-generated method stub
@@ -216,20 +242,6 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	public void addHeroCardID(Integer cardID) {
 		// TODO Auto-generated method stub
 		this.heroCardIDList.add(cardID);
-	}
-	
-	private Integer callCountPlay = 0;                        //玩家本次比赛召唤随从次数
-	
-	@Override
-	public Integer getCallCountOfPlay() {
-		// TODO Auto-generated method stub
-		return callCountPlay;
-	}
-	
-	@Override
-	public void addCallCountOfPlay(Integer time) {
-		// TODO Auto-generated method stub
-		callCountPlay += time;
 	}
 	
 	@Override

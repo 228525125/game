@@ -4,6 +4,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.validator.IValidatable;
+import org.cx.game.validator.ParameterTypeValidator;
 
 /**
  * 比赛规则中的所有动作都必须继承该接口

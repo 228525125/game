@@ -12,7 +12,7 @@ public class AffectedDecorator extends ActionDecorator implements IAffected {
 		// TODO Auto-generated constructor stub
 		this.affected = affected;
 		
-		setParameterTypeValidator(new Class[]{IMagic.class});
+		//setParameterTypeValidator(new Class[]{IMagic.class});
 	}
 
 	@Override

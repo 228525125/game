@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.out.JsonOut;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
+import org.cx.game.validator.ParameterTypeValidator;
 
 public abstract class Action extends Observable implements IAction {
 
@@ -42,6 +44,21 @@ public abstract class Action extends Observable implements IAction {
 	
 	public Object getOwner() {
 		return owner;
+	}
+	
+	@Override
+	public void action(Object... objects) throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		
+		/* 
+		 * 执行规则验证
+		 
+		doValidator();
+		
+		if(hasError())
+			throw new RuleValidatorException(getErrors().getMessage());
+		 */
+		//以上代码，在ActionDecorator中执行，因为当验证失败，action不会执行拦截器
 	}
 
 	@Override

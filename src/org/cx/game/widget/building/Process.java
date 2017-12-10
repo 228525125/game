@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.cx.game.action.IAction;
+import org.cx.game.action.IExecute;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
@@ -33,7 +34,7 @@ public abstract class Process implements IIntercepter, IRecover {
 		this.waitBout = waitBout;
 		this.owner = owner;
 		
-		IPlayer player = owner.getOwner().getPlayer();
+		IPlayer player = owner.getOwner().getOwner().getPlayer();
 		this.beginBout = player.getBout();
 		this.curBout = player.getBout();
 		
@@ -59,7 +60,7 @@ public abstract class Process implements IIntercepter, IRecover {
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		this.curBout = getOwner().getOwner().getPlayer().getBout();
+		this.curBout = getOwner().getOwner().getOwner().getPlayer().getBout();
 	}
 	
 	public IOption getOwner(){

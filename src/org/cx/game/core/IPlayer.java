@@ -1,6 +1,7 @@
 package org.cx.game.core;
 
 import java.util.List;
+import java.util.Map;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
@@ -31,19 +32,34 @@ public interface IPlayer extends IInterceptable
 	
 	public Object getObject(String type);
 	
-	public Integer getResource();
+	public Map<String, Integer> getResource();
 	
-	/**
-	 * 隐式的改变资源
-	 * @param power
-	 */
-	public void setResource(Integer res);
+	public void setResource(Map<String, Integer> res);
 	
 	/**
 	 * 显示的改变资源
-	 * @param resource
+	 * @param res [资源类型][资源数]
 	 */
-	public void addToResource(Integer res);
+	public void addToResource(Map<String, Integer> res);
+	
+	/**
+	 * 显示的改变资源
+	 * @param resType 资源类型
+	 * @param res 资源数
+	 */
+	public void addToResource(String resType, Integer res);
+	
+	public final static String Gold = "701";                    //金币
+	
+	public final static String Wood = "702";                    //木材
+	
+	public final static String Stone = "703";                   //石材
+	
+	public final static String Ore = "704";                     //矿石
+	
+	public final static String EmpiricValue = "710";             //经验值
+	
+	public final static String SkillCount = "720";              //技能点
 	
 	public CommandBuffer getCommandBuffer();
 	
@@ -70,18 +86,6 @@ public interface IPlayer extends IInterceptable
 	public List<LifeCard> getHeroList();
 	
 	public void addHero(LifeCard hero);
-	
-	/**
-	 * 玩家本次比赛召唤随从次数
-	 * @return
-	 */
-	public Integer getCallCountOfPlay();
-	
-	/**
-	 * call计数器增加time次
-	 * @param time
-	 */
-	public void addCallCountOfPlay(Integer time);
 	
 	/**
 	 * 获取所有随从

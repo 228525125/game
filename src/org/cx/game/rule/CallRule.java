@@ -1,5 +1,9 @@
 package org.cx.game.rule;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.cx.game.action.ICall;
 import org.cx.game.action.IDeath;
 import org.cx.game.card.HeroCard;
@@ -16,9 +20,23 @@ public class CallRule extends Rule implements IRule {
 		return "action";
 	}
 	
+	private Boolean isInvoke = true;
+	
+	@Override
+	public Boolean isInvoke() {
+		// TODO Auto-generated method stub
+		return isInvoke;
+	}
+	
+	private IPlace place = null;
+	private Integer nop = 0;
+	
 	@Override
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
+		this.place = (IPlace)((Object[]) args[0])[0];
+		this.nop = (Integer)((Object[]) args[0])[1];
+		
 		ICall call = getOwner();
 
 		LifeCard owner = call.getOwner();
@@ -33,27 +51,60 @@ public class CallRule extends Rule implements IRule {
 			IPlace place = ground.getPlace(position);
 			place.getCemetery().remove(hero);
 		}
+		
+		/*
+		 * 招募分为创建一支部队和补充兵源，这里处理补充兵源的情况；
+		 */
+		LifeCard life = place.getLife();
+		if(null!=life){
+			Integer n = life.getCall().getNop();
+			n += this.nop;
+			life.getCall().setNop(n);
+			
+			this.isInvoke = false;
+		}
 	}
 	
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
 		ICall call = getOwner();
-
 		LifeCard owner = call.getOwner();
 		
+		/*
+		 * 刚招募的部队允许反击
+		 */
 		owner.getDeath().setStatus(IDeath.Status_Live);
 		owner.getAttacked().setFightBack(true);
-		
-		IPlayer player = owner.getPlayer();
-		player.addToResource(-owner.getCall().getConsume());
-		
-		player.addToRation(owner.getRation());
+	}
+	
+	/**
+	 * 这里与after区分开，如果是补充兵源after将不会被调用
+	 */
+	public void finish(Object[] args) {
+		// TODO Auto-generated method stub
+		ICall call = getOwner();
+		LifeCard owner = call.getOwner();
 		
 		/*
-		 * 增加召唤计数器
+		 * 扣减资源
 		 */
-		player.addCallCountOfPlay(1);
+		IPlayer player = owner.getPlayer();
+		Map<String,Integer> consume = call.getConsume();
+		Map<String,Integer> res = new HashMap<String,Integer>();
+		for(String key : consume.keySet()){
+			Integer value = consume.get(key);
+			res.put(key, value*this.nop);
+		}
+		
+		player.addToResource(res);
+		
+		/*
+		 * 计算人口
+		 */
+		player.addToRation(owner.getRation()*this.nop);
+		
+		this.isInvoke = true;
 	}
 	
 	@Override

@@ -52,39 +52,51 @@ public abstract class ActionDecorator implements IAction {
 		return original.getOwner();
 	}
 	
-	private ParameterTypeValidator parameterTypeValidator = null;
+	/*
+	private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
 	private String[] proertyName = null;
 	private Object[] validatorValue = null;
-	
-	protected void setParameterTypeValidator(Class[] parameterType) {
+
+	@Override
+	public void setParameterTypeValidator(Class[] parameterType) {
 		this.parameterType = parameterType;
-	}
+	}*/
 	
-	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
+	/**
+	 * 
+	 * @param parameterType 参数类型
+	 * @param proertyName 属性名称
+	 * @param validatorValue 属性值，但必须为基本类型
+	 
+	@Override
+	public void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
 		this.parameterType = parameterType;
 		this.proertyName = proertyName;
 		this.validatorValue = validatorValue;
-	}
-	
+	}*/
+
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
-		deleteValidator(parameterTypeValidator);
-		this.parameterTypeValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
-		addValidator(parameterTypeValidator);
+		/*
+		 * 这里要考虑一下，可以把参数验证放到Command中，这里可以省略
+		 
+		deleteValidator(parameterValidator);
+		this.parameterValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue);
+		addValidator(parameterValidator);
+		*/
 		
 		/* 
 		 * 执行规则验证
 		 */
 		original.doValidator();
 		
-		if(!original.hasError()){
+		if(original.hasError()){
+			throw new RuleValidatorException(getErrors().getMessage());
+		}else{
 			Object proxy = ProxyFactory.getProxy(this.original);     
 			((IAction)proxy).action(objects);
-		}else{
-			throw new RuleValidatorException(getErrors().getMessage());
 		}		
 	}
 	

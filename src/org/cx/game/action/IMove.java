@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import java.util.List;
+
 import org.cx.game.card.LifeCard;
 
 public interface IMove extends IAction{
@@ -75,6 +77,26 @@ public interface IMove extends IAction{
 	public void setHide(Boolean hide);
 	
 	public void changeHide(Boolean hide);
+	
+	/**
+	 * 朝向
+	 * @return
+	 */
+	public Integer getDirection();
+	
+	public void setDirection(Integer direction);
+	
+	/**
+	 * 改变朝向
+	 * @param direction 朝向
+	 */
+	public void changeDirection(Integer direction);
+	
+	/**
+	 * 移动路径
+	 * @return
+	 */
+	public List<Integer> getMovePath();
 	
 	public LifeCard getOwner();
 

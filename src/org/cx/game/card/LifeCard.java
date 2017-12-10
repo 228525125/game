@@ -77,6 +77,14 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
 		this.id = id;
+		
+		/*
+		 * 初始化
+		 */
+		this.consume.put(IPlayer.Gold, 0);
+		this.consume.put(IPlayer.Wood, 0);
+		this.consume.put(IPlayer.Stone, 0);
+		this.consume.put(IPlayer.Ore, 0);
 	}
 	
 	private Integer id;
@@ -146,12 +154,33 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	private Integer ration = 1;
 
+	/**
+	 * 人口
+	 * @return
+	 */
 	public Integer getRation() {
 		return ration;
 	}
 
 	public void setRation(Integer ration) {
 		this.ration = ration;
+	}
+	
+	/**
+	 * 人数，LifeCard可以理解为一个小队
+	 */
+	private Integer nop = 1;
+
+	/**
+	 * 人数，LifeCard可以理解为一个小队
+	 * @return
+	 */
+	public Integer getNop() {
+		return nop;
+	}
+
+	public void setNop(Integer nop) {
+		this.nop = nop;
 	}
 
 	private Integer energy = 100;
@@ -237,6 +266,23 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.atk = atk;
 	}
 	
+	/**
+	 * 伤害
+	 */
+	private Integer dmg = 180081;
+	
+	/**
+	 * 伤害
+	 * @return
+	 */
+	public Integer getDmg() {
+		return dmg;
+	}
+
+	public void setDmg(Integer dmg) {
+		this.dmg = dmg;
+	}
+
 	private Integer attackRange = 0;
 
 	/**
@@ -477,18 +523,19 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	}
 	
 	/**
-	 * 消耗
+	 * 消耗资源
 	 */
-	private Integer consume = 0;
+	private Map<String,Integer> consume = new HashMap<String,Integer>();
 	
-	public Integer getConsume() {
+	public Map<String,Integer> getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Integer consume) {
+	public void setConsume(Map<String,Integer> consume) {
 		// TODO Auto-generated method stub
-		this.consume = consume;
+		for(String resType : consume.keySet())
+			getConsume().put(resType, consume.get(resType));
 	}
 	
 	private Integer level = 1;
@@ -503,19 +550,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public void setLevel(Integer level){
 		this.level = level;
-	}
-	
-	/**
-	 * 达到等级的标准
-	 */
-	private Integer standard = IUpgrade.BasicStandard;
-	
-	public Integer getStandard() {
-		return standard;
-	}
-
-	public void setStandard(Integer standard) {
-		this.standard = standard;
 	}
 
 	/**
@@ -743,6 +777,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		if(null==attack){
 			IAttack attack = new Attack();
 			attack.setAtk(atk);
+			attack.setDmg(dmg);
 			attack.setRange(attackRange);
 			attack.setLockChance(lockChance);
 			attack.setMode(attackMode);
@@ -754,6 +789,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	public void setAttack(IAttack attack) {
 		attack.setAtk(atk);
+		attack.setDmg(dmg);
 		attack.setRange(attackRange);
 		attack.setLockChance(lockChance);
 		attack.setMode(attackMode);
@@ -857,6 +893,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 			ICall call = new Call();
 			call.setConsume(consume);
 			call.setRation(ration);
+			call.setNop(nop);
 			call.setOwner(this);
 			this.call = new CallDecorator(call);
 		}
@@ -867,6 +904,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void setCall(ICall call) {
 		call.setConsume(consume);
 		call.setRation(ration);
+		call.setNop(nop);
 		call.setOwner(this);
 		this.call = new CallDecorator(call);
 	}
@@ -1005,8 +1043,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * 召唤
 	 *
 	 */
-	public void call(IPlace place) throws RuleValidatorException {
-		getCall().action(place);
+	public void call(IPlace place, Integer nop) throws RuleValidatorException {
+		getCall().action(place, nop);
 	}
 	
 	/**
@@ -1058,6 +1096,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		getAttack().setLockChance(lockChance);
 		
 		getCall().setConsume(consume);
+		getCall().setNop(nop);
 		
 		getMove().setEnergy(energy);
 		getMove().setType(moveType);

@@ -1,5 +1,6 @@
 package org.cx.game.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,10 @@ public class Move extends Action implements IMove{
 	private Boolean moveable = false;   //是否能移动，回合内只能移动一次
 	private Integer flee = 0;         //逃离成功率
 	private Boolean hide = false;           //隐形状态
+	
+	private List<Integer> path = new ArrayList<Integer>();
+	
+	private Integer direction = IGround.Relative_Right;
 	
 	@Override
 	public MoveDecorator getDecorator() {
@@ -163,6 +168,33 @@ public class Move extends Action implements IMove{
 		this.moveable = moveable;
 	}
 	
+	public Integer getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Integer direction) {
+		this.direction = direction;
+	}
+	
+	public void changeDirection(Integer direction){
+		if(!this.direction.equals(direction)){
+			this.direction = direction;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", getOwner().getPlayer());
+			map.put("container", getOwner().getContainer());
+			map.put("card", getOwner());
+			map.put("direction", direction);
+			map.put("position", getOwner().getContainerPosition());
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Direction,map);
+			super.notifyObservers(info);
+		}
+	}
+	
+	public List<Integer> getMovePath() {
+		return path;
+	}
+
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
@@ -172,6 +204,8 @@ public class Move extends Action implements IMove{
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		super.action(objects);
+		
 		IPlace place = (IPlace) objects[0];
 		
 		IGround ground = (IGround) getOwner().getContainer();

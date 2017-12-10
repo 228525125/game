@@ -20,6 +20,9 @@ public class Affected extends Action implements IAffected {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		
+		super.action(objects);
+		
 		IMagic magic = (IMagic) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();

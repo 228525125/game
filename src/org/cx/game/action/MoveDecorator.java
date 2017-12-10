@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.cx.game.card.ICard;
@@ -29,14 +30,12 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 
 	private IMove move = null;
 	
-	
-	
 	public MoveDecorator(IMove move) {
 		// TODO Auto-generated constructor stub
 		super(move);
 		this.move = move;
 		
-		setParameterTypeValidator(new Class[]{IPlace.class});
+		//setParameterTypeValidator(new Class[]{IPlace.class});
 	}
 	
 	@Override
@@ -147,6 +146,30 @@ public class MoveDecorator extends ActionDecorator implements IMove {
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
 		return move.getOwner();
+	}
+
+	@Override
+	public Integer getDirection() {
+		// TODO Auto-generated method stub
+		return move.getDirection();
+	}
+
+	@Override
+	public void setDirection(Integer direction) {
+		// TODO Auto-generated method stub
+		move.setDirection(direction);
+	}
+
+	@Override
+	public void changeDirection(Integer direction) {
+		// TODO Auto-generated method stub
+		move.changeDirection(direction);
+	}
+
+	@Override
+	public List<Integer> getMovePath() {
+		// TODO Auto-generated method stub
+		return move.getMovePath();
 	}
 
 }

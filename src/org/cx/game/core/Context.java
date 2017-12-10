@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +56,11 @@ public class Context extends Observable implements IContext
 	private final static Map<Integer,List<Integer>> Tag_1 = new HashMap<Integer,List<Integer>>();
 	private final static Map<Integer,List<Integer>> Tag_2 = new HashMap<Integer,List<Integer>>();
 	
-	private int bout=0;  //游戏回合
+	private int bout = 0;  //回合
+	
+	private Integer day = 0; //天
+	
+	private Integer week = 0; //星期几
 	
 	private List<IPlayer> playerList = new ArrayList<IPlayer>();
 	
@@ -213,6 +218,35 @@ public class Context extends Observable implements IContext
 	
 	public void addBout(){
 		bout++;
+		if(1==bout%getPlayerList().size()){
+			decorator.addDay();
+			if(1==day%7)
+				decorator.addWeek();
+		}
+	}
+	
+	@Override
+	public Integer getDay() {
+		// TODO Auto-generated method stub
+		return day;
+	}
+	
+	@Override
+	public void addDay() {
+		// TODO Auto-generated method stub
+		this.day++;
+	}
+	
+	@Override
+	public Integer getWeek() {
+		// TODO Auto-generated method stub
+		return this.week;
+	}
+	
+	@Override
+	public void addWeek() {
+		// TODO Auto-generated method stub
+		this.week++;
 	}
 	
 	@Override
@@ -237,16 +271,12 @@ public class Context extends Observable implements IContext
 		notifyObservers(info);
 	}
 	
-	/*public IPlayer getOtherPlayer(IPlayer player){
-		if(player.getId()==player1.getId())
-			return player2;
-		else
-			return player1;
-	}*/
-	
 	public void switchControl(){
 		Object object = queue.out();
-		decorator.setControlPlayer((IPlayer) object);
+		
+		setControlPlayer((IPlayer) object);
+		
+		decorator.addBout();
 	}
 	
 	public void addIntercepter(IIntercepter intercepter) {
@@ -295,6 +325,5 @@ public class Context extends Observable implements IContext
 		// TODO Auto-generated method stub
 		return newCardPlayId++;
 	}
-	
 	
 }

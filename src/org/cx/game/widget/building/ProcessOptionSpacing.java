@@ -1,10 +1,12 @@
 package org.cx.game.widget.building;
 
-public class OptionSpacingProcess extends Process {
+import org.cx.game.action.IExecute;
+
+public class ProcessOptionSpacing extends Process {
 
 	private IOption option = null;
 	
-	public OptionSpacingProcess(Integer waitBout, IOption option) {
+	public ProcessOptionSpacing(Integer waitBout, IOption option) {
 		// TODO Auto-generated constructor stub
 		super(waitBout, option);
 		this.option = option;

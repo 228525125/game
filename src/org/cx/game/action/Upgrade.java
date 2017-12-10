@@ -1,8 +1,12 @@
 package org.cx.game.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Upgrade extends Action implements IUpgrade {
 
 	private Integer level = 1;
+	private Integer levelLimit = 1;
 	
 	@Override
 	public Integer getLevel() {
@@ -16,22 +20,30 @@ public abstract class Upgrade extends Action implements IUpgrade {
 		this.level = level;
 		
 		if(null!=getOwner())
-			updateStandard();			
+			updateRequirement();			
 		
 	}
 	
-	protected Integer standard = 1;
+	public Integer getLevelLimit() {
+		return levelLimit;
+	}
+
+	public void setLevelLimit(Integer levelLimit) {
+		this.levelLimit = levelLimit;
+	}
+
+	private Map<String,Integer> requirement = new HashMap<String,Integer>();
 	
 	@Override
-	public Integer getStandard() {
+	public Map<String,Integer> getRequirement() {
 		// TODO Auto-generated method stub
-		return standard;
+		return requirement;
 	}
 	
 	@Override
-	public void setStandard(Integer standard) {
+	public void setRequirement(Map<String,Integer> requirement) {
 		// TODO Auto-generated method stub
-		this.standard = standard;
+		this.requirement = requirement;
 	}
 
 }

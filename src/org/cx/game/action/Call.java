@@ -6,14 +6,15 @@ import java.util.Map;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.CallRule;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IPlace;
 
 public class Call extends Action implements ICall {
 	
-	private Integer consume = 1;
+	private Map<String,Integer> consume = new HashMap<String,Integer>();
 	private Integer ration = 1;
+	
+	private Integer nop = 1;           //人数 
 	
 	@Override
 	public LifeCard getOwner() {
@@ -24,9 +25,18 @@ public class Call extends Action implements ICall {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		IPlace place = (IPlace) objects[0];		
 		
-		/* 召唤的动作应在place_in之前，因为place_in动作与移动时的place_in动作相同 */
+		super.action(objects);
+		
+		IPlace place = (IPlace) objects[0];
+		Integer nop = (Integer) objects[1];
+		
+		/*
+		 * 招募人数
+		 */
+		setNop(nop);
+		
+		/* 招募的动作应在place_in之前，因为place_in动作与移动时的place_in动作相同 */
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", place.getContainer());
@@ -50,7 +60,7 @@ public class Call extends Action implements ICall {
 		getOwner().getAttacked().updateDef();
 		death.updateHpLimit();
 		updateConsume();
-		getOwner().getUpgrade().updateStandard();
+		getOwner().getUpgrade().updateRequirement();
 		
 		death.setHp(death.getHpLimit());
 		
@@ -61,38 +71,21 @@ public class Call extends Action implements ICall {
 	}
 
 	@Override
-	public Integer getConsume() {
+	public Map<String,Integer> getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Integer consume) {
-		this.consume = consume;
+	public void setConsume(Map<String,Integer> consume) {
+		for(String resType : consume.keySet())
+			getConsume().put(resType, consume.get(resType));
 	}
 	
 	public void updateConsume(){
-		Integer level = getOwner().getUpgrade().getLevel();
+		/*Integer level = getOwner().getUpgrade().getLevel();
 		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
-		this.consume = getOwner().getConsume() * riseRatio.intValue() / 100;
+		this.consume = getOwner().getConsume() * riseRatio.intValue() / 100;*/
 	}
-
-	/*@Override
-	public void addToConsume(Integer consume) {
-		// TODO Auto-generated method stub
-		if(!Integer.valueOf(0).equals(consume)){
-			this.consume += consume;
-			this.consume = this.consume < 0 ? 0 : this.consume;
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("change", consume);
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Consume,map);
-			super.notifyObservers(info);
-		}
-	}*/
 	
 	@Override
 	public Integer getRation() {
@@ -105,4 +98,13 @@ public class Call extends Action implements ICall {
 		// TODO Auto-generated method stub
 		this.ration = ration;
 	}
+	
+	public Integer getNop() {
+		return nop;
+	}
+
+	public void setNop(Integer nop) {
+		this.nop = nop;
+	}
+
 }

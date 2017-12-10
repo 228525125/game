@@ -43,6 +43,22 @@ public interface IContext extends IInterceptable,Observable {
 	 * 比赛结束
 	 */
 	public abstract void finish();
+	
+	/**
+	 * 当前天数，从游戏开始算起
+	 * @return
+	 */
+	public Integer getDay();
+	
+	public void addDay();
+	
+	/**
+	 * 周
+	 * @return
+	 */
+	public Integer getWeek();
+	
+	public void addWeek(); 
 
 	public abstract int getBout();
 

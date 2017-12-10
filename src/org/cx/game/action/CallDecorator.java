@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import java.util.Map;
+
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.ProxyFactory;
@@ -16,19 +18,18 @@ public class CallDecorator extends ActionDecorator implements ICall {
 		super(call);
 		this.call = call;
 		
-		setParameterTypeValidator(new Class[]{IPlace.class});
-		addValidator(new CallConsumeValidator((LifeCard)call.getOwner()));
+		//setParameterTypeValidator(new Class[]{IPlace.class, Integer.class});
 	}
 
 	@Override
-	public Integer getConsume() {
+	public Map<String,Integer> getConsume() {
 		// TODO Auto-generated method stub
 		Object proxy = ProxyFactory.getProxy(this.call);     
 		return ((ICall)proxy).getConsume();
 	}
 
 	@Override
-	public void setConsume(Integer consume) {
+	public void setConsume(Map<String,Integer> consume) {
 		// TODO Auto-generated method stub
 		this.call.setConsume(consume);
 	}
@@ -55,5 +56,17 @@ public class CallDecorator extends ActionDecorator implements ICall {
 	public void updateConsume() {
 		// TODO Auto-generated method stub
 		this.call.updateConsume();
+	}
+
+	@Override
+	public Integer getNop() {
+		// TODO Auto-generated method stub
+		return call.getNop();
+	}
+
+	@Override
+	public void setNop(Integer nop) {
+		// TODO Auto-generated method stub
+		call.setNop(nop);
 	}
 }

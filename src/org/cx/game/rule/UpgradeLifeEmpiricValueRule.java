@@ -1,6 +1,7 @@
 package org.cx.game.rule;
 
 import org.cx.game.action.IUpgradeLife;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 
 public class UpgradeLifeEmpiricValueRule extends Rule implements IRule {
@@ -19,8 +20,8 @@ public class UpgradeLifeEmpiricValueRule extends Rule implements IRule {
 		
 		if(0<empiricValue){
 			IUpgradeLife upgrade = getOwner();
-			
-			if(upgrade.getEmpiricValue()>=upgrade.getStandard()){
+			Integer req = upgrade.getRequirement().get(IPlayer.EmpiricValue);
+			if(upgrade.getEmpiricValue()>=req){
 				
 				try {
 					upgrade.getOwner().upgrade();

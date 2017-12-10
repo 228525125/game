@@ -25,6 +25,9 @@ public class Attack extends Action implements IAttack {
 	private Boolean counterAttack = false;            //是否是反击
 	private Boolean attackable = false;
 	
+	public static String space = "8008";              //伤害间隔符
+	private Integer  dmg = 180081;                          //伤害 180082 = 1-2
+	
 	@Override
 	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
@@ -133,6 +136,14 @@ public class Attack extends Action implements IAttack {
 		updateAtk();
 	}
 
+	public Integer [] getDmg() {
+		return IntegerToDamage(dmg);
+	}
+
+	public void setDmg(Integer dmg) {
+		this.dmg = dmg;
+	}
+
 	@Override
 	public Integer getLockChance() {
 		// TODO Auto-generated method stub
@@ -219,7 +230,9 @@ public class Attack extends Action implements IAttack {
 
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
+		super.action(objects);
+		
 		LifeCard attacked = (LifeCard) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -276,5 +289,16 @@ public class Attack extends Action implements IAttack {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static Integer[] IntegerToDamage(Integer dmg){
+		String [] dmgs = dmg.toString().split(space);
+		Integer x = Integer.valueOf(dmgs[0]);
+		Integer y = Integer.valueOf(dmgs[1]);
+		return new Integer [] {x,y};
+	}
+	
+	public static Integer DamageToInteger(Integer [] dmg){
+		return Integer.valueOf(dmg[0]+space+dmg[1]);
 	}
 }

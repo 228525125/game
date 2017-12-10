@@ -34,6 +34,7 @@ import org.cx.game.tools.Node;
 import org.cx.game.tools.PathFinding;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.Util;
+import org.cx.game.widget.building.BuildingFactory;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.dom4j.Document;
@@ -62,6 +63,7 @@ public class HoneycombGround extends Container implements IGround {
 
 	private Map<Integer, Integer> npcMap = new HashMap<Integer, Integer>();
 	private Map<Integer, IPolicyGroup> policyMap = new HashMap<Integer, IPolicyGroup>();
+	private List<String> npcData = new ArrayList<String>();
 	private IPlayer neutral = null;
 	
 	public HoneycombGround(Integer xBorder, Integer yBorder, String imagePath) {
@@ -173,18 +175,20 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public IBuilding getBuilding(Integer position) {
 		// TODO Auto-generated method stub
-		for(IBuilding building : buildingList){
-			if(position.equals(building.getPosition()))
-				return building;
-		}
-		return null;
+		return this.buildingMap.get(position);
 	}
 
-	public void setBuildingList(List<IBuilding> buildingList) {
-		for(IBuilding building : buildingList)
-			buildingMap.put(building.getPosition(), building);
-		
-		this.buildingList = buildingList;
+	public void setBuildings(Map<Integer, Integer> buildings) {
+		for(Entry<Integer, Integer> entry : buildings.entrySet()){
+			Integer position = entry.getKey();
+			Integer buildingType = entry.getValue();
+			
+			IBuilding building = BuildingFactory.getInstance(buildingType);
+			building.setPosition(position);
+			this.buildingList.add(building);
+			
+			buildingMap.put(position, building);
+		}
 	}
 
 	public List<Integer> getDisableList() {
@@ -202,22 +206,13 @@ public class HoneycombGround extends Container implements IGround {
 	}
 	
 	@Override
-	public Map<Integer, Integer> getNpcMap(){
-		return npcMap;
-	}
-
-	public void setNpcMap(Map<Integer, Integer> npcMap){
-		this.npcMap = npcMap;
-	}
-	
-	@Override
-	public Map<Integer, IPolicyGroup> getPolicyMap() {
+	public List<String> getNpcData() {
 		// TODO Auto-generated method stub
-		return this.policyMap;
+		return this.npcData;
 	}
 	
-	public void setPolicyMap(Map<Integer, IPolicyGroup> policyMap){
-		this.policyMap = policyMap;
+	public void setNpcData(List<String> npcData){
+		this.npcData = npcData;
 	}
 	
 	@Override
@@ -276,7 +271,7 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public void captureBuilding(Integer position, IPlayer player) {
 		// TODO Auto-generated method stub
-		IBuilding building = this.buildingMap.get(position);
+		IBuilding building = getBuilding(position);
 		building.setPlayer(player);
 	}
 	
@@ -784,10 +779,10 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public Integer getDirection(Integer stand, Integer target) {
 		// TODO Auto-generated method stub
+		Integer ret = null;
+		
 		Integer [] p1 = integerToPoint(stand);
 		Integer [] p2 = integerToPoint(target);
-		
-		Integer ret = null;
 		
 		if(p1[1]%2==0){
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==1)

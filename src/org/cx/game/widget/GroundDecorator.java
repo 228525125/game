@@ -1,5 +1,6 @@
 package org.cx.game.widget;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,7 +65,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		IPlayer neutral = ground.getNeutral();
 		neutral.setComputer(true);
 		neutral.setGround(this);
-		neutral.setResource(10000);
 	}
 	
 	@Override
@@ -290,18 +290,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	}
 
 	@Override
-	public Map<Integer, Integer> getNpcMap() {
-		// TODO Auto-generated method stub
-		return ground.getNpcMap();
-	}
-
-	@Override
-	public Map<Integer, IPolicyGroup> getPolicyMap() {
-		// TODO Auto-generated method stub
-		return ground.getPolicyMap();
-	}
-
-	@Override
 	public IBuilding getBuilding(Integer position) {
 		// TODO Auto-generated method stub
 		return ground.getBuilding(position);
@@ -311,5 +299,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<LifeCard> list(Integer status) {
 		// TODO Auto-generated method stub
 		return ground.list(status);
+	}
+
+	@Override
+	public List<String> getNpcData() {
+		// TODO Auto-generated method stub
+		return ground.getNpcData();
 	}
 }

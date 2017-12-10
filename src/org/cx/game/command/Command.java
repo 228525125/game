@@ -11,6 +11,7 @@ import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
+import org.cx.game.validator.ParameterTypeValidator;
 
 public class Command extends Observable implements IValidatable{
 		

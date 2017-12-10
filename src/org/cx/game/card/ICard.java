@@ -1,5 +1,7 @@
 package org.cx.game.card;
 
+import java.util.Map;
+
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -60,9 +62,9 @@ public interface ICard extends ITag
 	 * 消耗
 	 * @return
 	 */
-	public Integer getConsume();
+	public Map<String,Integer> getConsume();
 	
-	public void setConsume(Integer consume);
+	public void setConsume(Map<String,Integer> consume);
 	
 	/**
 	 * 

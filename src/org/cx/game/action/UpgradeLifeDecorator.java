@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import java.util.Map;
+
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.ProxyFactory;
 
@@ -46,15 +48,15 @@ public class UpgradeLifeDecorator extends UpgradeDecorator implements
 	}
 
 	@Override
-	public Integer getStandard() {
+	public Map<String,Integer> getRequirement() {
 		// TODO Auto-generated method stub
-		return this.upgrade.getStandard();
+		return this.upgrade.getRequirement();
 	}
 	
 	@Override
-	public void setStandard(Integer consume) {
+	public void setRequirement(Map<String,Integer> consume) {
 		// TODO Auto-generated method stub
-		this.upgrade.setStandard(consume);
+		this.upgrade.setRequirement(consume);
 	}
 	
 	@Override

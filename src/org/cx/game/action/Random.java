@@ -31,6 +31,11 @@ public class Random {
 		else
 			return false;
 	}
+	
+	public static Integer nextInt(Integer number){
+		java.util.Random r = new java.util.Random();
+		return r.nextInt(number);
+	}
 
 	public static void main(String[] args) {
 		/*for(int i=0;i<50;i++)

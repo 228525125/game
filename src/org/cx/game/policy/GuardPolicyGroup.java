@@ -2,6 +2,11 @@ package org.cx.game.policy;
 
 import java.util.List;
 
+import org.cx.game.card.LifeCard;
+import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.intercepter.Intercepter;
+import org.cx.game.widget.IPlace;
+
 /**
  * 原地驻守
  * @author chenxian
@@ -13,9 +18,32 @@ public class GuardPolicyGroup extends PolicyGroup {
 	
 	public static final Integer gpId = 10400001;
 	
+	private IIntercepter callIn = null;
+	
 	public GuardPolicyGroup() {
 		// TODO Auto-generated constructor stub
 		super(gpId);
+		
+		this.callIn = new Intercepter() {
+			
+			@Override
+			public void after(Object[] args) {
+				// TODO Auto-generated method stub
+				/*
+				 * 设置固守位置
+				 */
+				IPlace place = (IPlace)((Object[]) args[0])[0];
+				Integer position = place.getPosition();
+				setGuardPosition(position);
+			}
+			
+			@Override
+			public void finish(Object[] args) {
+				// TODO Auto-generated method stub
+				LifeCard owner = (LifeCard) getOwner();
+				owner.getCall().deleteIntercepter(callIn);
+			}
+		};
 	}
 	
 	public void setGuardPosition(Integer gp) {
@@ -38,5 +66,14 @@ public class GuardPolicyGroup extends PolicyGroup {
 	public void setPolicyList(List<IPolicy> policyList) {
 		// TODO Auto-generated method stub 反射需要
 		super.setPolicyList(policyList);
+	}
+	
+	@Override
+	public void setOwner(Object owner) {
+		// TODO Auto-generated method stub
+		super.setOwner(owner);
+		
+		LifeCard life = (LifeCard) owner;
+		life.getCall().addIntercepter(callIn);
 	}
 }

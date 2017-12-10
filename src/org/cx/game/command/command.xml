@@ -43,6 +43,10 @@
 		<type name = "option">
 			<item>option</item>
 		</type>
+		<type name = "property"> <!-- 用来应付一些需要通过命令来给对象属性赋值的情况，例如一次招募人数，就需要对招募选项的数量赋值 -->
+			<item>option.number</item>  <!-- 对象+属性名 -->
+		</type>
+		
 	</types>	
 	<commands>
 		<!-- 命令拆分例子：select ground place100001 card = select ground; select place100001; select card; -->
@@ -65,12 +69,21 @@
 		<command name='show' class='org.cx.game.command.ShowCommand' parameter='no'>
 			<description>显示</description>			
 		</command>
+		<!-- set option.number[2] 等价于 set 对象.属性[值]-->
+		<command name='set' class='org.cx.game.command.SetCommand' parameter='request'>
+			<description>设置</description>
+			<parameter>
+				<option>property</option>
+			</parameter>
+		</command>
+		<!-- 已被CallOption代替
 		<command name='call' class='org.cx.game.command.CallCommand' parameter='request'>
 			<description>招募</description>
 			<parameter>
 				<option>place</option>
 			</parameter>			
 		</command>
+		 -->
 		<command name='execute' class='org.cx.game.command.OptionExecuteCommand' parameter='request'>
 			<description>执行选项</description>
 			<parameter>

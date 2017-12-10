@@ -1,5 +1,7 @@
 package org.cx.game.action;
 
+import java.util.Map;
+
 /**
  * 升级
  * @author chenxian
@@ -11,26 +13,32 @@ public interface IUpgrade extends IAction {
 	
 	public void setLevel(Integer level);
 	
-	public static final Integer BasicStandard = 100;
+	public Integer getLevelLimit();
 	
-	public static final Integer BuildingStandard = 200;
+	public void setLevelLimit(Integer levelLimit);
 	
-	public static final Double DefaultBuildingRiseRatio = 2d;
+	public static final Integer DefaultLifeCardUpgradeRequirement = 100;
 	
-	public static final Double DefaultProductRiseRatio = 2d;
+	public static final Integer DefaultBuildingUpgradeGoldRequirement = 100;
 	
-	public static final Double DefaultLifeCardRiseRatio = 1.2;
+	public static final Integer DefaultProductUpgradeGoldRequirement = 100;
+
+	public static final Integer DefaultBuildingRiseRatio = 200;
+	
+	public static final Integer DefaultProductRiseRatio = 200;
+	
+	public static final Integer DefaultLifeCardRiseRatio = 120;
 	
 	/**
-	 * 升级需要耗费的资源数
+	 * 升级需要耗费的资源数[类型][数量]
 	 * @return
 	 */
-	public Integer getStandard();
+	public Map<String,Integer> getRequirement();
 	
-	public void setStandard(Integer standard);
+	public void setRequirement(Map<String,Integer> standard);
 	
 	/**
 	 * 更新标准
 	 */
-	public void updateStandard();
+	public void updateRequirement();
 }

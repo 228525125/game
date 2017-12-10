@@ -21,6 +21,8 @@ public class DeployState extends PlayState {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("control", curPlayer);
 		map.put("bout", context.getBout());
+		map.put("day", context.getDay());
+		map.put("week", context.getWeek());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Deploy,map);
 		super.notifyObservers(info);
 		

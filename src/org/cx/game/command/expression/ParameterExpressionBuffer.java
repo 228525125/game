@@ -149,7 +149,7 @@ public class ParameterExpressionBuffer {
 	
 	public void setBuilding(IBuilding building){
 		if(null!=building){
-			setPlace((IPlace) building.getOwner());        //因为内部建筑物不能被select，所以这里可以直接转换
+			setPlace(building.getPlace());
 			
 			bufferMap.put(CommandBuffer.BUILDING, building);
 		}

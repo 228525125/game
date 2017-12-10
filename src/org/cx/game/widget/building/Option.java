@@ -3,33 +3,35 @@ package org.cx.game.widget.building;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cx.game.action.Chuck;
-import org.cx.game.action.ChuckDecorator;
 import org.cx.game.action.Execute;
 import org.cx.game.action.ExecuteDecorator;
-import org.cx.game.action.IChuck;
 import org.cx.game.action.IExecute;
-import org.cx.game.exception.OptionValidatorException;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
+import org.cx.game.validator.OptionAllowValidator;
 import org.cx.game.validator.ParameterTypeValidator;
-import org.cx.game.widget.IGround;
 
 public abstract class Option implements IOption {
 
-	private String name = null;
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
-	
-	private IBuilding owner = null;
-	
 	private Integer spacingWait = 0;                   //间隔等待
 	private Integer executeWait = 0;                   //执行等待
 	private Process spacingProcess = null;
 	private Process executeProcess = null;
+	
+	private String name = null;
+	
+	private IBuilding owner = null;
+	
+	private Integer number = 1;                //选项参数
+	
+	public Option() {
+		// TODO Auto-generated constructor stub
+		addValidator(new OptionAllowValidator(this));
+	}
 	
 	@Override
 	public String getName() {
@@ -51,14 +53,34 @@ public abstract class Option implements IOption {
 		this.owner = building;
 	}
 	
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	
 	@Override
 	public void setSpacingWait(Integer spacingWait) {
 		// TODO Auto-generated method stub
 		this.spacingWait = spacingWait;
 	}
 	
+	@Override
+	public Integer getSpacingWait() {
+		// TODO Auto-generated method stub
+		return this.spacingWait;
+	}
+	
 	public void setExecuteWait(Integer executeWait) {
 		this.executeWait = executeWait;
+	}
+	
+	@Override
+	public Integer getExecuteWait() {
+		// TODO Auto-generated method stub
+		return this.executeWait;
 	}
 	
 	@Override
@@ -78,18 +100,27 @@ public abstract class Option implements IOption {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
 			setAllow(false);
-			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, this);
+			this.spacingProcess = new ProcessOptionSpacing(this.spacingWait, this);
 		}else
 			setAllow(true);
+	}
+	
+	/**
+	 * 在选项被执行前必须做的事，例如建造之前要扣减费用
+	 */
+	protected void beforeExecute(){
+		
 	}
 	
 	/**
 	 * 开始Execute方法进度
 	 */
 	private void firing() {
-		if(!Integer.valueOf(0).equals(this.executeWait)){
+		if(!Integer.valueOf(0).equals(getExecuteWait())){
 			setAllow(false);
-			this.executeProcess = new OptionExecuteProcess(executeWait, this);
+			this.executeProcess = new ProcessOptionExecute(getExecuteWait(), this);
+			
+			beforeExecute();
 		}else
 			setAllow(true);
 	}
@@ -103,13 +134,33 @@ public abstract class Option implements IOption {
 	public void setAllow(Boolean allow) {
 		this.allow = allow;
 	}
-
+	
+	@Override
+	public void execute(Object...objects) throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		/*
+		 * 因为Execute的参数范围太大，所以只能将参数验证交给Option的子类来完成
+		 */
+		deleteValidator(parameterValidator);
+		this.parameterValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue);
+		addValidator(parameterValidator);
+		
+		doValidator();
+		
+		if(hasError())
+			throw new RuleValidatorException(getErrors().getMessage());
+			
+		firing();
+		
+		getExecute().action(objects);
+	}
+	
 	private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
 	private String[] proertyName = null;
 	private Object[] validatorValue = null;
 
-	protected void setParameterTypeValidator(Class[] parameterType) {
+	public void setParameterTypeValidator(Class[] parameterType) {
 		this.parameterType = parameterType;
 	}
 	
@@ -119,44 +170,10 @@ public abstract class Option implements IOption {
 	 * @param proertyName 属性名称
 	 * @param validatorValue 属性值，但必须为基本类型
 	 */
-	protected void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
+	public void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
 		this.parameterType = parameterType;
 		this.proertyName = proertyName;
 		this.validatorValue = validatorValue;
-	}
-	
-	/**
-	 * 执行选项
-	 */
-	private IExecute execute = null;
-
-	public IExecute getExecute() {
-		if(null==this.execute){
-			IExecute execute = new Execute();
-			execute.setOwner(this);
-			this.execute = new ExecuteDecorator(execute);
-		}
-		return this.execute;
-	}
-	
-	@Override
-	public void execute(Object...objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub
-		deleteValidator(parameterValidator);
-		this.parameterValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue); 
-		addValidator(parameterValidator);
-		
-		/* 
-		 * 执行规则验证
-		 */
-		doValidator();
-		
-		if(hasError() && getAllow())
-			throw new RuleValidatorException(getErrors().getMessage());
-		
-		firing();
-		
-		this.execute.action(objects);
 	}
 	
 	@Override
@@ -202,6 +219,6 @@ public abstract class Option implements IOption {
 	public Boolean hasError() {
 		// TODO Auto-generated method stub
 		return errors.hasError();
-	}
+	}	
 
 }

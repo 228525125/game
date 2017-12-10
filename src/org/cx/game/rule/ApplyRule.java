@@ -1,11 +1,7 @@
 package org.cx.game.rule;
 
-import java.util.Observable;
-
-import org.cx.game.action.IActivate;
 import org.cx.game.action.IApply;
 import org.cx.game.core.IPlayer;
-import org.cx.game.observer.NotifyInfo;
 
 public class ApplyRule extends Rule implements IRule {
 
@@ -20,7 +16,11 @@ public class ApplyRule extends Rule implements IRule {
 		// TODO Auto-generated method stub
 		IApply apply = getOwner();
 		IPlayer player = apply.getOwner().getPlayer();
-		player.addToResource(-apply.getConsume());
+		
+		/*
+		 * 扣减资源
+		 */
+		player.addToResource(apply.getConsume());
 	}
 	
 	@Override

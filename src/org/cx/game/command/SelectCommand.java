@@ -22,44 +22,44 @@ public class SelectCommand extends InteriorCommand {
 		buffer.set(parameter);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", buffer.getPlayer());
+		map.put(CommandBuffer.PLAYER, buffer.getPlayer());
 		
 		if(null!=buffer.getContainer())
-			map.put("container", buffer.getContainer());
+			map.put(CommandBuffer.CONTAINER, buffer.getContainer());
 		
 		if(null!=buffer.getPlace()){
-			map.put("place", buffer.getPlace());
+			map.put(CommandBuffer.PLACE, buffer.getPlace());
 			map.put("position", buffer.getPlace().getPosition());
 		}
 		
 		if(null!=buffer.getBuilding()){
-			map.put("building", buffer.getBuilding());
+			map.put(CommandBuffer.BUILDING, buffer.getBuilding());
 		}
 		
 		if(null!=buffer.getOption()){
-			map.put("option", buffer.getOption());
+			map.put(CommandBuffer.OPTION, buffer.getOption());
 		}
 		
 		if(null!=buffer.getCemetery()){
-			map.put("cemetery", buffer.getCemetery());
+			map.put(CommandBuffer.CEMETERY, buffer.getCemetery());
 			map.put("position", buffer.getCemetery().getOwner().getPosition());
 		}
 		
 		if(null!=buffer.getTrickList()){
-			map.put("tricklist", buffer.getTrickList());
+			map.put(CommandBuffer.TRICKLIST, buffer.getTrickList());
 			map.put("position", buffer.getTrickList().getOwner().getPosition());
 		}
 		
 		if(null!=buffer.getCard()){
-			map.put("card", buffer.getCard());
+			map.put(CommandBuffer.CARD, buffer.getCard());
 			map.put("position", buffer.getCard().getContainerPosition());
 		}
 		
 		if(null!=buffer.getSkill())
-			map.put("skill", buffer.getSkill());
+			map.put(CommandBuffer.SKILL, buffer.getSkill());
 		
 		if(null!=buffer.getTrick())
-			map.put("trick", buffer.getTrick());
+			map.put(CommandBuffer.TRICK, buffer.getTrick());
 		
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Command_Select,map); 
 		super.notifyObservers(info);    

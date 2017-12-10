@@ -12,8 +12,6 @@ public class Product implements IProduct {
 	private IBuilding building = null;
 	private Integer type = 0;
 	
-	private Integer standard = IUpgrade.BasicStandard;
-	
 	public Product(Integer type) {
 		// TODO Auto-generated constructor stub
 		this.type = type;
@@ -66,13 +64,4 @@ public class Product implements IProduct {
 		// TODO Auto-generated method stub
 		this.upgrade.action();
 	}
-	
-	public Integer getStandard() {
-		return standard;
-	}
-
-	public void setStandard(Integer standard) {
-		this.standard = standard;
-	}
-
 }

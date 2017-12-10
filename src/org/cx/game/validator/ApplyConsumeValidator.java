@@ -1,5 +1,8 @@
 package org.cx.game.validator;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.cx.game.card.MagicCard;
 import org.cx.game.tools.I18n;
 
@@ -15,12 +18,22 @@ public class ApplyConsumeValidator extends Validator {
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		if(magic.getApply().getConsume()<=magic.getPlayer().getResource())
-			return true;
-		else{
-			addMessage(I18n.getMessage(this));
-			return false;
+		Boolean ret = true;
+
+		Map<String,Integer> res = magic.getPlayer().getResource();
+			
+		for(Entry<String,Integer> entry : magic.getConsume().entrySet()){
+			String resType = entry.getKey();
+			Integer resValue = res.get(resType);
+			if(resValue<entry.getValue()){
+				ret = false;
+				break;
+			}
 		}
+		
+		if(!ret)
+			addMessage(I18n.getMessage(this));
+		return ret;
 	}
 	
 }

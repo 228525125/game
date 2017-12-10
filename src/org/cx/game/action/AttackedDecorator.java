@@ -17,7 +17,7 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		super(attacked);
 		this.attacked = attacked;
 		
-		setParameterTypeValidator(new Class[]{LifeCard.class,IAttack.class}); //第二个参数可能是反击
+		//setParameterTypeValidator(new Class[]{LifeCard.class,IAttack.class}); //第二个参数可能是反击
 	}
 
 	@Override

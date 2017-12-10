@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 
@@ -18,12 +19,16 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	
 	public Integer getProcess() {
 		// TODO Auto-generated method stub
-		return getEmpiricValue()*100/getStandard();
+		return getEmpiricValue()*100/getRequirement().get(IPlayer.EmpiricValue);
 	}
 	
-	public void updateStandard(){
-		Double riseRatio = getLevel()>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, getLevel()) * 100 : 100d;
-		setStandard(getOwner().getStandard() * riseRatio.intValue() / 100);
+	public void updateRequirement(){
+		Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultLifeCardRiseRatio*getLevel() : 100;
+		for(String key : getRequirement().keySet()){
+			Integer value = getRequirement().get(key);
+			value = value * riseRatio / 100;
+			getRequirement().put(key, value);
+		}
 	}
 	
 	public void setEmpiricValue(Integer empiricValue){
@@ -44,7 +49,15 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_EmpiricValue,map);
 			super.notifyObservers(info);*/
 		}
-	}	
+	}
+	
+	@Override
+	public Map<String, Integer> getRequirement() {
+		// TODO Auto-generated method stub
+		if(super.getRequirement().isEmpty())
+			super.getRequirement().put(IPlayer.EmpiricValue, IUpgrade.DefaultLifeCardUpgradeRequirement);
+		return super.getRequirement();
+	}
 	
 	@Override
 	public LifeCard getOwner() {
@@ -55,6 +68,8 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
+		super.action(objects);
+		
 		Integer level = getLevel();
 		level += 1;
 		setLevel(level);
@@ -78,7 +93,7 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 			getOwner().getAttack().updateAtk();
 			getOwner().getAttacked().updateDef();
 			getOwner().getDeath().updateHpLimit();
-			getOwner().getCall().updateConsume();
+			//getOwner().getCall().updateConsume();
 		}
 	}
 

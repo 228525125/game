@@ -12,7 +12,7 @@ public class ConjureDecorator extends ActionDecorator implements IConjure {
 		// TODO Auto-generated constructor stub
 		this.conjure = conjure;
 		
-		setParameterTypeValidator(new Class[]{IActiveSkill.class, Object[].class});
+		//setParameterTypeValidator(new Class[]{IActiveSkill.class, Object[].class});
 	}
 	
 	@Override

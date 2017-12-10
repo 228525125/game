@@ -1,5 +1,6 @@
 package org.cx.game.policy;
 
+import java.util.List;
 import java.util.Set;
 
 import org.cx.game.card.CardFactory;
@@ -39,22 +40,26 @@ public class DisposeNPCPolicy extends Policy {
 		// TODO Auto-generated method stub
 		this.already = true;
 		
-		/*
-		 * NPC登场
-		 */
 		IGround ground = GroundFactory.getGround();
 		IPlayer neutral = ground.getNeutral();
-		Set<Integer> posSet = ground.getNpcMap().keySet();
-		for(Integer pos : posSet){
-			Integer npcId = ground.getNpcMap().get(pos);
-			LifeCard npc = (LifeCard) CardFactory.getInstance(npcId, neutral);
-			IPolicyGroup groupPolicy = ground.getPolicyMap().get(pos);
-			if(null!=groupPolicy)
-				npc.setGroupPolicy(groupPolicy);
+		List<String> npcData = ground.getNpcData();
+		
+		for(String data : npcData){
+			String [] datas = data.split(",");
+			Integer cardID = Integer.valueOf(datas[0]);
+			Integer position = Integer.valueOf(datas[1]);
+			Integer nop = Integer.valueOf(datas[2]);
+			Integer policyID = Integer.valueOf(datas[3]);
 			
-			IPlace place = ground.getPlace(pos);
+			LifeCard npc = (LifeCard) CardFactory.getInstance(cardID, neutral);
+			IPlace place = ground.getPlace(position);
+			IPolicyGroup policy = PolicyGroupFactory.getInstance(policyID);
+			
+			if(null!=policy)
+				npc.setGroupPolicy(policy);
+			
 			try {
-				npc.call(place);
+				npc.call(place, nop);
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -146,6 +146,20 @@ public class ContextDecorator implements IContext {
 		Object proxy = ProxyFactory.getProxy(this.original);     
 		((IContext)proxy).addBout();
 	}
+	
+	@Override
+	public void addDay() {
+		// TODO Auto-generated method stub
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IContext)proxy).addDay();
+	}
+	
+	@Override
+	public void addWeek() {
+		// TODO Auto-generated method stub
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IContext)proxy).addWeek();
+	}
 
 	@Override
 	public IPlayer getControlPlayer() {
@@ -186,8 +200,19 @@ public class ContextDecorator implements IContext {
 	@Override
 	public void setControlPlayer(IPlayer player) {
 		// TODO Auto-generated method stub
-		Object proxy = ProxyFactory.getProxy(this.original);     
-		((IContext)proxy).setControlPlayer(player);
+		original.setControlPlayer(player);
+	}
+
+	@Override
+	public Integer getDay() {
+		// TODO Auto-generated method stub
+		return this.original.getDay();
+	}
+
+	@Override
+	public Integer getWeek() {
+		// TODO Auto-generated method stub
+		return this.original.getWeek();
 	}
 
 }
