@@ -10,7 +10,7 @@ import org.cx.game.exception.RuleValidatorException;
  *
  */
 public interface ITreasure {
-
+	
 	public String getName();
 	
 	public IPicked getPicked();

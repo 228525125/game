@@ -33,7 +33,7 @@ public class NeedConjurerValidator extends Validator {
 			if (buffer.lastCard() instanceof LifeCard && magic.getConjurerList().contains(buffer.lastCard().getId())) {
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(NeedConjurerValidator.class.getName()));
 				ret = false;
 			}
 		}

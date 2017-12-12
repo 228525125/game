@@ -103,4 +103,16 @@ public class AttackedDecorator extends ActionDecorator implements IAttacked {
 		// TODO Auto-generated method stub
 		this.attacked.addToDef(def);
 	}
+
+	@Override
+	public Integer getArmourDef() {
+		// TODO Auto-generated method stub
+		return this.attacked.getArmourDef();
+	}
+
+	@Override
+	public void updateArmourDef() {
+		// TODO Auto-generated method stub
+		this.attacked.updateArmourDef();
+	}
 }

@@ -29,12 +29,11 @@ public class CallConsumeValidator extends Validator {
 			Integer resValue = res.get(resType);
 			if(resValue<entry.getValue()){
 				ret = false;
+				addMessage(I18n.getMessage(CallConsumeValidator.class.getName()));
 				break;
 			}
 		}	
-		
-		if(!ret)
-			addMessage(I18n.getMessage(this));
+	
 		return ret;
 	}
 }

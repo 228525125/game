@@ -22,7 +22,7 @@ public class SelectContainerValidator extends Validator {
 		if(container.equals(selectContainer))
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(SelectContainerValidator.class.getName()));
 			return false;
 		}
 	}

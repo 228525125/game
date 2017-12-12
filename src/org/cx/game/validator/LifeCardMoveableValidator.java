@@ -23,7 +23,7 @@ public class LifeCardMoveableValidator extends LifeCardActivateValidator {
 			if(getLifeCard().getMove().getMoveable()){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(LifeCardMoveableValidator.class.getName()));
 				ret = false;
 			}
 		}

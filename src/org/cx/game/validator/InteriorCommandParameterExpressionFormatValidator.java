@@ -35,43 +35,43 @@ public class InteriorCommandParameterExpressionFormatValidator extends Validator
 			
 			String type = Calculator.itemToType(item);
 			if(null==type){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}			
 			
 			if(CommandBuffer.PLACE.equals(type) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}
 			
 			if(CommandBuffer.OPTION.equals(type) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}
 			
 			if(CommandBuffer.CARD.equals(type) && previou.equals(CommandBuffer.USECARD) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}
 			
 			if(CommandBuffer.CARD.equals(type) && previou.equals(CommandBuffer.CEMETERY) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}
 			
 			if(CommandBuffer.SKILL.equals(type) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}
 			
 			if(CommandBuffer.TRICK.equals(type) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
 			}

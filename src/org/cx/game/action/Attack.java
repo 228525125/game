@@ -3,6 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.AttackLockBuff;
 import org.cx.game.exception.RuleValidatorException;
@@ -13,6 +14,8 @@ import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IWeapon;
+import org.cx.game.widget.treasure.ITreasure;
+import org.cx.game.widget.treasure.TreasureEquipment;
 
 public class Attack extends Action implements IAttack {
 	
@@ -22,6 +25,7 @@ public class Attack extends Action implements IAttack {
 	private Integer atk = 0;                          //真实攻击力
 	private Integer extraAtk = 0;                     //额外攻击力
 	private Integer landformAtk = 0;                  //地形攻击力
+	private Integer weaponAtk = 0;                    //武器攻击力
 	private Boolean counterAttack = false;            //是否是反击
 	private Boolean attackable = false;
 	
@@ -99,12 +103,31 @@ public class Attack extends Action implements IAttack {
 		Integer level = getOwner().getUpgrade().getLevel();
 		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
 		Integer atk = getOwner().getAtk() * riseRatio.intValue() / 100;
-		Integer weaponAtk = null!=getWeapon() ? this.weapon.getAtk() : 0;
+		//Integer weaponAtk = null!=getWeapon() ? this.weapon.getAtk() : 0;
+		Integer weaponAtk = getWeaponAtk();
 		Integer landformAtk = getLandformAtk();
 		Integer extraAtk = getExtraAtk();
 		this.atk = atk + weaponAtk + landformAtk + extraAtk;
 	}
-	
+
+	public Integer getWeaponAtk() {
+		return weaponAtk;
+	}
+
+	public void updateWeaponAtk() {
+		if (getOwner() instanceof HeroCard) {
+			HeroCard hero = (HeroCard) getOwner();
+			Integer atk = 0;
+			for(ITreasure treasure : hero.getTreasures()){
+				if (treasure instanceof TreasureEquipment) {
+					TreasureEquipment te = (TreasureEquipment) treasure;
+					atk += te.getAtk();
+				}
+			}
+			this.weaponAtk = atk;
+		}
+	}
+
 	public Integer getExtraAtk() {
 		// TODO Auto-generated method stub
 		return this.extraAtk;

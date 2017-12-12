@@ -33,7 +33,7 @@ public class ControlPowerValidator extends Validator {
 		else if(player.equals(context.getControlPlayer()))
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(ControlPowerValidator.class.getName()));
 			return false;
 		}
 	}

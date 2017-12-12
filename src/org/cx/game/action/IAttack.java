@@ -59,6 +59,10 @@ public interface IAttack extends IAction {
 	 */
 	public Integer getExtraAtk();
 	
+	public Integer getWeaponAtk();
+	
+	public void updateWeaponAtk();
+	
 	/**
 	 * 隐式使用，不涉及到模块以外的变更时使用；
 	 * @param atk 额外攻击力

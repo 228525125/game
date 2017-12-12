@@ -18,7 +18,7 @@ public class UpgradeObjectValidator extends Validator {
 		if(null!=buffer.getSkill()){
 			return true;
 		}else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(UpgradeObjectValidator.class.getName()));
 			return false;
 		}
 	}

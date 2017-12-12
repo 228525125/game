@@ -23,7 +23,7 @@ public class SelectPlaceEmptyValidator extends Validator {
 			if(place.getEmpty().equals(empty))
 				ret = true;
 			else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(SelectPlaceEmptyValidator.class.getName()));
 				ret = false;
 			}
 		}

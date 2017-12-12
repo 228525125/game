@@ -56,7 +56,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.USECARD.equals(item)){
 					if(null==getBuffer().getPlayer()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -68,7 +68,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.GROUND.equals(item)){
 					if(null==getBuffer().getPlayer()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -80,7 +80,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.PLACE.equals(item)){
 					if(null==getBuffer().getGround()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -92,7 +92,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.BUILDING.equals(item)){
 					if(null==getBuffer().getPlace()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -107,7 +107,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 								parameterObject = building;
 								getBuffer().setBuilding(building);
 							}else{
-								addMessage(I18n.getMessage(this));
+								addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 								ret = false;
 								break;
 							}
@@ -117,7 +117,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.OPTION.equals(item)){
 					if(null==getBuffer().getBuilding()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -130,7 +130,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.CEMETERY.equals(item)){
 					if(null==getBuffer().getPlace()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -142,7 +142,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.TRICKLIST.equals(item)){
 					if(null==getBuffer().getPlace()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -154,7 +154,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.CARD.equals(item)){
 					if(null==getBuffer().getContainer()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -173,7 +173,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						if(null!=getBuffer().getGround()){
 							IPlace place = getBuffer().getPlace();
 							if(null==place){
-								addMessage(I18n.getMessage(this));
+								addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 								ret = false;
 								break;
 							}
@@ -192,7 +192,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.SKILL.equals(item)){
 					if(!(getBuffer().getCard() instanceof LifeCard)){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
@@ -205,7 +205,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				
 				if(CommandBuffer.TRICK.equals(item)){
 					if(null==getBuffer().getTrickList()){
-						addMessage(I18n.getMessage(this));
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{

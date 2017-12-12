@@ -42,11 +42,9 @@ public class CallRangeValidator extends SelectBuildingTypeValidator {
 			if(Integer.valueOf(1).equals(ground.distance(buildingCall.getPosition(), place.getPosition())))
 				ret = true;
 			else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(CallRangeValidator.class.getName()));
 				ret = false;
 			}
-		}else{
-			addMessage(I18n.getMessage(this));
 		}
 		
 		return ret;

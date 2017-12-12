@@ -29,7 +29,7 @@ public class SelectLifeCardValidator extends SelectCardValidator {
 				life = (LifeCard) card;
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(SelectLifeCardValidator.class.getName()));
 				ret = false;
 			}
 		}

@@ -42,10 +42,10 @@ public class InteriorCommandParameterExpressionObjectTypeValidator extends
 					break;
 				}
 			}
-		}
-		
-		if(!ret){
-			addMessage(I18n.getMessage(this));
+			
+			if(!ret){
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionObjectTypeValidator.class.getName()));
+			}
 		}
 		
 		return ret;

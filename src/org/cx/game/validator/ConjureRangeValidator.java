@@ -29,7 +29,7 @@ public class ConjureRangeValidator extends Validator {
 		if(range>=step)
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(ConjureRangeValidator.class.getName()));
 			return false;
 		}
 	}

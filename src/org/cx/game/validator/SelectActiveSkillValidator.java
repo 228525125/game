@@ -24,7 +24,7 @@ public class SelectActiveSkillValidator extends SelectSkillValidator {
 			if (getSkill() instanceof IActiveSkill) {
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(SelectActiveSkillValidator.class.getName()));
 				ret = false;
 			}
 		}

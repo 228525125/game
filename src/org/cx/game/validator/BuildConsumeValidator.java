@@ -35,12 +35,11 @@ public class BuildConsumeValidator extends Validator {
 			Integer value = res.get(resType);
 			if(value<entry.getValue()){
 				ret = false;
+				addMessage(I18n.getMessage(BuildConsumeValidator.class.getName()));
 				break;
 			}
 		}
-		
-		if(!ret)
-			addMessage(I18n.getMessage(this));
+			
 		return ret;
 	}
 

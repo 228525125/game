@@ -30,7 +30,7 @@ public class OwnerValidator extends Validator {
 		if (item instanceof IPlayer) {
 			IPlayer player = (IPlayer) item;
 			if(!isOwner.equals(curPlayer.equals(player))){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(OwnerValidator.class.getName()));
 				ret = false;
 			}
 		}
@@ -38,7 +38,7 @@ public class OwnerValidator extends Validator {
 		if (item instanceof IContainer) {
 			IContainer container = (IContainer) item;
 			if(!isOwner.equals(curPlayer.equals(container.getPlayer()))){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(OwnerValidator.class.getName()));
 				ret = false;
 			}
 		}
@@ -46,7 +46,7 @@ public class OwnerValidator extends Validator {
 		if (item instanceof ICard) {
 			ICard card = (ICard) item;
 			if(!isOwner.equals(curPlayer.equals(card.getPlayer()))){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(OwnerValidator.class.getName()));
 				ret = false;
 			}
 		}

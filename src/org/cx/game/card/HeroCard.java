@@ -14,6 +14,7 @@ import org.cx.game.action.UpgradeLifeDecorator;
 import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.skill.ISkill;
+import org.cx.game.widget.treasure.ITreasure;
 
 public class HeroCard extends LifeCard {
 
@@ -71,6 +72,26 @@ public class HeroCard extends LifeCard {
 		this.upgrade = new UpgradeDecorator(upgrade);
 	}
 	
+	private List<ITreasure> treasures = new ArrayList<ITreasure>();
+	
+	public List<ITreasure> getTreasures() {
+		return treasures;
+	}
+	
+	public void addTreasure(ITreasure treasure) {
+		this.treasures.add(treasure);
+		
+		getAttack().updateWeaponAtk();
+		getAttacked().updateArmourDef();
+	}
+	
+	public void removeTreasure(ITreasure treasure) {
+		this.treasures.remove(treasure);
+		
+		getAttack().updateWeaponAtk();
+		getAttacked().updateArmourDef();
+	}
+
 	@Override
 	public void setAtk(Integer atk) {
 		// TODO Auto-generated method stub

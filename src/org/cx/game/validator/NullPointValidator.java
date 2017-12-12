@@ -25,7 +25,7 @@ public class NullPointValidator extends Validator {
 		if(null!=container.getCard(position)){
 			return true;
 		}else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(NullPointValidator.class.getName()));
 			return false;
 		}
 	}

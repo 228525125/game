@@ -25,7 +25,7 @@ public class CallUnitEqualValidator extends Validator {
 		if(unit.getId().equals(call.getId()))
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(CallUnitEqualValidator.class.getName()));
 			return false;
 		}
 	}

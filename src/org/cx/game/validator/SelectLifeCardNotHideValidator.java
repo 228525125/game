@@ -24,7 +24,7 @@ public class SelectLifeCardNotHideValidator extends Validator {
 		Boolean ret = super.validate(); 
 		if(ret){
 			if(this.attacked.getMove().getHide()){
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(SelectLifeCardNotHideValidator.class.getName()));
 				ret = false;
 			}else{
 				ret = true;

@@ -23,7 +23,7 @@ public class AttackableValidator extends SelectLifeCardValidator {
 			if(getLifeCard().getAttack().getAttackable()){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(AttackableValidator.class.getName()));
 				ret = false;
 			}
 		}

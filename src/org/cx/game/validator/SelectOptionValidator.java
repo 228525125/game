@@ -21,7 +21,7 @@ public class SelectOptionValidator extends Validator {
 			this.option = buffer.getOption();
 			return true;
 		}else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(SelectOptionValidator.class.getName()));
 			return false;
 		}
 	}

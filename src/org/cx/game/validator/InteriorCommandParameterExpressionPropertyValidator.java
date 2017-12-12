@@ -30,13 +30,13 @@ public class InteriorCommandParameterExpressionPropertyValidator extends
 		Boolean ret = false;
 		
 		if(-1==parameter.indexOf("[") || -1==parameter.indexOf("]")){
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(InteriorCommandParameterExpressionPropertyValidator.class.getName()));
 			return false;
 		}
 		
 		String value = parameter.substring(parameter.indexOf("[")+1, parameter.indexOf("]"));
 		if("".equals(value)){
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(InteriorCommandParameterExpressionPropertyValidator.class.getName()));
 			return false;
 		}
 		
@@ -45,7 +45,7 @@ public class InteriorCommandParameterExpressionPropertyValidator extends
 		String type = Calculator.itemToType(property);
 		
 		if(null==type){
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(InteriorCommandParameterExpressionPropertyValidator.class.getName()));
 			return false;
 		}
 		
@@ -60,7 +60,7 @@ public class InteriorCommandParameterExpressionPropertyValidator extends
 		}
 		
 		if(!ret)
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(InteriorCommandParameterExpressionPropertyValidator.class.getName()));
 		
 		return ret;
 	}

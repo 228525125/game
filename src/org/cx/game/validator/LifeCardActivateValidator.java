@@ -23,7 +23,7 @@ public class LifeCardActivateValidator extends SelectLifeCardValidator {
 			if(getLifeCard().getActivate().getActivation()){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(LifeCardActivateValidator.class.getName()));
 				ret = false;
 			}
 		}

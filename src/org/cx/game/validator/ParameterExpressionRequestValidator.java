@@ -27,7 +27,7 @@ public class ParameterExpressionRequestValidator extends CommandExpressionAction
 			Element el = getCommand();
 			if(null!=el.attribute("parameter") && "request".equals(el.attribute("parameter").getText())){
 				if(2>cmd.split(Calculator.SPACE).length){
-					addMessage(I18n.getMessage(this));
+					addMessage(I18n.getMessage(ParameterExpressionRequestValidator.class.getName()));
 					ret = false;
 				}
 			}

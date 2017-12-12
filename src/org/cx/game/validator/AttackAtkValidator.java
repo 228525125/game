@@ -23,7 +23,7 @@ public class AttackAtkValidator extends SelectLifeCardValidator {
 			if(0<getLifeCard().getAttack().getAtk()){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(AttackAtkValidator.class.getName()));
 				ret = false;
 			}
 		}

@@ -57,7 +57,7 @@ public class ParameterTypeValidator extends Validator {
 							if(this.propertyValueList.contains(pValue)){
 								;
 							}else{
-								addMessage(I18n.getMessage(this));
+								addMessage(I18n.getMessage(ParameterTypeValidator.class.getName()));
 								ret = false;
 								break;
 							}
@@ -79,13 +79,13 @@ public class ParameterTypeValidator extends Validator {
 						}
 					}
 				}else{
-					addMessage(I18n.getMessage(this));
+					addMessage(I18n.getMessage(ParameterTypeValidator.class.getName()));
 					ret = false;
 					break;
 				}
 			}
 		}else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(ParameterTypeValidator.class.getName()));
 			ret = false;
 		}
 		

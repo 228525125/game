@@ -8,7 +8,9 @@ import org.cx.game.validator.LifeCardMoveableValidator;
 import org.cx.game.validator.MoveEnergyValidator;
 import org.cx.game.validator.MoveTauntValidator;
 import org.cx.game.validator.PickRangeValidator;
+import org.cx.game.validator.PickTreasureEquipmentValidator;
 import org.cx.game.validator.SelectContainerValidator;
+import org.cx.game.validator.SelectLifeCardValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
 import org.cx.game.validator.SelectPlaceExistTreasureValidator;
 import org.cx.game.widget.IPlace;
@@ -20,6 +22,7 @@ public class PickCommand extends InteriorCommand {
 		super(player);
 		// TODO Auto-generated constructor stub
 		addValidator(new SelectContainerValidator(player.getGround(),buffer));
+		addValidator(new SelectLifeCardValidator(buffer));
 		addValidator(new AttackableValidator(buffer));
 		addValidator(new MoveEnergyValidator(buffer));
 		addValidator(new MoveTauntValidator(buffer));
@@ -30,6 +33,7 @@ public class PickCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
 		addValidator(new SelectPlaceExistTreasureValidator((IPlace) parameter));
+		addValidator(new PickTreasureEquipmentValidator((LifeCard) buffer.getCard(), (IPlace) parameter));
 		addValidator(new PickRangeValidator((LifeCard) buffer.getCard(), (IPlace) parameter));
 	}
 	

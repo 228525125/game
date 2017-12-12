@@ -26,7 +26,7 @@ public class SelectCardValidator extends Validator {
 		if(null!= card)
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(SelectCardValidator.class.getName()));
 			return false;
 		}
 	}

@@ -25,7 +25,7 @@ public class SelectTrickCardValidator extends SelectCardValidator {
 				trick = (TrickCard) card;
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(SelectTrickCardValidator.class.getName()));
 				ret = false;
 			}
 		}

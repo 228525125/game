@@ -37,7 +37,7 @@ public class UpgradeConsumeValidator extends Validator {
 		}	
 		
 		if(!ret)
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(UpgradeConsumeValidator.class.getName()));
 		return ret;
 	}
 }

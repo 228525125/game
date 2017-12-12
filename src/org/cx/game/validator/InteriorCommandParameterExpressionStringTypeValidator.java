@@ -30,7 +30,7 @@ public class InteriorCommandParameterExpressionStringTypeValidator extends Valid
 		String type = Calculator.itemToType(parameter);
 		
 		if(null==type){
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(InteriorCommandParameterExpressionStringTypeValidator.class.getName()));
 			return false;
 		}
 		
@@ -42,6 +42,10 @@ public class InteriorCommandParameterExpressionStringTypeValidator extends Valid
 				ret = true;
 				break;
 			}
+		}
+		
+		if(!ret){
+			addMessage(I18n.getMessage(InteriorCommandParameterExpressionStringTypeValidator.class.getName()));
 		}
 		
 		return ret;

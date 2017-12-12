@@ -25,7 +25,7 @@ public class SelectMagicCardValidator extends SelectCardValidator {
 				magic = (MagicCard) card;
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(SelectMagicCardValidator.class.getName()));
 				ret = false;
 			}
 		}

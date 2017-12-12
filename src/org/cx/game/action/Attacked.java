@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
@@ -11,6 +12,8 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.AttackRule;
 import org.cx.game.rule.AttackedRule;
 import org.cx.game.rule.IRule;
+import org.cx.game.widget.treasure.ITreasure;
+import org.cx.game.widget.treasure.TreasureEquipment;
 
 /**
  * 受到攻击
@@ -21,7 +24,8 @@ public class Attacked extends Action implements IAttacked {
 
 	private Boolean fightBack = false;
 	private Integer armour = 0;
-	private Integer def = 0;         //防御力
+	private Integer def = 0;         //真实防御力
+	private Integer armourDef = 0;   //装备防御力
 	private Integer extraDef = 0;    //额外防御力
 	private Integer landformDef = 0; //地形防御力
 	
@@ -61,6 +65,28 @@ public class Attacked extends Action implements IAttacked {
 		}
 	}
 	
+	@Override
+	public Integer getArmourDef() {
+		// TODO Auto-generated method stub
+		return this.armourDef;
+	}
+	
+	@Override
+	public void updateArmourDef() {
+		// TODO Auto-generated method stub
+		if (getOwner() instanceof HeroCard) {
+			HeroCard hero = (HeroCard) getOwner();
+			Integer def = 0;
+			for(ITreasure treasure : hero.getTreasures()){
+				if (treasure instanceof TreasureEquipment) {
+					TreasureEquipment te = (TreasureEquipment) treasure;
+					def += te.getDef();
+				}
+			}
+			this.armourDef = def;
+		}
+	}
+	
 	public Integer getLandformDef() {
 		return landformDef;
 	}
@@ -81,9 +107,10 @@ public class Attacked extends Action implements IAttacked {
 		Integer level = getOwner().getUpgrade().getLevel();
 		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
 		Integer def = getOwner().getDef() * riseRatio.intValue() / 100;
+		Integer armourDef = getArmourDef();
 		Integer landformDef = getLandformDef();
 		Integer extraDef = getExtraDef();
-		this.def = def + landformDef + extraDef;
+		this.def = def + armourDef + landformDef + extraDef;
 	}
 
 	@Override

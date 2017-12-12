@@ -22,7 +22,7 @@ public class MoveEnergyValidator extends SelectLifeCardValidator {
 		if(ret){
 			if(getLifeCard().getMove().getEnergy()<1){
 				ret = false;
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(MoveEnergyValidator.class.getName()));
 			}
 		}
 		

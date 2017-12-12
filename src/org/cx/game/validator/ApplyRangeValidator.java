@@ -27,7 +27,7 @@ public class ApplyRangeValidator extends Validator {
 		if(range.contains(destPos))
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(ApplyRangeValidator.class.getName()));
 			return false;
 		}
 	}

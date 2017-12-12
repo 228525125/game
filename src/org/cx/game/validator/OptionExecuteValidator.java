@@ -21,7 +21,7 @@ public class OptionExecuteValidator extends SelectOptionValidator {
 			if(Integer.valueOf(0).equals(option.getExecuteRemainBout())){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(OptionExecuteValidator.class.getName()));
 				ret = false;
 			}
 		}

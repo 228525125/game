@@ -198,4 +198,16 @@ public class AttackDecorator extends ActionDecorator implements IAttack {
 		// TODO Auto-generated method stub
 		attack.setDmg(dmg);
 	}
+
+	@Override
+	public Integer getWeaponAtk() {
+		// TODO Auto-generated method stub
+		return attack.getWeaponAtk();
+	}
+
+	@Override
+	public void updateWeaponAtk() {
+		// TODO Auto-generated method stub
+		attack.updateWeaponAtk();
+	}
 }

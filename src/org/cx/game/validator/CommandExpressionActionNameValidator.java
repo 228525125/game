@@ -38,7 +38,7 @@ public class CommandExpressionActionNameValidator extends Validator {
 		}
 		
 		if(!ret){
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(CommandExpressionActionNameValidator.class.getName()));
 		}
 		
 		return ret;

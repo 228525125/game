@@ -43,6 +43,14 @@ public interface IAttacked extends IAction {
 	public void setLandformDef(Integer landformDef);
 	
 	/**
+	 * 装备防御力
+	 * @return
+	 */
+	public Integer getArmourDef();
+	
+	public void updateArmourDef();
+	
+	/**
 	 * 额外防御力
 	 * @return
 	 */

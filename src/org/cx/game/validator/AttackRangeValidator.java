@@ -31,7 +31,7 @@ public class AttackRangeValidator extends Validator {
 		if(ps.contains(attacked.getContainerPosition())){
 			return true;
 		}else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(AttackRangeValidator.class.getName()));
 			return false;
 		}
 	}

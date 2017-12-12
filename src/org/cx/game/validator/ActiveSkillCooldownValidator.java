@@ -26,7 +26,7 @@ public class ActiveSkillCooldownValidator extends SelectActiveSkillValidator {
 			if(Integer.valueOf(0).equals(as.getCooldownRemain())){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(this));
+				addMessage(I18n.getMessage(ActiveSkillCooldownValidator.class.getName()));
 				ret = false;
 			}
 		}

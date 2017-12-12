@@ -24,7 +24,7 @@ public class SelectSkillValidator extends Validator {
 		// TODO Auto-generated method stub
 		skill = buffer.getSkill(); 
 		if(null==skill){
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(SelectSkillValidator.class.getName()));
 			return false;
 		}else{
 			return true;

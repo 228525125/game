@@ -28,7 +28,7 @@ public class SelectBuildingTypeValidator extends Validator {
 		if(buildingTypes.contains(building.getType()))
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(SelectBuildingTypeValidator.class.getName()));
 			return false;
 		}
 	}

@@ -30,10 +30,9 @@ public class PickRangeValidator extends Validator {
 		Integer distance = ground.distance(this.life.getContainerPosition(), this.place.getPosition());
 		if(IPick.Pick_Range_Defautl<distance){
 			ret = false;
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(PickRangeValidator.class.getName()));
 		}
-		
-		
+	
 		return ret;
 	}
 }

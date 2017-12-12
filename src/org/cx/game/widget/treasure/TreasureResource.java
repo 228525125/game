@@ -58,10 +58,6 @@ public class TreasureResource extends Treasure implements ITreasure {
 			
 			LifeCard life = (LifeCard) objects[0];
 			life.getPlayer().addToResource(getResource());
-			
-			IGround ground = life.getPlayer().getGround();
-			IPlace place = ground.getPlace(getOwner().getPosition());
-			place.setTreasure(null);
 		}
 	}
 }

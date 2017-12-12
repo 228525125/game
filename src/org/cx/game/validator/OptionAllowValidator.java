@@ -23,7 +23,7 @@ public class OptionAllowValidator extends Validator {
 		Boolean ret = this.option.getAllow();
 		
 		if(!ret)
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(OptionAllowValidator.class.getName()));
 		
 		return ret;
 	}

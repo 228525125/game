@@ -28,7 +28,7 @@ public class MoveRangeValidator extends Validator {
 		if(range>=step)
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(MoveRangeValidator.class.getName()));
 			return false;
 		}
 	}

@@ -23,7 +23,7 @@ public class RationLimitValidator extends Validator {
 		if(ration>=life.getRation()*this.nop)
 			return true;
 		else{
-			addMessage(I18n.getMessage(this));
+			addMessage(I18n.getMessage(RationLimitValidator.class.getName()));
 			return false;
 		}
 	}
