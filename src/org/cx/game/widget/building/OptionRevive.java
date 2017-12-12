@@ -88,7 +88,7 @@ public class OptionRevive extends Option implements IOption {
 		}	
 	}
 	
-	public class OptionReviveExecute extends Execute {
+	public class OptionReviveExecute extends Execute implements IExecute {
 		
 		private LifeCard hero = null;
 

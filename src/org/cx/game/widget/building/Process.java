@@ -34,7 +34,7 @@ public abstract class Process implements IIntercepter, IRecover {
 		this.waitBout = waitBout;
 		this.owner = owner;
 		
-		IPlayer player = owner.getOwner().getOwner().getPlayer();
+		IPlayer player = owner.getOwner().getPlayer();
 		this.beginBout = player.getBout();
 		this.curBout = player.getBout();
 		
@@ -60,7 +60,7 @@ public abstract class Process implements IIntercepter, IRecover {
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		this.curBout = getOwner().getOwner().getOwner().getPlayer().getBout();
+		this.curBout = getOwner().getOwner().getPlayer().getBout();
 	}
 	
 	public IOption getOwner(){

@@ -35,7 +35,7 @@ public class QueryCommandValidator extends Validator {
 				addMessage(I18n.getMessage(this));
 		}
 		
-		if("attack".equals(action) || "move".equals(action)){
+		if("attack".equals(action) || "move".equals(action) || "pick".equals(action)){
 			if(card instanceof LifeCard && card.getContainer() instanceof IGround)
 				return true;
 			else

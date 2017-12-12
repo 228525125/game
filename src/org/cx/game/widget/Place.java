@@ -19,6 +19,7 @@ import org.cx.game.rule.CallRule;
 import org.cx.game.rule.PlaceRule;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.treasure.ITreasure;
 
 public class Place extends Observable implements IPlace {
 
@@ -32,6 +33,7 @@ public class Place extends Observable implements IPlace {
 	private Boolean disable = false;
 	private Boolean empty = true;
 	private Integer landform = IPlace.Landform_Sward;
+	private ITreasure treasure = null;
 	
 	public Place(IGround ground,Integer position) {
 		// TODO Auto-generated constructor stub
@@ -195,5 +197,19 @@ public class Place extends Observable implements IPlace {
 	public void setBuilding(IBuilding building) {
 		// TODO Auto-generated method stub
 		this.building = building;
+	}
+	
+	@Override
+	public ITreasure getTreasure() {
+		// TODO Auto-generated method stub
+		return this.treasure;
+	}
+	
+	@Override
+	public void setTreasure(ITreasure treasure) {
+		// TODO Auto-generated method stub
+		if(null!=treasure)
+			treasure.setPosition(position);
+		this.treasure = treasure;
 	}
 }

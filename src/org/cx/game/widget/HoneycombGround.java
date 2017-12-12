@@ -37,6 +37,7 @@ import org.cx.game.tools.Util;
 import org.cx.game.widget.building.BuildingFactory;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.treasure.ITreasure;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -65,6 +66,8 @@ public class HoneycombGround extends Container implements IGround {
 	private Map<Integer, IPolicyGroup> policyMap = new HashMap<Integer, IPolicyGroup>();
 	private List<String> npcData = new ArrayList<String>();
 	private IPlayer neutral = null;
+	
+	private Map<Integer, ITreasure> treasureMap = new HashMap<Integer, ITreasure>();
 	
 	public HoneycombGround(Integer xBorder, Integer yBorder, String imagePath) {
 		// TODO Auto-generated constructor stub
@@ -225,6 +228,14 @@ public class HoneycombGround extends Container implements IGround {
 	public Map<Integer, Integer> getLandformMap() {
 		// TODO Auto-generated method stub
 		return this.landformMap;
+	}
+	
+	public Map<Integer, ITreasure> getTreasureMap() {
+		return treasureMap;
+	}
+	
+	public void setTreasureMap(Map<Integer, ITreasure> treasureMap) {
+		this.treasureMap = treasureMap;
 	}
 
 	@Override
@@ -433,6 +444,11 @@ public class HoneycombGround extends Container implements IGround {
 			place.out();
 			place = getPlace(pointToInteger(node._Pos.x, node._Pos.y));
 			place.in(life);
+			
+			/*
+			 * 减少精力
+			 */
+			life.getMove().addToEnergy(-node.consume);
 		}
 		
 		return route;

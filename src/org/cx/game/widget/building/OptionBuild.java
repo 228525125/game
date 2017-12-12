@@ -61,7 +61,29 @@ public class OptionBuild extends Option {
 	@Override
 	public Boolean getAllow() {
 		// TODO Auto-generated method stub
-		return super.getAllow() && IBuilding.Building_Status_Nothingness.equals(getOwner().getStatus());
+		Boolean ret = true;
+		
+		/*
+		 * 判断基础建筑物是否建造
+		 */
+		if(getOwner().getOwner() instanceof BuildingTown && !getOwner().getNeedBuilding().isEmpty()){
+			BuildingTown town = (BuildingTown) getOwner().getOwner();
+			List<IBuilding> buildings = town.getBuildings();
+			List<Integer> list = new ArrayList<Integer>();
+			for(IBuilding building : buildings){
+				if(IBuilding.Building_Status_Complete.equals(building.getStatus()))
+					list.add(building.getType());
+			}
+			
+			for(Integer type : getOwner().getNeedBuilding()){
+				if(!list.contains(type)){
+					ret = false;
+					break;
+				}
+			}
+		}
+			
+		return ret && IBuilding.Building_Status_Nothingness.equals(getOwner().getStatus());
 	}
 	
 	@Override

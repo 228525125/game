@@ -36,6 +36,7 @@
 			<item>swap</item>
 			<item>apply</item>
 			<item>execute</item>
+			<item>pick</item>
 		</type>
 		<type name = "building">
 			<item>building</item>
@@ -92,6 +93,12 @@
 		</command>
 		<command name='move' class='org.cx.game.command.MoveCommand' parameter='request'>
 			<description>移动</description>
+			<parameter>
+				<option>place</option>
+			</parameter>
+		</command>
+		<command name='pick' class='org.cx.game.command.PickCommand' parameter='request'>
+			<description>拾取</description>
 			<parameter>
 				<option>place</option>
 			</parameter>

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.cx.game.card.CardFactory;
 import org.cx.game.card.ICard;
@@ -15,6 +16,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.treasure.ITreasure;
 
 public class GroundDecorator extends ContainerDecorator implements IGround {
 	
@@ -50,6 +52,16 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 			for(IOption option : building.getOptions()){
 				option.setOwner(building);
 			}
+		}
+		
+		/*
+		 * 放置物品
+		 */
+		for(Entry<Integer, ITreasure> entry : getTreasureMap().entrySet()){
+			Integer position = entry.getKey();
+			IPlace place = getPlace(position);
+			ITreasure treasure = entry.getValue();
+			place.setTreasure(treasure);
 		}
 		
 		/*
@@ -305,5 +317,11 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 	public List<String> getNpcData() {
 		// TODO Auto-generated method stub
 		return ground.getNpcData();
+	}
+
+	@Override
+	public Map<Integer, ITreasure> getTreasureMap() {
+		// TODO Auto-generated method stub
+		return ground.getTreasureMap();
 	}
 }

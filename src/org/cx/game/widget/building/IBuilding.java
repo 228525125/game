@@ -12,8 +12,6 @@ import org.cx.game.widget.IPlace;
 public interface IBuilding {
 
 	public String getName();
-
-	public IPlace getPlace();
 	
 	/**
 	 * 父建筑，例如 城堡；
@@ -69,19 +67,21 @@ public interface IBuilding {
 	
 	/**
 	 * 建造周期
-	 * @param bout 回合
+	 * @return
 	 */
-	public void setBuildWait(Integer bout);
-	
 	public Integer getBuildWait();
+	
+	/**
+	 * 前置建筑物
+	 * @return
+	 */
+	public List<Integer> getNeedBuilding();
 	
 	/**
 	 * 建筑物等级上限
 	 * @return
 	 */
 	public Integer getLevelLimit();
-	
-	public void setLevelLimit(Integer levelLimit);
 	
 	/**
 	 * 坐标

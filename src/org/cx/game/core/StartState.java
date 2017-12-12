@@ -23,6 +23,7 @@ import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.building.OptionRevive;
+import org.cx.game.widget.treasure.ITreasure;
 
 public class StartState extends PlayState {
 	
@@ -66,8 +67,13 @@ public class StartState extends PlayState {
 		for(Integer i : landformMap.keySet())
 			landform.put(i.toString(), landformMap.get(i));
 		
+		Map<String, ITreasure> treasureMap = new HashMap<String, ITreasure>();
+		for(Integer i : ground.getTreasureMap().keySet())
+			treasureMap.put(i.toString(), ground.getTreasureMap().get(i));
+		
 		map.put("landform", landform);
 		map.put("buildingList", ground.getBuildingList());
+		map.put("treasure", treasureMap);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Start,map);
 		super.notifyObservers(info);
 		

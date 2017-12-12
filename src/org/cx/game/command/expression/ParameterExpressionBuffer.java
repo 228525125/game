@@ -149,7 +149,8 @@ public class ParameterExpressionBuffer {
 	
 	public void setBuilding(IBuilding building){
 		if(null!=building){
-			setPlace(building.getPlace());
+			IGround ground = getPlayer().getGround();
+			setPlace(ground.getPlace(building.getPosition()));
 			
 			bufferMap.put(CommandBuffer.BUILDING, building);
 		}

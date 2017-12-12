@@ -14,8 +14,11 @@ import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.validator.LifeCardActivateValidator;
+import org.cx.game.validator.LifeCardMoveableValidator;
+import org.cx.game.validator.MoveTauntValidator;
 import org.cx.game.validator.NeedConjurerValidator;
 import org.cx.game.validator.QueryCommandValidator;
+import org.cx.game.validator.SelectContainerValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
 import org.cx.game.validator.SelectMagicCardValidator;
 import org.cx.game.widget.IGround;
@@ -35,6 +38,7 @@ public class QueryCommand extends InteriorCommand {
 		map.put("swap", NotifyInfo.Command_Query_Swap);
 		map.put("apply", NotifyInfo.Command_Query_Apply);
 		map.put("execute", NotifyInfo.Command_Query_Execute);
+		map.put("pick", NotifyInfo.Command_Query_Pick);
 	}
 	
 	private List<Integer> positionList = new ArrayList<Integer>();
@@ -49,13 +53,20 @@ public class QueryCommand extends InteriorCommand {
 		
 		if("conjure".equals(parameter)){
 			positionList = ground.queryRange(buffer.getSkill(), map.get(parameter));
-		}else if("attack".equals(parameter) || "move".equals(parameter)){
+		}else if("attack".equals(parameter)){
 			doValidator(new SelectLifeCardValidator(buffer));
 			if(hasError())
 				throw new CommandValidatorException(getErrors().getMessage());
 			
 			LifeCard life = (LifeCard) buffer.getCard();           
 			positionList = ground.queryRange(life, map.get(parameter));   //这里需要计算
+		}else if("move".equals(parameter)){
+			doValidator(new SelectLifeCardValidator(buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
+			LifeCard life = (LifeCard) buffer.getCard();           
+			positionList = ground.queryRange(life, map.get(parameter));
 		}else if("execute".equals(parameter)){
 			IOption option = buffer.getOption();
 			positionList = ground.queryRange(option, map.get(parameter));
@@ -66,6 +77,13 @@ public class QueryCommand extends InteriorCommand {
 			
 			MagicCard magic = (MagicCard) buffer.getCard();
 			positionList = ground.queryRange(magic, map.get(parameter));
+		}else if("pick".equals(parameter)){
+			doValidator(new SelectLifeCardValidator(buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
+			LifeCard life = (LifeCard) buffer.getCard();
+			positionList = ground.areaForDistance(life.getContainerPosition(), 1, IGround.Contain);
 		}
 	
 		Map<String,Object> bean = new HashMap<String,Object>();

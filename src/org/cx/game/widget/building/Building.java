@@ -35,6 +35,8 @@ public class Building implements IBuilding, IRecover {
 	
 	private Integer status = IBuilding.Building_Status_Nothingness;
 	
+	private List<Integer> needBuilding = new ArrayList<Integer>();
+	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
 	public Building(Integer buildingType) {
@@ -67,7 +69,6 @@ public class Building implements IBuilding, IRecover {
 		this.status = status;
 	}
 	
-	@Override
 	public void setBuildWait(Integer bout) {
 		// TODO Auto-generated method stub
 		this.buildWait = bout;
@@ -85,7 +86,6 @@ public class Building implements IBuilding, IRecover {
 		return this.levelLimit;
 	}
 	
-	@Override
 	public void setLevelLimit(Integer levelLimit) {
 		// TODO Auto-generated method stub
 		this.levelLimit = levelLimit;
@@ -105,6 +105,14 @@ public class Building implements IBuilding, IRecover {
 		return false;
 	}
 
+	public List<Integer> getNeedBuilding() {
+		return needBuilding;
+	}
+
+	public void setNeedBuilding(List<Integer> needBuilding) {
+		this.needBuilding = needBuilding;
+	}
+
 	public Integer getPosition() {
 		// TODO Auto-generated method stub
 		return position;
@@ -114,16 +122,6 @@ public class Building implements IBuilding, IRecover {
 	public void setPosition(Integer position) {
 		// TODO Auto-generated method stub
 		this.position = position;
-	}
-	
-	@Override
-	public IPlace getPlace() {
-		// TODO Auto-generated method stub
-		if(null==place){
-			IGround ground = getPlayer().getGround();
-			place = ground.getPlace(getPosition());
-		}
-		return place;
 	}
 
 	@Override

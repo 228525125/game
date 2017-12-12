@@ -80,7 +80,10 @@ public class Move extends Action implements IMove{
 		// TODO Auto-generated method stub
 		if(!Integer.valueOf(0).equals(energy)){
 			this.energy += energy;
-			this.energy = this.energy < 1 ? 1 : this.energy;
+			this.energy = this.energy < 0 ? 0 : this.energy;
+			
+			if(Integer.valueOf(0).equals(this.energy))
+				setMoveable(false);
 			
 			/*Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());

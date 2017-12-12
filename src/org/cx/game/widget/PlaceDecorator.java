@@ -9,6 +9,7 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.treasure.ITreasure;
 
 public class PlaceDecorator implements IPlace {
 
@@ -183,6 +184,18 @@ public class PlaceDecorator implements IPlace {
 	public void setEmpty(Boolean empty) {
 		// TODO Auto-generated method stub
 		original.setEmpty(empty);
+	}
+
+	@Override
+	public void setTreasure(ITreasure treasure) {
+		// TODO Auto-generated method stub
+		original.setTreasure(treasure);
+	}
+
+	@Override
+	public ITreasure getTreasure() {
+		// TODO Auto-generated method stub
+		return original.getTreasure();
 	}
 
 }

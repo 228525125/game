@@ -50,6 +50,8 @@ public class NotifyInfo {
 	public final static String Card_LifeCard_Action_Dodge = "Card_LifeCard_Action_Dodge";
 	public final static String Card_LifeCard_Action_Chuck = "Card_LifeCard_Action_Chuck";
 	public final static String Card_LifeCard_Action_Move = "Card_LifeCard_Action_Move";
+	public final static String Card_LifeCard_Action_Pick = "Card_LifeCard_Action_Pick";
+	public final static String Treasure_Action_Picked = "Treasure_Action_Picked";
 	
 	public final static String Card_LifeCard_State_Hide = "Card_LifeCard_State_Hide";
 	public final static String Card_LifeCard_State_Hp = "Card_LifeCard_State_Hp";
@@ -98,6 +100,7 @@ public class NotifyInfo {
 	public final static String Command_Query_Swap = "Command_Query_Swap";
 	public final static String Command_Query_Apply = "Command_Query_Apply";
 	public final static String Command_Query_Execute = "Command_Query_Execute";
+	public final static String Command_Query_Pick = "Command_Query_Pick";
 	public final static String Command_Reload = "Command_Reload";
 	
 	public final static String Context_Control = "Context_Control";

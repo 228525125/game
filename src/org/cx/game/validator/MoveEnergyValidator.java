@@ -4,13 +4,13 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.tools.I18n;
 
 /**
- * 验证是否可以行动
+ * 验证精力还有剩余
  * @author chenxian
  *
  */
-public class AttackableValidator extends SelectLifeCardValidator {
+public class MoveEnergyValidator extends SelectLifeCardValidator {
 
-	public AttackableValidator(CommandBuffer buffer) {
+	public MoveEnergyValidator(CommandBuffer buffer) {
 		super(buffer);
 		// TODO Auto-generated constructor stub
 	}
@@ -20,11 +20,9 @@ public class AttackableValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(getLifeCard().getAttack().getAttackable()){
-				ret = true;
-			}else{
-				addMessage(I18n.getMessage(this));
+			if(getLifeCard().getMove().getEnergy()<1){
 				ret = false;
+				addMessage(I18n.getMessage(this));
 			}
 		}
 		

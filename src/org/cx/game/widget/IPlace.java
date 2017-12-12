@@ -8,6 +8,7 @@ import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.treasure.ITreasure;
 
 /**
  * 战场位置
@@ -22,7 +23,7 @@ public interface IPlace extends IInterceptable, Observable{
 	
 	public LifeCard out();
 	
-	public LifeCard getLife();	
+	public LifeCard getLife();
 	
 	public ICemetery getCemetery();
 	
@@ -103,4 +104,12 @@ public interface IPlace extends IInterceptable, Observable{
 	public Integer getLandform();
 	
 	public void setLandform(Integer langform);
+	
+	/**
+	 * 放置物品
+	 */
+	public void setTreasure(ITreasure treasure);
+	
+	public ITreasure getTreasure();
+	
 }

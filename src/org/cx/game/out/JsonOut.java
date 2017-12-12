@@ -44,7 +44,7 @@ public class JsonOut extends Response implements Observer {
 			"attendantList","context","ground","heroList",              //Player
 			"near",                  //Place
 			"index",                 //ControlQueue.Place
-			"strongHoldList","randomEntry","landformMap","emptyList","disableList","npcMap","policyMap",        //Ground
+			"strongHoldList","randomEntry","landformMap","emptyList","disableList","npcMap","policyMap","treasureMap",        //Ground
 			"appendCardList","hashCode","containerPosition","useCardPolicy",        //LifeCard
 			"affectedList",                  //Skill
 			"movePath",                       //Move
@@ -57,7 +57,7 @@ public class JsonOut extends Response implements Observer {
 			"policy",                                           //PolicyGroup
 			"messageSource",                                    //RuleGroup
 			"ruleParam",                                        //用于传递一些参数给rule，与前台无关
-			"place",                                            //Building
+			//,                                            //Building
 			"owner","instance","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
 		});
 		return JSONObject.fromObject(resp,config);

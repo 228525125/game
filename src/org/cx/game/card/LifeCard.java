@@ -29,10 +29,13 @@ import org.cx.game.action.ICall;
 import org.cx.game.action.IChuck;
 import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
+import org.cx.game.action.IPick;
 import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IMove;
 import org.cx.game.action.IRenew;
 import org.cx.game.action.IUpgrade;
+import org.cx.game.action.Pick;
+import org.cx.game.action.PickDecorator;
 import org.cx.game.action.UpgradeLifeDecorator;
 import org.cx.game.action.Move;
 import org.cx.game.action.MoveDecorator;
@@ -60,6 +63,7 @@ import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.treasure.ITreasure;
 
 /**
  * 所有生物卡的父类，
@@ -989,6 +993,22 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		this.upgrade = new UpgradeDecorator(upgrade);
 	}
 	
+	private IPick pick = null;
+	
+	public IPick getPick() {
+		if(null==pick){
+			IPick pick = new Pick();
+			pick.setOwner(this);
+			this.pick = new PickDecorator(pick);
+		}
+		return this.pick;
+	}
+	
+	public void setPick(IPick pick) {
+		pick.setOwner(this);
+		this.pick = new PickDecorator(pick);
+	}
+	
 	/**
 	 * 激活
 	 * @param activate
@@ -1078,6 +1098,15 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	public void upgrade() throws RuleValidatorException {
 		getUpgrade().action();
+	}
+	
+	/**
+	 * 拾取
+	 * @param treasure
+	 * @throws RuleValidatorException
+	 */
+	public void pick(ITreasure treasure) throws RuleValidatorException {
+		getPick().action(treasure);
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.treasure.ITreasure;
 
 /**
  * position用二维坐标系表示，中间用0000隔开，例如(1,2) = 100002
@@ -130,6 +131,12 @@ public interface IGround extends IContainer{
 	 * @return 地形数据
 	 */
 	public Map<Integer, Integer> getLandformMap();
+	
+	/**
+	 * 地图上的物品
+	 * @return
+	 */
+	public Map<Integer, ITreasure> getTreasureMap();
 	
 	/**
 	 * 获取所有建筑物

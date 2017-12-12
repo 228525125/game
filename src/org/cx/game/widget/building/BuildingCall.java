@@ -1,5 +1,6 @@
 package org.cx.game.widget.building;
 
+import java.util.List;
 import java.util.Map;
 
 public class BuildingCall extends Building implements IBuilding {
@@ -65,5 +66,11 @@ public class BuildingCall extends Building implements IBuilding {
 	public void setLevelLimit(Integer levelLimit) {
 		// TODO Auto-generated method stub
 		super.setLevelLimit(levelLimit);
+	}
+	
+	@Override
+	public void setNeedBuilding(List<Integer> needBuilding) {
+		// TODO Auto-generated method stub
+		super.setNeedBuilding(needBuilding);
 	}
 }
