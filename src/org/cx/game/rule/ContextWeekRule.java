@@ -23,7 +23,7 @@ public class ContextWeekRule extends Rule implements IRule {
 		/*
 		 * 产出
 		 */
-		IGround ground = getOwner().getControlPlayer().getGround();
+		IGround ground = getOwner().getControlPlayer().getContext().getGround();
 		List<IBuilding> list = ground.getBuildingList();
 		for(IBuilding building : list){
 			if(building instanceof BuildingTown){

@@ -35,7 +35,7 @@ public class Execute extends Action implements IExecute {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", player);
-		map.put("container", player.getGround());
+		map.put("container", player.getContext().getGround());
 		map.put("building", building);
 		map.put("option", getOwner());
 		map.put("position", position);

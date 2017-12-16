@@ -40,7 +40,7 @@ public class CallRule extends Rule implements IRule {
 		ICall call = getOwner();
 
 		LifeCard owner = call.getOwner();
-		IGround ground = owner.getPlayer().getGround();
+		IGround ground = owner.getPlayer().getContext().getGround();
 		
 		/*
 		 * 英雄复活要先把尸体回收

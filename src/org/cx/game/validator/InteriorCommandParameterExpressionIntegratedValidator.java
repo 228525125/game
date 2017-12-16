@@ -72,7 +72,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						ret = false;
 						break;
 					}else{
-						IGround ground = getBuffer().getPlayer().getGround();
+						IGround ground = getBuffer().getPlayer().getContext().getGround();
 						parameterObject = ground;
 						getBuffer().setContainer(ground);
 					}

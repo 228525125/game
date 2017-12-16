@@ -28,7 +28,7 @@ public class ReloadCommand extends InteriorCommand {
 		
 		map.put("player", player);
 		map.put("use", player.getUseCard().toList());
-		map.put("god", player.getGround().toList());      //ground已被屏蔽
+		map.put("god", player.getContext().getGround().toList());      //ground已被屏蔽
 		list.add(map);
 		
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Command_Reload,list); 

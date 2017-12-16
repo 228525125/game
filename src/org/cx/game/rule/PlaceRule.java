@@ -41,7 +41,7 @@ public class PlaceRule extends Rule implements IRule {
 		 * 生成朝向信息
 		 */
 		if(null!=this.position){       //call时 position=null
-			IGround ground = life.getPlayer().getGround();
+			IGround ground = life.getPlayer().getContext().getGround();
 			Integer direction = ground.getDirection(this.position, place.getPosition());
 			life.getMove().changeDirection(direction);
 		}

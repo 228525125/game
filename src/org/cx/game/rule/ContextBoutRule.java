@@ -31,7 +31,7 @@ public class ContextBoutRule extends Rule implements IRule {
 		player.addBout();
 		
 		Integer tax = 0;
-		IGround ground = player.getGround();
+		IGround ground = player.getContext().getGround();
 		List<IBuilding> list = ground.getBuildingList(player);
 		for(IBuilding building : list){
 			if(building instanceof BuildingTown){

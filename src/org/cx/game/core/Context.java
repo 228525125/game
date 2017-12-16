@@ -20,6 +20,7 @@ import java.util.UUID;
 import org.cx.game.action.Death;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.command.CommandBuffer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
@@ -65,15 +66,19 @@ public class Context extends Observable implements IContext
 	private List<IPlayer> playerList = new ArrayList<IPlayer>();
 	
 	private IPlayer controlPlayer=null;
+	private IGround ground = null;
 	
-	public Context(IPlayer[] players) {
+	public Context(IGround ground, IPlayer[] players) {
 		// TODO Auto-generated constructor stub
 		for(int i=0;i<players.length;i++){
 			playerList.add(players[i]);
 		}
 		
-		for(IPlayer player : playerList)
+		for(IPlayer player : playerList){
 			this.queue.add(player);
+		}
+		
+		this.ground = ground;
 		
 		addObserver(JsonOut.getInstance());
 		
@@ -325,5 +330,10 @@ public class Context extends Observable implements IContext
 		// TODO Auto-generated method stub
 		return newCardPlayId++;
 	}
-	
+
+	@Override
+	public IGround getGround() {
+		// TODO Auto-generated method stub
+		return this.ground;
+	}
 }

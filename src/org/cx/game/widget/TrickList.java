@@ -32,7 +32,7 @@ public class TrickList extends Observable implements ITrickList {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", trick.getPlayer());
-		map.put("container", trick.getPlayer().getGround());
+		map.put("container", trick.getPlayer().getContext().getGround());
 		map.put("trick", trick);
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_TrickList_Add,map);
@@ -45,7 +45,7 @@ public class TrickList extends Observable implements ITrickList {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", trick.getPlayer());
-		map.put("container", trick.getPlayer().getGround());
+		map.put("container", trick.getPlayer().getContext().getGround());
 		map.put("trick", trick);
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_TrickList_Remove,map);

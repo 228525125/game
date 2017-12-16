@@ -21,7 +21,7 @@ public class PickCommand extends InteriorCommand {
 	public PickCommand(IPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		addValidator(new SelectContainerValidator(player.getGround(),buffer));
+		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
 		addValidator(new SelectLifeCardValidator(buffer));
 		addValidator(new AttackableValidator(buffer));
 		addValidator(new MoveEnergyValidator(buffer));

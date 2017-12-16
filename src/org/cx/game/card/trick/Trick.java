@@ -131,7 +131,7 @@ public abstract class Trick extends Observable implements ITrick {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getPlayer());
-		map.put("container", getPlayer().getGround());
+		map.put("container", getPlayer().getContext().getGround());
 		map.put("trick", this);
 		map.put("position", getOwner().getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(getAction()+Affect,map);

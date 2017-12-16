@@ -42,7 +42,7 @@ public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 			
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getOwner().getPlayer());
-		map.put("container", getOwner().getOwner().getPlayer().getGround());
+		map.put("container", getOwner().getOwner().getPlayer().getContext().getGround());
 		map.put("position", getOwner().getOwner().getPosition());
 		map.put("building", getOwner().getOwner());
 		map.put("productType", getOwner().getType());

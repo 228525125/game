@@ -104,18 +104,6 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		// TODO Auto-generated method stub
 		return this.heroList;
 	}
-
-	private IGround ground = null;
-	
-	@Override
-	public IGround getGround() {
-		// TODO Auto-generated method stub
-		return ground;
-	}
-	
-	public void setGround(IGround ground) {
-		this.ground = ground;
-	}
 	
 	private IUseCard useCard = null;
 	
@@ -125,13 +113,13 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		return useCard;
 	}
 	
-	private Map<String,Object> data = new HashMap<String,Object>();
+	/*private Map<String,Object> data = new HashMap<String,Object>();
 	
 	@Override
 	public Object getObject(String type) {
 		// TODO Auto-generated method stub
 		return data.get(type);
-	}
+	}*/
 	
 	private CommandBuffer commandBuffer = null;
 	
@@ -155,8 +143,8 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		this.context = context;
 		
 		//command会用到
-		data.put(CommandBuffer.GROUND, this.ground);
-		data.put(CommandBuffer.OWN, this);
+		//data.put(CommandBuffer.GROUND, this.ground);
+		//data.put(CommandBuffer.OWN, this);
 		
 		commandBuffer = new CommandBuffer(this);
 	}
@@ -247,7 +235,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	@Override
 	public List<LifeCard> getAttendantList(Integer status) {
 		// TODO Auto-generated method stub
-		return getGround().list(this, status);
+		return getContext().getGround().list(this, status);
 	}
 	
 	@Override

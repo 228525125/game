@@ -15,7 +15,7 @@ public class MoveCommand extends InteriorCommand {
 	public MoveCommand(IPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		addValidator(new SelectContainerValidator(player.getGround(),buffer));
+		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
 		addValidator(new LifeCardMoveableValidator(buffer));
 		addValidator(new MoveTauntValidator(buffer));
 	}

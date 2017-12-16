@@ -20,7 +20,7 @@ public class MoveRangeValidator extends Validator {
 		// TODO Auto-generated method stub
 		
 		Integer curPosition = life.getContainerPosition();
-		Integer step = life.getPlayer().getGround().distance(curPosition, place.getPosition());
+		Integer step = life.getPlayer().getContext().getGround().distance(curPosition, place.getPosition());
 		Integer energy = life.getMove().getEnergy();
 		Integer consume = life.getMove().getConsume();
 		Integer range = energy/consume;         // 145/50 = 2;整数默认情况符合游戏规则

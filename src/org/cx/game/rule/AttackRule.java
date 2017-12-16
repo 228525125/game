@@ -28,7 +28,7 @@ public class AttackRule extends Rule implements IRule {
 		/*
 		 * 生成朝向信息
 		 */
-		IGround ground = owner.getPlayer().getGround();
+		IGround ground = owner.getPlayer().getContext().getGround();
 		Integer direction = ground.getDirection(owner.getContainerPosition(), attacked.getContainerPosition());
 		owner.getMove().setDirection(direction);
 	}

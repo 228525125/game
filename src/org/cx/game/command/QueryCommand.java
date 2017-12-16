@@ -49,7 +49,7 @@ public class QueryCommand extends InteriorCommand {
 		addValidator(new QueryCommandValidator(parameter.toString(),buffer));
 		super.execute();
 		
-		IGround ground = player.getGround();
+		IGround ground = player.getContext().getGround();
 		
 		if("conjure".equals(parameter)){
 			positionList = ground.queryRange(buffer.getSkill(), map.get(parameter));

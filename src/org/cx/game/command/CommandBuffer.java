@@ -330,7 +330,7 @@ public class CommandBuffer {
 	
 	private void setBuilding(IBuilding building, Map<String, Object> bufferMap){
 		if(null!=building){
-			IGround ground = getPlayer().getGround();
+			IGround ground = getPlayer().getContext().getGround();
 			setPlace(ground.getPlace(building.getPosition()), bufferMap);
 			
 			bufferMap.put(BUILDING, building);

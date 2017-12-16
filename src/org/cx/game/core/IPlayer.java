@@ -24,13 +24,9 @@ public interface IPlayer extends IInterceptable
 	
 	public void setContext(IContext context);
 	
-	public IGround getGround();
-	
-	public void setGround(IGround ground);
-	
 	public IUseCard getUseCard();
 	
-	public Object getObject(String type);
+	//public Object getObject(String type);
 	
 	public Map<String, Integer> getResource();
 	

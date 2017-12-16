@@ -33,7 +33,7 @@ public class Cemetery extends Observable implements ICemetery {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", life.getPlayer());
-		map.put("container", life.getPlayer().getGround());
+		map.put("container", life.getPlayer().getContext().getGround());
 		map.put("life", life);
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_Cemetery_Add,map);
@@ -52,7 +52,7 @@ public class Cemetery extends Observable implements ICemetery {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", life.getPlayer());
-		map.put("container", life.getPlayer().getGround());
+		map.put("container", life.getPlayer().getContext().getGround());
 		map.put("life", life);
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_Cemetery_Remove,map);

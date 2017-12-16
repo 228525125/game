@@ -42,28 +42,16 @@ public class PlayerDecorator implements IPlayer {
 	}
 
 	@Override
-	public IGround getGround() {
-		// TODO Auto-generated method stub
-		return player.getGround();
-	}
-
-	@Override
-	public void setGround(IGround ground) {
-		// TODO Auto-generated method stub
-		player.setGround(ground);
-	}
-
-	@Override
 	public IUseCard getUseCard() {
 		// TODO Auto-generated method stub
 		return player.getUseCard();
 	}
 
-	@Override
+	/*@Override
 	public Object getObject(String type) {
 		// TODO Auto-generated method stub
 		return player.getObject(type);
-	}
+	}*/
 	
 
 	@Override

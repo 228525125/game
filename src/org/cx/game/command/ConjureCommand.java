@@ -24,7 +24,7 @@ public class ConjureCommand extends InteriorCommand {
 	public ConjureCommand(IPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		addValidator(new SelectContainerValidator(player.getGround(),buffer));
+		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
 		addValidator(new ActiveSkillCooldownValidator(buffer));
 		addValidator(new AttackableValidator(buffer));
 	}

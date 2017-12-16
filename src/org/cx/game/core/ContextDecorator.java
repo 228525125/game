@@ -10,6 +10,7 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.IControlQueue;
+import org.cx.game.widget.IGround;
 
 public class ContextDecorator implements IContext {
 
@@ -213,6 +214,12 @@ public class ContextDecorator implements IContext {
 	public Integer getWeek() {
 		// TODO Auto-generated method stub
 		return this.original.getWeek();
+	}
+
+	@Override
+	public IGround getGround() {
+		// TODO Auto-generated method stub
+		return this.original.getGround();
 	}
 
 }

@@ -76,7 +76,6 @@ public class GroundDecorator extends ContainerDecorator implements IGround {
 		 */
 		IPlayer neutral = ground.getNeutral();
 		neutral.setComputer(true);
-		neutral.setGround(this);
 	}
 	
 	@Override

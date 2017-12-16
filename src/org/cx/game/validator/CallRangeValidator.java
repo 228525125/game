@@ -38,7 +38,7 @@ public class CallRangeValidator extends SelectBuildingTypeValidator {
 		Boolean ret = super.validate();
 		
 		if(ret){
-			IGround ground = buildingCall.getPlayer().getGround();
+			IGround ground = buildingCall.getPlayer().getContext().getGround();
 			if(Integer.valueOf(1).equals(ground.distance(buildingCall.getPosition(), place.getPosition())))
 				ret = true;
 			else{

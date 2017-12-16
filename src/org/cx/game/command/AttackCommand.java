@@ -16,7 +16,7 @@ public class AttackCommand extends InteriorCommand {
 	public AttackCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
-		addValidator(new SelectContainerValidator(player.getGround(),buffer));
+		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
 		addValidator(new AttackableValidator(buffer));
 		addValidator(new AttackAtkValidator(buffer));
 	}

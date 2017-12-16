@@ -34,7 +34,7 @@ public class Picked extends Action implements IPicked {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Treasure_Action_Picked,map);
 		super.notifyObservers(info);
 		
-		IGround ground = life.getPlayer().getGround();
+		IGround ground = life.getPlayer().getContext().getGround();
 		IPlace place = ground.getPlace(getOwner().getPosition());
 		place.setTreasure(null);
 	}

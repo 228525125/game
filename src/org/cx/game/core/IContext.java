@@ -6,9 +6,13 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.widget.IControlQueue;
+import org.cx.game.widget.IGround;
 
 public interface IContext extends IInterceptable,Observable {
 
+	public final static String Ground = "Ground";
+	public final static String ControlPlayer = "ControlPlayer";
+	
 	public abstract IControlQueue getControlQueue();
 
 	public abstract void setControlQueue(IControlQueue queue);
@@ -88,5 +92,7 @@ public interface IContext extends IInterceptable,Observable {
 	 * @return
 	 */
 	public Long newCardPlayId();
+	
+	public IGround getGround();
 
 }

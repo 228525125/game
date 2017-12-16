@@ -5,6 +5,7 @@ import java.util.List;
 import org.cx.game.card.CardFactory;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.Intercepter;
+import org.cx.game.widget.IGround;
 import org.cx.game.widget.IStrongHold;
 
 public class ContextFactory {
@@ -19,8 +20,8 @@ public class ContextFactory {
 		return context;
 	}
 
-	public static IContext getInstance(IPlayer... players){
-		context = new ContextDecorator(new Context(players));
+	public static IContext getInstance(IGround ground, IPlayer... players){
+		context = new ContextDecorator(new Context(ground, players));
 
 		for(int i=0;i<players.length;i++){
 			players[i].setContext(context);

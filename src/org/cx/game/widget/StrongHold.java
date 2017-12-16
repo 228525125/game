@@ -38,7 +38,6 @@ public abstract class StrongHold implements IStrongHold {
 	
 	public void setGround(IGround ground){
 		this.ground = ground;
-		this.player.setGround(ground);
 		
 		this.area = ground.areaForDistance(position, range, IGround.Contain);
 	}
