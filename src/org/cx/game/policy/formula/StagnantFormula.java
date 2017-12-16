@@ -24,7 +24,7 @@ public class StagnantFormula extends Validator implements IFormula {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		Boolean ret = false;
-		if(this.originPosition.equals(life.getContainerPosition())){
+		if(this.originPosition.equals(life.getPosition())){
 			ret = true;
 		}else{
 			ret = false;

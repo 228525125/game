@@ -56,7 +56,7 @@ public class GroundFactory {
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
 				new ObjectTypeParse(otb).parse(mapEl);
-				ground = new GroundDecorator((IGround) otb.builder());
+				ground = (IGround) otb.builder();
 				return ground;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

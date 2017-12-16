@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.action.Execute;
-import org.cx.game.action.ExecuteDecorator;
 import org.cx.game.action.IExecute;
 import org.cx.game.card.CardFactory;
 import org.cx.game.card.LifeCard;
@@ -56,7 +55,7 @@ public class OptionCall extends Option implements IOption {
 		if(null==this.execute){
 			IExecute execute = new OptionCallExecute(this.cardID);
 			execute.setOwner(this);
-			this.execute = new ExecuteDecorator(execute);
+			this.execute = execute;
 		}
 		return this.execute;
 	}

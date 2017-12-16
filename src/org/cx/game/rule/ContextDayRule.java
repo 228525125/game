@@ -3,6 +3,7 @@ package org.cx.game.rule;
 import java.util.List;
 
 import org.cx.game.core.IContext;
+import org.cx.game.core.Context.ContextAddDay;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.building.BuildingCall;
 import org.cx.game.widget.building.BuildingResource;
@@ -24,7 +25,7 @@ public class ContextDayRule extends Rule implements IRule {
 		/*
 		 * 产出
 		 */
-		IGround ground = getOwner().getControlPlayer().getContext().getGround();
+		IGround ground = getOwner().getOwner().getGround();
 		List<IBuilding> list = ground.getBuildingList();
 		for(IBuilding building : list){
 			if(building instanceof BuildingTown){
@@ -45,15 +46,15 @@ public class ContextDayRule extends Rule implements IRule {
 	}
 	
 	@Override
-	public IContext getOwner() {
+	public ContextAddDay getOwner() {
 		// TODO Auto-generated method stub
-		return (IContext) super.getOwner();
+		return (ContextAddDay) super.getOwner();
 	}
 
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IContext.class;
+		return ContextAddDay.class;
 	}
 
 }

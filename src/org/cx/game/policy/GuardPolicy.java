@@ -26,7 +26,7 @@ public class GuardPolicy extends Policy {
 		
 		setPri(IPolicy.PRI_Min);
 		
-		String cmd = "select ground place"+owner.getContainerPosition()+" card;";
+		String cmd = "select ground place"+owner.getPosition()+" card;";
 		try {
 			Command command= CommandFactory.getInstance(owner.getPlayer(),cmd);
 			command.execute();

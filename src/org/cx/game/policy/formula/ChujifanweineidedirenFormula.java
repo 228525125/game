@@ -30,7 +30,7 @@ public class ChujifanweineidedirenFormula extends Validator implements IFormula 
 		// TODO Auto-generated method stub
 		Integer range = this.life.getMove().getEnergy();
 		IGround ground = GroundFactory.getGround();
-		List<Integer> list =ground.areaForDistance(this.life.getContainerPosition(), range, IGround.Contain, this.life.getMove().getType());
+		List<Integer> list =ground.areaForDistance(this.life.getPosition(), range, IGround.Contain, this.life.getMove().getType());
 		for(Integer pos : list){            //移动范围内的敌人
 			LifeCard life = ground.getCard(pos);
 			if(null!=life && !this.life.getPlayer().equals(life.getPlayer()))
@@ -66,14 +66,14 @@ public class ChujifanweineidedirenFormula extends Validator implements IFormula 
 		Integer distance = this.life.getMove().getEnergy() + this.life.getAttackRange();
 		LifeCard enemy = null;
 		for(LifeCard life : this.enemyList){
-			Integer d = ground.distance(this.life.getContainerPosition(), life.getContainerPosition());
+			Integer d = ground.distance(this.life.getPosition(), life.getPosition());
 			if(d<=distance){
 				distance = d;
 				enemy = life;
 			}
 		}
-		List<Integer> l1 = ground.areaForDistance(enemy.getContainerPosition(), 1, IGround.Contain);
-		List<Integer> l2 = ground.areaForDistance(this.life.getContainerPosition(), this.life.getMove().getEnergy(), IGround.Contain, this.life.getMove().getType());
+		List<Integer> l1 = ground.areaForDistance(enemy.getPosition(), 1, IGround.Contain);
+		List<Integer> l2 = ground.areaForDistance(this.life.getPosition(), this.life.getMove().getEnergy(), IGround.Contain, this.life.getMove().getType());
 		l1.retainAll(l2);
 		return l1.get(0);
 	}

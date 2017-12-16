@@ -86,11 +86,4 @@ public class BuildingTown extends Building implements IBuilding {
 			building.setPlayer(player);
 		}
 	}
-	
-	@Override
-	public void setUpgrade(IUpgrade upgrade) {
-		// TODO Auto-generated method stub
-		super.setUpgrade(upgrade);
-	}
-	
 }

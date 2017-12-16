@@ -23,17 +23,12 @@ public class RuleGroup {
 	}
 	
 	public void bindingRule(IInterceptable interceptable){
-		Class [] interfaces = interceptable.getClass().getInterfaces();
+		Class clazz = interceptable.getClass();
 		
 		for(IRule rule : ruleList){
-			
-			for(Class clazz : interfaces){
-				
-				if(rule.getInterceptable().equals(clazz)){
-					interceptable.addIntercepter(rule);
-					rule.setOwner(interceptable);
-					break;
-				}
+			if(rule.getInterceptable().equals(clazz)){
+				interceptable.addIntercepter(rule);
+				rule.setOwner(interceptable);
 			}
 		}
 		
@@ -43,8 +38,10 @@ public class RuleGroup {
 	public static void main(String[] args) {
 		IAction ac = new Attack();
 		Class acl = ac.getClass();
-		System.out.println("Attack的父类是："+acl.getSuperclass());
+		/*System.out.println("Attack的父类是："+acl.getSuperclass());
 		for(Class clazz : acl.getInterfaces())
-			System.out.println("Attack的接口包括："+clazz);
+			System.out.println("Attack的接口包括："+clazz);*/
+		
+		System.out.println(ac.getClass().equals(Attack.class));
 	}
 }

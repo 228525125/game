@@ -1,6 +1,7 @@
 package org.cx.game.rule;
 
 import org.cx.game.action.IUpgradeHero;
+import org.cx.game.action.UpgradeHero;
 
 public class UpgradeHeroRule extends UpgradeLifeRule implements IRule {
 
@@ -14,12 +15,12 @@ public class UpgradeHeroRule extends UpgradeLifeRule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgradeHero.class;
+		return UpgradeHero.class;
 	}
 	
 	@Override
-	public IUpgradeHero getOwner() {
+	public UpgradeHero getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgradeHero) super.getOwner();
+		return (UpgradeHero) super.getOwner();
 	}
 }

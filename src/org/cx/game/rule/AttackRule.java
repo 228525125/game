@@ -1,5 +1,6 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.Attack;
 import org.cx.game.action.IAttack;
 import org.cx.game.card.LifeCard;
 import org.cx.game.widget.IGround;
@@ -29,19 +30,19 @@ public class AttackRule extends Rule implements IRule {
 		 * 生成朝向信息
 		 */
 		IGround ground = owner.getPlayer().getContext().getGround();
-		Integer direction = ground.getDirection(owner.getContainerPosition(), attacked.getContainerPosition());
+		Integer direction = ground.getDirection(owner.getPosition(), attacked.getPosition());
 		owner.getMove().setDirection(direction);
 	}
 	
 	@Override
-	public IAttack getOwner() {
+	public Attack getOwner() {
 		// TODO Auto-generated method stub
-		return (IAttack) super.getOwner();
+		return (Attack) super.getOwner();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IAttack.class;
+		return Attack.class;
 	}
 }

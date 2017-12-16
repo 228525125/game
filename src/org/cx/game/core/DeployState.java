@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.cx.game.card.ICard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.npc.NPC;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
@@ -32,7 +33,7 @@ public class DeployState extends PlayState {
 	}
 
 	@Override
-	public void done() {
+	public void done() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		//操作完毕
 		context.setPlayState(IContext.doneState);
@@ -40,7 +41,7 @@ public class DeployState extends PlayState {
 	}
 
 	@Override
-	public void finish() {
+	public void finish() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		//操作中比赛随时可能结束
 		context.setPlayState(IContext.finishState);

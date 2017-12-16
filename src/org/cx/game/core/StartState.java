@@ -28,7 +28,7 @@ import org.cx.game.widget.treasure.ITreasure;
 public class StartState extends PlayState {
 	
 	@Override
-	public void deploy() {
+	public void deploy() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		context.setPlayState(IContext.deployState);
 		context.deploy();
@@ -47,7 +47,7 @@ public class StartState extends PlayState {
 	}
 
 	@Override
-	public void start() {
+	public void start() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		provision();
 		

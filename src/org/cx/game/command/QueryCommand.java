@@ -83,7 +83,7 @@ public class QueryCommand extends InteriorCommand {
 				throw new CommandValidatorException(getErrors().getMessage());
 			
 			LifeCard life = (LifeCard) buffer.getCard();
-			positionList = ground.areaForDistance(life.getContainerPosition(), 1, IGround.Contain);
+			positionList = ground.areaForDistance(life.getPosition(), 1, IGround.Contain);
 		}
 	
 		Map<String,Object> bean = new HashMap<String,Object>();

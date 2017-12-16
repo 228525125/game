@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.cx.game.action.Call;
 import org.cx.game.action.ICall;
 import org.cx.game.action.IDeath;
 import org.cx.game.card.HeroCard;
@@ -47,7 +48,7 @@ public class CallRule extends Rule implements IRule {
 		 */
 		if (owner instanceof HeroCard && null!= owner.getContainer()) {
 			HeroCard hero = (HeroCard) owner;
-			Integer position = hero.getContainerPosition();
+			Integer position = hero.getPosition();
 			IPlace place = ground.getPlace(position);
 			place.getCemetery().remove(hero);
 		}
@@ -99,24 +100,18 @@ public class CallRule extends Rule implements IRule {
 		
 		player.addToResource(res);
 		
-		/*
-		 * 计算人口
-		 */
-		player.addToRation(owner.getRation()*this.nop);
-		
 		this.isInvoke = true;
 	}
 	
 	@Override
-	public ICall getOwner() {
+	public Call getOwner() {
 		// TODO Auto-generated method stub
-		return (ICall) super.getOwner();
+		return (Call) super.getOwner();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return ICall.class;
+		return Call.class;
 	}
-
 }

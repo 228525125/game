@@ -22,7 +22,7 @@ public class ConjureRangeValidator extends Validator {
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		Integer curPosition = skill.getOwner().getContainerPosition();
+		Integer curPosition = skill.getOwner().getPosition();
 		Integer step = skill.getOwner().getPlayer().getContext().getGround().distance(curPosition, position);
 		Integer range = skill.getRange();
 		

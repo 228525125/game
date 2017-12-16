@@ -8,6 +8,7 @@ import java.util.Observable;
 
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.intercepter.ProxyFactory;
 import org.cx.game.out.JsonOut;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.validator.Errors;
@@ -20,20 +21,12 @@ public abstract class Action extends Observable implements IAction {
 	private Object owner;
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
-	
-	private ActionDecorator decorator = null;
-	
-	public ActionDecorator getDecorator() {
-		return decorator;
-	}
-
-	public void setDecorator(ActionDecorator decorator) {
-		this.decorator = decorator;
-	}
 
 	public Action() {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
+		
+		RuleGroupFactory.bindingRule(this);
 	}
 	
 	@Override
@@ -47,18 +40,19 @@ public abstract class Action extends Observable implements IAction {
 	}
 	
 	@Override
-	public void action(Object... objects) throws RuleValidatorException {
+	public void execute(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
 		/* 
 		 * 执行规则验证
-		 
+		 */
 		doValidator();
 		
-		if(hasError())
+		if(hasError()){
 			throw new RuleValidatorException(getErrors().getMessage());
-		 */
-		//以上代码，在ActionDecorator中执行，因为当验证失败，action不会执行拦截器
+		}else{
+			Object proxy = ProxyFactory.getProxy(this);     
+			((IAction)proxy).action(objects);
+		}
 	}
 
 	@Override

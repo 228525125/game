@@ -20,7 +20,6 @@ public class Pick extends Action implements IPick {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		ITreasure treasure = (ITreasure) objects[0];
 		
@@ -29,7 +28,7 @@ public class Pick extends Action implements IPick {
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("treasure", treasure);
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Pick,map);
 		super.notifyObservers(info);
 		

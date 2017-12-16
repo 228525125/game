@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.cx.game.action.Action;
 import org.cx.game.action.Death;
+import org.cx.game.action.IAction;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.core.Context.ContextAddBout;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
@@ -30,9 +34,7 @@ import org.cx.game.widget.building.IOption;
 
 public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
-	private Integer id = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一
-	
-	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();	
+	private Integer id = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一	
 	
 	public Player(Integer id, String name) {
 		// TODO Auto-generated constructor stub
@@ -294,31 +296,18 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		return bout;
 	}
 	
-	@Override
-	public void addBout() {
-		// TODO Auto-generated method stub
-		this.bout++;
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", this);
-		map.put("bout", this.bout);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Bout,map);
-		notifyObservers(info);
-		
-		/*
-		 * 计算技能冷却
-		 */
-		List<LifeCard> lList = getAttendantList(Death.Status_Live);
-		for(LifeCard life : lList){
-			for(ISkill skill : life.getSkillList()){
-				if (skill instanceof IActiveSkill) {
-					IActiveSkill as = (IActiveSkill) skill;
-					Integer cooldown = as.getCooldownRemain();
-					cooldown = cooldown>0 ? --cooldown : 0;
-					as.setCooldownRemain(cooldown);
-				}
-			}
+	private IAction addBoutAction = null;
+	
+	public IAction getAddBoutAction(){
+		if(null==this.addBoutAction){
+			this.addBoutAction = new PlayerAddBout();
+			addBoutAction.setOwner(this);
 		}
+		return this.addBoutAction;
+	}
+	
+	public void addBout() throws RuleValidatorException{
+		getAddBoutAction().execute();
 	}
 	
 	private IPolicyGroup groupPolicy = null;
@@ -340,34 +329,39 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		}
 	}
 	
-	@Override
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
+	public class PlayerAddBout extends Action implements IAction {
+		
+		@Override
+		public void action(Object... objects) throws RuleValidatorException {
+			// TODO Auto-generated method stub
+			Player.this.bout++;
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", Player.this);
+			map.put("bout", Player.this.bout);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Bout,map);
+			notifyObservers(info);
+			
+			/*
+			 * 计算技能冷却
+			 */
+			List<LifeCard> lList = getAttendantList(Death.Status_Live);
+			for(LifeCard life : lList){
+				for(ISkill skill : life.getSkillList()){
+					if (skill instanceof IActiveSkill) {
+						IActiveSkill as = (IActiveSkill) skill;
+						Integer cooldown = as.getCooldownRemain();
+						cooldown = cooldown>0 ? --cooldown : 0;
+						as.setCooldownRemain(cooldown);
+					}
+				}
+			}
 		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
+		
+		@Override
+		public IPlayer getOwner() {
+			// TODO Auto-generated method stub
+			return (IPlayer) super.getOwner();
+		}
 	}
 }

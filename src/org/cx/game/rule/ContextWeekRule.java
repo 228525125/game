@@ -2,6 +2,7 @@ package org.cx.game.rule;
 
 import java.util.List;
 
+import org.cx.game.core.Context.ContextAddWeek;
 import org.cx.game.core.IContext;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.building.BuildingCall;
@@ -23,7 +24,7 @@ public class ContextWeekRule extends Rule implements IRule {
 		/*
 		 * 产出
 		 */
-		IGround ground = getOwner().getControlPlayer().getContext().getGround();
+		IGround ground = getOwner().getOwner().getGround();
 		List<IBuilding> list = ground.getBuildingList();
 		for(IBuilding building : list){
 			if(building instanceof BuildingTown){
@@ -39,14 +40,14 @@ public class ContextWeekRule extends Rule implements IRule {
 	}
 	
 	@Override
-	public IContext getOwner() {
+	public ContextAddWeek getOwner() {
 		// TODO Auto-generated method stub
-		return (IContext) super.getOwner();
+		return (ContextAddWeek) super.getOwner();
 	}
 
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IContext.class;
+		return ContextAddWeek.class;
 	}
 }

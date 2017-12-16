@@ -3,8 +3,10 @@ package org.cx.game.core;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.action.IAction;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
@@ -14,7 +16,7 @@ import org.cx.game.widget.IUseCard;
  * @author chenxian
  *
  */
-public interface IPlayer extends IInterceptable
+public interface IPlayer
 {		
 	public Integer getId();
 	
@@ -118,7 +120,9 @@ public interface IPlayer extends IInterceptable
 	 */
 	public Integer getBout();
 	
-	public void addBout();
+	public void addBout() throws RuleValidatorException;
+	
+	public IAction getAddBoutAction();
 	
 	/**
 	 * 是否为非玩家控制角色

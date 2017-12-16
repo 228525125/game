@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import org.cx.game.action.Activate;
 import org.cx.game.action.IActivate;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.AttackLockBuff;
@@ -14,12 +15,6 @@ import org.cx.game.intercepter.Intercepter;
 import org.cx.game.observer.NotifyInfo;
 
 public class ActivateRule extends Rule implements IRule {
-	
-	@Override
-	public String getIntercepterMethod() {
-		// TODO Auto-generated method stub
-		return "action";
-	}
 	
 	@Override
 	public void after(Object[] args) {
@@ -55,17 +50,17 @@ public class ActivateRule extends Rule implements IRule {
 			}
 		}
 	}
-
+	
 	@Override
-	public Class getInterceptable() {
+	public Activate getOwner() {
 		// TODO Auto-generated method stub
-		return IActivate.class;
+		return (Activate) super.getOwner();
 	}
 	
 	@Override
-	public IActivate getOwner() {
+	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return (IActivate) super.getOwner();
+		return Activate.class;
 	}
 
 }

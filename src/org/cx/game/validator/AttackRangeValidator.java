@@ -28,7 +28,7 @@ public class AttackRangeValidator extends Validator {
 		// TODO Auto-generated method stub
 		IGround ground = (IGround) attack.getContainer();
 		List<Integer> ps = ground.queryRange(attack, NotifyInfo.Command_Query_Attack);
-		if(ps.contains(attacked.getContainerPosition())){
+		if(ps.contains(attacked.getPosition())){
 			return true;
 		}else{
 			addMessage(I18n.getMessage(AttackRangeValidator.class.getName()));

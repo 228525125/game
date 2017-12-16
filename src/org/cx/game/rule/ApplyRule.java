@@ -1,5 +1,6 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.Apply;
 import org.cx.game.action.IApply;
 import org.cx.game.core.IPlayer;
 
@@ -24,15 +25,14 @@ public class ApplyRule extends Rule implements IRule {
 	}
 	
 	@Override
-	public IApply getOwner() {
+	public Apply getOwner() {
 		// TODO Auto-generated method stub
-		return (IApply) super.getOwner();
+		return (Apply) super.getOwner();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IApply.class;
+		return Apply.class;
 	}
-
 }

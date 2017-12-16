@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.action.Execute;
-import org.cx.game.action.ExecuteDecorator;
 import org.cx.game.action.IExecute;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
@@ -42,7 +41,7 @@ public class OptionBuild extends Option {
 		if(null==this.execute){
 			IExecute execute = new OptionBuildExecute();
 			execute.setOwner(this);
-			this.execute = new ExecuteDecorator(execute);
+			this.execute = execute;
 		}
 		return this.execute;
 	}

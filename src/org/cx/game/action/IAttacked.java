@@ -22,7 +22,10 @@ public interface IAttacked extends IAction {
 	
 	public void setArmour(Integer armour);
 	
-	public Integer addToArmour(Integer armour);
+	/*
+	 * 取消护甲抵消伤害
+	 */
+	//public Integer addToArmour(Integer armour);
 	
 	/**
 	 * 真实防御力 = 初始防御力 + 等级防御力 + 地形防御力 + 额外防御力

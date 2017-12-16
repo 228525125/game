@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.action.ApplyDecorator;
 import org.cx.game.action.Chuck;
-import org.cx.game.action.ChuckDecorator;
 import org.cx.game.action.Death;
 import org.cx.game.action.IApply;
 import org.cx.game.action.IChuck;
@@ -121,7 +119,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 	}
 	
 	@Override
-	public Integer getContainerPosition() {
+	public Integer getPosition() {
 		// TODO Auto-generated method stub
 		return container.getPosition(this);
 	}
@@ -144,12 +142,12 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		List<Integer> positionList = new ArrayList<Integer>();
 		if(needConjurer()){    //如果需要施法者，就默认施法者的攻击距离
 			LifeCard conjure = getConjurer();
-			Integer position = conjure.getContainerPosition();
+			Integer position = conjure.getPosition();
 			positionList = ground.areaForDistance(position, conjure.getAttack().getRange(), IGround.Contain);
 		}else{                //如果不需要施法者，就默认我方所有战场上的单位
 			List<LifeCard> cardList = ground.list(getPlayer(), Death.Status_Live);
 			for(LifeCard life : cardList){
-				positionList.add(life.getContainerPosition());
+				positionList.add(life.getPosition());
 			}
 		}
 		
@@ -226,18 +224,11 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 
 	public IApply getApply() {
 		if(null==apply){
-			IApply apply = new org.cx.game.action.Apply();
+			apply = new org.cx.game.action.Apply();
 			apply.setConsume(consume);
 			apply.setOwner(this);
-			this.apply = new ApplyDecorator(apply);
 		}
 		return apply;
-	}
-
-	public void setApply(IApply apply) {
-		apply.setConsume(consume);
-		apply.setOwner(this);
-		this.apply = new ApplyDecorator(apply);
 	}
 	
 	/**
@@ -247,18 +238,12 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 
 	public IChuck getChuck() {
 		if(null==chuck){
-			IChuck chuck = new Chuck();
+			chuck = new Chuck();
 			chuck.setOwner(this);
-			this.chuck = new ChuckDecorator(chuck);
 		}
 		return chuck;
 	}
 
-	public void setChuck(IChuck chuck) {
-		chuck.setOwner(this);
-		this.chuck = new ChuckDecorator(chuck);
-	}
-	
 	private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
 	private String[] proertyName = null;
@@ -305,13 +290,13 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		 * 魔法卡只有在没有指定对象的时候，即命令验证不通过时，才会被回退
 		 * 如果验证通过，即使魔法卡在没有目标对象的情况下，也会认定被使用
 		 */
-		apply.action(objects);
+		apply.execute(objects);
 	}
 	
 	@Override
 	public void chuck() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		chuck.action();
+		chuck.execute();
 	}
 	
 	@Override
@@ -321,7 +306,7 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		map.put("player", getPlayer());
 		map.put("container", getContainer());
 		map.put("card", this);
-		map.put("position", getContainerPosition());
+		map.put("position", getPosition());
 		NotifyInfo info = new NotifyInfo(getAction()+Apply,map);
 		notifyObservers(info);
 	}

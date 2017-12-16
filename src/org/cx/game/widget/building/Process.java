@@ -38,7 +38,7 @@ public abstract class Process implements IIntercepter, IRecover {
 		this.beginBout = player.getBout();
 		this.curBout = player.getBout();
 		
-		recordIntercepter(player, this);
+		recordIntercepter(player.getAddBoutAction(), this);
 	}
 	
 	public Integer getRemainBout(){

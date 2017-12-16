@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.TrickCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
@@ -55,7 +54,7 @@ public class ShowCommand extends InteriorCommand {
 		
 		if(null!=buffer.getCard()){
 			map.put("card", buffer.getCard());
-			map.put("position", buffer.getCard().getContainerPosition());
+			map.put("position", buffer.getCard().getPosition());
 		}
 		
 		if(null!=buffer.getSkill())

@@ -33,7 +33,7 @@ public abstract class Treasure implements ITreasure {
 	@Override
 	public void picked(LifeCard life) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		getPicked().action(life);
+		getPicked().execute(life);
 	}
 
 }

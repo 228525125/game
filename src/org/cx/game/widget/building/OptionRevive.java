@@ -7,7 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.cx.game.action.Execute;
-import org.cx.game.action.ExecuteDecorator;
 import org.cx.game.action.IExecute;
 import org.cx.game.card.CardFactory;
 import org.cx.game.card.HeroCard;
@@ -62,7 +61,7 @@ public class OptionRevive extends Option implements IOption {
 		if(null==this.execute){
 			IExecute execute = new OptionReviveExecute(this.hero);
 			execute.setOwner(this);
-			this.execute = new ExecuteDecorator(execute);
+			this.execute = execute;
 		}
 		return this.execute;
 	}

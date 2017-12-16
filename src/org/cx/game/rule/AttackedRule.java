@@ -1,5 +1,6 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.Attacked;
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IAttacked;
 import org.cx.game.action.IDeath;
@@ -40,15 +41,15 @@ public class AttackedRule extends Rule implements IRule {
 	}
 	
 	@Override
-	public IAttacked getOwner() {
+	public Attacked getOwner() {
 		// TODO Auto-generated method stub
-		return (IAttacked) super.getOwner();
+		return (Attacked) super.getOwner();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IAttacked.class;
+		return Attacked.class;
 	}
 
 }

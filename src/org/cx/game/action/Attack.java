@@ -245,7 +245,7 @@ public class Attack extends Action implements IAttack {
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		map.put("weapon", weapon);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Weapon_Hand,map);
 		super.notifyObservers(info);
@@ -254,7 +254,6 @@ public class Attack extends Action implements IAttack {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		LifeCard attacked = (LifeCard) objects[0];
 		
@@ -263,14 +262,14 @@ public class Attack extends Action implements IAttack {
 		map.put("container", getOwner().getContainer());
 		map.put("attack", getOwner());
 		map.put("attacked", attacked);
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attack,map);
 		super.notifyObservers(info);
 		
 		IAttack clone = clone();
 		
 		IGround ground = GroundFactory.getGround();
-		Integer distance = ground.distance(attacked.getContainerPosition(), getOwner().getContainerPosition());
+		Integer distance = ground.distance(attacked.getPosition(), getOwner().getPosition());
 		if(IDeath.Status_Live == attacked.getDeath().getStatus()
 		&& 1==distance){                                           //近身
 			new AttackLockBuff(getOwner(),attacked).effect();

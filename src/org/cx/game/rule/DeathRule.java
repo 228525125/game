@@ -1,5 +1,6 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.Death;
 import org.cx.game.action.IDeath;
 import org.cx.game.card.LifeCard;
 
@@ -31,13 +32,13 @@ public class DeathRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IDeath.class;
+		return Death.class;
 	}
 	
 	@Override
-	public IDeath getOwner() {
+	public Death getOwner() {
 		// TODO Auto-generated method stub
-		return (IDeath) super.getOwner();
+		return (Death) super.getOwner();
 	}
 	
 	

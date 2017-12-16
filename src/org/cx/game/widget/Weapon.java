@@ -84,7 +84,7 @@ public class Weapon extends Observable implements IWeapon {
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
-			map.put("position", getOwner().getContainerPosition());
+			map.put("position", getOwner().getPosition());
 			map.put("weapon", this);
 			map.put("change", wear);
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Weapon_Wear,map);
@@ -103,7 +103,7 @@ public class Weapon extends Observable implements IWeapon {
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		map.put("weapon", this);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Weapon_Output,map);
 		super.notifyObservers(info);
@@ -126,7 +126,7 @@ public class Weapon extends Observable implements IWeapon {
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		map.put("weapon", this);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Weapon_Bearkdown,map);
 		super.notifyObservers(info);

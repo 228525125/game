@@ -34,7 +34,6 @@ public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		Integer level = getLevel();
 		level += 1;

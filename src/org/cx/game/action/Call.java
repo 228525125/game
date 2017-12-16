@@ -25,9 +25,7 @@ public class Call extends Action implements ICall {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
-		super.action(objects);
-		
+
 		IPlace place = (IPlace) objects[0];
 		Integer nop = (Integer) objects[1];
 		

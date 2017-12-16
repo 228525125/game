@@ -57,13 +57,13 @@ public class AttackPolicy extends Policy {
 		doValidator(lockFormula);
 		if(hasError()){       //没有被锁，搜索射程范围内的最近的敌人
 			LifeCard enemy = scFormula.getNearEnemy();
-			this.cmdStr = "attack ground place"+enemy.getContainerPosition()+" card";
+			this.cmdStr = "attack ground place"+enemy.getPosition()+" card";
 			
 			validator();
 		}else{              //已经被锁，就在锁定的敌人中随机找
 			lockerList = lockFormula.getLockerList();
 			LifeCard locker = lockerList.get(0);
-			this.cmdStr = "attack ground place"+locker.getContainerPosition()+" card";
+			this.cmdStr = "attack ground place"+locker.getPosition()+" card";
 			
 			validator();
 		}
@@ -71,7 +71,7 @@ public class AttackPolicy extends Policy {
 	
 	private void validator(){
 		LifeCard owner = (LifeCard) getOwner().getOwner();
-		String cmd = "select ground place"+owner.getContainerPosition()+" card;";
+		String cmd = "select ground place"+owner.getPosition()+" card;";
 		try {
 			Command command= CommandFactory.getInstance(owner.getPlayer(),cmd);
 			command.execute();

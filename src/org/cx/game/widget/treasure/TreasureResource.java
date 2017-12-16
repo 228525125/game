@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.cx.game.action.IPicked;
 import org.cx.game.action.Picked;
-import org.cx.game.action.PickedDecorator;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
@@ -44,7 +43,7 @@ public class TreasureResource extends Treasure implements ITreasure {
 		if(null==this.picked){
 			IPicked picked = new TreasureResourcePicked();
 			picked.setOwner(this);
-			this.picked = new PickedDecorator(picked);
+			this.picked = picked;
 		}
 		return picked;
 	}

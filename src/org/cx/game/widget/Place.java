@@ -1,22 +1,18 @@
 package org.cx.game.widget;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.TrickCard;
 import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 import org.cx.game.rule.CallRule;
-import org.cx.game.rule.PlaceRule;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.treasure.ITreasure;
@@ -74,6 +70,8 @@ public class Place extends Observable implements IPlace {
 	@Override
 	public void in(LifeCard life) {
 		// TODO Auto-generated method stub
+		Integer original = life.getPosition();
+		life.setPosition(position);
 		this.life = life;
 		
 		this.empty = false;
@@ -86,12 +84,25 @@ public class Place extends Observable implements IPlace {
 		map.put("position", position);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Place_In,map);
 		notifyObservers(info);    //通知观察者
+		
+		/*
+		 * 生成地形优势
+		 */
+		Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
+		life.getAttack().setLandformAtk(life.getAtk()*LandformEffect.getAttackAdvantage(profession, getLandform())/100);
+		life.getAttacked().setLandformDef(life.getDef()*LandformEffect.getDefendAdvantage(profession, getLandform())/100);
+		
+		/*
+		 * 添加路径
+		 */
+		life.getMove().getMovePath().add(getPosition());
 	}
 	
 	@Override
 	public LifeCard out() {
 		// TODO Auto-generated method stub
 		LifeCard life = this.life;
+		life.setPosition(null);
 		this.life = null;
 		
 		this.empty = true;
@@ -197,6 +208,7 @@ public class Place extends Observable implements IPlace {
 	public void setBuilding(IBuilding building) {
 		// TODO Auto-generated method stub
 		this.building = building;
+		building.setPosition(position);
 	}
 	
 	@Override

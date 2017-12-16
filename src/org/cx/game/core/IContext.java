@@ -3,12 +3,13 @@ package org.cx.game.core;
 import java.util.List;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
 
-public interface IContext extends IInterceptable,Observable {
+public interface IContext extends Observable {
 
 	public final static String Ground = "Ground";
 	public final static String ControlPlayer = "ControlPlayer";
@@ -16,8 +17,6 @@ public interface IContext extends IInterceptable,Observable {
 	public abstract IControlQueue getControlQueue();
 
 	public abstract void setControlQueue(IControlQueue queue);
-	
-	public void setDecorator(ContextDecorator decorator);
 
 	public final static StartState startState = new StartState();
 	public final static DeployState deployState = new DeployState();
@@ -28,25 +27,29 @@ public interface IContext extends IInterceptable,Observable {
 
 	/**
 	 * 比赛开始
+	 * @throws RuleValidatorException 
 	 */
-	public abstract void start();
+	public abstract void start() throws RuleValidatorException;
 
 	/**
 	 *  玩家部署
+	 * @throws RuleValidatorException 
 	 *
 	 */
-	public abstract void deploy();
+	public abstract void deploy() throws RuleValidatorException;
 
 	/**
 	 *  回合结束
+	 * @throws RuleValidatorException 
 	 *
 	 */
-	public abstract void done();
+	public abstract void done() throws RuleValidatorException;
 
 	/**
 	 * 比赛结束
+	 * @throws RuleValidatorException 
 	 */
-	public abstract void finish();
+	public abstract void finish() throws RuleValidatorException;
 	
 	/**
 	 * 当前天数，从游戏开始算起
@@ -54,7 +57,7 @@ public interface IContext extends IInterceptable,Observable {
 	 */
 	public Integer getDay();
 	
-	public void addDay();
+	public void addDay() throws RuleValidatorException;
 	
 	/**
 	 * 周
@@ -62,15 +65,16 @@ public interface IContext extends IInterceptable,Observable {
 	 */
 	public Integer getWeek();
 	
-	public void addWeek(); 
+	public void addWeek() throws RuleValidatorException; 
 
 	public abstract int getBout();
 
 	/**
 	 * 当玩家开始部署时，回合数加1
+	 * @throws RuleValidatorException 
 	 *
 	 */
-	public abstract void addBout();
+	public abstract void addBout() throws RuleValidatorException;
 
 	//public abstract LifeCard getControlLife(); 半回合制
 	
@@ -82,8 +86,9 @@ public interface IContext extends IInterceptable,Observable {
 
 	/**
 	 * 交换比赛控制权
+	 * @throws RuleValidatorException 
 	 */
-	public abstract void switchControl();
+	public abstract void switchControl() throws RuleValidatorException;
 
 	public abstract String getPlayNo();
 	

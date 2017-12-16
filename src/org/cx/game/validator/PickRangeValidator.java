@@ -27,7 +27,7 @@ public class PickRangeValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
 		IGround ground = this.life.getPlayer().getContext().getGround();
-		Integer distance = ground.distance(this.life.getContainerPosition(), this.place.getPosition());
+		Integer distance = ground.distance(this.life.getPosition(), this.place.getPosition());
 		if(IPick.Pick_Range_Defautl<distance){
 			ret = false;
 			addMessage(I18n.getMessage(PickRangeValidator.class.getName()));

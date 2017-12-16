@@ -52,7 +52,7 @@ public class SelectCommand extends InteriorCommand {
 		
 		if(null!=buffer.getCard()){
 			map.put(CommandBuffer.CARD, buffer.getCard());
-			map.put("position", buffer.getCard().getContainerPosition());
+			map.put("position", buffer.getCard().getPosition());
 		}
 		
 		if(null!=buffer.getSkill())

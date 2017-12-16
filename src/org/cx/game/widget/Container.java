@@ -108,7 +108,7 @@ public abstract class Container extends Observable implements IContainer {
 	@Override
 	public Boolean remove(ICard card) {
 		// TODO Auto-generated method stub
-		Integer position = card.getContainerPosition();
+		Integer position = card.getPosition();
 		Boolean ret = cardList.remove(card);
 		if(ret){
 			Map<String,Object> map = new HashMap<String,Object>();
@@ -167,6 +167,8 @@ public abstract class Container extends Observable implements IContainer {
 			cardList.add(card);
 		else
 			cardList.add(position, card);
+		
+		card.setContainer(this);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", card.getPlayer());

@@ -33,7 +33,7 @@ public class RunbackPolicy extends Policy {
 		LifeCard owner = (LifeCard) getOwner().getOwner();
 		
 		IGround ground = GroundFactory.getGround();
-		Integer position = ground.getPointByWay(owner.getContainerPosition(), this.guardPosition, owner.getMove().getEnergy(), owner.getMove().getType());
+		Integer position = ground.getPointByWay(owner.getPosition(), this.guardPosition, owner.getMove().getEnergy(), owner.getMove().getType());
 		
 		this.cmdStr = "move ground place"+position+";";
 		
@@ -60,7 +60,7 @@ public class RunbackPolicy extends Policy {
 			System.out.println(getErrors().getMessage());
 		}else{
 			//Invoker invoker = new Invoker();
-			String cmd = "select ground place"+owner.getContainerPosition()+" card;";
+			String cmd = "select ground place"+owner.getPosition()+" card;";
 			try {
 				//invoker.receiveCommand(owner.getPlayer(), cmd);
 				Command command= CommandFactory.getInstance(owner.getPlayer(),cmd);

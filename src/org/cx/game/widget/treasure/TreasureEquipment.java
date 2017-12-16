@@ -2,7 +2,6 @@ package org.cx.game.widget.treasure;
 
 import org.cx.game.action.IPicked;
 import org.cx.game.action.Picked;
-import org.cx.game.action.PickedDecorator;
 import org.cx.game.card.HeroCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
@@ -58,7 +57,7 @@ public class TreasureEquipment extends Treasure implements ITreasure {
 		if(null==this.picked){
 			IPicked picked = new TreasureEquipmentPicked();
 			picked.setOwner(this);
-			this.picked = new PickedDecorator(picked);
+			this.picked = picked;
 		}
 		return picked;
 	}

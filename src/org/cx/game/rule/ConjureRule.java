@@ -3,6 +3,7 @@ package org.cx.game.rule;
 import java.util.Map;
 import java.util.Observable;
 
+import org.cx.game.action.Conjure;
 import org.cx.game.action.IAttacked;
 import org.cx.game.action.IConjure;
 import org.cx.game.card.LifeCard;
@@ -24,14 +25,14 @@ public class ConjureRule extends Rule implements IRule {
 	}
 
 	@Override
-	public IConjure getOwner() {
+	public Conjure getOwner() {
 		// TODO Auto-generated method stub
-		return (IConjure) super.getOwner();
+		return (Conjure) super.getOwner();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IConjure.class;
+		return Conjure.class;
 	}
 }

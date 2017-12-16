@@ -10,7 +10,6 @@ import java.util.Queue;
 import org.cx.game.action.IDeath;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.TrickCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.trick.ITrick;

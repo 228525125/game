@@ -24,7 +24,6 @@ import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.core.Player;
-import org.cx.game.core.PlayerDecorator;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
@@ -92,13 +91,44 @@ public class HoneycombGround extends Container implements IGround {
 		 * 初始化六边形地图算法
 		 */
 		cellularDistrict.initCellularDistrict(getMaxSerial(Math.max(xBorder, yBorder)));
-		initCoordinateSystem(getCentrePoint(xBorder, yBorder),Math.max(xBorder, yBorder));
+		initCoordinateSystem(getCentrePoint(xBorder, yBorder),Math.max(xBorder, yBorder));		
+		
+		/*
+		 * new Place 需要用到Decorator对象的this
+		 */
+		for(int i=1;i<getXBorder()+1;i++){
+			for(int j=1;j<getYBorder()+1;j++){
+				Integer curPos = Integer.valueOf(""+i+IGround.space+j);
+				IPlace place = new Place(this, curPos);
+				place.setLandform(IPlace.Landform_Sward);
+				addPlace(place);
+				
+				getEmptyList().add(curPos);      //初始化空位置
+			}
+		}
+		
+		/*
+		 * 放置物品
+		 */
+		for(Entry<Integer, ITreasure> entry : getTreasureMap().entrySet()){
+			Integer position = entry.getKey();
+			IPlace place = getPlace(position);
+			ITreasure treasure = entry.getValue();
+			place.setTreasure(treasure);
+		}
+		
+		/*
+		 * 设置地形
+		 */
+		for(Integer disable : getDisableList()){
+			getPlace(disable).setDisable(true);
+		}
 		
 		/*
 		 * 创建中立部队
 		 */
 		this.neutral = new Player(9, "neutral");
-		neutral = new PlayerDecorator(neutral);
+		neutral.setComputer(true);
 	}
 
 	public void add(Integer position, ICard card) {
@@ -187,9 +217,10 @@ public class HoneycombGround extends Container implements IGround {
 			Integer buildingType = entry.getValue();
 			
 			IBuilding building = BuildingFactory.getInstance(buildingType);
-			building.setPosition(position);
-			this.buildingList.add(building);
+			IPlace place = getPlace(position);
+			place.setBuilding(building);
 			
+			this.buildingList.add(building);
 			buildingMap.put(position, building);
 		}
 	}
@@ -222,6 +253,12 @@ public class HoneycombGround extends Container implements IGround {
 	public void setLandformMap(Map<Integer, Integer> landformMap) {
 		// TODO Auto-generated method stub
 		this.landformMap = landformMap;
+		
+		for(Entry<Integer,Integer> entry : landformMap.entrySet()){
+			Integer pos = entry.getKey();
+			IPlace place = getPlace(pos);
+			place.setLandform(entry.getValue());
+		}
 	}
 
 	@Override
@@ -312,7 +349,7 @@ public class HoneycombGround extends Container implements IGround {
 			 * 当远程单位在战场上时，如果附近有敌方单位，则只能近身攻击
 			 */
 			if(IAttack.Mode_Far.equals(life.getAttack().getMode())){
-				List<Integer> list = areaForDistance(life.getContainerPosition(), 1, IGround.Equal);
+				List<Integer> list = areaForDistance(life.getPosition(), 1, IGround.Equal);
 				for(Integer position : list){
 					LifeCard lifeCard = getCard(position);
 					if(null!=lifeCard && !lifeCard.getPlayer().equals(lifeCard.getPlayer())){
@@ -322,8 +359,8 @@ public class HoneycombGround extends Container implements IGround {
 				}
 			}
 			
-			positionList = areaForDistance(life.getContainerPosition(), range, Contain);  //1：表示范围内的所有单元格，0：表示等于范围的单元格
-			positionList.remove(life.getContainerPosition());
+			positionList = areaForDistance(life.getPosition(), range, Contain);  //1：表示范围内的所有单元格，0：表示等于范围的单元格
+			positionList.remove(life.getPosition());
 		}
 		
 		if(NotifyInfo.Command_Query_Move.equals(action) && card instanceof LifeCard){
@@ -331,23 +368,23 @@ public class HoneycombGround extends Container implements IGround {
 			Integer step = life.getMove().getEnergy()/life.getMove().getConsume();
 			switch (life.getMove().getType()) {
 			case 141:    //步行
-				positionList = areaForDistance(life.getContainerPosition(), step, Contain, IMove.Type_Walk);
+				positionList = areaForDistance(life.getPosition(), step, Contain, IMove.Type_Walk);
 				//distance(280083, 280083, IMove.Type_Walk);
 				break;
 			case 142:    //骑行
-				positionList = areaForDistance(life.getContainerPosition(), step, Contain, IMove.Type_Equitation);
+				positionList = areaForDistance(life.getPosition(), step, Contain, IMove.Type_Equitation);
 				break;
 			case 143:    //驾驶
-				positionList = areaForDistance(life.getContainerPosition(), step, Contain, IMove.Type_Drive);
+				positionList = areaForDistance(life.getPosition(), step, Contain, IMove.Type_Drive);
 				break;
 			case 144:    //飞行
-				positionList = areaForDistance(life.getContainerPosition(), step, Contain);
+				positionList = areaForDistance(life.getPosition(), step, Contain);
 				break;
 				
 			default:
 				break;
 			}
-			positionList.remove(life.getContainerPosition());
+			positionList.remove(life.getPosition());
 		}
 		return positionList;
 	}
@@ -362,7 +399,7 @@ public class HoneycombGround extends Container implements IGround {
 				positionList = as.getConjureRange(this);
 			}else{
 				LifeCard card = (LifeCard) skill.getOwner();
-				Integer position = card.getContainerPosition();
+				Integer position = card.getPosition();
 				positionList = areaForDistance(position, skill.getRange(), Contain);
 			}
 		}
@@ -438,6 +475,7 @@ public class HoneycombGround extends Container implements IGround {
 		
 		for(int i=0;i<path.size();i++){
 			Integer curPos = getPosition(life);
+			Integer original = life.getPosition();
 			Node node = (Node) path.get(i);
 			
 			IPlace place = getPlace(curPos);
@@ -449,6 +487,15 @@ public class HoneycombGround extends Container implements IGround {
 			 * 减少精力
 			 */
 			life.getMove().addToEnergy(-node.consume);
+			
+			/*
+			 * 生成朝向信息
+			 */
+			if(null!=original){
+				IGround ground = life.getPlayer().getContext().getGround();
+				Integer direction = ground.getDirection(original, life.getPosition());
+				life.getMove().changeDirection(direction);
+			}
 		}
 		
 		return route;
@@ -715,9 +762,9 @@ public class HoneycombGround extends Container implements IGround {
 		eList.removeAll(cList);
 		
 		for(LifeCard life : eList){
-			pList.add(life.getContainerPosition());
+			pList.add(life.getPosition());
 			
-			List<Integer> list = areaForDistance(life.getContainerPosition(), 1, IGround.Contain);
+			List<Integer> list = areaForDistance(life.getPosition(), 1, IGround.Contain);
 			list.removeAll(nList);
 			nList.addAll(list);
 		}

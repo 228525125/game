@@ -31,13 +31,11 @@ public class Chuck extends Action implements IChuck {
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
-		super.action(objects);
-		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Chuck, map);
 		super.notifyObservers(info);           //通知所有卡片对象，丢弃事件
 		

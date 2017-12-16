@@ -4,9 +4,11 @@ import org.cx.game.action.IDeath;
 import org.cx.game.action.IUpgradeHero;
 import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IUpgrade;
+import org.cx.game.action.UpgradeLife;
 import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IProduct;
 
@@ -35,7 +37,12 @@ public class UpgradeLifeRule extends Rule implements IRule {
 		LifeCard life = getOwner().getOwner();
 		IDeath death = life.getDeath();
 		
-		death.addToHp(death.getHpLimit()-hpLimit);
+		try {
+			death.addToHp(death.getHpLimit()-hpLimit);
+		} catch (RuleValidatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		IUpgradeLife upgrade = getOwner();
 		upgrade.addToEmpiricValue(this.empRequirement);
@@ -44,13 +51,13 @@ public class UpgradeLifeRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgradeLife.class;
+		return UpgradeLife.class;
 	}
 	
 	@Override
-	public IUpgradeLife getOwner() {
+	public UpgradeLife getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgradeLife) super.getOwner();
+		return (UpgradeLife) super.getOwner();
 	}
 
 }

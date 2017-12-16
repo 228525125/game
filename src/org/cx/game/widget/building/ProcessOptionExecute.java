@@ -42,7 +42,7 @@ public class ProcessOptionExecute extends Process {
 			invalid();
 
 			try {
-				this.option.getExecute().action(parameter);         //参数 可能有问题
+				this.option.getExecute().execute(parameter);         //参数 可能有问题
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

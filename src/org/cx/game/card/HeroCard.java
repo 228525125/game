@@ -5,13 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.cx.game.action.UpgradeHero;
-import org.cx.game.action.UpgradeHeroDecorator;
 import org.cx.game.action.IUpgradeHero;
 import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeLife;
-import org.cx.game.action.UpgradeLifeDecorator;
-import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.widget.treasure.ITreasure;
@@ -61,15 +58,9 @@ public class HeroCard extends LifeCard {
 			upgrade.setLevel(getLevel());
 			upgrade.setSkillCount(skillCount);
 			upgrade.setOwner(this);
-			this.upgrade = new UpgradeHeroDecorator(upgrade);
+			this.upgrade = upgrade;
 		}
 		return this.upgrade;
-	}
-	
-	public void setUpgrade(IUpgrade upgrade) {
-		upgrade.setLevel(getLevel());
-		upgrade.setOwner(this);
-		this.upgrade = new UpgradeDecorator(upgrade);
 	}
 	
 	private List<ITreasure> treasures = new ArrayList<ITreasure>();

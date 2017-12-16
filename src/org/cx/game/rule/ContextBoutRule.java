@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.Observable;
 
 import org.cx.game.action.Death;
+import org.cx.game.action.IAction;
 import org.cx.game.card.LifeCard;
+import org.cx.game.core.Context.ContextAddBout;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
@@ -20,15 +22,20 @@ public class ContextBoutRule extends Rule implements IRule {
 	@Override
 	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
-		return "addBout";
+		return "action";
 	}
 	
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		IPlayer player = getOwner().getControlPlayer();
+		IPlayer player = getOwner().getOwner().getControlPlayer();
 		
-		player.addBout();
+		try {
+			player.addBout();
+		} catch (RuleValidatorException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		Integer tax = 0;
 		IGround ground = player.getContext().getGround();
@@ -56,14 +63,14 @@ public class ContextBoutRule extends Rule implements IRule {
 	}
 	
 	@Override
-	public IContext getOwner() {
+	public ContextAddBout getOwner() {
 		// TODO Auto-generated method stub
-		return (IContext) super.getOwner();
+		return (ContextAddBout) super.getOwner();
 	}
-
+	
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IContext.class;
+		return ContextAddBout.class;
 	}
 }

@@ -12,7 +12,6 @@ import org.cx.game.builder.ObjectTypeParse;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
-import org.cx.game.widget.GroundDecorator;
 import org.cx.game.widget.IGround;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

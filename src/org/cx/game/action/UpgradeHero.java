@@ -31,7 +31,7 @@ public class UpgradeHero extends UpgradeLife implements IUpgradeHero {
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", skillCount);
-			map.put("position", getOwner().getContainerPosition());
+			map.put("position", getOwner().getPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Range,map);
 			super.notifyObservers(info);
 		}

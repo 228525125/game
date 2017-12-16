@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.action.Execute;
-import org.cx.game.action.ExecuteDecorator;
 import org.cx.game.action.IExecute;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
@@ -152,7 +151,7 @@ public abstract class Option implements IOption {
 			
 		firing();
 		
-		getExecute().action(objects);
+		getExecute().execute(objects);
 	}
 	
 	private ParameterTypeValidator parameterValidator = null;

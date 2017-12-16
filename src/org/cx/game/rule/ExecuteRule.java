@@ -1,5 +1,6 @@
 package org.cx.game.rule;
 
+import org.cx.game.action.Execute;
 import org.cx.game.action.IExecute;
 
 public class ExecuteRule extends Rule implements IRule {
@@ -24,12 +25,12 @@ public class ExecuteRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IExecute.class;
+		return Execute.class;
 	}
 	
 	@Override
-	public IExecute getOwner() {
+	public Execute getOwner() {
 		// TODO Auto-generated method stub
-		return (IExecute) super.getOwner();
+		return (Execute) super.getOwner();
 	}
 }

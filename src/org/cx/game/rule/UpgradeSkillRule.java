@@ -5,6 +5,7 @@ import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IUpgradeSkill;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeLife;
+import org.cx.game.action.UpgradeSkill;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
@@ -32,13 +33,13 @@ public class UpgradeSkillRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgradeSkill.class;
+		return UpgradeSkill.class;
 	}
 	
 	@Override
-	public IUpgradeSkill getOwner() {
+	public UpgradeSkill getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgradeSkill) super.getOwner();
+		return (UpgradeSkill) super.getOwner();
 	}
 
 }

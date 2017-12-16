@@ -65,7 +65,7 @@ public class SallyPolicy extends Policy {
 	
 	private void validator(){
 		LifeCard owner = (LifeCard) getOwner().getOwner();
-		String cmd = "select ground place"+owner.getContainerPosition()+" card;";
+		String cmd = "select ground place"+owner.getPosition()+" card;";
 		try {
 			Command command= CommandFactory.getInstance(owner.getPlayer(),cmd);
 			command.execute();

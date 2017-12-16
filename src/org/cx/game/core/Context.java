@@ -17,7 +17,11 @@ import java.util.Observable;
 import java.util.Set;
 import java.util.UUID;
 
+import org.cx.game.action.Action;
 import org.cx.game.action.Death;
+import org.cx.game.action.IAction;
+import org.cx.game.action.IPicked;
+import org.cx.game.action.Picked;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
@@ -31,7 +35,6 @@ import org.cx.game.out.JsonOut;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.widget.ControlQueue;
-import org.cx.game.widget.ControlQueueDecorator;
 import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
@@ -45,12 +48,9 @@ import org.dom4j.io.SAXReader;
 
 public class Context extends Observable implements IContext
 {	
-	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private String playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
 	private IControlQueue queue = new ControlQueue();
-	private Long newCardPlayId = 1l;                          //用于记录本场比赛中生成的id
-	
-	private ContextDecorator decorator = null; 
+	private Long newCardPlayId = 1l;                          //用于记录本场比赛中生成的id 
 	
 	private final static Map<Integer,Integer> TagCategory_1 = new HashMap<Integer,Integer>();
 	private final static Map<Integer,List<Integer>> TagCategory_2 = new HashMap<Integer,List<Integer>>();
@@ -174,10 +174,6 @@ public class Context extends Observable implements IContext
 	public static Integer getCategory(Integer tag){
 		return TagCategory_1.get(tag);
 	}
-	
-	public void setDecorator(ContextDecorator decorator) {
-		this.decorator = decorator;
-	}
 
 	public IControlQueue getControlQueue() {
 		return queue;
@@ -197,20 +193,20 @@ public class Context extends Observable implements IContext
 		this.playState.setContext(this);
 	}
 
-	public void start(){
+	public void start() throws RuleValidatorException{
 		setPlayState(startState);
 		this.playState.start();
 	}
 	
-	public void deploy(){
+	public void deploy() throws RuleValidatorException{
 		this.playState.deploy();
 	}
 	
-	public void done(){
+	public void done() throws RuleValidatorException{
 		this.playState.done();
 	}
 	
-	public void finish(){
+	public void finish() throws RuleValidatorException{
 		this.playState.finish();
 	}
 	
@@ -221,13 +217,18 @@ public class Context extends Observable implements IContext
 		return bout;
 	}
 	
-	public void addBout(){
-		bout++;
-		if(1==bout%getPlayerList().size()){
-			decorator.addDay();
-			if(1==day%7)
-				decorator.addWeek();
+	private IAction addBoutAction = null;
+	
+	public IAction getAddBoutAction(){
+		if(null==this.addBoutAction){
+			this.addBoutAction = new ContextAddBout();
+			addBoutAction.setOwner(this);
 		}
+		return this.addBoutAction;
+	}
+	
+	public void addBout() throws RuleValidatorException{
+		getAddBoutAction().execute();
 	}
 	
 	@Override
@@ -236,10 +237,21 @@ public class Context extends Observable implements IContext
 		return day;
 	}
 	
+	private IAction addDayAction = null;
+	
+	public IAction getAddDayAction(){
+		if(null==this.addDayAction){
+			IAction ad = new ContextAddDay();
+			ad.setOwner(this);
+			this.addDayAction = ad;
+		}
+		return this.addDayAction;
+	}
+	
 	@Override
-	public void addDay() {
+	public void addDay() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		this.day++;
+		getAddDayAction().execute();
 	}
 	
 	@Override
@@ -248,10 +260,21 @@ public class Context extends Observable implements IContext
 		return this.week;
 	}
 	
+	private IAction addWeekAction = null;
+	
+	public IAction getAddWeekAction(){
+		if(null==this.addWeekAction){
+			IAction aw = new ContextAddWeek();
+			aw.setOwner(this);
+			this.addWeekAction = aw;
+		}
+		return this.addWeekAction;
+	}
+	
 	@Override
-	public void addWeek() {
+	public void addWeek() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		this.week++;
+		getAddWeekAction().execute();
 	}
 	
 	@Override
@@ -276,42 +299,12 @@ public class Context extends Observable implements IContext
 		notifyObservers(info);
 	}
 	
-	public void switchControl(){
+	public void switchControl() throws RuleValidatorException{
 		Object object = queue.out();
 		
 		setControlPlayer((IPlayer) object);
 		
-		decorator.addBout();
-	}
-	
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
+		addBout();
 	}
 
 	public String getPlayNo() {
@@ -335,5 +328,55 @@ public class Context extends Observable implements IContext
 	public IGround getGround() {
 		// TODO Auto-generated method stub
 		return this.ground;
+	}
+	
+	public class ContextAddBout extends Action implements IAction {
+		
+		@Override
+		public void action(Object... objects) throws RuleValidatorException {
+			// TODO Auto-generated method stub
+			bout++;
+			if(1==bout%getPlayerList().size()){
+				addDay();
+				if(1==day%7)
+					addWeek();
+			}
+		}
+		
+		@Override
+		public IContext getOwner() {
+			// TODO Auto-generated method stub
+			return (IContext) super.getOwner();
+		}
+	}
+	
+	public class ContextAddDay extends Action implements IAction {
+		
+		@Override
+		public void action(Object... objects) throws RuleValidatorException {
+			// TODO Auto-generated method stub
+			day++;
+		}
+		
+		@Override
+		public IContext getOwner() {
+			// TODO Auto-generated method stub
+			return (IContext) super.getOwner();
+		}
+	}
+	
+	public class ContextAddWeek extends Action implements IAction {
+		
+		@Override
+		public void action(Object... objects) throws RuleValidatorException {
+			// TODO Auto-generated method stub
+			week++;
+		}
+		
+		@Override
+		public IContext getOwner() {
+			// TODO Auto-generated method stub
+			return (IContext) super.getOwner();
+		}
 	}
 }

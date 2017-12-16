@@ -5,6 +5,7 @@ import java.util.Observable;
 
 import org.cx.game.action.IAttacked;
 import org.cx.game.action.IMove;
+import org.cx.game.action.Move;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IIntercepter;
@@ -30,13 +31,13 @@ public class MoveRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IMove.class;
+		return Move.class;
 	}
 	
 	@Override
-	public IMove getOwner() {
+	public Move getOwner() {
 		// TODO Auto-generated method stub
-		return (IMove) super.getOwner();
+		return (Move) super.getOwner();
 	}
 
 }

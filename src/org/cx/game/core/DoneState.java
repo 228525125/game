@@ -12,14 +12,14 @@ import org.cx.game.out.JsonOut;
 public class DoneState extends PlayState {
 
 	@Override
-	public void deploy() {
+	public void deploy() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		context.setPlayState(IContext.deployState);
 		context.deploy();
 	}
 
 	@Override
-	public void done() {
+	public void done() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		IPlayer curPlayer = context.getControlPlayer();
 		List<LifeCard> list = curPlayer.getAttendantList(true);

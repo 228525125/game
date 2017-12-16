@@ -68,7 +68,6 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		Integer level = getLevel();
 		level += 1;
@@ -77,7 +76,7 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		map.put("card", getOwner());
 		map.put("level", getLevel());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Upgrade,map);

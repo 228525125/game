@@ -17,5 +17,4 @@ public abstract class Rule extends Intercepter implements IRule {
 		// TODO Auto-generated method stub
 		return this.owner;
 	}
-
 }

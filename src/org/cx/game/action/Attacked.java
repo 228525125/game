@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.action.Death.DeathAddToHpAction;
 import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.IBuff;
@@ -137,7 +138,7 @@ public class Attacked extends Action implements IAttacked {
 		this.armour = armour;
 	}
 	
-	@Override
+	/*
 	public Integer addToArmour(Integer armour) {
 		// TODO Auto-generated method stub
 		Integer ret = 0;
@@ -146,23 +147,21 @@ public class Attacked extends Action implements IAttacked {
 			ret = this.armour<0 ? this.armour : 0;
 			this.armour = this.armour>0 ? this.armour : 0;
 			
-			/*Map<String,Object> map = new HashMap<String,Object>();
+			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", getOwner().getPlayer());
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", armour);
 			map.put("position", getOwner().getContainerPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Armour,map);
-			super.notifyObservers(info);*/
+			super.notifyObservers(info);
 		}
 		return ret;
-	}
+	}*/
 
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
-		super.action(objects);
 		
 		IAttack attack = (IAttack) objects[1];
 		
@@ -180,24 +179,20 @@ public class Attacked extends Action implements IAttacked {
 		damage = damage*ratio/1000;
 		damage = -damage;
 		
-		/*
-		 * 攻击有先后顺序
-		 */
-		IDeath death = getOwner().getDeath();
-		damage = addToArmour(damage);
-		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("attack", attack.getOwner());
 		map.put("attacked", getOwner());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		map.put("damage", damage);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
 		super.notifyObservers(info);
 		
 		//造成的实际伤害
-		damage = death.addToHp(damage);
+		IDeath death = getOwner().getDeath();
+		death.addToHp(damage);
+		damage = ((DeathAddToHpAction) death.getAddToHpAction()).getDamage();
 		
 		//增加经验值
 		IUpgradeLife lu = (IUpgradeLife) attack.getOwner().getUpgrade();

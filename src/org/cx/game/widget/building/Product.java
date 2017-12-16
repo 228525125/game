@@ -2,7 +2,6 @@ package org.cx.game.widget.building;
 
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeProduct;
-import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 
@@ -49,19 +48,14 @@ public class Product implements IProduct {
 		if(null==this.upgrade){
 			IUpgrade upgrade = new UpgradeProduct();
 			upgrade.setOwner(this);
-			this.upgrade = new UpgradeDecorator(upgrade);
+			this.upgrade = upgrade;
 		}
 		return upgrade;
-	}
-
-	public void setUpgrade(IUpgrade upgrade) {
-		upgrade.setOwner(this);
-		this.upgrade = new UpgradeDecorator(upgrade);
 	}
 
 	@Override
 	public void upgrade() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		this.upgrade.action();
+		this.upgrade.execute();
 	}
 }

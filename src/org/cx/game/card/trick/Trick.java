@@ -51,7 +51,7 @@ public abstract class Trick extends Observable implements ITrick {
 		this.bout = bout;
 		this.touchNumberOfTimes = touchNumberOfTimes;
 
-		recordIntercepter(player.getContext(), this);
+		recordIntercepter(player.getAddBoutAction(), this);
 		
 		String allName = this.getClass().getName();
 		String packageName = this.getClass().getPackage().getName();

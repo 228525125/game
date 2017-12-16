@@ -19,7 +19,7 @@ public class MoveRangeValidator extends Validator {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		
-		Integer curPosition = life.getContainerPosition();
+		Integer curPosition = life.getPosition();
 		Integer step = life.getPlayer().getContext().getGround().distance(curPosition, place.getPosition());
 		Integer energy = life.getMove().getEnergy();
 		Integer consume = life.getMove().getConsume();

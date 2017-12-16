@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import org.cx.game.action.UpgradeBuilding;
 import org.cx.game.action.IUpgrade;
-import org.cx.game.action.UpgradeDecorator;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -211,22 +210,15 @@ public class Building implements IBuilding, IRecover {
 			upgrade.setLevelLimit(levelLimit);
 			upgrade.setRequirement(consume);      //升级默认与建造相同，但这种方式可能会有问题
 			upgrade.setOwner(this);
-			this.upgrade = new UpgradeDecorator(upgrade);
+			this.upgrade = upgrade;
 		}
 		return upgrade;
-	}
-
-	public void setUpgrade(IUpgrade upgrade) {
-		upgrade.setLevelLimit(levelLimit);
-		upgrade.setRequirement(consume);
-		upgrade.setOwner(this);
-		this.upgrade = new UpgradeDecorator(upgrade);
 	}
 	
 	@Override
 	public void upgrade() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		this.upgrade.action();
+		this.upgrade.execute();
 	}
 	
 	public void demolish(){

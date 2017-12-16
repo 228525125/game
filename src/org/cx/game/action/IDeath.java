@@ -1,7 +1,9 @@
 package org.cx.game.action;
 
+import org.cx.game.action.Death.DeathAddToHpAction;
 import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IRecover;
 import org.cx.game.observer.Observable;
@@ -11,7 +13,7 @@ import org.cx.game.observer.Observable;
  * @author chenxian
  *
  */
-public interface IDeath extends IAction, IRecover{
+public interface IDeath extends IAction {
 	
 	/**
 	 * 当前生命值
@@ -25,12 +27,15 @@ public interface IDeath extends IAction, IRecover{
 	 */
 	public void setHp(Integer hp);
 	
+	public IAction getAddToHpAction();
+	
 	/**
 	 * 改变HP值，可能是受到伤害，也可能是接收治疗
 	 * @param hp
 	 * @return 增加和减少的实际数据，例如hp=10，damage=-100，return=10；
+	 * @throws RuleValidatorException 
 	 */
-	public Integer addToHp(Integer hp);
+	public void addToHp(Integer hp) throws RuleValidatorException;
 	
 	/**
 	 * 生命值上限 = 初始生命值 + 等级生命值 + 额外生命值

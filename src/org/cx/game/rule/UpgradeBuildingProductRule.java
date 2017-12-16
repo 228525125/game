@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import org.cx.game.action.IUpgradeProduct;
 import org.cx.game.action.IUpgrade;
+import org.cx.game.action.UpgradeProduct;
 import org.cx.game.core.IPlayer;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IProduct;
@@ -34,13 +35,13 @@ public class UpgradeBuildingProductRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgradeProduct.class;
+		return UpgradeProduct.class;
 	}
 	
 	@Override
-	public IUpgradeProduct getOwner() {
+	public UpgradeProduct getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgradeProduct) super.getOwner();
+		return (UpgradeProduct) super.getOwner();
 	}
 
 }

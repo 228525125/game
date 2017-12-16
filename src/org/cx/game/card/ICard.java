@@ -82,5 +82,7 @@ public interface ICard extends ITag
 	 * 在容器中的位置
 	 * @return
 	 */
-	public Integer getContainerPosition();
+	public Integer getPosition();
+	
+	public void setPosition(Integer position);
 }

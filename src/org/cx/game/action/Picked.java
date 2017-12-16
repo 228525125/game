@@ -21,7 +21,6 @@ public class Picked extends Action implements IPicked {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		LifeCard life = (LifeCard) objects[0];
 		

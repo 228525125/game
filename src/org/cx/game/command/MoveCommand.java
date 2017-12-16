@@ -5,6 +5,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.LifeCardActivateValidator;
 import org.cx.game.validator.LifeCardMoveableValidator;
+import org.cx.game.validator.MoveRangeValidator;
 import org.cx.game.validator.MoveTauntValidator;
 import org.cx.game.validator.SelectContainerValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
@@ -25,6 +26,7 @@ public class MoveCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
 		addValidator(new SelectPlaceEmptyValidator((IPlace) parameter, true));
+		addValidator(new MoveRangeValidator((LifeCard) buffer.getCard(), (IPlace) parameter));
 	}
 	
 	@Override

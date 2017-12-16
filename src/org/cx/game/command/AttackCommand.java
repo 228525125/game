@@ -6,6 +6,7 @@ import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackAtkValidator;
+import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.validator.AttackTauntValidator;
 import org.cx.game.validator.AttackableValidator;
 import org.cx.game.validator.SelectContainerValidator;
@@ -26,6 +27,7 @@ public class AttackCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
 		addValidator(new AttackTauntValidator(buffer, (LifeCard) parameter));
+		addValidator(new AttackRangeValidator((LifeCard) buffer.getCard(),(LifeCard) parameter));
 	}
 	
 	@Override

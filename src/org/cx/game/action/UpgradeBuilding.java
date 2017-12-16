@@ -41,7 +41,6 @@ public class UpgradeBuilding extends Upgrade implements IUpgradeBuilding {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		Integer level = getLevel();
 		level += 1;

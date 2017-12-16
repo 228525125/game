@@ -53,7 +53,7 @@ public class Activate extends Action implements IActivate {
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", speed);
-			map.put("position", getOwner().getContainerPosition());
+			map.put("position", getOwner().getPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Speed,map);
 			super.notifyObservers(info);
 		}
@@ -78,8 +78,6 @@ public class Activate extends Action implements IActivate {
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
-		super.action(objects);
-		
 		Boolean activate = (Boolean) objects[0];
 		
 		setActivation(activate);
@@ -88,7 +86,7 @@ public class Activate extends Action implements IActivate {
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
-		map.put("position", getOwner().getContainerPosition());
+		map.put("position", getOwner().getPosition());
 		map.put("activate", activate);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Activate,map);
 		notifyObservers(info);

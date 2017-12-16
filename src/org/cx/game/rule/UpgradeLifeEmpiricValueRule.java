@@ -1,6 +1,7 @@
 package org.cx.game.rule;
 
 import org.cx.game.action.IUpgradeLife;
+import org.cx.game.action.UpgradeLife;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 
@@ -36,13 +37,13 @@ public class UpgradeLifeEmpiricValueRule extends Rule implements IRule {
 	@Override
 	public Class getInterceptable() {
 		// TODO Auto-generated method stub
-		return IUpgradeLife.class;
+		return UpgradeLife.class;
 	}
 	
 	@Override
-	public IUpgradeLife getOwner() {
+	public UpgradeLife getOwner() {
 		// TODO Auto-generated method stub
-		return (IUpgradeLife) super.getOwner();
+		return (UpgradeLife) super.getOwner();
 	}
 
 }

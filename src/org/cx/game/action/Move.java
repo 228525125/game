@@ -27,12 +27,6 @@ public class Move extends Action implements IMove{
 	private Integer direction = IGround.Relative_Right;
 	
 	@Override
-	public MoveDecorator getDecorator() {
-		// TODO Auto-generated method stub
-		return (MoveDecorator) super.getDecorator();
-	}
-	
-	@Override
 	public Integer getType() {
 		// TODO Auto-generated method stub
 		return this.type;
@@ -188,7 +182,7 @@ public class Move extends Action implements IMove{
 			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("direction", direction);
-			map.put("position", getOwner().getContainerPosition());
+			map.put("position", getOwner().getPosition());
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Direction,map);
 			super.notifyObservers(info);
 		}
@@ -207,7 +201,6 @@ public class Move extends Action implements IMove{
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		super.action(objects);
 		
 		IPlace place = (IPlace) objects[0];
 		

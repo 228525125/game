@@ -120,13 +120,14 @@
 		<command name='upgrade' class='org.cx.game.command.UpgradeCommand' parameter='no'>
 			<description>升级</description>
 		</command>
-		<!-- 命令转换例子：setup 1 = select group 1;setup = select group;select 1;setup -->
+		<!-- 命令转换例子：setup 1 = select group 1;setup = select group;select 1;setup 
 		<command name='setup' class='org.cx.game.command.SetupCommand' parameter='request'>
 			<description>放置</description>
 			<parameter>
 				<option>place</option>
 			</parameter>			
 		</command>
+		-->
 		<command name='apply' class='org.cx.game.command.ApplyCommand' parameter='request'>
 			<description>使用魔法卡</description>
 			<parameter>
