@@ -21,6 +21,43 @@ public class Call extends Action implements ICall {
 		// TODO Auto-generated method stub
 		return (LifeCard) super.getOwner();
 	}
+
+	@Override
+	public Map<String,Integer> getConsume() {
+		// TODO Auto-generated method stub
+		return consume;
+	}
+	
+	public void setConsume(Map<String,Integer> consume) {
+		for(String resType : consume.keySet())
+			getConsume().put(resType, consume.get(resType));
+	}
+	
+	@Override
+	public Integer getRation() {
+		// TODO Auto-generated method stub
+		return this.ration;
+	}
+	
+	@Override
+	public void setRation(Integer ration) {
+		// TODO Auto-generated method stub
+		if(!ration.equals(this.ration)){
+			this.ration = ration;
+		}
+	}
+	
+	public Integer getNop() {
+		return nop;
+	}
+
+	public void setNop(Integer nop) {
+		if(!nop.equals(this.nop)){
+			this.nop = nop;
+			
+			getOwner().getAttack().updateDmg();
+		}
+	}
 	
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
@@ -51,58 +88,10 @@ public class Call extends Action implements ICall {
 		ground.add(place.getPosition(), getOwner());
 		
 		/*
-		 * 玩家可能直接召唤高等级单位
+		 * 刚招募的部队允许反击
 		 */
-		IDeath death = getOwner().getDeath();
-		getOwner().getAttack().updateAtk();
-		getOwner().getAttacked().updateDef();
-		death.updateHpLimit();
-		updateConsume();
-		getOwner().getUpgrade().updateRequirement();
-		
-		death.setHp(death.getHpLimit());
-		
-		/*半回合制
-		IPlayer player = getOwner().getPlayer();
-		IControlQueue cq = player.getContext().getControlQueue();
-		cq.add(getOwner());   //插入队列*/
-	}
-
-	@Override
-	public Map<String,Integer> getConsume() {
-		// TODO Auto-generated method stub
-		return consume;
-	}
-	
-	public void setConsume(Map<String,Integer> consume) {
-		for(String resType : consume.keySet())
-			getConsume().put(resType, consume.get(resType));
-	}
-	
-	public void updateConsume(){
-		/*Integer level = getOwner().getUpgrade().getLevel();
-		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
-		this.consume = getOwner().getConsume() * riseRatio.intValue() / 100;*/
-	}
-	
-	@Override
-	public Integer getRation() {
-		// TODO Auto-generated method stub
-		return this.ration;
-	}
-	
-	@Override
-	public void setRation(Integer ration) {
-		// TODO Auto-generated method stub
-		this.ration = ration;
-	}
-	
-	public Integer getNop() {
-		return nop;
-	}
-
-	public void setNop(Integer nop) {
-		this.nop = nop;
+		getOwner().getDeath().setStatus(IDeath.Status_Live);
+		getOwner().getAttacked().setFightBack(true);
 	}
 
 }

@@ -1,8 +1,6 @@
 package org.cx.game.tools;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.cx.game.widget.IGround;
@@ -10,7 +8,6 @@ import org.cx.game.widget.IGround;
 /** 
  * 蜂窝小区，以1为中心，顺时针编号，编号最大限定为100000。 求任意两编号之间的最短距离。 两个相邻小区的距离为1 
  *  
- * 参见试题说明的示意图 
  *  
  */
 public class CellularDistrict {
@@ -182,10 +179,10 @@ public class CellularDistrict {
     public static Integer yBorder = 12;
     
     static {
-    	initCoordinateSystem(getCentrePoint(xBorder,yBorder),Math.max(xBorder, yBorder));
+    	initCoordinateSystem(getCenterPoint(xBorder,yBorder),Math.max(xBorder, yBorder));
     }
     
-    private static Integer getCentrePoint(Integer xBorder, Integer yBorder){
+    private static Integer getCenterPoint(Integer xBorder, Integer yBorder){
     	return pointToInteger(xBorder/2, yBorder/2);
     }
     

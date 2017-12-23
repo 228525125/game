@@ -40,6 +40,9 @@ import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.UseCard;
+import org.cx.game.widget.building.BuildingCall;
+import org.cx.game.widget.building.BuildingResource;
+import org.cx.game.widget.building.BuildingTown;
 import org.cx.game.widget.building.IBuilding;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -341,6 +344,15 @@ public class Context extends Observable implements IContext
 				if(1==day%7)
 					addWeek();
 			}
+			
+			IPlayer player = getControlPlayer();
+			
+			try {
+				player.addBout();
+			} catch (RuleValidatorException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 		@Override
@@ -356,6 +368,28 @@ public class Context extends Observable implements IContext
 		public void action(Object... objects) throws RuleValidatorException {
 			// TODO Auto-generated method stub
 			day++;
+			
+			/*
+			 * 产出
+			 */
+			IGround ground = getOwner().getGround();
+			List<IBuilding> list = ground.getBuildingList();
+			for(IBuilding building : list){
+				if(building instanceof BuildingTown){
+					BuildingTown town = (BuildingTown) building;
+					for(IBuilding innerBuilding :town.getBuildings()){
+						if(innerBuilding instanceof BuildingResource){
+							BuildingResource br = (BuildingResource) innerBuilding;
+							br.output();           
+						}
+					}
+				}
+				
+				if(building instanceof BuildingResource){
+					BuildingResource br = (BuildingResource) building;
+					br.output();
+				}
+			}
 		}
 		
 		@Override
@@ -371,6 +405,23 @@ public class Context extends Observable implements IContext
 		public void action(Object... objects) throws RuleValidatorException {
 			// TODO Auto-generated method stub
 			week++;
+			
+			/*
+			 * 产出
+			 */
+			IGround ground = getOwner().getGround();
+			List<IBuilding> list = ground.getBuildingList();
+			for(IBuilding building : list){
+				if(building instanceof BuildingTown){
+					BuildingTown town = (BuildingTown) building;
+					for(IBuilding innerBuilding :town.getBuildings()){
+						if(innerBuilding instanceof BuildingCall){
+							BuildingCall bc = (BuildingCall) innerBuilding;
+							bc.output();           
+						}
+					}
+				}
+			}
 		}
 		
 		@Override

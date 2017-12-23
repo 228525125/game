@@ -45,19 +45,6 @@ public interface IDeath extends IAction {
 	
 	public void setHpLimit(Integer hpLimit);
 	
-	/**
-	 * 额外生命值 
-	 * @return
-	 */
-	public Integer getExtraHp();
-	
-	public void setExtraHp(Integer extraHp);
-	
-	/**
-	 * 更新生命值上限
-	 */
-	public void updateHpLimit();
-	
 	public final static Integer Status_Live = 0;         //战斗
 	public final static Integer Status_Death = 1;        //死亡
 	public final static Integer Status_Exist = 2;        //存在

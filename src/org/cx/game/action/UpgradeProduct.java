@@ -8,6 +8,7 @@ import org.cx.game.action.Upgrade;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IProduct;
 
 public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
@@ -32,6 +33,12 @@ public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 	}
 	
 	@Override
+	public IProduct getOwner() {
+		// TODO Auto-generated method stub
+		return (IProduct) super.getOwner();
+	}
+	
+	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
@@ -48,11 +55,5 @@ public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 		map.put("level", getLevel());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Building_Action_Upgrade_Product,map);
 		super.notifyObservers(info);
-	}
-	
-	@Override
-	public IProduct getOwner() {
-		// TODO Auto-generated method stub
-		return (IProduct) super.getOwner();
 	}
 }

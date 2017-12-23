@@ -7,7 +7,6 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.ConjureRule;
 import org.cx.game.rule.IRule;
 
 /**
@@ -40,5 +39,7 @@ public class Conjure extends Action implements IConjure {
 		
 		Object [] parameter = (Object[]) objects[1];
 		skill.useSkill(parameter);
+		
+		getOwner().getAttack().setAttackable(false);
 	}
 }

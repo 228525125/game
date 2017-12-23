@@ -18,6 +18,18 @@ import org.cx.game.rule.IRule;
 public class Affected extends Action implements IAffected {
 	
 	@Override
+	public LifeCard getOwner() {
+		// TODO Auto-generated method stub
+		return (LifeCard) super.getOwner();
+	}
+	
+	@Override
+	public void magicHarm(Integer harm) {
+		// TODO Auto-generated method stub
+		//getOwner().getDeath().addToHp(harm);
+	}
+	
+	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
@@ -34,18 +46,6 @@ public class Affected extends Action implements IAffected {
 		
 		if(magic.isTrigger(objects))
 			magic.affect(getOwner());
-	}
-	
-	@Override
-	public LifeCard getOwner() {
-		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
-	}
-	
-	@Override
-	public void magicHarm(Integer harm) {
-		// TODO Auto-generated method stub
-		//getOwner().getDeath().addToHp(harm);
-	}
+	}	
 
 }

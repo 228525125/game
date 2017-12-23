@@ -13,7 +13,6 @@ public class Death extends Action implements IDeath {
 	
 	private Integer hp = 0;
 	private Integer hpLimit = 0;
-	private Integer extraHp = 0;
 	private Integer status = IDeath.Status_Exist;
 	
 	@Override
@@ -55,25 +54,9 @@ public class Death extends Action implements IDeath {
 	}
 
 	public void setHpLimit(Integer hpLimit) {
-		this.hpLimit = hpLimit;
-	}
-
-	public Integer getExtraHp() {
-		return extraHp;
-	}
-
-	public void setExtraHp(Integer extraHp) {
-		this.extraHp = extraHp;
-		
-		 updateHpLimit();
-	}
-	
-	public void updateHpLimit(){
-		Integer level = getOwner().getUpgrade().getLevel();
-		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
-		Integer hp = getOwner().getHp() * riseRatio.intValue() / 100;
-		Integer extraHp = getExtraHp();
-		this.hpLimit = hp + extraHp;
+		if(!hpLimit.equals(this.hpLimit)){
+			this.hpLimit = hpLimit;
+		}
 	}
 	
 	public Integer getStatus() {
@@ -81,7 +64,9 @@ public class Death extends Action implements IDeath {
 	}
 
 	public void setStatus(Integer status) {
-		this.status = status;
+		if(!status.equals(this.status)){
+			this.status = status;
+		}
 	}
 
 	@Override
@@ -99,6 +84,14 @@ public class Death extends Action implements IDeath {
 		IPlace place = ground.getPlace(getOwner().getPosition());
 		place.out();
 		place.getCemetery().add(getOwner());         //进入墓地
+		
+		if(getOwner().getHero()){
+			setStatus(IDeath.Status_Exist);
+		}else{
+			setStatus(IDeath.Status_Death);
+		}
+		
+		getOwner().initState();
 	}
 	
 	public class DeathAddToHpAction extends Action implements IAction {
@@ -127,6 +120,18 @@ public class Death extends Action implements IDeath {
 				map.put("position", getOwner().getOwner().getPosition());
 				NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
 				super.notifyObservers(info);
+				
+				/*
+				 * 判断死亡
+				 */
+				if(Death.this.hp.equals(0)){
+					try {
+						getOwner().action();
+					} catch (RuleValidatorException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.cx.game.action.IUpgradeSkill;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Upgrade;
+import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IPlayer;
@@ -35,6 +36,15 @@ public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 		Integer level = getLevel();
 		level += 1;
 		setLevel(level);
+		
+		/*
+		 * 扣除技能点
+		 */
+		LifeCard life = getOwner().getOwner();
+		IUpgradeHero up = (IUpgradeHero) life.getUpgrade();
+		Integer skillCountReq = up.getRequirement().get(IPlayer.SkillCount);
+		Integer skillCount = up.getSkillCount();
+		up.setSkillCount(skillCount-skillCountReq);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getOwner().getPlayer());

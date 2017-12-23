@@ -17,10 +17,8 @@ public abstract class Container extends Observable implements IContainer {
 
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	protected List<ICard> cardList = new ArrayList<ICard>();
-	private IPlayer player;
 	private String action;
 	
-	public static final String CardGroup = "CardGroup";
 	public static final String Cemetery = "Cemetery";
 	public static final String Ground = "Ground";
 	public static final String UseCard = "UseCard";
@@ -30,65 +28,28 @@ public abstract class Container extends Observable implements IContainer {
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
 	}
-	
-	/*private ContainerDecorator decorator = null;
-
-	public void setDecorator(ContainerDecorator decorator) {
-		this.decorator = decorator;
-	}
-
-	public ContainerDecorator getDecorator() {
-		return decorator;
-	}*/
-
-
-
-	public IPlayer getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(IPlayer player) {
-		this.player = player;
-	}
 
 	public void setAction(String action) {
 		this.action = action;
 	}
-
+	
 	@Override
-	public void addIntercepter(IIntercepter intercepter) {
+	public void add(Integer position, ICard card) {
 		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
+		if(NotifyInfo.Container_Ground_Add.equals(action) || NotifyInfo.Container_Ground_Remove.equals(action))  //如果是ground，position就没有意义
+			cardList.add(card);
+		else
+			cardList.add(position, card);
 		
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
+		card.setContainer(this);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", card.getPlayer());
+		map.put("container", this);
+		map.put("card", card);
+		map.put("position", position);
+		NotifyInfo info = new NotifyInfo(action,map);
+		notifyObservers(info);    //通知观察者
 	}
 
 	@Override
@@ -159,25 +120,6 @@ public abstract class Container extends Observable implements IContainer {
 		}
 		return ret;
 	}
-
-	@Override
-	public void add(Integer position, ICard card) {
-		// TODO Auto-generated method stub
-		if(NotifyInfo.Container_Ground_Add.equals(action) || NotifyInfo.Container_Ground_Remove.equals(action))  //如果是ground，position就没有意义
-			cardList.add(card);
-		else
-			cardList.add(position, card);
-		
-		card.setContainer(this);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", card.getPlayer());
-		map.put("container", this);
-		map.put("card", card);
-		map.put("position", position);
-		NotifyInfo info = new NotifyInfo(action,map);
-		notifyObservers(info);    //通知观察者
-	}
 	
 	@Override
 	public void notifyObservers(Object arg0) {
@@ -194,6 +136,37 @@ public abstract class Container extends Observable implements IContainer {
 	
 	public List toList(){
 		return cardList;
+	}
+	
+	@Override
+	public void addIntercepter(IIntercepter intercepter) {
+		// TODO Auto-generated method stub
+		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
+		if(null!=intercepters){
+			intercepters.add(intercepter);
+		}else{
+			intercepters = new ArrayList<IIntercepter>();
+			intercepters.add(intercepter);
+			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
+		}
+	}
+
+	@Override
+	public void deleteIntercepter(IIntercepter intercepter) {
+		// TODO Auto-generated method stub
+		intercepter.delete();
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		intercepterList.clear();
+	}
+
+	@Override
+	public Map<String,List<IIntercepter>> getIntercepterList() {
+		// TODO Auto-generated method stub
+		return intercepterList;
 	}
 
 }

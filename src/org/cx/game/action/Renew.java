@@ -10,7 +10,6 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
-import org.cx.game.rule.RenewRule;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IPlace;
 
@@ -39,5 +38,8 @@ public class Renew extends Action implements IRenew {
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Renew,map);
 		super.notifyObservers(info);           //通知所有卡片对象，召唤事件
+		
+		getOwner().getDeath().setStatus(Death.Status_Live);
+		getOwner().getAttacked().setFightBack(true);
 	}
 }

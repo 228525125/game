@@ -178,6 +178,14 @@ public class HoneycombGround extends Container implements IGround {
 		// TODO Auto-generated method stub
 		return ground.get(position);
 	}
+	
+	@Override
+	public void addPlace(IPlace place) {
+		// TODO Auto-generated method stub
+		ground.put(place.getPosition(), place);
+	}
+	
+	//----------------------- Building ------------------------
 
 	public List<IBuilding> getBuildingList() {
 		return buildingList;
@@ -224,6 +232,56 @@ public class HoneycombGround extends Container implements IGround {
 			buildingMap.put(position, building);
 		}
 	}
+	
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(IBuilding building : getBuildingList(player)){
+			list.add(building.getPosition());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player,
+			Integer buildingType) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(IBuilding building : getBuildingList(player, buildingType)){
+			list.add(building.getPosition());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Integer> getBuildingPosition(IPlayer player, Integer buildingType, Integer level) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<Integer>();
+		for(IBuilding building : getBuildingList(player, buildingType)){
+			if(building.getUpgrade().getLevel()>=level)
+				list.add(building.getPosition());
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public void addBuilding(IBuilding building) {
+		// TODO Auto-generated method stub
+		buildingList.add(building);
+	}
+	
+	@Override
+	public void captureBuilding(Integer position, IPlayer player) {
+		// TODO Auto-generated method stub
+		IBuilding building = getBuilding(position);
+		building.setPlayer(player);
+	}
+	
+	//----------------------- Building End------------------------
 
 	public List<Integer> getDisableList() {
 		return disableList;
@@ -273,60 +331,6 @@ public class HoneycombGround extends Container implements IGround {
 	
 	public void setTreasureMap(Map<Integer, ITreasure> treasureMap) {
 		this.treasureMap = treasureMap;
-	}
-
-	@Override
-	public List<Integer> getBuildingPosition(IPlayer player) {
-		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
-		for(IBuilding building : getBuildingList(player)){
-			list.add(building.getPosition());
-		}
-		
-		return list;
-	}
-	
-	@Override
-	public List<Integer> getBuildingPosition(IPlayer player,
-			Integer buildingType) {
-		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
-		for(IBuilding building : getBuildingList(player, buildingType)){
-			list.add(building.getPosition());
-		}
-		
-		return list;
-	}
-	
-	@Override
-	public List<Integer> getBuildingPosition(IPlayer player, Integer buildingType, Integer level) {
-		// TODO Auto-generated method stub
-		List<Integer> list = new ArrayList<Integer>();
-		for(IBuilding building : getBuildingList(player, buildingType)){
-			if(building.getUpgrade().getLevel()>=level)
-				list.add(building.getPosition());
-		}
-		
-		return list;
-	}
-	
-	@Override
-	public void addBuilding(IBuilding building) {
-		// TODO Auto-generated method stub
-		buildingList.add(building);
-	}
-	
-	@Override
-	public void captureBuilding(Integer position, IPlayer player) {
-		// TODO Auto-generated method stub
-		IBuilding building = getBuilding(position);
-		building.setPlayer(player);
-	}
-	
-	@Override
-	public void addPlace(IPlace place) {
-		// TODO Auto-generated method stub
-		ground.put(place.getPosition(), place);
 	}
 	
 	@Override
@@ -486,7 +490,9 @@ public class HoneycombGround extends Container implements IGround {
 			/*
 			 * 减少精力
 			 */
-			life.getMove().addToEnergy(-node.consume);
+			Integer energy = life.getMove().getConsume();
+			energy -= node.consume;
+			life.getMove().setEnergy(energy);
 			
 			/*
 			 * 生成朝向信息
@@ -494,31 +500,11 @@ public class HoneycombGround extends Container implements IGround {
 			if(null!=original){
 				IGround ground = life.getPlayer().getContext().getGround();
 				Integer direction = ground.getDirection(original, life.getPosition());
-				life.getMove().changeDirection(direction);
+				life.getMove().setDirection(direction);
 			}
 		}
 		
 		return route;
-	}
-	
-	private Integer[] integerToPoint(Integer point){
-		String [] points = point.toString().split(space);
-		Integer x = Integer.valueOf(points[0]);
-		Integer y = Integer.valueOf(points[1]);
-
-		return new Integer[]{x,y}; 
-	}
-	
-	/**
-	 * 用于表示越界的点，isOver = true
-	 */
-	private static final Integer OverPoint = 110010;
-	
-	private Integer pointToInteger(Integer x,Integer y){
-		if(x<1 || y<1)
-			return OverPoint;
-		else
-			return Integer.valueOf(x+space+y);
 	}
 	
 	@Override
@@ -532,20 +518,6 @@ public class HoneycombGround extends Container implements IGround {
 			list.add(place);
 		}
 		return list;
-	}
-
-	/**
-	 * 判断是否超出边界
-	 * @param position
-	 * @return
-	 */
-	private Boolean isOver(Integer position){
-		Integer [] ps = integerToPoint(position);
-		if(ps[0]<1||ps[0]>xBorder)
-			return true;
-		if(ps[1]<1||ps[1]>yBorder)
-			return true;
-		return false;
 	}
 	
 	@Override
@@ -707,138 +679,7 @@ public class HoneycombGround extends Container implements IGround {
 
 		return list;		
 	}
-	
-	/**
-	 * 两点之间的矩阵，包含起点和终点
-	 * @param start 左上角
-	 * @param stop  右下角
-	 * @return
-	 */
-	private List<Integer> rectangle(Integer start, Integer stop){
-		String [] starts = start.toString().split(space);
-		Integer startx = Integer.valueOf(starts[0]);
-		Integer starty = Integer.valueOf(starts[1]);
 		
-		String [] stops = stop.toString().split(space);
-		Integer stopx = Integer.valueOf(stops[0]);
-		Integer stopy = Integer.valueOf(stops[1]);
-		
-		List<Integer> list = new ArrayList<Integer>();
-		for(int i=startx;i<=stopx;i++)
-			for(int j=starty;j<=stopy;j++)
-				list.add(Integer.valueOf(i+space+j));
-		return list;
-	}
-	
-	/**
-	 * 更新MAP加载地形；
-	 */
-	private void updateMAP_Landform(Integer moveType){
-		
-		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
-		
-		for(Integer i : m){
-			String [] is = i.toString().split(space);
-			Integer ix = Integer.valueOf(is[0]);
-			Integer iy = Integer.valueOf(is[1]);
-			IPlace p = getPlace(i);
-			MAP[ix][iy] = LandformEffect.getConsume(moveType, p.getLandform());
-		}
-	}
-	
-	/**
-	 * 加载战场单位的站位情况；
-	 * 为什么是独立为一个方法，主要考虑hide状态下系统不会去加载站位情况
-	 */
-	private void updateMAP_Stance(){
-		IContext context = ContextFactory.getContext();
-		IPlayer control = context.getControlPlayer();
-		
-		List<Integer> pList = new ArrayList<Integer>();         //敌方单位的站位，友方允许穿过
-		List<Integer> nList = new ArrayList<Integer>();         //敌方单位附近1个单元格
-		
-		List<LifeCard> cList = list(control, Death.Status_Live);
-		List<LifeCard> eList = list(Death.Status_Live);            //非友方单位
-		eList.removeAll(cList);
-		
-		for(LifeCard life : eList){
-			pList.add(life.getPosition());
-			
-			List<Integer> list = areaForDistance(life.getPosition(), 1, IGround.Contain);
-			list.removeAll(nList);
-			nList.addAll(list);
-		}
-		
-		for(Integer p : nList){
-			Integer [] point = integerToPoint(p);
-			if(-1!=MAP[point[0]][point[1]])
-				MAP[point[0]][point[1]] += 1;
-		}
-		
-		for(Integer p : pList){
-			Integer [] point = integerToPoint(p);
-			MAP[point[0]][point[1]] = -1;
-		}
-	}
-	
-	/**
-	 * 初始化MAP，不加载地形等信息
-	 */
-	private void updateMAP(){
-		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
-		
-		for(Integer i : m){
-			String [] is = i.toString().split(space);
-			Integer ix = Integer.valueOf(is[0]);
-			Integer iy = Integer.valueOf(is[1]);
-			MAP[ix][iy] = 1;
-		}
-	}
-	
-	/**
-	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
-	 * 注意，在调用该方法之前，必须调用updateMAP，之所以将两个方法分开，也是为了提高
-	 * 计算效率，例如在一次route方法调用，只更新一次MAP
-	 * @param start
-	 * @param stop
-	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达则返回null
-	 */
-	private List route(Integer start, Integer stop){
-		updateMAP();
-		
-		PathFinding pathFinding = new PathFinding(MAP,hit);
-		
-		Integer[] starts = integerToPoint(start);
-		Integer[] stops = integerToPoint(stop);
-		Point startPos = new Point(starts[0], starts[1]);
-		Point stopPos = new Point(stops[0],stops[1]);
-		List path = pathFinding.searchPath(startPos, stopPos);
-		
-		return path;
-	}
-	
-	/**
-	 * 
-	 * @param start
-	 * @param stop 
-	 * @param moveType 移动类型
-	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达，即MAP中为-1，则返回null
-	 */
-	private List route(Integer start, Integer stop, Integer moveType){
-		updateMAP_Landform(moveType);           //加载地形
-		updateMAP_Stance();                     //加载站位
-		
-		PathFinding pathFinding = new PathFinding(MAP,hit);
-		
-		Integer[] starts = integerToPoint(start);
-		Integer[] stops = integerToPoint(stop);
-		Point startPos = new Point(starts[0], starts[1]);
-		Point stopPos = new Point(stops[0],stops[1]);
-		List path = pathFinding.searchPath(startPos, stopPos);
-		
-		return path;
-	}
-	
 	@Override
 	public Integer getDirection(Integer stand, Integer target) {
 		// TODO Auto-generated method stub
@@ -1166,6 +1007,171 @@ public class HoneycombGround extends Container implements IGround {
 			}
 		}
     }
+	
+	private Integer[] integerToPoint(Integer point){
+		String [] points = point.toString().split(space);
+		Integer x = Integer.valueOf(points[0]);
+		Integer y = Integer.valueOf(points[1]);
+
+		return new Integer[]{x,y}; 
+	}
+	
+	/**
+	 * 用于表示越界的点，isOver = true
+	 */
+	private static final Integer OverPoint = 110010;
+	
+	private Integer pointToInteger(Integer x,Integer y){
+		if(x<1 || y<1)
+			return OverPoint;
+		else
+			return Integer.valueOf(x+space+y);
+	}
+	
+	/**
+	 * 判断是否超出边界
+	 * @param position
+	 * @return
+	 */
+	private Boolean isOver(Integer position){
+		Integer [] ps = integerToPoint(position);
+		if(ps[0]<1||ps[0]>xBorder)
+			return true;
+		if(ps[1]<1||ps[1]>yBorder)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * 两点之间的矩阵，包含起点和终点
+	 * @param start 左上角
+	 * @param stop  右下角
+	 * @return
+	 */
+	private List<Integer> rectangle(Integer start, Integer stop){
+		String [] starts = start.toString().split(space);
+		Integer startx = Integer.valueOf(starts[0]);
+		Integer starty = Integer.valueOf(starts[1]);
+		
+		String [] stops = stop.toString().split(space);
+		Integer stopx = Integer.valueOf(stops[0]);
+		Integer stopy = Integer.valueOf(stops[1]);
+		
+		List<Integer> list = new ArrayList<Integer>();
+		for(int i=startx;i<=stopx;i++)
+			for(int j=starty;j<=stopy;j++)
+				list.add(Integer.valueOf(i+space+j));
+		return list;
+	}
+	
+	/**
+	 * 更新MAP加载地形；
+	 */
+	private void updateMAP_Landform(Integer moveType){
+		
+		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
+		
+		for(Integer i : m){
+			String [] is = i.toString().split(space);
+			Integer ix = Integer.valueOf(is[0]);
+			Integer iy = Integer.valueOf(is[1]);
+			IPlace p = getPlace(i);
+			MAP[ix][iy] = LandformEffect.getConsume(moveType, p.getLandform());
+		}
+	}
+	
+	/**
+	 * 加载战场单位的站位情况；
+	 * 为什么是独立为一个方法，主要考虑hide状态下系统不会去加载站位情况
+	 */
+	private void updateMAP_Stance(){
+		IContext context = ContextFactory.getContext();
+		IPlayer control = context.getControlPlayer();
+		
+		List<Integer> pList = new ArrayList<Integer>();         //敌方单位的站位，友方允许穿过
+		List<Integer> nList = new ArrayList<Integer>();         //敌方单位附近1个单元格
+		
+		List<LifeCard> cList = list(control, Death.Status_Live);
+		List<LifeCard> eList = list(Death.Status_Live);            //非友方单位
+		eList.removeAll(cList);
+		
+		for(LifeCard life : eList){
+			pList.add(life.getPosition());
+			
+			List<Integer> list = areaForDistance(life.getPosition(), 1, IGround.Contain);
+			list.removeAll(nList);
+			nList.addAll(list);
+		}
+		
+		for(Integer p : nList){
+			Integer [] point = integerToPoint(p);
+			if(-1!=MAP[point[0]][point[1]])
+				MAP[point[0]][point[1]] += 1;
+		}
+		
+		for(Integer p : pList){
+			Integer [] point = integerToPoint(p);
+			MAP[point[0]][point[1]] = -1;
+		}
+	}
+	
+	/**
+	 * 初始化MAP，不加载地形等信息
+	 */
+	private void updateMAP(){
+		List<Integer> m = rectangle(Integer.valueOf(1+space+1), Integer.valueOf(xBorder+space+yBorder));
+		
+		for(Integer i : m){
+			String [] is = i.toString().split(space);
+			Integer ix = Integer.valueOf(is[0]);
+			Integer iy = Integer.valueOf(is[1]);
+			MAP[ix][iy] = 1;
+		}
+	}
+	
+	/**
+	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
+	 * 注意，在调用该方法之前，必须调用updateMAP，之所以将两个方法分开，也是为了提高
+	 * 计算效率，例如在一次route方法调用，只更新一次MAP
+	 * @param start
+	 * @param stop
+	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达则返回null
+	 */
+	private List route(Integer start, Integer stop){
+		updateMAP();
+		
+		PathFinding pathFinding = new PathFinding(MAP,hit);
+		
+		Integer[] starts = integerToPoint(start);
+		Integer[] stops = integerToPoint(stop);
+		Point startPos = new Point(starts[0], starts[1]);
+		Point stopPos = new Point(stops[0],stops[1]);
+		List path = pathFinding.searchPath(startPos, stopPos);
+		
+		return path;
+	}
+	
+	/**
+	 * 
+	 * @param start
+	 * @param stop 
+	 * @param moveType 移动类型
+	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达，即MAP中为-1，则返回null
+	 */
+	private List route(Integer start, Integer stop, Integer moveType){
+		updateMAP_Landform(moveType);           //加载地形
+		updateMAP_Stance();                     //加载站位
+		
+		PathFinding pathFinding = new PathFinding(MAP,hit);
+		
+		Integer[] starts = integerToPoint(start);
+		Integer[] stops = integerToPoint(stop);
+		Point startPos = new Point(starts[0], starts[1]);
+		Point stopPos = new Point(stops[0],stops[1]);
+		List path = pathFinding.searchPath(startPos, stopPos);
+		
+		return path;
+	}
 	
 	public static void main(String[] args) {
 		/*Integer x1=1,y1=1,x2=2,y2=2;

@@ -3,6 +3,8 @@ package org.cx.game.widget.building;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cx.game.core.IPlayer;
+
 public class BuildingResource extends Building {
 	
 	private Map<String,Integer> resource = new HashMap<String,Integer>();
@@ -10,6 +12,11 @@ public class BuildingResource extends Building {
 	public BuildingResource(Integer buildingType) {
 		super(buildingType);
 		// TODO Auto-generated constructor stub
+		
+		this.resource.put(IPlayer.Gold, 0);
+		this.resource.put(IPlayer.Wood, 0);
+		this.resource.put(IPlayer.Stone, 0);
+		this.resource.put(IPlayer.Ore, 0);
 	}
 
 	public Map<String,Integer> getResource() {

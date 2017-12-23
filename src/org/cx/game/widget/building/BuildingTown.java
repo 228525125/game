@@ -1,7 +1,10 @@
 package org.cx.game.widget.building;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.cx.game.action.IUpgrade;
 import org.cx.game.core.IPlayer;
@@ -13,13 +16,18 @@ import org.cx.game.core.IPlayer;
  */
 public class BuildingTown extends Building implements IBuilding {
 	
-	private Integer tax = 0;
+	private Map<String, Integer> tax = new HashMap<String, Integer>();
 	private List<IBuilding> buildings = new ArrayList<IBuilding>();
 	
 	public BuildingTown(Integer buildingType) {
 		super(buildingType);
 		// TODO Auto-generated constructor stub
-		setStatus(IBuilding.Building_Status_Complete);  //城镇在地图上已经形成；
+		setStatus(IBuilding.Building_Status_Complete);  //城镇在地图上已经形成
+		
+		this.tax.put(IPlayer.Gold, 0);
+		this.tax.put(IPlayer.Wood, 0);
+		this.tax.put(IPlayer.Stone, 0);
+		this.tax.put(IPlayer.Ore, 0);
 	}
 	
 	@Override
@@ -35,14 +43,19 @@ public class BuildingTown extends Building implements IBuilding {
 	 * 征税
 	 * @return
 	 */
-	public Integer getTax() {
+	public Map<String, Integer> getTax() {
 		// TODO Auto-generated method stub
+		for(IBuilding building : getBuildings()){
+			if (building instanceof BuildingResource) {
+				BuildingResource br = (BuildingResource) building;
+				for(Entry<String,Integer> entry : br.getResource().entrySet()){
+					Integer taxValue = this.tax.get(entry.getKey());
+					taxValue += entry.getValue();
+					this.tax.put(entry.getKey(), taxValue);
+				}
+			}
+		}
 		return this.tax;
-	}
-	
-	public void setTax(Integer tax) {
-		// TODO Auto-generated method stub
-		this.tax = tax;
 	}
 	
 	/**

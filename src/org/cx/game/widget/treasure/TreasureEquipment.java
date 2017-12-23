@@ -6,6 +6,11 @@ import org.cx.game.card.HeroCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 
+/**
+ * 装备物品
+ * @author chenxian
+ *
+ */
 public class TreasureEquipment extends Treasure implements ITreasure {
 
 	private Integer id = null;

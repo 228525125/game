@@ -11,6 +11,11 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
+/**
+ * 资料类物品
+ * @author chenxian
+ *
+ */
 public class TreasureResource extends Treasure implements ITreasure {
 
 	private Map<String, Integer> resource = new HashMap<String, Integer>();

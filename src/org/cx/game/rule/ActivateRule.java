@@ -23,20 +23,7 @@ public class ActivateRule extends Rule implements IRule {
 		IActivate activate = getOwner();
 		LifeCard owner = activate.getOwner();
 		
-		if(activation){
-			owner.getAttack().setAttackable(true);
-			owner.getMove().setMoveable(true);
-			owner.getAttacked().setFightBack(true);
-			List<IBuff> buffs = owner.getNexusBuff(AttackLockBuff.class);  //清除锁定对象
-			for(IBuff buff : buffs){
-				buff.invalid();
-			}
-			
-			activate.addToVigour(-IActivate.ActivationConsume);
-		}else{
-			owner.getAttack().setAttackable(false);
-			owner.getMove().setMoveable(false);
-			
+		if(!activation){
 			/*
 			 * 当活力值大于一次行动消耗时，再次获得一次行动
 			 */

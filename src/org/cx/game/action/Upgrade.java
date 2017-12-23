@@ -17,11 +17,12 @@ public abstract class Upgrade extends Action implements IUpgrade {
 	@Override
 	public void setLevel(Integer level) {
 		// TODO Auto-generated method stub
-		this.level = level;
-		
-		if(null!=getOwner())
-			updateRequirement();			
-		
+		if(!level.equals(this.level)){
+			this.level = level;
+			
+			if(null!=getOwner())
+				updateRequirement();
+		}
 	}
 	
 	public Integer getLevelLimit() {
@@ -29,7 +30,9 @@ public abstract class Upgrade extends Action implements IUpgrade {
 	}
 
 	public void setLevelLimit(Integer levelLimit) {
-		this.levelLimit = levelLimit;
+		if(!levelLimit.equals(this.levelLimit)){
+			this.levelLimit = levelLimit;
+		}
 	}
 
 	private Map<String,Integer> requirement = new HashMap<String,Integer>();

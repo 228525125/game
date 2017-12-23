@@ -13,6 +13,11 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 
+/**
+ * 处理补充兵源的情况
+ * @author chenxian
+ *
+ */
 public class CallRule extends Rule implements IRule {
 	
 	@Override
@@ -64,19 +69,6 @@ public class CallRule extends Rule implements IRule {
 			
 			this.isInvoke = false;
 		}
-	}
-	
-	@Override
-	public void after(Object[] args) {
-		// TODO Auto-generated method stub
-		ICall call = getOwner();
-		LifeCard owner = call.getOwner();
-		
-		/*
-		 * 刚招募的部队允许反击
-		 */
-		owner.getDeath().setStatus(IDeath.Status_Live);
-		owner.getAttacked().setFightBack(true);
 	}
 	
 	/**

@@ -54,13 +54,6 @@ public interface IContainer extends IInterceptable, Observable
 	 */
 	public Integer getPosition(ICard card);
 	
-	/**
-	 * 所属玩家
-	 */
-	public IPlayer getPlayer();
-	
-	public void setPlayer(IPlayer player);
-	
 	public List<ICard> list();
 	
 	/**

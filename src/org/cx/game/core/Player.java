@@ -343,6 +343,20 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 			notifyObservers(info);
 			
 			/*
+			 * 获得控制权的玩家单位被激活
+			 */
+			for(LifeCard life : getAttendantList(Death.Status_Live)){
+				Integer speed = life.getActivate().getSpeed();
+				life.getActivate().addToVigour(speed);
+				try {
+					life.activate(true);
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			/*
 			 * 计算技能冷却
 			 */
 			List<LifeCard> lList = getAttendantList(Death.Status_Live);

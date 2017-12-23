@@ -46,8 +46,6 @@ public interface IMove extends IAction{
 	
 	public void setType(Integer type);
 	
-	public void changeType(Integer type);
-	
 	/**
 	 * 精力，与移动范围相关
 	 * @return
@@ -55,8 +53,6 @@ public interface IMove extends IAction{
 	public Integer getEnergy();
 
 	public void setEnergy(Integer energy);
-	
-	public void addToEnergy(Integer energy);
 	
 	/**
 	 * 逃离成功率
@@ -66,8 +62,6 @@ public interface IMove extends IAction{
 	
 	public void setFlee(Integer fleeChance);
 	
-	public void addToFlee(Integer fleeChance);
-	
 	/**
 	 * 隐身状态
 	 * @return
@@ -76,8 +70,6 @@ public interface IMove extends IAction{
 	
 	public void setHide(Boolean hide);
 	
-	public void changeHide(Boolean hide);
-	
 	/**
 	 * 朝向
 	 * @return
@@ -85,12 +77,6 @@ public interface IMove extends IAction{
 	public Integer getDirection();
 	
 	public void setDirection(Integer direction);
-	
-	/**
-	 * 改变朝向
-	 * @param direction 朝向
-	 */
-	public void changeDirection(Integer direction);
 	
 	/**
 	 * 移动路径

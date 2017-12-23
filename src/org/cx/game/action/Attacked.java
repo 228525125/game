@@ -8,10 +8,11 @@ import org.cx.game.action.Death.DeathAddToHpAction;
 import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.buff.IBuff;
+import org.cx.game.card.buff.TauntBuff;
+import org.cx.game.card.skill.IPassiveSkill;
+import org.cx.game.card.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.AttackRule;
-import org.cx.game.rule.AttackedRule;
 import org.cx.game.rule.IRule;
 import org.cx.game.widget.treasure.ITreasure;
 import org.cx.game.widget.treasure.TreasureEquipment;
@@ -24,7 +25,6 @@ import org.cx.game.widget.treasure.TreasureEquipment;
 public class Attacked extends Action implements IAttacked {
 
 	private Boolean fightBack = false;
-	private Integer armour = 0;
 	private Integer def = 0;         //真实防御力
 	private Integer armourDef = 0;   //装备防御力
 	private Integer extraDef = 0;    //额外防御力
@@ -39,7 +39,7 @@ public class Attacked extends Action implements IAttacked {
 	@Override
 	public Integer getDef() {
 		// TODO Auto-generated method stub
-		return this.def+getLandformDef();
+		return this.def;
 	}
 	
 	@Override
@@ -48,28 +48,28 @@ public class Attacked extends Action implements IAttacked {
 		this.def = def;
 	}
 	
-	@Override
-	public void addToDef(Integer def) {
-		// TODO Auto-generated method stub
-		if(0<def){
-			this.def += def;
-			this.def = this.def<0 ? 0 : this.def;
-			
-			/*Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("change", this.def);
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Def,map);
-			super.notifyObservers(info);*/
-		}
+	public void updateDef(){
+		Integer def = getOwner().getDef();
+		Integer armourDef = getArmourDef();
+		Integer landformDef = getLandformDef();
+		Integer extraDef = getExtraDef();
+		setDef(def + armourDef + landformDef + extraDef);
 	}
 	
 	@Override
 	public Integer getArmourDef() {
 		// TODO Auto-generated method stub
 		return this.armourDef;
+	}
+	
+	@Override
+	public void setArmourDef(Integer armourDef) {
+		// TODO Auto-generated method stub
+		if(!armourDef.equals(this.armourDef)){
+			this.armourDef = armourDef;
+			
+			updateDef();
+		}
 	}
 	
 	@Override
@@ -84,7 +84,7 @@ public class Attacked extends Action implements IAttacked {
 					def += te.getDef();
 				}
 			}
-			this.armourDef = def;
+			setArmourDef(def);
 		}
 	}
 	
@@ -93,7 +93,11 @@ public class Attacked extends Action implements IAttacked {
 	}
 
 	public void setLandformDef(Integer landformDef) {
-		this.landformDef = landformDef;
+		if(!landformDef.equals(this.landformDef)){
+			this.landformDef = landformDef;
+			
+			updateDef();			
+		}
 	}
 
 	public Integer getExtraDef() {
@@ -101,17 +105,29 @@ public class Attacked extends Action implements IAttacked {
 	}
 
 	public void setExtraDef(Integer extraDef) {
-		this.extraDef = extraDef;
+		if(!extraDef.equals(this.extraDef)){
+			this.extraDef = extraDef;
+			
+			updateDef();
+		}
 	}
 	
-	public void updateDef(){
-		Integer level = getOwner().getUpgrade().getLevel();
-		Double riseRatio = level>1 ? Math.pow(IUpgrade.DefaultLifeCardRiseRatio, level) * 100 : 100d;
-		Integer def = getOwner().getDef() * riseRatio.intValue() / 100;
-		Integer armourDef = getArmourDef();
-		Integer landformDef = getLandformDef();
-		Integer extraDef = getExtraDef();
-		this.def = def + armourDef + landformDef + extraDef;
+	@Override
+	public void updateExtraDef() {
+		// TODO Auto-generated method stub
+		Integer levelDef = getOwner().getUpgrade().getLevel();
+		Integer buffDef = 0;
+		for(IBuff buff : getOwner().getBuffList()){
+			buffDef += buff.getDef();
+		}
+		Integer skillDef = 0;
+		for(ISkill skill : getOwner().getSkillList()){
+			if (skill instanceof IPassiveSkill) {
+				IPassiveSkill ps = (IPassiveSkill) skill;
+				skillDef += ps.getDef();
+			}
+		}
+		setExtraDef(levelDef + buffDef + skillDef);
 	}
 
 	@Override
@@ -123,46 +139,15 @@ public class Attacked extends Action implements IAttacked {
 	@Override
 	public void setFightBack(Boolean fightBack) {
 		// TODO Auto-generated method stub
-		this.fightBack = fightBack;
-	}
-	
-	@Override
-	public Integer getArmour() {
-		// TODO Auto-generated method stub
-		return this.armour;
-	}
-	
-	@Override
-	public void setArmour(Integer armour) {
-		// TODO Auto-generated method stub
-		this.armour = armour;
-	}
-	
-	/*
-	public Integer addToArmour(Integer armour) {
-		// TODO Auto-generated method stub
-		Integer ret = 0;
-		if(!Integer.valueOf(0).equals(armour)){
-			this.armour += armour;
-			ret = this.armour<0 ? this.armour : 0;
-			this.armour = this.armour>0 ? this.armour : 0;
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("card", getOwner());
-			map.put("change", armour);
-			map.put("position", getOwner().getContainerPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Armour,map);
-			super.notifyObservers(info);
+		if(!fightBack.equals(this.fightBack)){
+			this.fightBack = fightBack;
 		}
-		return ret;
-	}*/
+	}
 
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
+		LifeCard attackLife = (LifeCard) objects[0];
 		IAttack attack = (IAttack) objects[1];
 		
 		/*
@@ -173,7 +158,7 @@ public class Attacked extends Action implements IAttacked {
 		Integer temp = atk - def;
 		Integer ratio = temp<0 ? temp*25 : temp*50;
 		ratio += 1000;
-		Integer[] dmg = attack.getDmg();
+		Integer[] dmg = Attack.IntegerToDamage(attack.getDmg());
 		Integer result = Random.nextInt(dmg[1]-dmg[0]);
 		Integer damage =  dmg[0]+result;
 		damage = damage*ratio/1000;
@@ -197,5 +182,24 @@ public class Attacked extends Action implements IAttacked {
 		//增加经验值
 		IUpgradeLife lu = (IUpgradeLife) attack.getOwner().getUpgrade();
 		lu.addToEmpiricValue(Math.abs(damage));
+		
+		/*
+		 * 反击
+		 */
+		if(IDeath.Status_Live.equals(getOwner().getDeath().getStatus())          //没有死亡 
+			&& getFightBack()                                           //是否反击过 
+			&& !attack.getCounterAttack()                                             //这次攻击方式是否是反击
+			&& 0<getOwner().getAttack().getAtk()                        //是否有攻击力 
+			&& getOwner().getBuff(TauntBuff.class).isEmpty()){        //没有被嘲讽
+			try {
+				getOwner().getAttack().setCounterAttack(true);      //设置为反击
+				getOwner().attack(attackLife);
+				getOwner().getAttack().setCounterAttack(false);     //反击结束
+				getOwner().getAttacked().setFightBack(false);
+			} catch (RuleValidatorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

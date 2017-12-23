@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * A*寻路算法，六边形版本
  * 被用于Ground.route
  * @author chenxian
  *

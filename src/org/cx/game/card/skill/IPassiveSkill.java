@@ -21,4 +21,16 @@ public interface IPassiveSkill extends ISkill,IIntercepter {
 	 * 失效
 	 */
 	public void invalid();
+	
+	/**
+	 * 被动技能增加的攻击力，在extraAtk里面体现
+	 * @return
+	 */
+	public Integer getAtk();
+	
+	/**
+	 * 被动技能增加的防御力，在extraAtk里面体现
+	 * @return
+	 */
+	public Integer getDef();
 }

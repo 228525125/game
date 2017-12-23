@@ -1,9 +1,12 @@
 package org.cx.game.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.cx.game.card.LifeCard;
+import org.cx.game.card.buff.AttackLockBuff;
+import org.cx.game.card.buff.IBuff;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.ActivateRule;
@@ -90,6 +93,23 @@ public class Activate extends Action implements IActivate {
 		map.put("activate", activate);
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Activate,map);
 		notifyObservers(info);
+		
+		LifeCard owner = getOwner();
+		
+		if(activation){
+			owner.getAttack().setAttackable(true);
+			owner.getMove().setMoveable(true);
+			owner.getAttacked().setFightBack(true);
+			List<IBuff> buffs = owner.getNexusBuff(AttackLockBuff.class);  //清除锁定对象
+			for(IBuff buff : buffs){
+				buff.invalid();
+			}
+			
+			addToVigour(-IActivate.ActivationConsume);
+		}else{
+			owner.getAttack().setAttackable(false);
+			owner.getMove().setMoveable(false);
+		}
 	}
 	
 	@Override

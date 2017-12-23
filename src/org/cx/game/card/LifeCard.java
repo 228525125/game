@@ -422,6 +422,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		this.buffList.add(buff);
 		
+		getAttack().updateExtraAtk();
+		getAttacked().updateExtraDef();
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getPlayer());
 		map.put("container", getContainer());
@@ -438,7 +441,12 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * 该方法仅用于Buff.invalid
 	 * @param buff
 	 */
-	public void removeBuff(IBuff buff){	
+	public void removeBuff(IBuff buff){
+		this.buffList.remove(buff);
+		
+		getAttack().updateExtraAtk();
+		getAttacked().updateExtraDef();
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getPlayer());
 		map.put("container", getContainer());
@@ -447,8 +455,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		map.put("position", getPosition());
 		NotifyInfo info = new NotifyInfo(buff.getAction()+Invalid,map);
 		notifyObservers(info);
-
-		this.buffList.remove(buff);
 	}
 	
 	public List<IBuff> getBuff(Class clazz){
@@ -679,6 +685,8 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	public void addSkill(ISkill skill){
 		skill.setOwner(this);
 		skillList.add(skill);
+		getAttack().updateExtraAtk();
+		getAttacked().updateExtraDef();
 	}
 	
 	public Boolean containsSkill(Class clazz){

@@ -64,6 +64,18 @@ public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRe
 	public void setDuplication(Boolean duplication);
 	
 	/**
+	 * buff增加的攻击力，在extraAtk中体现
+	 * @return
+	 */
+	public Integer getAtk();
+	
+	/**
+	 * buff增加的防御力，在extraAtk中体现
+	 * @return
+	 */
+	public Integer getDef();
+	
+	/**
 	 * 受益，不包含系统级的buff
 	 */
 	public static final Integer Type_Benefit = 121;

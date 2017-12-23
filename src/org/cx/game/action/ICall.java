@@ -23,8 +23,6 @@ public interface ICall extends IAction {
 	
 	public void setConsume(Map<String,Integer> consume);
 	
-	public void updateConsume();
-	
 	/**
 	 * 人口
 	 * @return

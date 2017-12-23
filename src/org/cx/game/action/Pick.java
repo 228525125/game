@@ -23,6 +23,12 @@ public class Pick extends Action implements IPick {
 		
 		ITreasure treasure = (ITreasure) objects[0];
 		
+		/*
+		 * 消耗精力
+		 */
+		Integer energy = getOwner().getMove().getEnergy();
+		getOwner().getMove().setEnergy(--energy);
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
@@ -31,8 +37,6 @@ public class Pick extends Action implements IPick {
 		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Pick,map);
 		super.notifyObservers(info);
-		
-		getOwner().getMove().addToEnergy(-1);
 		
 		treasure.picked(getOwner());
 	}

@@ -15,19 +15,6 @@ public interface IAttacked extends IAction {
 	public void setFightBack(Boolean fightBack);
 	
 	/**
-	 * 护甲
-	 * @return
-	 */
-	public Integer getArmour();
-	
-	public void setArmour(Integer armour);
-	
-	/*
-	 * 取消护甲抵消伤害
-	 */
-	//public Integer addToArmour(Integer armour);
-	
-	/**
 	 * 真实防御力 = 初始防御力 + 等级防御力 + 地形防御力 + 额外防御力
 	 * @return
 	 */
@@ -35,7 +22,10 @@ public interface IAttacked extends IAction {
 	
 	public void setDef(Integer def);
 	
-	public void addToDef(Integer def);
+	/**
+	 * 更新防御力
+	 */
+	public void updateDef();
 	
 	/**
 	 * 地形防御力
@@ -51,10 +41,12 @@ public interface IAttacked extends IAction {
 	 */
 	public Integer getArmourDef();
 	
+	public void setArmourDef(Integer armourDef);
+	
 	public void updateArmourDef();
 	
 	/**
-	 * 额外防御力
+	 * 额外防御力，包括：等级防御力，buff防御力，skill防御力
 	 * @return
 	 */
 	public Integer getExtraDef();
@@ -62,8 +54,8 @@ public interface IAttacked extends IAction {
 	public void setExtraDef(Integer extraDef);
 	
 	/**
-	 * 更新防御力
+	 * 更新包括：等级防御力，buff防御力，skill防御力
 	 */
-	public void updateDef();
+	public void updateExtraDef();
 
 }

@@ -5,7 +5,6 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
-import org.cx.game.widget.IWeapon;
 
 /**
  * 系统将攻击这个动作抽象出来的目的是不同的生物攻击方式不同，规则也不同，比如近身攻击、远程攻击等
@@ -28,8 +27,6 @@ public interface IAttack extends IAction {
 	
 	public void setMode(Integer mode);
 	
-	public void changeMode(Integer mode);
-	
 	public Integer getRange();
 
 	/**
@@ -37,8 +34,6 @@ public interface IAttack extends IAction {
 	 * @param range
 	 */
 	public void setRange(Integer range);
-	
-	public void addToRange(Integer range);
 	
 	/**
 	 * 真实攻击力 = 初始攻击力  + 等级攻击力 + 武器攻击力 + 地形攻击力 + 额外攻击力
@@ -54,26 +49,23 @@ public interface IAttack extends IAction {
 	public void updateAtk();
 
 	/**
-	 * 额外攻击力
+	 * 额外攻击力，包括：等级攻击力，buff攻击力，skill攻击力
 	 * @return
 	 */
 	public Integer getExtraAtk();
-	
-	public Integer getWeaponAtk();
-	
-	public void updateWeaponAtk();
-	
-	/**
-	 * 隐式使用，不涉及到模块以外的变更时使用；
-	 * @param atk 额外攻击力
-	 */
+
 	public void setExtraAtk(Integer extraAtk);
 	
 	/**
-	 * 增加 额外攻击力
-	 * @param atk
-	*/
-	public void addToExtraAtk(Integer extraAtk); 
+	 * 更新包括：等级攻击力，buff攻击力，skill攻击力
+	 */
+	public void updateExtraAtk();
+	
+	public Integer getWeaponAtk();
+	
+	public void setWeaponAtk(Integer weaponAtk);
+	
+	public void updateWeaponAtk();
 	
 	/**
 	 * 地形攻击力
@@ -84,12 +76,18 @@ public interface IAttack extends IAction {
 	public void setLandformAtk(Integer landformAtk);
 	
 	/**
-	 * 伤害
+	 * 真实伤害 = 单位伤害 * 数量
+	 * 请注意，伤害的改变只与数量有关；
 	 * @return
 	 */
-	public Integer [] getDmg();
+	public Integer getDmg();
 	
 	public void setDmg(Integer dmg);
+	
+	/**
+	 * 更新伤害值，例如数量发生变化时
+	 */
+	public void updateDmg();
 	
 	public Integer getLockChance();
 	
@@ -98,8 +96,6 @@ public interface IAttack extends IAction {
 	 * @param lockChance
 	 */
 	public void setLockChance(Integer lockChance);
-	
-	public void addToLockChance(Integer lockChance);
 	
 	/**
 	 * 攻击方式，是否是反击
@@ -116,18 +112,6 @@ public interface IAttack extends IAction {
 	public Boolean getAttackable();
 	
 	public void setAttackable(Boolean attackable);
-	
-	/**
-	 * 武器
-	 * @return
-	 */
-	public IWeapon getWeapon();
-	
-	/**
-	 * 拿起武器
-	 * @param weapon
-	 */
-	public void handWeapon(IWeapon weapon);
 	
 	public IAttack clone();
 	

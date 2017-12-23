@@ -12,14 +12,37 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	
 	private Integer empiricValue = 0;          //经验值
 	
+	public UpgradeLife() {
+		// TODO Auto-generated constructor stub
+		getRequirement().put(IPlayer.EmpiricValue, 100);
+	}
+	
 	public Integer getEmpiricValue() {
 		// TODO Auto-generated method stub
 		return this.empiricValue;
 	}
 	
-	public Integer getProcess() {
+	public void setEmpiricValue(Integer empiricValue){
+		if(!empiricValue.equals(this.empiricValue)){
+			this.empiricValue = empiricValue;
+		}
+	}
+	
+	public void addToEmpiricValue(Integer empiricValue) {
 		// TODO Auto-generated method stub
-		return getEmpiricValue()*100/getRequirement().get(IPlayer.EmpiricValue);
+		if(!Integer.valueOf(0).equals(empiricValue)){
+			this.empiricValue += empiricValue;
+			
+			Integer req = getRequirement().get(IPlayer.EmpiricValue);
+			if(getEmpiricValue()>=req){
+				try {
+					action();
+				} catch (RuleValidatorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	public void updateRequirement(){
@@ -31,23 +54,21 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		}
 	}
 	
-	public void setEmpiricValue(Integer empiricValue){
-		this.empiricValue = empiricValue;
+	public Integer getProcess() {
+		// TODO Auto-generated method stub
+		return getEmpiricValue()*100/getRequirement().get(IPlayer.EmpiricValue);
 	}
 	
-	public void addToEmpiricValue(Integer empiricValue) {
+	@Override
+	public void setLevel(Integer level) {
 		// TODO Auto-generated method stub
-		if(!Integer.valueOf(0).equals(empiricValue)){
-			this.empiricValue += empiricValue;
+		if(!level.equals(getLevel())){
+			super.setLevel(level);
 			
-			/*Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
-			map.put("position", getOwner().getContainerPosition());
-			map.put("card", getOwner());
-			map.put("change", empiricValue);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_EmpiricValue,map);
-			super.notifyObservers(info);*/
+			if(null!=getOwner()){
+				getOwner().getAttack().updateExtraAtk();
+				getOwner().getAttacked().updateExtraDef();		
+			}
 		}
 	}
 	
@@ -73,6 +94,11 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		level += 1;
 		setLevel(level);
 		
+		/*
+		 * 扣减升级所需经验值
+		 */
+		addToEmpiricValue(getRequirement().get(IPlayer.EmpiricValue));
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());
 		map.put("container", getOwner().getContainer());
@@ -81,19 +107,6 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		map.put("level", getLevel());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Upgrade,map);
 		super.notifyObservers(info);
-	}
-	
-	@Override
-	public void setLevel(Integer level) {
-		// TODO Auto-generated method stub
-		super.setLevel(level);
-		
-		if(null!=getOwner()){
-			getOwner().getAttack().updateAtk();
-			getOwner().getAttacked().updateDef();
-			getOwner().getDeath().updateHpLimit();
-			//getOwner().getCall().updateConsume();
-		}
 	}
 
 }
