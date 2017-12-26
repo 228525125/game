@@ -48,7 +48,7 @@ public abstract class Process implements IIntercepter, IRecover {
 	@Override
 	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
-		return "addBout";
+		return "action";
 	}
 
 	@Override

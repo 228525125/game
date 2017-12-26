@@ -2,6 +2,8 @@ package org.cx.game.action;
 
 import java.util.Map;
 
+import org.cx.game.widget.treasure.IResource;
+
 /**
  * 升级
  * @author chenxian
@@ -33,9 +35,9 @@ public interface IUpgrade extends IAction {
 	 * 升级需要耗费的资源数[类型][数量]
 	 * @return
 	 */
-	public Map<String,Integer> getRequirement();
+	public IResource getRequirement();
 	
-	public void setRequirement(Map<String,Integer> standard);
+	public void setRequirement(IResource requirement);
 	
 	/**
 	 * 更新标准

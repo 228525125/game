@@ -14,10 +14,12 @@ import org.cx.game.rule.ApplyRule;
 import org.cx.game.rule.IRule;
 import org.cx.game.tools.Logger;
 import org.cx.game.validator.ApplyConsumeValidator;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
 
 public class Apply extends Action implements IApply {
 
-	private Map<String,Integer> consume = new HashMap<String,Integer>();
+	private IResource consume = new Resource();
 	
 	@Override
 	public MagicCard getOwner() {
@@ -39,12 +41,12 @@ public class Apply extends Action implements IApply {
 	}
 	
 	@Override
-	public Map<String,Integer> getConsume() {
+	public IResource getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Map<String,Integer> consume) {
+	public void setConsume(IResource consume) {
 		this.consume = consume;
 	}
 }

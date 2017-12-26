@@ -7,6 +7,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.tag.ITag;
 import org.cx.game.widget.IContainer;
+import org.cx.game.widget.treasure.IResource;
 
 public interface ICard extends ITag
 {
@@ -62,9 +63,9 @@ public interface ICard extends ITag
 	 * 消耗
 	 * @return
 	 */
-	public Map<String,Integer> getConsume();
+	public IResource getConsume();
 	
-	public void setConsume(Map<String,Integer> consume);
+	public void setConsume(IResource consume);
 	
 	/**
 	 * 

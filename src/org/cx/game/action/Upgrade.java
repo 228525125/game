@@ -3,6 +3,9 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
+
 public abstract class Upgrade extends Action implements IUpgrade {
 
 	private Integer level = 1;
@@ -35,16 +38,16 @@ public abstract class Upgrade extends Action implements IUpgrade {
 		}
 	}
 
-	private Map<String,Integer> requirement = new HashMap<String,Integer>();
+	private IResource requirement = new Resource();
 	
 	@Override
-	public Map<String,Integer> getRequirement() {
+	public IResource getRequirement() {
 		// TODO Auto-generated method stub
 		return requirement;
 	}
 	
 	@Override
-	public void setRequirement(Map<String,Integer> requirement) {
+	public void setRequirement(IResource requirement) {
 		// TODO Auto-generated method stub
 		this.requirement = requirement;
 	}

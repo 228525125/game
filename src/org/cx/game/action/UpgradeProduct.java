@@ -10,25 +10,19 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IProduct;
+import org.cx.game.widget.treasure.IResource;
 
 public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 	
 	@Override
 	public void updateRequirement() {
 		// TODO Auto-generated method stub
-		Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultProductRiseRatio*getLevel() : 100;
-		for(String key : getRequirement().keySet()){
-			Integer value = getRequirement().get(key);
-			value = value * riseRatio / 100;
-			getRequirement().put(key, value);
-		}
+		//
 	}
 	
 	@Override
-	public Map<String, Integer> getRequirement() {
+	public IResource getRequirement() {
 		// TODO Auto-generated method stub
-		if(super.getRequirement().isEmpty())
-			super.getRequirement().put(IPlayer.Gold, DefaultProductUpgradeGoldRequirement);
 		return super.getRequirement();
 	}
 	

@@ -14,6 +14,7 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
+import org.cx.game.widget.treasure.EmpiricValue;
 import org.cx.game.widget.treasure.ITreasure;
 import org.cx.game.widget.treasure.TreasureEquipment;
 

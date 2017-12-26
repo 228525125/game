@@ -1,8 +1,10 @@
 package org.cx.game.action;
 
+import org.cx.game.widget.treasure.SkillCount;
+
 public interface IUpgradeHero extends IUpgradeLife {
 
-	public Integer getSkillCount();
+	public SkillCount getSkillCount();
 	
-	public void setSkillCount(Integer skillCount);
+	public void addToSkillCount(SkillCount sc);
 }

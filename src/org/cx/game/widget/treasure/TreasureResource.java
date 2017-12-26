@@ -18,17 +18,14 @@ import org.cx.game.widget.IPlace;
  */
 public class TreasureResource extends Treasure implements ITreasure {
 
-	private Map<String, Integer> resource = new HashMap<String, Integer>();
+	private IResource resource = null;
 	
 	public TreasureResource(Integer gold, Integer wood, Integer stone, Integer ore) {
 		// TODO Auto-generated constructor stub
-		this.resource.put(IPlayer.Gold, gold);
-		this.resource.put(IPlayer.Wood, wood);
-		this.resource.put(IPlayer.Stone, stone);
-		this.resource.put(IPlayer.Ore, ore);
+		this.resource = new Resource(gold, wood, stone, ore);
 	}
 	
-	public Map<String, Integer> getResource() {
+	public IResource getResource() {
 		return resource;
 	}
 	
@@ -36,7 +33,7 @@ public class TreasureResource extends Treasure implements ITreasure {
 	public String getName() {
 		// TODO Auto-generated method stub
 		String name = super.getName();
-		name += "("+getResource().get(IPlayer.Gold)+"/"+getResource().get(IPlayer.Wood)+"/"+getResource().get(IPlayer.Stone)+"/"+getResource().get(IPlayer.Ore)+")";
+		name += "("+getResource().get(IResource.Gold)+"/"+getResource().get(IResource.Wood)+"/"+getResource().get(IResource.Stone)+"/"+getResource().get(IResource.Ore)+")";
 		return name;
 	}
 	

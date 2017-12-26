@@ -11,7 +11,9 @@ import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeLife;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.skill.ISkill;
+import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.ITreasure;
+import org.cx.game.widget.treasure.SkillCount;
 
 public class HeroCard extends LifeCard {
 
@@ -39,28 +41,14 @@ public class HeroCard extends LifeCard {
 		}
 	}
 	
-	/**
-	 * 技能点
-	 */
-	private Integer skillCount = 1;
-	
-	public Integer getSkillCount() {
-		return skillCount;
-	}
-
-	public void setSkillCount(Integer skillCount) {
-		this.skillCount = skillCount;
-	}
-	
-	public IUpgrade getUpgrade() {
+	public IUpgradeHero getUpgrade() {
 		if(null==upgrade){
 			IUpgradeHero upgrade = new UpgradeHero();
 			upgrade.setLevel(getLevel());
-			upgrade.setSkillCount(skillCount);
 			upgrade.setOwner(this);
 			this.upgrade = upgrade;
 		}
-		return this.upgrade;
+		return (IUpgradeHero) this.upgrade;
 	}
 	
 	private List<ITreasure> treasures = new ArrayList<ITreasure>();
@@ -102,7 +90,7 @@ public class HeroCard extends LifeCard {
 	}
 	
 	@Override
-	public void setConsume(Map<String,Integer> consume) {
+	public void setConsume(IResource consume) {
 		// TODO Auto-generated method stub
 		super.setConsume(consume);
 	}

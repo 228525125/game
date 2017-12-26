@@ -31,10 +31,14 @@ import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
 
 public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
-	private Integer id = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一	
+	private Integer id = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一
+	
+	private IResource resource = null;
 	
 	public Player(Integer id, String name) {
 		// TODO Auto-generated constructor stub
@@ -46,10 +50,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		this.groupPolicy = PolicyGroupFactory.getInstance(10450001);
 		this.groupPolicy.setOwner(this);
 		
-		this.resource.put(IPlayer.Gold, 1000);
-		this.resource.put(IPlayer.Wood, 0);
-		this.resource.put(IPlayer.Stone, 0);
-		this.resource.put(IPlayer.Ore, 0);
+		this.resource = new Resource(0, 0, 0, 0);
 	}
 	
 	@Override
@@ -151,44 +152,33 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		commandBuffer = new CommandBuffer(this);
 	}
 	
-	private Map<String,Integer> resource = new HashMap<String,Integer>();
-	
-	public Map<String, Integer> getResource() {
+	public IResource getResource() {
 		return resource;
 	}
-
-	@Override
-	public void addToResource(Map<String, Integer> res) {
-		// TODO Auto-generated method stub
-		for(Entry<String,Integer> entry : res.entrySet()){
-			String resType = entry.getKey();
-			Integer resValue = this.resource.get(resType);
-			resValue += entry.getValue();
-			resValue = resValue>0 ? resValue : 0;
-			this.resource.put(resType, resValue);
-		}
-			
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", this);
-		map.put("resource", res);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
-		notifyObservers(info);
-	}
 	
 	@Override
-	public void addToResource(String resType, Integer res) {
+	public void addToResource(IResource res) {
 		// TODO Auto-generated method stub
-		if(0!=res){
-			Integer value = this.resource.get(resType);
-			value += res;
-			value = value>0 ? value : 0;
-			this.resource.put(resType, value);
+		if(!res.isEmpty()){
+			this.resource.add(res);
 			
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", this);
-			Map<String,Integer> resMap = new HashMap<String,Integer>();
-			resMap.put(resType, res);
-			map.put("resource", resMap);
+			map.put("resource", this.resource);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
+			notifyObservers(info);
+		}
+	}
+	
+	@Override
+	public void addToResource(Integer resType, Integer res) {
+		// TODO Auto-generated method stub
+		if(0!=res){
+			this.resource.add(resType, res);
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", this);
+			map.put("resource", this.resource);
 			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
 			notifyObservers(info);
 		}
@@ -198,9 +188,8 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	 * 用于xml配置
 	 * @param res
 	 */
-	public void setResource(Map<String, Integer> res){
-		for(String resType : res.keySet())
-			getResource().put(resType, res.get(resType));
+	public void setResource(IResource res){
+		this.resource = res;
 	}
 
 	@Override

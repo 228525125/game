@@ -7,34 +7,31 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.treasure.EmpiricValue;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.SkillCount;
 
 public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	
-	private Integer empiricValue = 0;          //经验值
+	private EmpiricValue empiricValue = new EmpiricValue();          //经验值
 	
 	public UpgradeLife() {
 		// TODO Auto-generated constructor stub
-		getRequirement().put(IPlayer.EmpiricValue, 100);
+		getRequirement().add(100);
 	}
 	
-	public Integer getEmpiricValue() {
+	public EmpiricValue getEmpiricValue() {
 		// TODO Auto-generated method stub
 		return this.empiricValue;
 	}
 	
-	public void setEmpiricValue(Integer empiricValue){
-		if(!empiricValue.equals(this.empiricValue)){
-			this.empiricValue = empiricValue;
-		}
-	}
-	
-	public void addToEmpiricValue(Integer empiricValue) {
+	public void addToEmpiricValue(EmpiricValue empiricValue) {
 		// TODO Auto-generated method stub
-		if(!Integer.valueOf(0).equals(empiricValue)){
-			this.empiricValue += empiricValue;
+		if(!empiricValue.isEmpty()){
+			this.empiricValue.add(empiricValue);
 			
-			Integer req = getRequirement().get(IPlayer.EmpiricValue);
-			if(getEmpiricValue()>=req){
+			Integer req = getRequirement().get();
+			if(getEmpiricValue().get()>=req){
 				try {
 					action();
 				} catch (RuleValidatorException e) {
@@ -45,18 +42,27 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		}
 	}
 	
+	@Override
+	public void addToEmpiricValue(Integer empiricValue) {
+		// TODO Auto-generated method stub
+		EmpiricValue ev = new EmpiricValue(empiricValue);
+		addToEmpiricValue(ev);
+	}
+	
+	@Override
+	public EmpiricValue getRequirement() {
+		// TODO Auto-generated method stub
+		EmpiricValue ev = new EmpiricValue(-200);
+		return ev;
+	}
+	
 	public void updateRequirement(){
-		Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultLifeCardRiseRatio*getLevel() : 100;
+		/*Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultLifeCardRiseRatio*getLevel() : 100;
 		for(String key : getRequirement().keySet()){
 			Integer value = getRequirement().get(key);
 			value = value * riseRatio / 100;
 			getRequirement().put(key, value);
-		}
-	}
-	
-	public Integer getProcess() {
-		// TODO Auto-generated method stub
-		return getEmpiricValue()*100/getRequirement().get(IPlayer.EmpiricValue);
+		}*/
 	}
 	
 	@Override
@@ -70,14 +76,6 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 				getOwner().getAttacked().updateExtraDef();		
 			}
 		}
-	}
-	
-	@Override
-	public Map<String, Integer> getRequirement() {
-		// TODO Auto-generated method stub
-		if(super.getRequirement().isEmpty())
-			super.getRequirement().put(IPlayer.EmpiricValue, IUpgrade.DefaultLifeCardUpgradeRequirement);
-		return super.getRequirement();
 	}
 	
 	@Override
@@ -97,7 +95,7 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		/*
 		 * 扣减升级所需经验值
 		 */
-		addToEmpiricValue(getRequirement().get(IPlayer.EmpiricValue));
+		addToEmpiricValue(getRequirement());
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getPlayer());

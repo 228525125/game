@@ -12,6 +12,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.treasure.IResource;
 
 /**
  * 处理补充兵源的情况
@@ -83,14 +84,8 @@ public class CallRule extends Rule implements IRule {
 		 * 扣减资源
 		 */
 		IPlayer player = owner.getPlayer();
-		Map<String,Integer> consume = call.getConsume();
-		Map<String,Integer> res = new HashMap<String,Integer>();
-		for(String key : consume.keySet()){
-			Integer value = consume.get(key);
-			res.put(key, value*this.nop);
-		}
-		
-		player.addToResource(res);
+		IResource consume = call.getConsume();		
+		player.addToResource(consume);
 		
 		this.isInvoke = true;
 	}

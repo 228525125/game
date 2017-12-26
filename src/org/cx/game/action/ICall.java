@@ -7,6 +7,7 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
+import org.cx.game.widget.treasure.IResource;
 
 /**
  * 召唤
@@ -19,9 +20,9 @@ public interface ICall extends IAction {
 	 * 消耗资源
 	 * @return 资源类型，资源数量
 	 */
-	public Map<String,Integer> getConsume();
+	public IResource getConsume();
 	
-	public void setConsume(Map<String,Integer> consume);
+	public void setConsume(IResource consume);
 	
 	/**
 	 * 人口

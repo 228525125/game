@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.treasure.IResource;
 
 /**
  * 验证建造资源是否足够
@@ -27,17 +28,12 @@ public class BuildConsumeValidator extends Validator {
 		Boolean ret = true;
 		
 		IPlayer player = building.getPlayer();
-		Map<String,Integer> consume = building.getConsume();
-		Map<String,Integer> res = player.getResource();
+		IResource consume = building.getConsume();
+		IResource res = player.getResource();
 		
-		for(Entry<String,Integer> entry : consume.entrySet()){
-			String resType = entry.getKey();
-			Integer value = res.get(resType);
-			if(value<entry.getValue()){
-				ret = false;
-				addMessage(I18n.getMessage(BuildConsumeValidator.class.getName()));
-				break;
-			}
+		if(res.absoluteLessThan(consume)){
+			ret = false;
+			addMessage(I18n.getMessage(BuildConsumeValidator.class.getName()));
 		}
 			
 		return ret;

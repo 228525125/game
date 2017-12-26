@@ -4,6 +4,11 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
 
+/**
+ * 验证人口上限
+ * @author chenxian
+ *
+ */
 public class RationLimitValidator extends Validator {
 	
 	private LifeCard life = null;

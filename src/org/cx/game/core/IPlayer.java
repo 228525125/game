@@ -10,6 +10,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IUseCard;
+import org.cx.game.widget.treasure.IResource;
 
 /**
  * 游戏玩家
@@ -30,34 +31,22 @@ public interface IPlayer
 	
 	//public Object getObject(String type);
 	
-	public Map<String, Integer> getResource();
+	public IResource getResource();
 	
-	public void setResource(Map<String, Integer> res);
+	public void setResource(IResource res);
 	
 	/**
-	 * 显示的改变资源
-	 * @param res [资源类型][资源数]
+	 * 改变资源
+	 * @param res
 	 */
-	public void addToResource(Map<String, Integer> res);
+	public void addToResource(IResource res);
 	
 	/**
 	 * 显示的改变资源
 	 * @param resType 资源类型
 	 * @param res 资源数
 	 */
-	public void addToResource(String resType, Integer res);
-	
-	public final static String Gold = "701";                    //金币
-	
-	public final static String Wood = "702";                    //木材
-	
-	public final static String Stone = "703";                   //石材
-	
-	public final static String Ore = "704";                     //矿石
-	
-	public final static String EmpiricValue = "710";             //经验值
-	
-	public final static String SkillCount = "720";              //技能点
+	public void addToResource(Integer resType, Integer res);
 	
 	public CommandBuffer getCommandBuffer();
 	

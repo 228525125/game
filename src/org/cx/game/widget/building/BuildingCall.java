@@ -3,6 +3,8 @@ package org.cx.game.widget.building;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.widget.treasure.IResource;
+
 public class BuildingCall extends Building implements IBuilding {
 
 	private Integer cardID = null;       //可招募单位
@@ -51,7 +53,7 @@ public class BuildingCall extends Building implements IBuilding {
 	}
 	
 	@Override
-	public void setConsume(Map<String, Integer> consume) {
+	public void setConsume(IResource consume) {
 		// TODO Auto-generated method stub
 		super.setConsume(consume);
 	}

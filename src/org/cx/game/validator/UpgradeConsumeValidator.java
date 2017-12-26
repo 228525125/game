@@ -8,6 +8,7 @@ import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeProduct;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.treasure.IResource;
 
 public class UpgradeConsumeValidator extends Validator {
 
@@ -25,19 +26,13 @@ public class UpgradeConsumeValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
 
-		Map<String,Integer> res = player.getResource();
+		IResource res = player.getResource();
 			
-		for(Entry<String,Integer> entry : upgrade.getRequirement().entrySet()){
-			String resType = entry.getKey();
-			Integer resValue = res.get(resType);
-			if(resValue<entry.getValue()){
-				ret = false;
-				break;
-			}
-		}	
-		
-		if(!ret)
+		if(res.absoluteLessThan(upgrade.getRequirement())){
+			ret = false;
 			addMessage(I18n.getMessage(UpgradeConsumeValidator.class.getName()));
+		}
+		
 		return ret;
 	}
 }

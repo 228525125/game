@@ -27,7 +27,7 @@ public class OptionCall extends Option implements IOption {
 		// TODO Auto-generated constructor stub
 		this.cardID = cardId;
 		
-		setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
+		//setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
 	}
 	
 	@Override
@@ -72,6 +72,7 @@ public class OptionCall extends Option implements IOption {
 		getExecute().addValidator(new CallConsumeValidator(life, getNumber()));
 		getExecute().addValidator(new CallRangeValidator(getOwner(), place));
 		getExecute().addValidator(new RationLimitValidator(life, getNumber()));
+		//验证单个队伍人口上限
 		
 		getExecute().addValidator(new CallNopValidator(life, getNumber(), getOwner()));
 		
@@ -96,7 +97,7 @@ public class OptionCall extends Option implements IOption {
 		return super.getAllow() && IBuilding.Building_Status_Complete.equals(getOwner().getStatus());
 	}
 	
-	public class OptionCallExecute extends Execute {
+	public class OptionCallExecute extends Execute implements IExecute {
 		
 		private Integer cardID = null;
 

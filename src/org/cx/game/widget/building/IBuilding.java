@@ -8,6 +8,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.Observable;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.treasure.IResource;
 
 public interface IBuilding {
 
@@ -156,9 +157,9 @@ public interface IBuilding {
 	 * 建造材料
 	 * @return
 	 */
-	public Map<String,Integer> getConsume();
+	public IResource getConsume();
 	
-	public void setConsume(Map<String,Integer> consume);
+	public void setConsume(IResource consume);
 	
 	/**
 	 * 是否可升级，即当前等级小于等级上限

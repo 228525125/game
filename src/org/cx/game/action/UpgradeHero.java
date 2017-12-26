@@ -1,28 +1,26 @@
 package org.cx.game.action;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.treasure.EmpiricValue;
+import org.cx.game.widget.treasure.SkillCount;
 
 public class UpgradeHero extends UpgradeLife implements IUpgradeHero {
 
-	private Integer skillCount = 0;            //技能点
+	private SkillCount skillCount = new SkillCount(1);            //技能点
 	
 	/**
 	 * 技能点
 	 * @return
 	 */
-	public Integer getSkillCount() {
+	public SkillCount getSkillCount() {
 		return skillCount;
 	}
-
-	public void setSkillCount(Integer skillCount) {
-		if(!skillCount.equals(this.skillCount)){
-			skillCount = skillCount<0 ? 0 : skillCount;
-			this.skillCount = skillCount;
-		}
+	
+	@Override
+	public void addToSkillCount(SkillCount sc) {
+		// TODO Auto-generated method stub
+		if(!sc.isEmpty())
+			this.skillCount.add(sc);
 	}
 	
 	@Override
@@ -33,7 +31,7 @@ public class UpgradeHero extends UpgradeLife implements IUpgradeHero {
 		/*
 		 * 英雄每升一级，增加1个技能点；
 		 */
-		Integer skillCount = getSkillCount();
-		setSkillCount(++skillCount);
+		SkillCount sc = new SkillCount(1);
+		addToSkillCount(sc);
 	}
 }

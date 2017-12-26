@@ -50,7 +50,9 @@ import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.ITreasure;
+import org.cx.game.widget.treasure.Resource;
 
 /**
  * 所有生物卡的父类，
@@ -68,14 +70,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
 		this.id = id;
-		
-		/*
-		 * 初始化
-		 */
-		this.consume.put(IPlayer.Gold, 0);
-		this.consume.put(IPlayer.Wood, 0);
-		this.consume.put(IPlayer.Stone, 0);
-		this.consume.put(IPlayer.Ore, 0);
 	}
 	
 	private Integer id;
@@ -522,17 +516,16 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 消耗资源
 	 */
-	private Map<String,Integer> consume = new HashMap<String,Integer>();
+	private IResource consume = new Resource();
 	
-	public Map<String,Integer> getConsume() {
+	public IResource getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Map<String,Integer> consume) {
+	public void setConsume(IResource consume) {
 		// TODO Auto-generated method stub
-		for(String resType : consume.keySet())
-			getConsume().put(resType, consume.get(resType));
+		this.consume = consume;
 	}
 	
 	private Integer level = 1;
@@ -1052,7 +1045,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		IUpgradeLife up = (IUpgradeLife) getUpgrade();
 		
 		up.setLevel(level);
-		up.setEmpiricValue(0);
 		
 		setHide(false);
 		

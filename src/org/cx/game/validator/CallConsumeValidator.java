@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.treasure.IResource;
 
 public class CallConsumeValidator extends Validator {
 
@@ -22,16 +23,11 @@ public class CallConsumeValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
 
-		Map<String,Integer> res = life.getPlayer().getResource();
+		IResource res = life.getPlayer().getResource();
 			
-		for(Entry<String,Integer> entry : life.getCall().getConsume().entrySet()){
-			String resType = entry.getKey();
-			Integer resValue = res.get(resType);
-			if(resValue<entry.getValue()){
-				ret = false;
-				addMessage(I18n.getMessage(CallConsumeValidator.class.getName()));
-				break;
-			}
+		if(res.absoluteLessThan(life.getCall().getConsume())){
+			ret = false;
+			addMessage(I18n.getMessage(CallConsumeValidator.class.getName()));
 		}	
 	
 		return ret;

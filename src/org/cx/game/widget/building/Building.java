@@ -16,6 +16,8 @@ import org.cx.game.intercepter.IRecover;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
 
 public class Building implements IBuilding, IRecover {
 
@@ -28,7 +30,7 @@ public class Building implements IBuilding, IRecover {
 	private IPlayer player = null;
 	private List<IOption> options = new ArrayList<IOption>();
 	private List<IProduct> products = new ArrayList<IProduct>();
-	private Map<String,Integer> consume = new HashMap<String,Integer>();
+	private IResource consume = new Resource();
 	
 	private IBuilding owner = null;
 	
@@ -40,15 +42,7 @@ public class Building implements IBuilding, IRecover {
 	
 	public Building(Integer buildingType) {
 		// TODO Auto-generated constructor stub
-		this.type = buildingType;		
-		
-		/*
-		 * 初始化
-		 */
-		this.consume.put(IPlayer.Gold, 0);
-		this.consume.put(IPlayer.Wood, 0);
-		this.consume.put(IPlayer.Stone, 0);
-		this.consume.put(IPlayer.Ore, 0);
+		this.type = buildingType;
 		
 		IOption optionBuild = new OptionBuild();				
 		addOption(optionBuild);
@@ -232,16 +226,15 @@ public class Building implements IBuilding, IRecover {
 	}
 	
 	@Override
-	public Map<String, Integer> getConsume() {
+	public IResource getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
 	@Override
-	public void setConsume(Map<String, Integer> consume) {
+	public void setConsume(IResource consume) {
 		// TODO Auto-generated method stub
-		for(String resType : consume.keySet())
-			getConsume().put(resType, consume.get(resType));
+		this.consume = consume;
 	}
 	
 	public void resetIntercepter() {

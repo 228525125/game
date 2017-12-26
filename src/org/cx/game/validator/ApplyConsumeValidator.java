@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import org.cx.game.card.MagicCard;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.treasure.IResource;
 
 public class ApplyConsumeValidator extends Validator {
 
@@ -20,16 +21,11 @@ public class ApplyConsumeValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
 
-		Map<String,Integer> res = magic.getPlayer().getResource();
+		IResource res = magic.getPlayer().getResource();
 			
-		for(Entry<String,Integer> entry : magic.getConsume().entrySet()){
-			String resType = entry.getKey();
-			Integer resValue = res.get(resType);
-			if(resValue<entry.getValue()){
-				ret = false;
-				addMessage(I18n.getMessage(ApplyConsumeValidator.class.getName()));
-				break;
-			}
+		if(res.absoluteLessThan(magic.getConsume())){
+			ret = false;
+			addMessage(I18n.getMessage(ApplyConsumeValidator.class.getName()));
 		}
 			
 		return ret;

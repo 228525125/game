@@ -10,30 +10,24 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
 import org.cx.game.widget.building.IBuilding;
+import org.cx.game.widget.treasure.IResource;
 
 public class UpgradeBuilding extends Upgrade implements IUpgradeBuilding {
 	
 	@Override
 	public void updateRequirement() {
 		// TODO Auto-generated method stub
-		Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultBuildingRiseRatio*getLevel() : 100;
-		for(String key : getRequirement().keySet()){
-			Integer value = getRequirement().get(key);
-			value = value * riseRatio / 100;
-			getRequirement().put(key, value);
-		}
+		//
 	}
 	
 	@Override
-	public Map<String, Integer> getRequirement() {
+	public IResource getRequirement() {
 		// TODO Auto-generated method stub
-		if(super.getRequirement().isEmpty())
-			super.getRequirement().put(IPlayer.Gold, DefaultBuildingUpgradeGoldRequirement);
-		return super.getRequirement();
+		return getOwner().getConsume();
 	}
 	
 	@Override
-	public void setRequirement(Map<String, Integer> requirement) {
+	public void setRequirement(IResource requirement) {
 		// TODO Auto-generated method stub
 		super.setRequirement(requirement);
 	}

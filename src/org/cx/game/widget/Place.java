@@ -70,7 +70,6 @@ public class Place extends Observable implements IPlace {
 	@Override
 	public void in(LifeCard life) {
 		// TODO Auto-generated method stub
-		Integer original = life.getPosition();
 		life.setPosition(position);
 		this.life = life;
 		

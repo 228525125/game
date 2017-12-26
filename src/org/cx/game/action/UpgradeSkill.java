@@ -6,21 +6,22 @@ import java.util.Map;
 import org.cx.game.action.IUpgradeSkill;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Upgrade;
+import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.widget.treasure.SkillCount;
 
 public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 	
 	@Override
-	public Map<String, Integer> getRequirement() {
+	public SkillCount getRequirement() {
 		// TODO Auto-generated method stub
-		if(super.getRequirement().isEmpty())
-			super.getRequirement().put(IPlayer.SkillCount, 1);
-		return super.getRequirement();
+		SkillCount sc = new SkillCount(-1);
+		return sc;
 	}
 	
 	@Override
@@ -40,11 +41,9 @@ public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 		/*
 		 * 扣除技能点
 		 */
-		LifeCard life = getOwner().getOwner();
-		IUpgradeHero up = (IUpgradeHero) life.getUpgrade();
-		Integer skillCountReq = up.getRequirement().get(IPlayer.SkillCount);
-		Integer skillCount = up.getSkillCount();
-		up.setSkillCount(skillCount-skillCountReq);
+		HeroCard hero = (HeroCard) getOwner().getOwner();
+		IUpgradeHero up = hero.getUpgrade();
+		up.addToSkillCount(getRequirement());
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", getOwner().getOwner().getPlayer());

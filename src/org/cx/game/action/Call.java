@@ -8,10 +8,12 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IPlace;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
 
 public class Call extends Action implements ICall {
 	
-	private Map<String,Integer> consume = new HashMap<String,Integer>();
+	private IResource consume = new Resource();
 	private Integer ration = 1;
 	
 	private Integer nop = 1;           //人数 
@@ -23,14 +25,13 @@ public class Call extends Action implements ICall {
 	}
 
 	@Override
-	public Map<String,Integer> getConsume() {
+	public IResource getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Map<String,Integer> consume) {
-		for(String resType : consume.keySet())
-			getConsume().put(resType, consume.get(resType));
+	public void setConsume(IResource consume) {
+		this.consume = consume;
 	}
 	
 	@Override

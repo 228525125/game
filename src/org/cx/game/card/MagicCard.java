@@ -25,6 +25,8 @@ import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IGround;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
 
 public abstract class MagicCard extends java.util.Observable implements ICard, IMagic, Observable, IValidatable {
 	
@@ -39,14 +41,6 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		this.id = id;
 		
 		setAction("Magic");
-		
-		/*
-		 * 初始化
-		 */
-		this.consume.put(IPlayer.Gold, 0);
-		this.consume.put(IPlayer.Wood, 0);
-		this.consume.put(IPlayer.Stone, 0);
-		this.consume.put(IPlayer.Ore, 0);
 	}
 	
 	private final static String Apply = "_Apply";
@@ -124,13 +118,13 @@ public abstract class MagicCard extends java.util.Observable implements ICard, I
 		return container.getPosition(this);
 	}
 	
-	private Map<String,Integer> consume = new HashMap<String,Integer>();
+	private IResource consume = new Resource();
 	
-	public Map<String,Integer> getConsume() {
+	public IResource getConsume() {
 		return consume;
 	}
 
-	public void setConsume(Map<String,Integer> consume) {
+	public void setConsume(IResource consume) {
 		this.consume = consume;
 	}
 	
