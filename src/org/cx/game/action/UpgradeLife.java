@@ -4,21 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.card.LifeCard;
-import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.widget.treasure.EmpiricValue;
-import org.cx.game.widget.treasure.IResource;
-import org.cx.game.widget.treasure.SkillCount;
 
 public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	
-	private EmpiricValue empiricValue = new EmpiricValue();          //经验值
-	
-	public UpgradeLife() {
+	public UpgradeLife(Map<Integer, String> requirement) {
+		super(requirement);
 		// TODO Auto-generated constructor stub
-		getRequirement().add(100);
 	}
+
+	private EmpiricValue empiricValue = new EmpiricValue();          //经验值
 	
 	public EmpiricValue getEmpiricValue() {
 		// TODO Auto-generated method stub
@@ -52,17 +50,7 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	@Override
 	public EmpiricValue getRequirement() {
 		// TODO Auto-generated method stub
-		EmpiricValue ev = new EmpiricValue(-200);
-		return ev;
-	}
-	
-	public void updateRequirement(){
-		/*Integer riseRatio = getLevel()>1 ? IUpgrade.DefaultLifeCardRiseRatio*getLevel() : 100;
-		for(String key : getRequirement().keySet()){
-			Integer value = getRequirement().get(key);
-			value = value * riseRatio / 100;
-			getRequirement().put(key, value);
-		}*/
+		return (EmpiricValue) super.getRequirement();
 	}
 	
 	@Override

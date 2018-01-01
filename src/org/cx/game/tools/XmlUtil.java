@@ -12,7 +12,7 @@ import org.dom4j.io.SAXReader;
 
 public class XmlUtil {
 	
-	private static Element getRoot(String path) {
+	public static Element getRoot(String path) {
 		SAXReader saxReader = new SAXReader();
 		try {
 			InputStream is = new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure(path)));
@@ -26,9 +26,5 @@ public class XmlUtil {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-	static {
-		
 	}
 }

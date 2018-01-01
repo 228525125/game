@@ -28,6 +28,20 @@ public class Resource implements IResource {
 		this.resource.put(Ore, ore);
 	}
 	
+	/**
+	 * 
+	 * @param resourceString 格式 G/W/S/O = '0,0,0,0'
+	 */
+	public Resource(String resourceString) {
+		// TODO Auto-generated constructor stub
+		String [] res = resourceString.split(",");
+		
+		this.resource.put(Gold, res.length>0 ? Integer.valueOf(res[0]) : 0);
+		this.resource.put(Wood, res.length>1 ? Integer.valueOf(res[1]) : 0);
+		this.resource.put(Stone, res.length>2 ? Integer.valueOf(res[2]) : 0);
+		this.resource.put(Ore, res.length>3 ? Integer.valueOf(res[3]) : 0);
+	}
+	
 	@Override
 	public Integer get(Integer type) {
 		// TODO Auto-generated method stub

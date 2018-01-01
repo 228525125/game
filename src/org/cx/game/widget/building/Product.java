@@ -1,5 +1,8 @@
 package org.cx.game.widget.building;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.UpgradeProduct;
 import org.cx.game.exception.RuleValidatorException;
@@ -42,11 +45,17 @@ public class Product implements IProduct {
 		return this.type;
 	}
 	
+	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();
+	
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		this.upgradeRequirement = upgradeRequirement;
+	}
+	
 	private IUpgrade upgrade = null;
 	
 	public IUpgrade getUpgrade() {
 		if(null==this.upgrade){
-			IUpgrade upgrade = new UpgradeProduct();
+			IUpgrade upgrade = new UpgradeProduct(upgradeRequirement);
 			upgrade.setOwner(this);
 			this.upgrade = upgrade;
 		}

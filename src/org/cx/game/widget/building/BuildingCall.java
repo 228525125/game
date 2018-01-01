@@ -65,6 +65,12 @@ public class BuildingCall extends Building implements IBuilding {
 	}
 	
 	@Override
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		// TODO Auto-generated method stub
+		super.setUpgradeRequirement(upgradeRequirement);
+	}
+	
+	@Override
 	public void setLevelLimit(Integer levelLimit) {
 		// TODO Auto-generated method stub
 		super.setLevelLimit(levelLimit);

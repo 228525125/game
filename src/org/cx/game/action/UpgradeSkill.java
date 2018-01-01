@@ -17,6 +17,11 @@ import org.cx.game.widget.treasure.SkillCount;
 
 public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 	
+	public UpgradeSkill(Map<Integer, String> requirement) {
+		super(requirement);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public SkillCount getRequirement() {
 		// TODO Auto-generated method stub
@@ -54,11 +59,4 @@ public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Skill_Upgrade,map);
 		super.notifyObservers(info);
 	}
-
-	@Override
-	public void updateRequirement() {
-		// TODO Auto-generated method stub
-		//
-	}
-
 }

@@ -76,4 +76,10 @@ public class BuildingTown extends Building implements IBuilding {
 			building.setPlayer(player);
 		}
 	}
+	
+	@Override
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		// TODO Auto-generated method stub
+		super.setUpgradeRequirement(upgradeRequirement);
+	}
 }

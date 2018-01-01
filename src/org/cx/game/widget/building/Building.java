@@ -26,6 +26,7 @@ public class Building implements IBuilding, IRecover {
 	private IPlace place = null;
 	private Integer type = 0;
 	private Integer buildWait = 0;
+	private Integer level = 1;
 	private Integer levelLimit = 1;
 	private IPlayer player = null;
 	private List<IOption> options = new ArrayList<IOption>();
@@ -196,14 +197,20 @@ public class Building implements IBuilding, IRecover {
 		return null;
 	}
 	
+	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();
+	
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		this.upgradeRequirement = upgradeRequirement;
+	}
+	
 	private IUpgrade upgrade = null;
 
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			IUpgrade upgrade = new UpgradeBuilding();
+			IUpgrade upgrade = new UpgradeBuilding(upgradeRequirement);
+			upgrade.setLevel(level);
 			upgrade.setLevelLimit(levelLimit);
-			upgrade.setRequirement(consume);      //升级默认与建造相同，但这种方式可能会有问题
-			upgrade.setOwner(this);
+			upgrade.setOwner(this);			
 			this.upgrade = upgrade;
 		}
 		return upgrade;

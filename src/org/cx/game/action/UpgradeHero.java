@@ -1,10 +1,17 @@
 package org.cx.game.action;
 
+import java.util.Map;
+
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.treasure.EmpiricValue;
 import org.cx.game.widget.treasure.SkillCount;
 
 public class UpgradeHero extends UpgradeLife implements IUpgradeHero {
+
+	public UpgradeHero(Map<Integer, String> requirement) {
+		super(requirement);
+		// TODO Auto-generated constructor stub
+	}
 
 	private SkillCount skillCount = new SkillCount(1);            //技能点
 	

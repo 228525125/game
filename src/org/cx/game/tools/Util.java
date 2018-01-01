@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.command.expression.ParameterExpressionBuffer;
+import org.cx.game.widget.treasure.IResource;
+import org.cx.game.widget.treasure.Resource;
 
 public class Util {
 
@@ -202,6 +204,11 @@ public class Util {
             return false; 
         }
     }
+	
+	public static IResource stringToResource(String resString){
+		String [] res = resString.split(",");
+		return new Resource(Integer.valueOf(res[0]), Integer.valueOf(res[1]), Integer.valueOf(res[2]), Integer.valueOf(res[3]));
+	}
 	
 	public static void copyBuffer(ParameterExpressionBuffer peBuffer, CommandBuffer cBuffer){
 		peBuffer.setPlayer(cBuffer.getPlayer());

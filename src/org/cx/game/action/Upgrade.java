@@ -5,11 +5,18 @@ import java.util.Map;
 
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
+import org.cx.game.widget.treasure.ResourceFactory;
 
 public abstract class Upgrade extends Action implements IUpgrade {
 
-	private Integer level = 1;
+	private Integer level = 0;
 	private Integer levelLimit = 1;
+	private Map<Integer, String> requirement = new HashMap<Integer, String>();
+	
+	public Upgrade(Map<Integer, String> requirement) {
+		// TODO Auto-generated constructor stub
+		this.requirement = requirement;
+	}
 	
 	@Override
 	public Integer getLevel() {
@@ -22,9 +29,6 @@ public abstract class Upgrade extends Action implements IUpgrade {
 		// TODO Auto-generated method stub
 		if(!level.equals(this.level)){
 			this.level = level;
-			
-			if(null!=getOwner())
-				updateRequirement();
 		}
 	}
 	
@@ -37,19 +41,15 @@ public abstract class Upgrade extends Action implements IUpgrade {
 			this.levelLimit = levelLimit;
 		}
 	}
-
-	private IResource requirement = new Resource();
 	
 	@Override
 	public IResource getRequirement() {
 		// TODO Auto-generated method stub
-		return requirement;
-	}
-	
-	@Override
-	public void setRequirement(IResource requirement) {
-		// TODO Auto-generated method stub
-		this.requirement = requirement;
+		String resString = this.requirement.get(Integer.valueOf(getLevel()+1));
+		if(null!=resString)
+			return ResourceFactory.getInstance(resString);
+		else
+			return null;
 	}
 
 }

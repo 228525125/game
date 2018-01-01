@@ -1,5 +1,7 @@
 package org.cx.game.widget.building;
 
+import java.util.Map;
+
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
@@ -44,6 +46,12 @@ public class BuildingResource extends Building {
 	public void setLevelLimit(Integer levelLimit) {
 		// TODO Auto-generated method stub
 		super.setLevelLimit(levelLimit);
+	}
+	
+	@Override
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		// TODO Auto-generated method stub
+		super.setUpgradeRequirement(upgradeRequirement);
 	}
 
 }

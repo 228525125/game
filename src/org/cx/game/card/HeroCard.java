@@ -1,6 +1,7 @@
 package org.cx.game.card;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class HeroCard extends LifeCard {
 	
 	public IUpgradeHero getUpgrade() {
 		if(null==upgrade){
-			IUpgradeHero upgrade = new UpgradeHero();
+			IUpgradeHero upgrade = new UpgradeHero(getUpgradeRequirement());
 			upgrade.setLevel(getLevel());
 			upgrade.setOwner(this);
 			this.upgrade = upgrade;
@@ -153,4 +154,9 @@ public class HeroCard extends LifeCard {
 		super.setLevel(level);
 	}
 
+	@Override
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		// TODO Auto-generated method stub
+		super.setUpgradeRequirement(upgradeRequirement);
+	}
 }

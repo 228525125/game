@@ -892,6 +892,16 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		}
 		return chuck;
 	}
+	
+	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();
+	
+	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
+		this.upgradeRequirement = upgradeRequirement;
+	}
+	
+	protected Map<Integer, String> getUpgradeRequirement() {
+		return upgradeRequirement;
+	}
 
 	/**
 	 * 升级
@@ -900,7 +910,9 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			upgrade = new UpgradeLife();
+			upgradeRequirement.put(2, "e-100");
+			upgradeRequirement.put(3, "e-200");
+			upgrade = new UpgradeLife(upgradeRequirement);
 			upgrade.setLevel(level);
 			upgrade.setOwner(this);
 		}

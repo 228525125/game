@@ -14,12 +14,11 @@ import org.cx.game.widget.treasure.IResource;
 
 public class UpgradeProduct extends Upgrade implements IUpgradeProduct {
 	
-	@Override
-	public void updateRequirement() {
-		// TODO Auto-generated method stub
-		//
+	public UpgradeProduct(Map<Integer, String> requirement) {
+		super(requirement);
+		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public IResource getRequirement() {
 		// TODO Auto-generated method stub
