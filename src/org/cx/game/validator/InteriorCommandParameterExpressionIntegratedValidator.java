@@ -11,12 +11,10 @@ import org.cx.game.command.expression.ParameterExpressionBuffer;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.tools.Util;
-import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.ICemetery;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
-import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.building.BuildingTown;
@@ -52,18 +50,6 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				if(CommandBuffer.OWN.equals(item)){
 					parameterObject = player;
 					getBuffer().setPlayer(player);
-				}
-				
-				if(CommandBuffer.USECARD.equals(item)){
-					if(null==getBuffer().getPlayer()){
-						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
-						ret = false;
-						break;
-					}else{
-						IUseCard use = getBuffer().getPlayer().getUseCard();
-						parameterObject = use;
-						getBuffer().setContainer(use);
-					}
 				}
 				
 				if(CommandBuffer.GROUND.equals(item)){
@@ -158,18 +144,6 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						ret = false;
 						break;
 					}else{
-						if(null!=getBuffer().getUseCard()){
-							ICard card = getBuffer().getUseCard().getCard(Integer.valueOf(position));
-							parameterObject = card;
-							getBuffer().setCard(card);
-						}
-						
-						if(null!=getBuffer().getCardGroup()){
-							ICard card = getBuffer().getCardGroup().getCard(Integer.valueOf(position));
-							parameterObject = card;
-							getBuffer().setCard(card);
-						}
-						
 						if(null!=getBuffer().getGround()){
 							IPlace place = getBuffer().getPlace();
 							if(null==place){

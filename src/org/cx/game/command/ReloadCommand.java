@@ -9,7 +9,6 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.widget.IUseCard;
 
 public class ReloadCommand extends InteriorCommand {
 
@@ -27,7 +26,6 @@ public class ReloadCommand extends InteriorCommand {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		map.put("player", player);
-		map.put("use", player.getUseCard().toList());
 		map.put("god", player.getContext().getGround().toList());      //ground已被屏蔽
 		list.add(map);
 		

@@ -28,7 +28,6 @@ import org.cx.game.policy.NeutralPolicyGroup;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.treasure.IResource;
@@ -106,14 +105,6 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	public List<LifeCard> getHeroList() {
 		// TODO Auto-generated method stub
 		return this.heroList;
-	}
-	
-	private IUseCard useCard = null;
-	
-	@Override
-	public IUseCard getUseCard() {
-		// TODO Auto-generated method stub
-		return useCard;
 	}
 	
 	/*private Map<String,Object> data = new HashMap<String,Object>();

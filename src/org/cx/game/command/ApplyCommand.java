@@ -18,7 +18,6 @@ public class ApplyCommand extends InteriorCommand {
 		super(player);
 		// TODO Auto-generated constructor stub
 		addValidator(new SelectMagicCardValidator(buffer));
-		addValidator(new SelectContainerValidator(player.getUseCard(),buffer));
 	}
 	
 	@Override

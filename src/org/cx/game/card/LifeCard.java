@@ -70,6 +70,10 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		// TODO Auto-generated constructor stub
 		addObserver(JsonOut.getInstance());
 		this.id = id;
+		
+		upgradeRequirement.put(2, "e-100");
+		upgradeRequirement.put(3, "e-200");
+		upgradeRequirement.put(4, "e-400");
 	}
 	
 	private Integer id;
@@ -910,8 +914,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			upgradeRequirement.put(2, "e-100");
-			upgradeRequirement.put(3, "e-200");
 			upgrade = new UpgradeLife(upgradeRequirement);
 			upgrade.setLevel(level);
 			upgrade.setOwner(this);

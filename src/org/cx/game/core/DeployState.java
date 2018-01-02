@@ -9,9 +9,6 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.npc.NPC;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
-import org.cx.game.widget.ICardGroup;
-import org.cx.game.widget.IUseCard;
-import org.cx.game.widget.UseCard;
 
 public class DeployState extends PlayState {
 	

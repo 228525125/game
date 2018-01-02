@@ -52,12 +52,6 @@ public class InteriorCommandParameterExpressionFormatValidator extends Validator
 				break;
 			}
 			
-			if(CommandBuffer.CARD.equals(type) && previou.equals(CommandBuffer.USECARD) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
-				ret = false;
-				break;
-			}
-			
 			if(CommandBuffer.CARD.equals(type) && previou.equals(CommandBuffer.CEMETERY) && !Util.isInteger(position)){
 				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;

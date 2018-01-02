@@ -10,13 +10,11 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.IPlayer;
-import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.ICemetery;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
-import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -55,24 +53,6 @@ public class ParameterExpressionBuffer {
 		IContainer container = getContainer(); 
 		if (container instanceof IGround) {
 			return (IGround) container;
-		}else{
-			return null;
-		}
-	}
-	
-	public IUseCard getUseCard(){
-		IContainer container = getContainer(); 
-		if (container instanceof IUseCard) {
-			return (IUseCard) container;
-		}else{
-			return null;
-		}
-	}
-	
-	public ICardGroup getCardGroup(){
-		IContainer container = getContainer(); 
-		if (container instanceof ICardGroup) {
-			return (ICardGroup) container;
 		}else{
 			return null;
 		}

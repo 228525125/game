@@ -9,7 +9,6 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.treasure.IResource;
 
 /**
@@ -26,8 +25,6 @@ public interface IPlayer
 	public IContext getContext();
 	
 	public void setContext(IContext context);
-	
-	public IUseCard getUseCard();
 	
 	//public Object getObject(String type);
 	

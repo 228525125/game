@@ -4,15 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.card.ICard;
-import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
-import org.cx.game.rule.IRule;
-import org.cx.game.widget.Cemetery;
-import org.cx.game.widget.ICemetery;
-import org.cx.game.widget.IGround;
-import org.cx.game.widget.IUseCard;
 
 public class Chuck extends Action implements IChuck {
 
@@ -38,9 +31,6 @@ public class Chuck extends Action implements IChuck {
 		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Chuck, map);
 		super.notifyObservers(info);           //通知所有卡片对象，丢弃事件
-		
-		IUseCard use = getOwner().getPlayer().getUseCard();
-		use.remove(getOwner());
 	}
 
 }

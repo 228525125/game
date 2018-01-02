@@ -7,7 +7,6 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IOption;
 
 public class QueryCommandValidator extends Validator {
@@ -28,13 +27,6 @@ public class QueryCommandValidator extends Validator {
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		if("call".equals(action)){
-			if(card instanceof LifeCard && card.getContainer() instanceof IUseCard)
-				return true;
-			else
-				addMessage(I18n.getMessage(QueryCommandValidator.class.getName()));
-		}
-		
 		if("attack".equals(action) || "move".equals(action) || "pick".equals(action)){
 			if(card instanceof LifeCard && card.getContainer() instanceof IGround)
 				return true;
@@ -50,10 +42,10 @@ public class QueryCommandValidator extends Validator {
 		}
 		
 		if("apply".equals(action)){
-			if(card instanceof MagicCard && card.getContainer() instanceof IUseCard)
+			/*if(card instanceof MagicCard && card.getContainer() instanceof IUseCard)
 				return true;
 			else
-				addMessage(I18n.getMessage(QueryCommandValidator.class.getName()));
+				addMessage(I18n.getMessage(QueryCommandValidator.class.getName()));*/
 		}
 		
 		if("execute".equals(action)){

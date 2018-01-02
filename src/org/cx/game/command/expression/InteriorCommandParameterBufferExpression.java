@@ -42,10 +42,6 @@ public class InteriorCommandParameterBufferExpression extends
 				ret = buffer.getPlayer();
 			}
 			
-			if(CommandBuffer.USECARD.equals(item)){
-				ret = buffer.getUseCard();
-			}
-			
 			if(CommandBuffer.GROUND.equals(item)){
 				ret = buffer.getGround();
 			}

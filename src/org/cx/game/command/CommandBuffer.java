@@ -16,13 +16,11 @@ import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.Util;
-import org.cx.game.widget.ICardGroup;
 import org.cx.game.widget.ICemetery;
 import org.cx.game.widget.IContainer;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.IPlace;
 import org.cx.game.widget.ITrickList;
-import org.cx.game.widget.IUseCard;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -46,8 +44,6 @@ public class CommandBuffer {
 	public static final String CEMETERY = "cemetery";
 	
 	public static final String TRICKLIST = "tricklist";
-	
-	public static final String USECARD = "use";
 	
 	public static final String GROUND = "ground";
 	
@@ -152,24 +148,6 @@ public class CommandBuffer {
 		}
 	}
 	
-	public IUseCard getUseCard(){
-		IContainer container = getContainer(); 
-		if (container instanceof IUseCard) {
-			return (IUseCard) container;
-		}else{
-			return null;
-		}
-	}
-	
-	public ICardGroup getCardGroup(){
-		IContainer container = getContainer(); 
-		if (container instanceof ICardGroup) {
-			return (ICardGroup) container;
-		}else{
-			return null;
-		}
-	}
-	
 	public IPlace getPlace(){
 		return (IPlace) element().get(PLACE);
 	}
@@ -232,9 +210,6 @@ public class CommandBuffer {
 		if(TRICKLIST.equals(item)){
 			return getTrickList();
 		}
-		if (USECARD.equals(item)) {
-			return getUseCard();
-		}
 		if (CARD.equals(item)) {
 			return getCard();
 		}
@@ -273,9 +248,6 @@ public class CommandBuffer {
 		}
 		if(item instanceof ITrickList){
 			return TRICKLIST;
-		}
-		if (item instanceof IUseCard) {
-			return USECARD;
 		}
 		if (item instanceof ICard) {
 			return CARD;
