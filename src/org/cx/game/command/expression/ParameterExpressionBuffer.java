@@ -4,17 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.action.IDeath;
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.IPlayer;
-import org.cx.game.widget.ICemetery;
-import org.cx.game.widget.IContainer;
+import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
-import org.cx.game.widget.ITrickList;
+import org.cx.game.widget.Place;
+import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -45,21 +43,12 @@ public class ParameterExpressionBuffer {
 			return (IPlayer) bufferMap.get(CommandBuffer.PLAYER);
 	}
 	
-	public IContainer getContainer(){
-		return (IContainer) bufferMap.get(CommandBuffer.CONTAINER);
-	}
-	
 	public IGround getGround(){
-		IContainer container = getContainer(); 
-		if (container instanceof IGround) {
-			return (IGround) container;
-		}else{
-			return null;
-		}
+		return (IGround) bufferMap.get(CommandBuffer.GROUND);
 	}
 	
-	public IPlace getPlace(){
-		return (IPlace) bufferMap.get(CommandBuffer.PLACE);
+	public Place getPlace(){
+		return (Place) bufferMap.get(CommandBuffer.PLACE);
 	}
 	
 	public IBuilding getBuilding(){
@@ -70,16 +59,16 @@ public class ParameterExpressionBuffer {
 		return (IOption) bufferMap.get(CommandBuffer.OPTION);
 	}
 	
-	public ICemetery getCemetery(){
-		return (ICemetery) bufferMap.get(CommandBuffer.CEMETERY);
+	public Cemetery getCemetery(){
+		return (Cemetery) bufferMap.get(CommandBuffer.CEMETERY);
 	}
 	
-	public ITrickList getTrickList(){
-		return (ITrickList) bufferMap.get(CommandBuffer.TRICKLIST);
+	public TrickList getTrickList(){
+		return (TrickList) bufferMap.get(CommandBuffer.TRICKLIST);
 	}
 	
-	public ICard getCard(){
-		return (ICard)bufferMap.get(CommandBuffer.CARD);
+	public LifeCard getCard(){
+		return (LifeCard)bufferMap.get(CommandBuffer.CARD);
 	}
 	
 	public ISkill getSkill(){
@@ -96,7 +85,7 @@ public class ParameterExpressionBuffer {
 	
 	public void setPlayer(IPlayer player){
 		if(null!=player){
-			bufferMap.remove(CommandBuffer.CONTAINER);
+			bufferMap.remove(CommandBuffer.GROUND);
 			bufferMap.remove(CommandBuffer.PLACE);
 			bufferMap.remove(CommandBuffer.CEMETERY);
 			bufferMap.remove(CommandBuffer.TRICKLIST);
@@ -108,19 +97,19 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setContainer(IContainer container){
-		if(null!=container){
+	public void setGround(IGround ground){
+		if(null!=ground){
 			player = getPlayer();
 			
 			setPlayer(player);
 			
-			bufferMap.put(CommandBuffer.CONTAINER, container);
+			bufferMap.put(CommandBuffer.GROUND, ground);
 		}
 	}
 	
-	public void setPlace(IPlace place){
+	public void setPlace(Place place){
 		if(null!=place){
-			setContainer(place.getContainer());
+			setGround(place.getOwner());
 			
 			bufferMap.put(CommandBuffer.PLACE, place);
 		}
@@ -143,7 +132,7 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setCemetery(ICemetery cemetery){
+	public void setCemetery(Cemetery cemetery){
 		if(null!=cemetery){
 			setPlace(cemetery.getOwner());
 			
@@ -151,7 +140,7 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setTrickList(ITrickList tricklist){
+	public void setTrickList(TrickList tricklist){
 		if(null!=tricklist){
 			setPlace(tricklist.getOwner());
 			
@@ -160,25 +149,20 @@ public class ParameterExpressionBuffer {
 		
 	}
 	
-	public void setCard(ICard card){
-		if(null!=card){
-			setContainer(card.getContainer());
+	public void setCard(LifeCard life){
+		if(null!=life){
+			setGround(life.getGround());
 			
-			if (card.getContainer() instanceof IGround) {
-				IGround ground = (IGround) card.getContainer();
-				
-				IPlace place = ground.getPlace(ground.getPosition(card));
-				setPlace(place);
-				
-				if (card instanceof LifeCard) {
-					LifeCard life = (LifeCard) card;
-					if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
-						setCemetery(place.getCemetery());
-					}
-				}
+			IGround ground = life.getGround();
+			
+			Place place = ground.getPlace(ground.getPosition(life));
+			setPlace(place);
+			
+			if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
+				setCemetery(place.getCemetery());
 			}
 			
-			bufferMap.put(CommandBuffer.CARD, card);
+			bufferMap.put(CommandBuffer.CARD, life);
 		}		
 	}
 	

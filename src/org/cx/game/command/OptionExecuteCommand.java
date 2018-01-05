@@ -5,7 +5,6 @@ import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.OptionExecuteValidator;
 import org.cx.game.validator.OptionSpacingValidate;
 import org.cx.game.validator.SelectOptionValidator;
-import org.cx.game.widget.IPlace;
 import org.cx.game.widget.building.IOption;
 
 public class OptionExecuteCommand extends InteriorCommand {

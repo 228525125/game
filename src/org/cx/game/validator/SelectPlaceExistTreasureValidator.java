@@ -1,7 +1,7 @@
 package org.cx.game.validator;
 
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.ITreasure;
 
 /**
@@ -11,10 +11,10 @@ import org.cx.game.widget.treasure.ITreasure;
  */
 public class SelectPlaceExistTreasureValidator extends Validator {
 	
-	private IPlace place = null;
+	private Place place = null;
 	private ITreasure treasure = null;
 
-	public SelectPlaceExistTreasureValidator(IPlace place) {
+	public SelectPlaceExistTreasureValidator(Place place) {
 		// TODO Auto-generated constructor stub
 		this.place = place;
 	}

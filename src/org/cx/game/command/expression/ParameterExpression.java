@@ -1,8 +1,5 @@
 package org.cx.game.command.expression;
 
-import java.util.Iterator;
-
-import org.cx.game.exception.SyntaxValidatorException;
 import org.dom4j.Element;
 
 public abstract class ParameterExpression extends Expression {

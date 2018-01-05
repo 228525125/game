@@ -24,8 +24,8 @@ public class SelectCommand extends InteriorCommand {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put(CommandBuffer.PLAYER, buffer.getPlayer());
 		
-		if(null!=buffer.getContainer())
-			map.put(CommandBuffer.CONTAINER, buffer.getContainer());
+		if(null!=buffer.getGround())
+			map.put(CommandBuffer.GROUND, buffer.getGround());
 		
 		if(null!=buffer.getPlace()){
 			map.put(CommandBuffer.PLACE, buffer.getPlace());

@@ -212,7 +212,7 @@ public class Util {
 	
 	public static void copyBuffer(ParameterExpressionBuffer peBuffer, CommandBuffer cBuffer){
 		peBuffer.setPlayer(cBuffer.getPlayer());
-		peBuffer.setContainer(cBuffer.getContainer());
+		peBuffer.setGround(cBuffer.getGround());
 		peBuffer.setPlace(cBuffer.getPlace());
 		peBuffer.setBuilding(cBuffer.getBuilding());
 		peBuffer.setOption(cBuffer.getOption());

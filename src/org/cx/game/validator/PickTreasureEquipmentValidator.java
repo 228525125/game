@@ -3,7 +3,7 @@ package org.cx.game.validator;
 import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.TreasureEquipment;
 
 /**
@@ -15,7 +15,7 @@ public class PickTreasureEquipmentValidator extends SelectPlaceExistTreasureVali
 
 	private LifeCard life = null;
 	
-	public PickTreasureEquipmentValidator(LifeCard life, IPlace place) {
+	public PickTreasureEquipmentValidator(LifeCard life, Place place) {
 		super(place);
 		// TODO Auto-generated constructor stub
 		this.life = life;

@@ -7,7 +7,6 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
 import org.cx.game.widget.treasure.ITreasure;
 
 public class Picked extends Action implements IPicked {
@@ -25,16 +24,13 @@ public class Picked extends Action implements IPicked {
 		LifeCard life = (LifeCard) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", life.getPlayer());
-		map.put("container", life.getContainer());
 		map.put("card", life);
 		map.put("treasure", getOwner());
 		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Treasure_Action_Picked,map);
 		super.notifyObservers(info);
 		
-		IGround ground = life.getPlayer().getContext().getGround();
-		IPlace place = ground.getPlace(getOwner().getPosition());
-		place.setTreasure(null);
+		IGround ground = life.getGround();
+		ground.picked(getOwner());
 	}
 }

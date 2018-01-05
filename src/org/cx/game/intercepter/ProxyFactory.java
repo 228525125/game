@@ -2,9 +2,6 @@ package org.cx.game.intercepter;
 
 import java.lang.reflect.Proxy;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.widget.IContainer;
-
 public class ProxyFactory {
 
 	public static Object getProxy(IInterceptable object){

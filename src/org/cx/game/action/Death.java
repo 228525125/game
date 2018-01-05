@@ -7,7 +7,6 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
 
 public class Death extends Action implements IDeath {
 	
@@ -73,17 +72,13 @@ public class Death extends Action implements IDeath {
 	public void action(Object...objects) throws RuleValidatorException {
 
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Death,map);
 		super.notifyObservers(info);           //通知所有卡片对象，死亡事件		
 		
-		IGround ground = (IGround)getOwner().getContainer();     //只有在战场上才会死亡
-		IPlace place = ground.getPlace(getOwner().getPosition());
-		place.out();
-		place.getCemetery().add(getOwner());         //进入墓地
+		IGround ground = getOwner().getGround();     //只有在战场上才会死亡
+		ground.inCemetery(getOwner());
 		
 		if(getOwner().getHero()){
 			setStatus(IDeath.Status_Exist);
@@ -113,8 +108,6 @@ public class Death extends Action implements IDeath {
 				this.damage = Death.this.hp - before;
 				
 				Map<String,Object> map = new HashMap<String,Object>();
-				map.put("player", getOwner().getOwner().getPlayer());
-				map.put("container", getOwner().getOwner().getContainer());
 				map.put("card", getOwner().getOwner());
 				map.put("change", this.damage);
 				map.put("position", getOwner().getOwner().getPosition());

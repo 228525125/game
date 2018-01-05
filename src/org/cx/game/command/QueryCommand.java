@@ -5,22 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.validator.LifeCardActivateValidator;
-import org.cx.game.validator.LifeCardMoveableValidator;
-import org.cx.game.validator.MoveTauntValidator;
-import org.cx.game.validator.NeedConjurerValidator;
 import org.cx.game.validator.QueryCommandValidator;
-import org.cx.game.validator.SelectContainerValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
-import org.cx.game.validator.SelectMagicCardValidator;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.building.IOption;
 
@@ -70,13 +62,6 @@ public class QueryCommand extends InteriorCommand {
 		}else if("execute".equals(parameter)){
 			IOption option = buffer.getOption();
 			positionList = ground.queryRange(option, map.get(parameter));
-		}else if("apply".equals(parameter)){
-			doValidator(new SelectMagicCardValidator(buffer));
-			if(hasError())
-				throw new CommandValidatorException(getErrors().getMessage());
-			
-			MagicCard magic = (MagicCard) buffer.getCard();
-			positionList = ground.queryRange(magic, map.get(parameter));
 		}else if("pick".equals(parameter)){
 			doValidator(new SelectLifeCardValidator(buffer));
 			if(hasError())
@@ -87,8 +72,6 @@ public class QueryCommand extends InteriorCommand {
 		}
 	
 		Map<String,Object> bean = new HashMap<String,Object>();
-		bean.put("player", buffer.getPlayer());
-		bean.put("container", ground);
 		bean.put("positionList", positionList);
 		NotifyInfo info = new NotifyInfo(map.get(parameter),bean);
 		super.notifyObservers(info);    //通知观察者

@@ -38,7 +38,7 @@ public class InteriorCommandParameterBufferExpression extends
 		for(String param : ps){             //所有的位置信息都这样表示：类型+位置 = 字母+数字
 			String item = Util.filterAlphabet(param);
 			
-			if(CommandBuffer.OWN.equals(item)){
+			if(CommandBuffer.PLAYER.equals(item)){
 				ret = buffer.getPlayer();
 			}
 			

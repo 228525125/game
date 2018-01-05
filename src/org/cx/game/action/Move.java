@@ -10,7 +10,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.Debug;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 public class Move extends Action implements IMove{
 
@@ -82,26 +82,41 @@ public class Move extends Action implements IMove{
 			this.hide = hide;
 	}
 
+	@Override
 	public Boolean getMoveable() {
 		return moveable;
 	}
 	
+	@Override
 	public void setMoveable(Boolean moveable) {
-		if(!this.moveable.equals(moveable))
+		if(!this.moveable.equals(moveable)){
 			this.moveable = moveable;
+			
+			if(!this.moveable)
+				setEnergy(0);
+		}
 	}
 	
+	@Override
 	public Integer getDirection() {
 		return direction;
 	}
 
+	@Override
 	public void setDirection(Integer direction) {
 		if(!direction.equals(this.direction))
 			this.direction = direction;
 	}
 	
+	@Override
 	public List<Integer> getMovePath() {
 		return path;
+	}
+	
+	@Override
+	public void addMovePath(Integer position) {
+		// TODO Auto-generated method stub
+		this.path.add(position);
 	}
 
 	@Override
@@ -114,17 +129,18 @@ public class Move extends Action implements IMove{
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
-		IPlace place = (IPlace) objects[0];
+		Place place = (Place) objects[0];
 		
-		IGround ground = (IGround) getOwner().getContainer();
+		Integer start = getOwner().getPosition();
+		
+		IGround ground = (IGround) getOwner().getGround();
 		List<Integer> route = ground.move(getOwner(), place.getPosition(), type);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("route", route);
-		map.put("position", place.getPosition());
+		map.put("start", start);
+		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Move,map);
 		super.notifyObservers(info);
 		

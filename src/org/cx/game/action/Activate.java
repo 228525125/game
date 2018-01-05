@@ -52,8 +52,6 @@ public class Activate extends Action implements IActivate {
 			this.speed = this.speed < 0 ? 0 : this.speed;		
 			
 			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", getOwner().getPlayer());
-			map.put("container", getOwner().getContainer());
 			map.put("card", getOwner());
 			map.put("change", speed);
 			map.put("position", getOwner().getPosition());
@@ -86,8 +84,6 @@ public class Activate extends Action implements IActivate {
 		setActivation(activate);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		map.put("activate", activate);
@@ -99,6 +95,7 @@ public class Activate extends Action implements IActivate {
 		if(activation){
 			owner.getAttack().setAttackable(true);
 			owner.getMove().setMoveable(true);
+			owner.getMove().setEnergy(owner.getEnergy());
 			owner.getAttacked().setFightBack(true);
 			List<IBuff> buffs = owner.getNexusBuff(AttackLockBuff.class);  //清除锁定对象
 			for(IBuff buff : buffs){

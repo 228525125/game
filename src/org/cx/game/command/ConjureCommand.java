@@ -10,7 +10,7 @@ import org.cx.game.validator.ActiveSkillCooldownValidator;
 import org.cx.game.validator.AttackableValidator;
 import org.cx.game.validator.ParameterTypeValidator;
 import org.cx.game.validator.SelectActiveSkillValidator;
-import org.cx.game.validator.SelectContainerValidator;
+import org.cx.game.validator.SelectGroundValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
 import org.cx.game.validator.SelectSkillValidator;
 
@@ -24,7 +24,7 @@ public class ConjureCommand extends InteriorCommand {
 	public ConjureCommand(IPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
+		addValidator(new SelectGroundValidator(buffer));
 		addValidator(new ActiveSkillCooldownValidator(buffer));
 		addValidator(new AttackableValidator(buffer));
 	}

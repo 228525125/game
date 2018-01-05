@@ -11,7 +11,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 /**
  * 放置中立部队的NPC
@@ -52,7 +52,7 @@ public class DisposeNPCPolicy extends Policy {
 			Integer policyID = Integer.valueOf(datas[3]);
 			
 			LifeCard npc = (LifeCard) CardFactory.getInstance(cardID, neutral);
-			IPlace place = ground.getPlace(position);
+			Place place = ground.getPlace(position);
 			IPolicyGroup policy = PolicyGroupFactory.getInstance(policyID);
 			
 			if(null!=policy)

@@ -7,7 +7,6 @@ import org.cx.game.action.IUpgrade;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.Observable;
-import org.cx.game.widget.IPlace;
 import org.cx.game.widget.treasure.IResource;
 
 public interface IBuilding {

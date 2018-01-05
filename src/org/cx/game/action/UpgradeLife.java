@@ -86,8 +86,6 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		addToEmpiricValue(getRequirement());
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("position", getOwner().getPosition());
 		map.put("card", getOwner());
 		map.put("level", getLevel());

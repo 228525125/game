@@ -30,8 +30,6 @@ public class Pick extends Action implements IPick {
 		getOwner().getMove().setEnergy(--energy);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("treasure", treasure);
 		map.put("position", getOwner().getPosition());

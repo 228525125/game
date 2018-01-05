@@ -13,17 +13,17 @@ import java.util.Map.Entry;
 
 import org.cx.game.action.Death;
 import org.cx.game.action.IAttack;
+import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
 import org.cx.game.card.CardFactory;
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.ActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.core.Player;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
@@ -42,13 +42,14 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class HoneycombGround extends Container implements IGround {
+public class HoneycombGround implements IGround {
 
 	private Integer xBorder = 0;                                       //边界x轴长度
 	private Integer yBorder = 0;                                       //边界y轴长度
 	private String imagePath = "";                                     //背景图片
 	
-	private Map<Integer,IPlace> ground = new HashMap<Integer,IPlace>();
+	private Map<Integer,Place> ground = new HashMap<Integer,Place>();
+	private List<LifeCard> lifeList = new ArrayList<LifeCard>();
 	private List<IBuilding> buildingList = new ArrayList<IBuilding>();                 //建筑
 	private Map<Integer, IBuilding> buildingMap = new HashMap<Integer, IBuilding>();   //位置 - 建筑
 	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格（暂时没用），当地图中间需要被镂空时，会用到
@@ -99,8 +100,8 @@ public class HoneycombGround extends Container implements IGround {
 		for(int i=1;i<getXBorder()+1;i++){
 			for(int j=1;j<getYBorder()+1;j++){
 				Integer curPos = Integer.valueOf(""+i+IGround.space+j);
-				IPlace place = new Place(this, curPos);
-				place.setLandform(IPlace.Landform_Sward);
+				Place place = new Place(this, curPos);
+				place.setLandform(Place.Landform_Sward);
 				addPlace(place);
 				
 				getEmptyList().add(curPos);      //初始化空位置
@@ -112,7 +113,7 @@ public class HoneycombGround extends Container implements IGround {
 		 */
 		for(Entry<Integer, ITreasure> entry : getTreasureMap().entrySet()){
 			Integer position = entry.getKey();
-			IPlace place = getPlace(position);
+			Place place = getPlace(position);
 			ITreasure treasure = entry.getValue();
 			place.setTreasure(treasure);
 		}
@@ -131,31 +132,46 @@ public class HoneycombGround extends Container implements IGround {
 		neutral.setComputer(true);
 	}
 
-	public void add(Integer position, ICard card) {
+	public void add(Integer position, LifeCard card) throws RuleValidatorException {
 		// TODO 自动生成方法存根
-		super.setAction(NotifyInfo.Container_Ground_Add);
-		super.add(position, card);
+		this.lifeList.add(card);
 		
-		if (card instanceof LifeCard) {
-			LifeCard life = (LifeCard) card;
-			IPlace place = getPlace(position);
-			place.in(life);
-		}
+		Place place = getPlace(position);
+		place.in(card);
+		
+		card.setGround(this);
 	}
 	
 	@Override
-	public Boolean remove(ICard card) {
+	public Boolean remove(LifeCard card) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		setAction(NotifyInfo.Container_Ground_Remove);
-		Boolean ret = super.remove(card);
+		Boolean ret = this.lifeList.remove(card);
 		
 		if(ret){
-			Integer position = getPosition(card);
-			IPlace place = getPlace(position);
-			place.out();
+			Integer status = card.getDeath().getStatus();
+			
+			if(IDeath.Status_Live.equals(status)){
+				Integer position = card.getPosition();
+				Place place = getPlace(position);
+				place.out();
+			}
+			
+			if(IDeath.Status_Death.equals(status)){
+				Integer position = card.getPosition();
+				Place place = getPlace(position);
+				place.outCemetery(card);
+			}
+			
+			card.setGround(null);
 		}
 		
 		return ret;
+	}
+	
+	@Override
+	public Boolean contains(LifeCard card) {
+		// TODO Auto-generated method stub
+		return ground.containsValue(card);
 	}
 	
 	@Override
@@ -170,17 +186,17 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public Integer getSize() {
 		// TODO Auto-generated method stub
-		return cardList.size();
+		return this.lifeList.size();
 	}
 	
 	@Override
-	public IPlace getPlace(Integer position) {
+	public Place getPlace(Integer position) {
 		// TODO Auto-generated method stub
 		return ground.get(position);
 	}
 	
 	@Override
-	public void addPlace(IPlace place) {
+	public void addPlace(Place place) {
 		// TODO Auto-generated method stub
 		ground.put(place.getPosition(), place);
 	}
@@ -225,7 +241,7 @@ public class HoneycombGround extends Container implements IGround {
 			Integer buildingType = entry.getValue();
 			
 			IBuilding building = BuildingFactory.getInstance(buildingType);
-			IPlace place = getPlace(position);
+			Place place = getPlace(position);
 			place.setBuilding(building);
 			
 			this.buildingList.add(building);
@@ -314,7 +330,7 @@ public class HoneycombGround extends Container implements IGround {
 		
 		for(Entry<Integer,Integer> entry : landformMap.entrySet()){
 			Integer pos = entry.getKey();
-			IPlace place = getPlace(pos);
+			Place place = getPlace(pos);
 			place.setLandform(entry.getValue());
 		}
 	}
@@ -336,17 +352,16 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return Container.Ground;
+		return Ground;
 	}
 	
 	public IPlayer getNeutral(){
 		return this.neutral;
 	}
 	
-	public List<Integer> queryRange(ICard card, String action){
+	public List<Integer> queryRange(LifeCard life, String action){
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Attack.equals(action) && card instanceof LifeCard){
-			LifeCard life = (LifeCard) card;
+		if(NotifyInfo.Command_Query_Attack.equals(action)){
 			Integer range = life.getAttack().getRange();
 			/*
 			 * 这里要考虑远程单位射程切换为近战时的变化
@@ -367,8 +382,7 @@ public class HoneycombGround extends Container implements IGround {
 			positionList.remove(life.getPosition());
 		}
 		
-		if(NotifyInfo.Command_Query_Move.equals(action) && card instanceof LifeCard){
-			LifeCard life = (LifeCard) card;
+		if(NotifyInfo.Command_Query_Move.equals(action)){
 			Integer step = life.getMove().getEnergy()/life.getMove().getConsume();
 			switch (life.getMove().getType()) {
 			case 141:    //步行
@@ -411,16 +425,6 @@ public class HoneycombGround extends Container implements IGround {
 	}
 	
 	@Override
-	public List<Integer> queryRange(MagicCard magic, String action) {
-		// TODO Auto-generated method stub
-		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Apply.equals(action)){
-			positionList = magic.getApplyRange(this);
-		}
-		return positionList;
-	}
-	
-	@Override
 	public List<Integer> queryRange(IOption option, String action) {
 		// TODO Auto-generated method stub
 		List<Integer> positionList = new ArrayList<Integer>();
@@ -428,6 +432,13 @@ public class HoneycombGround extends Container implements IGround {
 			positionList = option.getExecuteRange(this);
 		}
 		return positionList;
+	}
+	
+	@Override
+	public void picked(ITreasure treasure) {
+		// TODO Auto-generated method stub
+		Place place = getPlace(treasure.getPosition());
+		place.setTreasure(null);
 	}
 
 	public Integer getXBorder() {
@@ -439,7 +450,7 @@ public class HoneycombGround extends Container implements IGround {
 	}
 	
 	@Override
-	public void loadMap() {
+	public Map<String, Object> toMap() {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("xBorder", xBorder);
@@ -448,18 +459,15 @@ public class HoneycombGround extends Container implements IGround {
 		map.put("buildingList", buildingList);
 		map.put("disableList", disableList);
 		//map.put("strongHoldList", strongHoldList);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,map);
-		
-		notifyObservers(info);    //通知观察者
+		return map;
 	}
 	
 	/**
 	 * 只能查找战场上的生物位置，包含墓地
 	 */
-	public Integer getPosition(ICard card) {
+	public Integer getPosition(LifeCard life) {
 		// TODO Auto-generated method stub
-		LifeCard life = (LifeCard) card;
-		for(Entry<Integer, IPlace> entry : ground.entrySet()){
+		for(Entry<Integer, Place> entry : ground.entrySet()){
 			if(life.equals(entry.getValue().getLife())){
 				return entry.getKey();
 			}else if(entry.getValue().getCemetery().contains(life)){
@@ -470,19 +478,25 @@ public class HoneycombGround extends Container implements IGround {
 	}
 
 	@Override
-	public List<Integer> move(LifeCard life, Integer position, Integer type) {
+	public List<Integer> move(LifeCard life, Integer position, Integer type) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		List<Integer> route = new ArrayList<Integer>();
 		
 		List path = route(getPosition(life), position, type);
 		path.remove(0);                         //路径包含起点
 		
-		for(int i=0;i<path.size();i++){
-			Integer curPos = getPosition(life);
+		for(int i=0;i<path.size();i++){   
+			
+			/*
+			 * moveable状态可能会在place.in中改变
+			 */
+			if(!life.getMove().getMoveable())
+				break;
+			
 			Integer original = life.getPosition();
 			Node node = (Node) path.get(i);
 			
-			IPlace place = getPlace(curPos);
+			Place place = getPlace(original);
 			place.out();
 			place = getPlace(pointToInteger(node._Pos.x, node._Pos.y));
 			place.in(life);
@@ -490,7 +504,7 @@ public class HoneycombGround extends Container implements IGround {
 			/*
 			 * 减少精力
 			 */
-			Integer energy = life.getMove().getConsume();
+			Integer energy = life.getMove().getEnergy();
 			energy -= node.consume;
 			life.getMove().setEnergy(energy);
 			
@@ -502,6 +516,11 @@ public class HoneycombGround extends Container implements IGround {
 				Integer direction = ground.getDirection(original, life.getPosition());
 				life.getMove().setDirection(direction);
 			}
+			
+			/*
+			 * 添加路径
+			 */
+			route.add(life.getPosition());
 		}
 		
 		return route;
@@ -510,24 +529,65 @@ public class HoneycombGround extends Container implements IGround {
 	@Override
 	public List toList() {
 		// TODO Auto-generated method stub
-		List<IPlace> list = new ArrayList<IPlace>();
+		List<Place> list = new ArrayList<Place>();
 		Set<Integer> keySet = ground.keySet();
 		Iterator<Integer> it = keySet.iterator();
 		while (it.hasNext()) {
-			IPlace place = ground.get(it.next());
+			Place place = ground.get(it.next());
 			list.add(place);
 		}
 		return list;
 	}
 	
 	@Override
+	public void inCemetery(LifeCard life) throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		Place place = getPlace(life.getPosition());
+		place.out();
+		place.inCemetery(life);
+	}
+	
+	@Override
+	public void outCemetery(LifeCard life) {
+		// TODO Auto-generated method stub
+		Place place = getPlace(life.getPosition());
+		place.outCemetery(life);
+	}
+	
+	@Override
+	public List<LifeCard> list() {
+		// TODO Auto-generated method stub
+		return this.lifeList;
+	}
+	
+	@Override
+	public List<LifeCard> listForID(List<Integer> ids) {
+		// TODO Auto-generated method stub
+		List<LifeCard> ret = new ArrayList<LifeCard>();
+		for(LifeCard life : list()){
+			if(ids.contains(life.getId()))
+				ret.add(life);
+		}
+		return ret;
+	}
+
+	@Override
+	public List<LifeCard> listForID(IPlayer player, List<Integer> ids) {
+		// TODO Auto-generated method stub
+		List<LifeCard> ret = new ArrayList<LifeCard>();
+		for(LifeCard card : list()){
+			if(ids.contains(card.getId()) && player.equals(card.getPlayer()))
+				ret.add(card);
+		}
+		return ret;
+	}
+
+	@Override
 	public List<LifeCard> list(IPlayer player, Integer status) {
 		// TODO Auto-generated method stub
 		List<LifeCard> ret = new ArrayList<LifeCard>();
-		List<ICard> list = list();
 		
-		for(ICard card : list){
-			LifeCard life = (LifeCard) card;
+		for(LifeCard life : list()){
 			if(player.equals(life.getPlayer()) && status.equals(life.getDeath().getStatus()))
 				ret.add(life);
 		}
@@ -539,10 +599,8 @@ public class HoneycombGround extends Container implements IGround {
 	public List<LifeCard> list(Integer status) {
 		// TODO Auto-generated method stub
 		List<LifeCard> ret = new ArrayList<LifeCard>();
-		List<ICard> list = list();
 		
-		for(ICard card : list){
-			LifeCard life = (LifeCard) card;
+		for(LifeCard life : list()){
 			if(status.equals(life.getDeath().getStatus()))
 				ret.add(life);
 		}
@@ -1075,7 +1133,7 @@ public class HoneycombGround extends Container implements IGround {
 			String [] is = i.toString().split(space);
 			Integer ix = Integer.valueOf(is[0]);
 			Integer iy = Integer.valueOf(is[1]);
-			IPlace p = getPlace(i);
+			Place p = getPlace(i);
 			MAP[ix][iy] = LandformEffect.getConsume(moveType, p.getLandform());
 		}
 	}

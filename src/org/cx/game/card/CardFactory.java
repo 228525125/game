@@ -43,11 +43,11 @@ public class CardFactory {
 		return null;
 	}
 
-	private static ICard getInstance(Element cardEl){
+	private static LifeCard getInstance(Element cardEl){
 		ObjectTypeBuilder otb = new ObjectTypeBuilder();
 		try {
 			new ObjectTypeParse(otb).parse(cardEl);
-			ICard card = (ICard) otb.builder();
+			LifeCard card = (LifeCard) otb.builder();
 			return card;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -59,20 +59,20 @@ public class CardFactory {
 		return null;
 	}
 	
-	public static ICard getInstance(Integer cid, IPlayer player){
+	public static LifeCard getInstance(Integer cid, IPlayer player){
 		Element cardEl = getElement(cid);
-		ICard card = getInstance(cardEl);
+		LifeCard card = getInstance(cardEl);
 		card.setPlayer(player);
 		card.setPlayId(ContextFactory.getContext().newCardPlayId());
 		return card;
 	}
 	
-	public static List<ICard> getInstances(List<Integer> cid, IPlayer player){
-		List<ICard> list = new ArrayList<ICard>();
+	public static List<LifeCard> getInstances(List<Integer> cid, IPlayer player){
+		List<LifeCard> list = new ArrayList<LifeCard>();
 		
 		for(Integer id : cid){
 			Element cardEl = getElement(id);
-			ICard card = getInstance(cardEl);
+			LifeCard card = getInstance(cardEl);
 			card.setPlayer(player);
 			card.setPlayId(ContextFactory.getContext().newCardPlayId());
 			list.add(getInstance(cardEl));

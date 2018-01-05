@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import org.cx.game.action.Action;
 import org.cx.game.action.Death;
 import org.cx.game.action.IAction;
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;

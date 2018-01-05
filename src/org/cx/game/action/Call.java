@@ -6,8 +6,8 @@ import java.util.Map;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.widget.IContainer;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.IGround;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
@@ -64,7 +64,7 @@ public class Call extends Action implements ICall {
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 
-		IPlace place = (IPlace) objects[0];
+		Place place = (Place) objects[0];
 		Integer nop = (Integer) objects[1];
 		
 		/*
@@ -74,8 +74,6 @@ public class Call extends Action implements ICall {
 		
 		/* 招募的动作应在place_in之前，因为place_in动作与移动时的place_in动作相同 */
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", place.getContainer());
 		map.put("card", getOwner());
 		map.put("position", place.getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Call,map);
@@ -85,7 +83,7 @@ public class Call extends Action implements ICall {
 		 * 加入战场
 		 * 因为顺序问题，没有写在Rule中
 		 */
-		IContainer ground = place.getContainer();
+		IGround ground = place.getOwner();
 		ground.add(place.getPosition(), getOwner());
 		
 		/*

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.building.IBuilding;
 
 /**
@@ -15,10 +15,10 @@ import org.cx.game.widget.building.IBuilding;
  */
 public class CallRangeValidator extends SelectBuildingTypeValidator {
 
-	private IPlace place;
+	private Place place;
 	private IBuilding buildingCall = null;
 	
-	public CallRangeValidator(IBuilding buildingCall, IPlace place) {
+	public CallRangeValidator(IBuilding buildingCall, Place place) {
 		// TODO Auto-generated constructor stub
 		super(buildingCall, new Integer[]{
 				IBuilding.Building_Chengshi

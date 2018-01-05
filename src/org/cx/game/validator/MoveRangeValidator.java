@@ -2,14 +2,14 @@ package org.cx.game.validator;
 
 import org.cx.game.card.LifeCard;
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 public class MoveRangeValidator extends Validator {
 
 	private LifeCard life;
-	private IPlace place;
+	private Place place;
 	
-	public MoveRangeValidator(LifeCard life, IPlace place) {
+	public MoveRangeValidator(LifeCard life, Place place) {
 		// TODO Auto-generated constructor stub
 		this.life = life;
 		this.place = place;

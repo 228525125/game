@@ -5,7 +5,7 @@ import java.util.List;
 import org.cx.game.card.LifeCard;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.Intercepter;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 /**
  * 原地驻守
@@ -32,7 +32,7 @@ public class GuardPolicyGroup extends PolicyGroup {
 				/*
 				 * 设置固守位置
 				 */
-				IPlace place = (IPlace)((Object[]) args[0])[0];
+				Place place = (Place)((Object[]) args[0])[0];
 				Integer position = place.getPosition();
 				setGuardPosition(position);
 			}

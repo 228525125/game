@@ -18,7 +18,7 @@ import org.cx.game.validator.CallConsumeValidator;
 import org.cx.game.validator.CallRangeValidator;
 import org.cx.game.validator.RationLimitValidator;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.building.OptionCall.OptionCallExecute;
 
 /**
@@ -36,7 +36,7 @@ public class OptionRevive extends Option implements IOption {
 		this.hero = hero;
 		this.hero.getDeath().addObserver(new OptionObserver());
 		
-		setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
+		setParameterTypeValidator(new Class[]{Place.class}, new String[]{"empty"}, new Object[]{true});
 	}
 	
 	@Override
@@ -72,7 +72,7 @@ public class OptionRevive extends Option implements IOption {
 	@Override
 	public void execute(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		IPlace place = (IPlace) objects[0];
+		Place place = (Place) objects[0];
 		
 		getExecute().addValidator(new CallConsumeValidator(this.hero, 1));
 		getExecute().addValidator(new CallRangeValidator(getOwner(), place));
@@ -117,7 +117,7 @@ public class OptionRevive extends Option implements IOption {
 			
 			super.action(objects);
 			
-			IPlace place = (IPlace) objects[0];
+			Place place = (Place) objects[0];
 			this.hero.call(place,1);
 		}
 	}

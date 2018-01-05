@@ -2,9 +2,25 @@ package org.cx.game.observer;
 
 public class NotifyInfo {
 	
+	private String type;
+	private Object info;
+	
 	public NotifyInfo(String type, Object info) {
 		// TODO Auto-generated constructor stub
 		this.type = type;
+		this.info = info;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public Object getInfo() {
+		return info;
+	}
+	public void setInfo(Object info) {
 		this.info = info;
 	}
 
@@ -194,21 +210,5 @@ public class NotifyInfo {
 	
 	public final static String Card_LifeCard_Skill_Trick_FreezeTrick = "Card_LifeCard_Skill_Trick_FreezeTrick";
 	public final static String Card_LifeCard_Skill_Trick_PrickTrick = "Card_LifeCard_Skill_Trick_PrickTrick";*/
-	
-	private String type;
-	private Object info;
-	
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public Object getInfo() {
-		return info;
-	}
-	public void setInfo(Object info) {
-		this.info = info;
-	}
 	
 }

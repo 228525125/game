@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <game>
-	<types> <!-- 类型定义 -->
+	<types> <!-- 类型定义 --><!-- 这里的text必须与CommandBuffer一致 -->
 		<type name = "player">
-			<item>own</item>
+			<item>player</item>
 		</type>
-		<type name = "container">
-			<item>group</item>  <!-- 这里的text必须与CommandBuffer一致 -->
-			<item>use</item>
+		<type name = "ground">
 			<item>ground</item>
 		</type>
 		<type name = "place">
@@ -34,7 +32,6 @@
 			<item>conjure</item>
 			<item>move</item>
 			<item>swap</item>
-			<item>apply</item>
 			<item>execute</item>
 			<item>pick</item>
 		</type>
@@ -55,7 +52,7 @@
 			<description>选择</description>			
 			<parameter>
 				<option>player</option>
-				<option>container</option>
+				<option>ground</option>
 				<option>place</option>
 				<option>building</option>
 				<option>option</option>
@@ -127,7 +124,7 @@
 				<option>place</option>
 			</parameter>			
 		</command>
-		-->
+		
 		<command name='apply' class='org.cx.game.command.ApplyCommand' parameter='request'>
 			<description>使用魔法卡</description>
 			<parameter>
@@ -135,6 +132,8 @@
 				<option>card</option>
 			</parameter>
 		</command>
+		-->
+		
 		<command name='chuck' class='org.cx.game.command.ChuckCommand' parameter='no'>
 			<description>丢弃</description>
 		</command>

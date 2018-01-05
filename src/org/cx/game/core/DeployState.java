@@ -3,7 +3,6 @@ package org.cx.game.core;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.ICard;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.npc.NPC;

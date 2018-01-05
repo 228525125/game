@@ -29,8 +29,6 @@ public class Conjure extends Action implements IConjure {
 		IActiveSkill skill = (IActiveSkill) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		map.put("skill", skill);

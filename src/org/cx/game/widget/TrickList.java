@@ -6,65 +6,47 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.card.trick.ITrick;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 
-public class TrickList extends Observable implements ITrickList {
+public class TrickList {
 
-	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	protected List<ITrick> trickList = new ArrayList<ITrick>();
+	private List<ITrick> trickList = new ArrayList<ITrick>();
 	
-	private IPlace place;
+	private Place place;
 	
-	public TrickList(IPlace place) {
+	public TrickList(Place place) {
 		// TODO Auto-generated constructor stub
 		super();
 		this.place = place;
 	}
 	
-	public void add(ITrick trick){
+	void add(ITrick trick){
 		trickList.add(trick);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", trick.getPlayer());
-		map.put("container", trick.getPlayer().getContext().getGround());
-		map.put("trick", trick);
-		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_TrickList_Add,map);
-		notifyObservers(info);
 	}
 	
-	@Override
-	public void remove(ITrick trick){
+	void remove(ITrick trick){
 		trickList.remove(trick);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", trick.getPlayer());
-		map.put("container", trick.getPlayer().getContext().getGround());
-		map.put("trick", trick);
-		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_Place_TrickList_Remove,map);
-		notifyObservers(info);    //通知观察者
-		
 	}
 	
-	@Override
+	/**
+	 * 因为TrickList的getPosition(ICard)返回TrickList所在ground的position
+	 * @param trick
+	 * @return
+	 */
 	public Integer indexOf(ITrick trick) {
 		// TODO Auto-generated method stub
 		return trickList.indexOf(trick);
 	}
 	
-	@Override
 	public Integer getSize() {
 		// TODO Auto-generated method stub
 		return trickList.size();
 	}
 
-	@Override
 	public ITrick getTrick(Integer index) {
 		// TODO Auto-generated method stub
 		if(index<getSize())
@@ -73,59 +55,14 @@ public class TrickList extends Observable implements ITrickList {
 			return null;
 	}
 
-	@Override
-	public IPlace getOwner() {
+	public Place getOwner() {
 		// TODO Auto-generated method stub
 		return place;
 	}
 
-	@Override
 	public Boolean contains(ITrick trick) {
 		// TODO Auto-generated method stub
 		return trickList.contains(trick);
-	}
-
-	@Override
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
-	}
-	
-	@Override
-	public void notifyObservers(Object arg0) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg0);
 	}
 
 	public List<ITrick> getList() {

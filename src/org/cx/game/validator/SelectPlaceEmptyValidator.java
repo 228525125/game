@@ -2,14 +2,14 @@ package org.cx.game.validator;
 
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 public class SelectPlaceEmptyValidator extends Validator {
 
 	private Boolean empty = false;
-	private IPlace place = null;
+	private Place place = null;
 	
-	public SelectPlaceEmptyValidator(IPlace place, Boolean empty) {
+	public SelectPlaceEmptyValidator(Place place, Boolean empty) {
 		// TODO Auto-generated constructor stub
 		this.empty = empty;
 		this.place = place;

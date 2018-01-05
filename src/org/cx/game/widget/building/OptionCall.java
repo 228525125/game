@@ -15,7 +15,7 @@ import org.cx.game.validator.CallRangeValidator;
 import org.cx.game.validator.CallUnitEqualValidator;
 import org.cx.game.validator.RationLimitValidator;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.building.OptionBuild.OptionBuildExecute;
 
 public class OptionCall extends Option implements IOption {
@@ -63,7 +63,7 @@ public class OptionCall extends Option implements IOption {
 	@Override
 	public void execute(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		IPlace place = (IPlace) objects[0];
+		Place place = (Place) objects[0];
 		LifeCard life = (LifeCard) CardFactory.getInstance(cardID, getOwner().getPlayer());
 		
 		if(null!=place.getLife())            //如果是补充兵源，就判断招募的兵源是否一致
@@ -111,7 +111,7 @@ public class OptionCall extends Option implements IOption {
 			// TODO Auto-generated method stub
 			super.action(objects);
 			
-			IPlace place = (IPlace) objects[0];
+			Place place = (Place) objects[0];
 			
 			LifeCard life = (LifeCard) CardFactory.getInstance(cardID, getOwner().getOwner().getPlayer());
 			life.call(place, getNumber());

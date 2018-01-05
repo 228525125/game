@@ -11,7 +11,7 @@ import org.cx.game.card.HeroCard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.IResource;
 
 /**
@@ -35,13 +35,13 @@ public class CallRule extends Rule implements IRule {
 		return isInvoke;
 	}
 	
-	private IPlace place = null;
+	private Place place = null;
 	private Integer nop = 0;
 	
 	@Override
 	public void before(Object[] args) {
 		// TODO Auto-generated method stub
-		this.place = (IPlace)((Object[]) args[0])[0];
+		this.place = (Place)((Object[]) args[0])[0];
 		this.nop = (Integer)((Object[]) args[0])[1];
 		
 		ICall call = getOwner();
@@ -52,11 +52,8 @@ public class CallRule extends Rule implements IRule {
 		/*
 		 * 英雄复活要先把尸体回收
 		 */
-		if (owner instanceof HeroCard && null!= owner.getContainer()) {
-			HeroCard hero = (HeroCard) owner;
-			Integer position = hero.getPosition();
-			IPlace place = ground.getPlace(position);
-			place.getCemetery().remove(hero);
+		if (owner instanceof HeroCard && null!= owner.getGround()) {
+			ground.outCemetery(owner);
 		}
 		
 		/*

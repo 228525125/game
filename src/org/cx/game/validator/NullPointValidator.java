@@ -1,7 +1,7 @@
 package org.cx.game.validator;
 
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IContainer;
+import org.cx.game.widget.IGround;
 
 /**
  * 验证指定的位置是否存在对象
@@ -10,19 +10,19 @@ import org.cx.game.widget.IContainer;
  */
 public class NullPointValidator extends Validator {
 
-	private IContainer container = null;
+	private IGround ground = null;
 	private Integer position = null;
 	
-	public NullPointValidator(IContainer container, Integer position) {
+	public NullPointValidator(IGround ground, Integer position) {
 		// TODO Auto-generated constructor stub
-		this.container = container;
+		this.ground = ground;
 		this.position = position;
 	}
 	
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		if(null!=container.getCard(position)){
+		if(null!=ground.getCard(position)){
 			return true;
 		}else{
 			addMessage(I18n.getMessage(NullPointValidator.class.getName()));

@@ -1,12 +1,6 @@
 package org.cx.game.core;
 
-import java.util.List;
-
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.LifeCard;
-import org.cx.game.intercepter.Intercepter;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IStrongHold;
 
 public class ContextFactory {
 	

@@ -25,7 +25,6 @@ public class ReloadCommand extends InteriorCommand {
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String,Object>();
 		
-		map.put("player", player);
 		map.put("god", player.getContext().getGround().toList());      //ground已被屏蔽
 		list.add(map);
 		

@@ -6,13 +6,11 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
 import org.cx.game.observer.Observable;
-import org.cx.game.widget.IContainer;
-import org.cx.game.widget.IPlace;
-import org.cx.game.widget.ITrickList;
+import org.cx.game.widget.TrickList;
 
 public interface ITrick extends IInterceptable,Observable,IIntercepter,IMagic,IRecover {
 	
-	public ITrickList getOwner();
+	public TrickList getOwner();
 	
 	public IPlayer getPlayer();
 	

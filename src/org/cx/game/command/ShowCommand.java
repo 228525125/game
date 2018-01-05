@@ -3,15 +3,9 @@ package org.cx.game.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.ICard;
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
-import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.widget.ICemetery;
-import org.cx.game.widget.IContainer;
-import org.cx.game.widget.ITrickList;
 
 public class ShowCommand extends InteriorCommand {
 
@@ -26,42 +20,42 @@ public class ShowCommand extends InteriorCommand {
 		super.execute();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", buffer.getPlayer());
+		map.put(CommandBuffer.PLAYER, buffer.getPlayer());
 		
-		if(null!=buffer.getContainer())
-			map.put("container", buffer.getContainer());
+		if(null!=buffer.getGround())
+			map.put(CommandBuffer.GROUND, buffer.getGround());
 		
 		if(null!=buffer.getPlace()){
-			map.put("place", buffer.getPlace());
+			map.put(CommandBuffer.PLACE, buffer.getPlace());
 			map.put("position", buffer.getPlace().getPosition());
 		}
 		
 		if(null!=buffer.getBuilding()){
-			map.put("building", buffer.getBuilding());
+			map.put(CommandBuffer.BUILDING, buffer.getBuilding());
 		}
 		
 		if(null!=buffer.getOption()){
-			map.put("option", buffer.getOption());
+			map.put(CommandBuffer.OPTION, buffer.getOption());
 		}
 		
 		if(null!=buffer.getCemetery()){
-			map.put("cemetery", buffer.getCemetery());
+			map.put(CommandBuffer.CEMETERY, buffer.getCemetery());
 		}
 		
 		if(null!=buffer.getTrickList()){
-			map.put("tricklist", buffer.getTrickList());
+			map.put(CommandBuffer.TRICKLIST, buffer.getTrickList());
 		}
 		
 		if(null!=buffer.getCard()){
-			map.put("card", buffer.getCard());
+			map.put(CommandBuffer.CARD, buffer.getCard());
 			map.put("position", buffer.getCard().getPosition());
 		}
 		
 		if(null!=buffer.getSkill())
-			map.put("skill", buffer.getSkill());
+			map.put(CommandBuffer.SKILL, buffer.getSkill());
 		
 		if(null!=buffer.getTrick())
-			map.put("trick", buffer.getTrick());
+			map.put(CommandBuffer.TRICK, buffer.getTrick());
 		
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Command_Show,map); 
 		super.notifyObservers(info);    //通知观察者

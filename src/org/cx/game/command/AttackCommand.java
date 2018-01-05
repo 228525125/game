@@ -9,7 +9,7 @@ import org.cx.game.validator.AttackAtkValidator;
 import org.cx.game.validator.AttackRangeValidator;
 import org.cx.game.validator.AttackTauntValidator;
 import org.cx.game.validator.AttackableValidator;
-import org.cx.game.validator.SelectContainerValidator;
+import org.cx.game.validator.SelectGroundValidator;
 import org.cx.game.validator.SelectLifeCardNotHideValidator;
 
 public class AttackCommand extends InteriorCommand {
@@ -17,7 +17,7 @@ public class AttackCommand extends InteriorCommand {
 	public AttackCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
-		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
+		addValidator(new SelectGroundValidator(buffer));
 		addValidator(new AttackableValidator(buffer));
 		addValidator(new AttackAtkValidator(buffer));
 	}

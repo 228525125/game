@@ -9,7 +9,6 @@ import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
 
 /**
  * 资料类物品

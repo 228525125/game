@@ -33,8 +33,6 @@ public class UpgradeBuilding extends Upgrade implements IUpgradeBuilding {
 		getOwner().setStatus(IBuilding.Building_Status_Complete);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getPlayer().getContext().getGround());
 		map.put("position", getOwner().getPosition());
 		map.put("building", this);
 		map.put("level", getLevel());

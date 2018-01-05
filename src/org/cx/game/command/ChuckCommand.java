@@ -1,17 +1,16 @@
 package org.cx.game.command;
 
-import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
-import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
-import org.cx.game.validator.SelectCardValidator;
+import org.cx.game.validator.SelectLifeCardValidator;
 
 public class ChuckCommand extends InteriorCommand {
 
 	public ChuckCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
-		addValidator(new SelectCardValidator(buffer));
+		addValidator(new SelectLifeCardValidator(buffer));
 	}
 	
 	@Override
@@ -19,7 +18,7 @@ public class ChuckCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 		
-		ICard card = buffer.getCard();
-		card.chuck();
+		LifeCard life = buffer.getCard();
+		life.chuck();
 	}
 }

@@ -3,10 +3,10 @@ package org.cx.game.command;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
-import org.cx.game.validator.SelectContainerValidator;
+import org.cx.game.validator.SelectGroundValidator;
 import org.cx.game.validator.SelectLifeCardValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 /**
  * 暂停使用，已被CallOption替代
@@ -26,7 +26,7 @@ public class CallCommand extends InteriorCommand {
 	public void setParameter(Object parameter) {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
-		addValidator(new SelectPlaceEmptyValidator((IPlace) parameter,true));
+		addValidator(new SelectPlaceEmptyValidator((Place) parameter,true));
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class CallCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 		
-		IPlace place = (IPlace) parameter;
+		Place place = (Place) parameter;
 		LifeCard life = (LifeCard) buffer.getCard();
 		//life.call(place);
 		buffer.clear();

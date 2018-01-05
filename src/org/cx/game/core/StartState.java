@@ -6,18 +6,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cx.game.card.CardFactory;
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
-import org.cx.game.policy.PolicyGroupFactory;
-import org.cx.game.policy.IPolicyGroup;
-import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.GroundFactory;
-import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.building.OptionRevive;
@@ -59,7 +52,7 @@ public class StartState extends PlayState {
 	 */
 	private void provision(){
 		Map<String,Object> map = new HashMap<String,Object>();
-		IGround ground = GroundFactory.getGround();
+		IGround ground = context.getGround();
 		Map<Integer, Integer> landformMap = ground.getLandformMap();
 		Map<String, Integer> landform = new HashMap<String, Integer>();
 		for(Integer i : landformMap.keySet())

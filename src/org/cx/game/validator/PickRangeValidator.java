@@ -4,7 +4,7 @@ import org.cx.game.action.IPick;
 import org.cx.game.card.LifeCard;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 /**
  * 验证拾取距离
@@ -13,10 +13,10 @@ import org.cx.game.widget.IPlace;
  */
 public class PickRangeValidator extends Validator {
 
-	private IPlace place = null;
+	private Place place = null;
 	private LifeCard life = null;
 	
-	public PickRangeValidator(LifeCard life, IPlace place) {
+	public PickRangeValidator(LifeCard life, Place place) {
 		// TODO Auto-generated constructor stub
 		this.place = place;
 		this.life = life;

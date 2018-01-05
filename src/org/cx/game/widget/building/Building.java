@@ -14,8 +14,6 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
@@ -23,7 +21,6 @@ public class Building implements IBuilding, IRecover {
 
 	private Integer position = 0;
 	private String name = null;
-	private IPlace place = null;
 	private Integer type = 0;
 	private Integer buildWait = 0;
 	private Integer level = 1;

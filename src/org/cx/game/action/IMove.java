@@ -84,6 +84,12 @@ public interface IMove extends IAction{
 	 */
 	public List<Integer> getMovePath();
 	
+	/**
+	 * 增加路径
+	 * @param position 
+	 */
+	public void addMovePath(Integer position);
+	
 	public LifeCard getOwner();
 
 }

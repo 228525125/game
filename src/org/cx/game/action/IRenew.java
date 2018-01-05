@@ -1,6 +1,5 @@
 package org.cx.game.action;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 
 /**

@@ -8,7 +8,6 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.Util;
 import org.cx.game.validator.SelectOptionValidator;
-import org.cx.game.widget.IPlace;
 import org.cx.game.widget.building.IOption;
 
 /**

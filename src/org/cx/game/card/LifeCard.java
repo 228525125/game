@@ -37,19 +37,16 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.JsonOut;
-import org.cx.game.policy.DonePolicy;
-import org.cx.game.policy.PolicyGroupFactory;
 import org.cx.game.policy.GuardPolicy;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.policy.IPolicy;
-import org.cx.game.rule.RuleGroupFactory;
+import org.cx.game.tag.ITag;
 import org.cx.game.tools.I18n;
-import org.cx.game.widget.IContainer;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.IGround;
+import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.ITreasure;
 import org.cx.game.widget.treasure.Resource;
@@ -61,14 +58,13 @@ import org.cx.game.widget.treasure.Resource;
  * @author chenxian
  *
  */
-public class LifeCard extends java.util.Observable implements ICard, Observable
+public class LifeCard implements ITag
 {
 	
 	public final static Integer Life = 1007; 
 	
 	public LifeCard(Integer id) {
 		// TODO Auto-generated constructor stub
-		addObserver(JsonOut.getInstance());
 		this.id = id;
 		
 		upgradeRequirement.put(2, "e-100");
@@ -95,13 +91,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 */
 	private Long playId;
 
-	@Override
 	public Long getPlayId() {
 		// TODO Auto-generated method stub
 		return playId;
 	}
-	
-	@Override
+
 	public void setPlayId(Long playId) {
 		// TODO Auto-generated method stub
 		this.playId = playId;
@@ -109,13 +103,11 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 
 	private IPlayer player;
 
-	@Override
 	public IPlayer getPlayer() {
 		// TODO Auto-generated method stub
 		return player;
 	}
 	
-	@Override
 	public void setPlayer(IPlayer player) {
 		// TODO Auto-generated method stub
 		this.player = player;
@@ -422,15 +414,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		getAttack().updateExtraAtk();
 		getAttacked().updateExtraDef();
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getPlayer());
-		map.put("container", getContainer());
-		map.put("card", this);
-		map.put("buff", buff);
-		map.put("position", getPosition());
-		NotifyInfo info = new NotifyInfo(buff.getAction()+Effect,map);
-		notifyObservers(info);
 	}
 	
 	private static final String Invalid = "_Invalid";
@@ -444,15 +427,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		
 		getAttack().updateExtraAtk();
 		getAttacked().updateExtraDef();
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getPlayer());
-		map.put("container", getContainer());
-		map.put("card", this);
-		map.put("buff", buff);
-		map.put("position", getPosition());
-		NotifyInfo info = new NotifyInfo(buff.getAction()+Invalid,map);
-		notifyObservers(info);
 	}
 	
 	public List<IBuff> getBuff(Class clazz){
@@ -720,25 +694,23 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	/**
 	 * 容器（手牌、战场、墓地等）
 	 */
-	private IContainer container;
+	private IGround ground;
 
-	public IContainer getContainer() {
-		return container;
+	public IGround getGround() {
+		return ground;
 	}
 
-	public void setContainer(IContainer container) {
-		this.container = container;
+	public void setGround(IGround ground) {
+		this.ground = ground;
 	}
 	
 	private Integer position = null;
 	
-	@Override
 	public Integer getPosition() {
 		// TODO Auto-generated method stub
 		return position;
 	}
 	
-	@Override
 	public void setPosition(Integer position) {
 		// TODO Auto-generated method stub
 		this.position = position;
@@ -977,7 +949,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * 移动到指定位置
 	 * @param position 指定位置
 	 */
-	public void move(IPlace place) throws RuleValidatorException {
+	public void move(Place place) throws RuleValidatorException {
 		getMove().execute(place);
 	}
 	
@@ -985,7 +957,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * 召唤
 	 *
 	 */
-	public void call(IPlace place, Integer nop) throws RuleValidatorException {
+	public void call(Place place, Integer nop) throws RuleValidatorException {
 		getCall().execute(place, nop);
 	}
 	
@@ -994,7 +966,7 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 	 * @param place
 	 * @throws RuleValidatorException
 	 */
-	public void renew(IPlace place) throws RuleValidatorException {
+	public void renew(Place place) throws RuleValidatorException {
 		getRenew().execute(place);
 	}
 
@@ -1075,21 +1047,12 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		return playId.intValue();
 	}
 	
-	@Override
-	public void notifyObservers(Object arg0) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg0);
-	}
-
-	@Override
 	public Boolean contains(Integer tag) {
 		// TODO Auto-generated method stub
 		List<Integer> objectList = Context.queryForTag(tag);
 		return objectList.contains(getId());
 	}
 
-	@Override
 	public List<Integer> queryTagForCategory(Integer category) {
 		// TODO Auto-generated method stub
 		List<Integer> list1 =  Context.queryForCategory(category);
@@ -1098,7 +1061,6 @@ public class LifeCard extends java.util.Observable implements ICard, Observable
 		return list2;
 	}
 	
-	@Override
 	public List<Integer> queryTagForObject() {
 		// TODO Auto-generated method stub
 		return Context.queryForObject(getId());

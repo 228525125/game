@@ -51,8 +51,6 @@ public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 		up.addToSkillCount(getRequirement());
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getOwner().getPlayer());
-		map.put("container", getOwner().getOwner().getContainer());
 		map.put("position", getOwner().getOwner().getPosition());
 		map.put("card", getOwner().getOwner());
 		map.put("level", getLevel());

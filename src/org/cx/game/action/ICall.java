@@ -2,7 +2,6 @@ package org.cx.game.action;
 
 import java.util.Map;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;

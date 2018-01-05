@@ -1,26 +1,20 @@
 package org.cx.game.command;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
 import org.cx.game.action.IDeath;
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.IPlayer;
-import org.cx.game.tools.Util;
-import org.cx.game.widget.ICemetery;
-import org.cx.game.widget.IContainer;
+import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.IPlace;
-import org.cx.game.widget.ITrickList;
+import org.cx.game.widget.Place;
+import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 
@@ -37,17 +31,11 @@ public class CommandBuffer {
 	
 	public static final String PLAYER = "player";
 	
-	public static final String OWN = "own";
-	
-	public static final String OTHER = "other";
-	
 	public static final String CEMETERY = "cemetery";
 	
 	public static final String TRICKLIST = "tricklist";
 	
 	public static final String GROUND = "ground";
-	
-	public static final String CONTAINER = "container";
 	
 	public static final String PLACE = "place"; 
 	
@@ -55,17 +43,11 @@ public class CommandBuffer {
 	
 	public static final String OPTION = "option";
 	
-	public static final String PROPERTY = "property";
-	
 	public static final String CARD = "card";
 	
 	public static final String SKILL = "skill";
 	
 	public static final String TRICK = "trick";
-	
-	public static final String ACTION = "action";
-	
-	public static final String DOMAIN = "domain";
 	
 	private IPlayer player;	
 	
@@ -90,11 +72,11 @@ public class CommandBuffer {
 		
 		if(PLAYER.equals(item)){
 			setPlayer((IPlayer)object, bufferMap);
-		}else if(CONTAINER.equals(item)){
-			IContainer container = (IContainer) object;
-			setContainer(container, bufferMap);
+		}else if(GROUND.equals(item)){
+			IGround ground = (IGround) object;
+			setGround(ground, bufferMap);
 		}else if(PLACE.equals(item)){
-			IPlace place = (IPlace) object;
+			Place place = (Place) object;
 			setPlace(place, bufferMap);
 		}else if(BUILDING.equals(item)){
 			IBuilding building = (IBuilding) object;
@@ -103,13 +85,13 @@ public class CommandBuffer {
 			IOption option = (IOption) object;
 			setOption(option, bufferMap);
 		}else if(CEMETERY.equals(item)){
-			ICemetery cemetery = (ICemetery) object;
+			Cemetery cemetery = (Cemetery) object;
 			setCemetery(cemetery, bufferMap);
 		}else if(TRICKLIST.equals(item)){
-			ITrickList trickList = (ITrickList) object;
+			TrickList trickList = (TrickList) object;
 			setTrickList(trickList, bufferMap);
 		}else if(CARD.equals(item)){
-			ICard card = (ICard) object;
+			LifeCard card = (LifeCard) object;
 			setCard(card, bufferMap);
 		}else if(SKILL.equals(item)){
 			ISkill skill = (ISkill) object;
@@ -135,21 +117,12 @@ public class CommandBuffer {
 			return (IPlayer) element().get(PLAYER);
 	}
 	
-	public IContainer getContainer(){
-		return (IContainer) element().get(CONTAINER);
-	}
-	
 	public IGround getGround(){
-		IContainer container = getContainer(); 
-		if (container instanceof IGround) {
-			return (IGround) container;
-		}else{
-			return null;
-		}
+		return (IGround) element().get(GROUND);
 	}
 	
-	public IPlace getPlace(){
-		return (IPlace) element().get(PLACE);
+	public Place getPlace(){
+		return (Place) element().get(PLACE);
 	}
 	
 	public IBuilding getBuilding(){
@@ -160,16 +133,16 @@ public class CommandBuffer {
 		return (IOption) element().get(OPTION);
 	}
 	
-	public ICemetery getCemetery(){
-		return (ICemetery) element().get(CEMETERY);
+	public Cemetery getCemetery(){
+		return (Cemetery) element().get(CEMETERY);
 	}
 	
-	public ITrickList getTrickList(){
-		return (ITrickList) element().get(TRICKLIST);
+	public TrickList getTrickList(){
+		return (TrickList) element().get(TRICKLIST);
 	}
 	
-	public ICard getCard(){
-		return (ICard) element().get(CARD);
+	public LifeCard getCard(){
+		return (LifeCard) element().get(CARD);
 	}
 	
 	public ISkill getSkill(){
@@ -184,8 +157,8 @@ public class CommandBuffer {
 		element().clear();
 	}
 	
-	public ICard lastCard(){
-		return (ICard) last().get(CARD);
+	public LifeCard lastCard(){
+		return (LifeCard) last().get(CARD);
 	}
 	
 	public Object get(String item){
@@ -234,7 +207,7 @@ public class CommandBuffer {
 		if (item instanceof IGround) {
 			return GROUND;
 		}
-		if (item instanceof IPlace) {
+		if (item instanceof Place) {
 			return PLACE;
 		}
 		if (item instanceof IBuilding) {
@@ -243,13 +216,13 @@ public class CommandBuffer {
 		if (item instanceof IOption) {
 			return OPTION;
 		}
-		if(item instanceof ICemetery){
+		if(item instanceof Cemetery){
 			return CEMETERY;
 		}
-		if(item instanceof ITrickList){
+		if(item instanceof TrickList){
 			return TRICKLIST;
 		}
-		if (item instanceof ICard) {
+		if (item instanceof LifeCard) {
 			return CARD;
 		}
 		if (item instanceof ISkill) {
@@ -263,7 +236,7 @@ public class CommandBuffer {
 	
 	private void setPlayer(IPlayer player, Map<String, Object> bufferMap){
 		if(null!=player){
-			bufferMap.remove(CONTAINER);
+			bufferMap.remove(GROUND);
 			bufferMap.remove(PLACE);
 			bufferMap.remove(BUILDING);
 			bufferMap.remove(OPTION);
@@ -277,8 +250,8 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setContainer(IContainer container, Map<String, Object> bufferMap){
-		if(null!=container){
+	private void setGround(IGround ground, Map<String, Object> bufferMap){
+		if(null!=ground){
 			/*IPlayer player = container.getPlayer();;
 			if (container instanceof IGround) {
 				player = getPlayer();
@@ -287,13 +260,13 @@ public class CommandBuffer {
 			player = getPlayer();
 			setPlayer(player, bufferMap);
 			
-			bufferMap.put(CONTAINER, container);
+			bufferMap.put(GROUND, ground);
 		}
 	}
 	
-	private void setPlace(IPlace place, Map<String, Object> bufferMap){
+	private void setPlace(Place place, Map<String, Object> bufferMap){
 		if(null!=place){
-			setContainer(place.getContainer(), bufferMap);
+			setGround(place.getOwner(), bufferMap);
 			
 			bufferMap.put(PLACE, place);
 		}
@@ -316,7 +289,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setCemetery(ICemetery cemetery, Map<String, Object> bufferMap){
+	private void setCemetery(Cemetery cemetery, Map<String, Object> bufferMap){
 		if(null!=cemetery){
 			setPlace(cemetery.getOwner(), bufferMap);
 			
@@ -324,7 +297,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setTrickList(ITrickList tricklist, Map<String, Object> bufferMap){
+	private void setTrickList(TrickList tricklist, Map<String, Object> bufferMap){
 		if(null!=tricklist){
 			setPlace(tricklist.getOwner(), bufferMap);
 			
@@ -332,25 +305,20 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setCard(ICard card, Map<String, Object> bufferMap){
-		if(null!=card){
-			setContainer(card.getContainer(), bufferMap);
+	private void setCard(LifeCard life, Map<String, Object> bufferMap){
+		if(null!=life){
+			setGround(life.getGround(), bufferMap);
 			
-			if (card.getContainer() instanceof IGround) {
-				IGround ground = (IGround) card.getContainer();
-				
-				IPlace place = ground.getPlace(ground.getPosition(card));
-				setPlace(place, bufferMap);
-				
-				if (card instanceof LifeCard) {
-					LifeCard life = (LifeCard) card;
-					if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
-						setCemetery(place.getCemetery(), bufferMap);
-					}
-				}
+			IGround ground = life.getGround();
+			
+			Place place = ground.getPlace(ground.getPosition(life));
+			setPlace(place, bufferMap);
+			
+			if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
+				setCemetery(place.getCemetery(), bufferMap);
 			}
 
-			bufferMap.put(CARD, card);
+			bufferMap.put(CARD, life);
 		}
 	}
 	

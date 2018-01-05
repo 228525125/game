@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
-import org.cx.game.card.MagicCard;
 import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.observer.Observable;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
@@ -20,11 +20,21 @@ import org.cx.game.widget.treasure.ITreasure;
  * @author jiuhuan
  *
  */
-public interface IGround extends IContainer{
+public interface IGround {
 	
 	public static final Integer Landform = 1011;
 	
 	public static String space = "8008";                               //位置坐标间隔符
+	
+	public static final String Ground = "Ground";
+	
+	/**
+	 * 加入容器
+	 * 如果是Ground，card只能是life，为什么trick不经过该方法，因为1、ground保存了所有card；2、trick不是card类型
+	 * @param position
+	 * @param card
+	 */
+	public void add(Integer position, LifeCard card) throws RuleValidatorException;
 	
 	public LifeCard getCard(Integer position);
 	
@@ -78,11 +88,11 @@ public interface IGround extends IContainer{
 	
 	
 	/**
-	 * 根据坐标
+	 * 根据坐标，仅用于CommandBuffer
 	 * @param position 坐标
 	 * @return
 	 */
-	public IPlace getPlace(Integer position);
+	public Place getPlace(Integer position);
 	
 	/**
 	 * 获取建筑的坐标
@@ -184,24 +194,30 @@ public interface IGround extends IContainer{
 	 * 在地图上增加一块区域（地图是由若干区域组成）
 	 * @param place
 	 */
-	public void addPlace(IPlace place);
+	public void addPlace(Place place);
 	
 	public Integer getXBorder();
 	
 	public Integer getYBorder();
 	
 	/**
-	 * 以JSON格式，把map信息发送给前台
+	 * 把ground信息发送给前台
 	 */
-	public void loadMap();
+	public Map<String, Object> toMap();
 	
 	/**
-	 * 查询卡片操作范围
+	 * 查询Life操作范围
 	 * @param card
 	 * @param action
 	 * @return
 	 */
-	public List<Integer> queryRange(ICard card, String action);
+	public List<Integer> queryRange(LifeCard life, String action);
+	
+	/**
+	 * 物品被拾取
+	 * @param treasure
+	 */
+	public void picked(ITreasure treasure);
 	
 	/**
 	 * 查询技能使用范围，现将查询逻辑交给ActiveSkill来完成
@@ -210,15 +226,6 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public List<Integer> queryRange(ISkill skill, String action);
-	
-	/**
-	 * 查询魔法卡使用范围
-	 * @param magic
-	 * @param life
-	 * @param action
-	 * @return
-	 */
-	public List<Integer> queryRange(MagicCard magic, String action);
 	
 	/**
 	 * 查询选项使用范围
@@ -234,7 +241,7 @@ public interface IGround extends IContainer{
 	 * @param position 指定位置
 	 * @param type 移动类型
 	 */
-	public List<Integer> move(LifeCard life, Integer position, Integer type);
+	public List<Integer> move(LifeCard life, Integer position, Integer type) throws RuleValidatorException;
 	
 	public static final Integer Relative_Top = 0;
 	public static final Integer Relative_LeftTop = 10;
@@ -294,6 +301,21 @@ public interface IGround extends IContainer{
 	public List<LifeCard> list(Integer stand, Integer step, Integer type);
 	
 	/**
+	 * 根据ID查找card
+	 * @param ids 需要查找的卡片编号，非playID
+	 * @return
+	 */
+	public List<LifeCard> listForID(List<Integer> ids);
+	
+	/**
+	 * 根据player和ID查询card
+	 * @param player
+	 * @param ids
+	 * @return
+	 */
+	public List<LifeCard> listForID(IPlayer player, List<Integer> ids);
+	
+	/**
 	 * 从起点到终点的最短路径，根据移动范围来获取路径上的那个点
 	 * @param stand 当前位置
 	 * @param dest 目标位置
@@ -314,5 +336,48 @@ public interface IGround extends IContainer{
 	 * @return
 	 */
 	public IPlayer getNeutral();
+	
+	/**
+	 * 从容器中移出，即life不存在于place及cemetery
+	 */
+	public Boolean remove(LifeCard life) throws RuleValidatorException;
+	
+	/**
+	 * 
+	 * @return 容器当前元素的个数
+ 	 */
+	public Integer getSize();
+	
+	
+	/**
+	 * 根据卡片查找位置
+	 * @param card
+	 * @return
+	 */
+	public Integer getPosition(LifeCard card);
+	
+	/**
+	 * 进入墓地，例如在战场上死亡
+	 * @param life 
+	 */
+	public void inCemetery(LifeCard life) throws RuleValidatorException;
+	
+	/**
+	 * 移出墓地，例如英雄复活
+	 * @param life
+	 */
+	public void outCemetery(LifeCard life);
+	
+	public List<LifeCard> list();
+	
+	public String getName();
+	
+	public Boolean contains(LifeCard card);
+	
+	/**
+	 * 用于show
+	 * @return 以map形式返回容器所有card
+	 */
+	public List toList();
 
 }

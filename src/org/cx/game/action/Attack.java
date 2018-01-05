@@ -212,8 +212,6 @@ public class Attack extends Action implements IAttack {
 		LifeCard attacked = (LifeCard) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("attack", getOwner());
 		map.put("attacked", attacked);
 		map.put("position", getOwner().getPosition());

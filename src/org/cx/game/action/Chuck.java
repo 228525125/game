@@ -3,7 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.ICard;
+import org.cx.game.card.LifeCard;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 
@@ -15,9 +15,9 @@ public class Chuck extends Action implements IChuck {
 	}
 	
 	@Override
-	public ICard getOwner() {
+	public LifeCard getOwner() {
 		// TODO Auto-generated method stub
-		return (ICard) super.getOwner();
+		return (LifeCard) super.getOwner();
 	}
 	
 	@Override
@@ -25,8 +25,6 @@ public class Chuck extends Action implements IChuck {
 		// TODO Auto-generated method stub
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Chuck, map);

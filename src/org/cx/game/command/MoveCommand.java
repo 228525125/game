@@ -7,16 +7,16 @@ import org.cx.game.validator.LifeCardActivateValidator;
 import org.cx.game.validator.LifeCardMoveableValidator;
 import org.cx.game.validator.MoveRangeValidator;
 import org.cx.game.validator.MoveTauntValidator;
-import org.cx.game.validator.SelectContainerValidator;
+import org.cx.game.validator.SelectGroundValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
-import org.cx.game.widget.IPlace;
+import org.cx.game.widget.Place;
 
 public class MoveCommand extends InteriorCommand {
 
 	public MoveCommand(IPlayer player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		addValidator(new SelectContainerValidator(player.getContext().getGround(),buffer));
+		addValidator(new SelectGroundValidator(buffer));
 		addValidator(new LifeCardMoveableValidator(buffer));
 		addValidator(new MoveTauntValidator(buffer));
 	}
@@ -25,8 +25,8 @@ public class MoveCommand extends InteriorCommand {
 	public void setParameter(Object parameter) {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
-		addValidator(new SelectPlaceEmptyValidator((IPlace) parameter, true));
-		addValidator(new MoveRangeValidator((LifeCard) buffer.getCard(), (IPlace) parameter));
+		addValidator(new SelectPlaceEmptyValidator((Place) parameter, true));
+		addValidator(new MoveRangeValidator((LifeCard) buffer.getCard(), (Place) parameter));
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ public class MoveCommand extends InteriorCommand {
 		super.execute();
 		
 		LifeCard life = (LifeCard) buffer.getCard();
-		IPlace place = (IPlace) parameter;
+		Place place = (Place) parameter;
 		life.move(place);
 	}
 }

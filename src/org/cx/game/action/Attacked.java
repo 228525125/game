@@ -166,8 +166,6 @@ public class Attacked extends Action implements IAttacked {
 		damage = -damage;
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", getOwner().getPlayer());
-		map.put("container", getOwner().getContainer());
 		map.put("attack", attack.getOwner());
 		map.put("attacked", getOwner());
 		map.put("position", getOwner().getPosition());

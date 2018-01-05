@@ -3,8 +3,6 @@ package org.cx.game.out;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.widget.IContainer;
-
 public abstract class Response {
 	
 	public static ThreadLocal<StringBuffer> process = new ThreadLocal<StringBuffer>(){

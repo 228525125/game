@@ -1,9 +1,5 @@
 package org.cx.game.command;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -18,7 +14,10 @@ public class StartCommand extends InteriorCommand {
 	@Override
 	public void execute() throws ValidatorException {
 		// TODO Auto-generated method stub
-		player.getContext().getGround().loadMap();
+		
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,context.getGround().toMap());
+		notifyObservers(info);    //通知观察者
+		
 		context.start();
 	}
 }

@@ -3,7 +3,6 @@ package org.cx.game.npc;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cx.game.card.ICard;
 import org.cx.game.card.LifeCard;
 import org.cx.game.core.Player;
 import org.cx.game.tools.I18n;
