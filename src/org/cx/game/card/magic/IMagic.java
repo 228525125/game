@@ -10,7 +10,7 @@ import org.cx.game.tag.ITag;
  */
 public interface IMagic extends ITag {
 
-	public Integer getId();
+	public Integer getType();
 	
 	/**
 	 * 所属对象

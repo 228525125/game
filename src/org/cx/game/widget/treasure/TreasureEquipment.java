@@ -13,19 +13,19 @@ import org.cx.game.tools.I18n;
  */
 public class TreasureEquipment extends Treasure implements ITreasure {
 
-	private Integer id = null;
+	private Integer type = null;
 	private String name = null;
 	private Integer atk = 0;
 	private Integer def = 0;
 	
-	public TreasureEquipment(Integer id) {
+	public TreasureEquipment(Integer type) {
 		// TODO Auto-generated constructor stub
-		this.id = id;
+		this.type = type;
 	}
 	
-	public Integer getId() {
+	public Integer getType() {
 		// TODO Auto-generated method stub
-		return id;
+		return type;
 	}
 	
 	public Integer getAtk() {
@@ -48,7 +48,7 @@ public class TreasureEquipment extends Treasure implements ITreasure {
 	public String getName() {
 		// TODO Auto-generated method stub
 		if(null==name){
-			name = I18n.getMessage(this, getId(), "name");
+			name = I18n.getMessage(this, getType(), "name");
 			name += "("+this.atk+"/"+this.def+")";
 		}
 		return name;

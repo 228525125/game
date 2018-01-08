@@ -44,7 +44,7 @@ public class OptionRevive extends Option implements IOption {
 		// TODO Auto-generated method stub
 		if(null==name){
 			name = super.getName();
-			name += I18n.getMessage(HeroCard.class, hero.getId(), "name");
+			name += I18n.getMessage(HeroCard.class, hero.getType(), "name");
 		}
 		return name;
 	}

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IPolicyGroup {
 	
-	public Integer getId();
+	public Integer getType();
 	
 	public Object getOwner();
 	

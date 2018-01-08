@@ -54,6 +54,25 @@ public class JsonOut extends Response implements Observer {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if (arg instanceof NotifyInfo) {
+			NotifyInfo info = (NotifyInfo) arg;
+			setAction(info.getType());
+			setInfo(info.getInfo());
+			Object result = convert(this);
+			super.process.get().append(result.toString()+";");
+			System.out.println(result);
+		}
+	}
+	
+	@Override
+	public Object convert(Response resp) {
+		// TODO Auto-generated method stub
+		return JSONObject.fromObject(resp,getConfig());
+	}
+	
 	private static JsonConfig config = null;
 	
 	private static JsonConfig getConfig(){
@@ -84,11 +103,11 @@ public class JsonOut extends Response implements Observer {
 							.element("call", life.getCall(),getConfig())
 							.element("death", life.getDeath(),getConfig())
 							.element("hero", life.getHero())
-							.element("id", life.getId())
+							.element("id", life.getType())
 							.element("move", life.getMove(),getConfig())
 							.element("name", life.getName())
 							.element("player", life.getPlayer(),getConfig())
-							.element("playId", life.getPlayId())
+							.element("playId", life.getId())
 							.element("position", life.getPosition())
 							.element("skillList", life.getSkillList(),getConfig())
 							.element("star", life.getStar())
@@ -111,11 +130,11 @@ public class JsonOut extends Response implements Observer {
 							.element("conjure", hero.getConjure(), getConfig())
 							.element("death", hero.getDeath(), getConfig())
 							.element("hero", hero.getHero())
-							.element("id", hero.getId())
+							.element("id", hero.getType())
 							.element("move", hero.getMove(), getConfig())
 							.element("name", hero.getName())
 							.element("player", hero.getPlayer(), getConfig())
-							.element("playId", hero.getPlayId())
+							.element("playId", hero.getId())
 							.element("position", hero.getPosition())
 							.element("skillList", hero.getSkillList(), getConfig())
 							.element("star", hero.getStar())
@@ -505,7 +524,7 @@ public class JsonOut extends Response implements Observer {
 					TreasureEquipment obj = (TreasureEquipment) arg0;
 					return new JSONObject().element("atk", obj.getAtk())
 							.element("def", obj.getDef())
-							.element("id", obj.getId())
+							.element("id", obj.getType())
 							.element("name", obj.getName())
 							.element("position", obj.getPosition());
 				}
@@ -524,48 +543,6 @@ public class JsonOut extends Response implements Observer {
 			});
 		}
 		return config;
-	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if (arg instanceof NotifyInfo) {
-			NotifyInfo info = (NotifyInfo) arg;
-			setAction(info.getType());
-			setInfo(info.getInfo());
-			Object result = convert(this);
-			super.process.get().append(result.toString()+";");
-			System.out.println(result);
-		}
-	}
-	
-	@Override
-	public Object convert(Response resp) {
-		// TODO Auto-generated method stub
-		/*JsonConfig config = new JsonConfig();
-		config.setExcludes(new String[]{
-			"cards","password","decks","cardGroup","useCard","commandBuffer",       //User
-			"attendantList","context","ground","heroList",              //Player
-			"near",                  //Place
-			"index",                 //ControlQueue.Place
-			"strongHoldList","randomEntry","landformMap","emptyList","disableList","npcMap","policyMap","treasureMap",        //Ground
-			"appendCardList","hashCode","containerPosition","useCardPolicy",        //LifeCard
-			"affectedList",                  //Skill
-			"movePath",                       //Move
-			"cardIDList","lifeList",                             //StrongHold
-			"pri",                                              //Priority
-			"locker",                                           //AttackLockBuff
-			"conjureRange",                                     //MagicCard
-			"unitNumber",                                       //HuntUnits
-			"controlLife","controlPlayer","player1","player2","controlQueue",          //Context
-			"policy",                                           //PolicyGroup
-			"messageSource",                                    //RuleGroup
-			"ruleParam",                                        //用于传递一些参数给rule，与前台无关
-			//,                                            //Building
-			"owner","instance","intercepterList","intercepterMethod","validators","errors","decorator"                    //系统的
-		});*/
-		
-		return JSONObject.fromObject(resp,getConfig());
 	}
 	
 	public static void main(String[] args) {

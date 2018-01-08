@@ -10,12 +10,6 @@ public interface ISkill extends IMagic {
 	
 	public final static Integer Skill = 1008;
 	
-	/**
-	 * 类名，不包含包名
-	 * @return
-	 */
-	public String getCType();
-	
 	public String getName();
 	
 	/**

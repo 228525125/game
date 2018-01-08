@@ -57,42 +57,42 @@ public class LifeCard implements ITag
 	
 	public final static Integer Life = 1007; 
 	
-	public LifeCard(Integer id) {
+	public LifeCard(Integer type) {
 		// TODO Auto-generated constructor stub
-		this.id = id;
+		this.type = type;
 		
 		upgradeRequirement.put(2, "e-100");
 		upgradeRequirement.put(3, "e-200");
 		upgradeRequirement.put(4, "e-400");
 	}
 	
-	private Integer id;
+	private Integer type;
 	
-	public Integer getId() {
-		return id;
+	public Integer getType() {
+		return type;
 	}
 	
 	private String name = null;
 
 	public String getName() {
 		if(null==name)
-			name = I18n.getMessage(this, id, "name");
+			name = I18n.getMessage(this, type, "name");
 		return name;
 	}
 	
 	/**
 	 * 比赛中的ID，临时的
 	 */
-	private Long playId;
+	private Long id;
 
-	public Long getPlayId() {
+	public Long getId() {
 		// TODO Auto-generated method stub
-		return playId;
+		return id;
 	}
 
-	public void setPlayId(Long playId) {
+	public void setId(Long id) {
 		// TODO Auto-generated method stub
-		this.playId = playId;
+		this.id = id;
 	}
 
 	private IPlayer player;
@@ -587,7 +587,7 @@ public class LifeCard implements ITag
 			skill = (ISkill) skillList.get(code);
 		}else{
 			for(ISkill s : skillList){
-				if(code.equals(s.getId()))
+				if(code.equals(s.getType()))
 					skill = s;
 			}
 		}
@@ -972,26 +972,26 @@ public class LifeCard implements ITag
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return playId.intValue();
+		return id.intValue();
 	}
 	
 	public Boolean contains(Integer tag) {
 		// TODO Auto-generated method stub
 		List<Integer> objectList = Context.queryForTag(tag);
-		return objectList.contains(getId());
+		return objectList.contains(getType());
 	}
 
 	public List<Integer> queryTagForCategory(Integer category) {
 		// TODO Auto-generated method stub
 		List<Integer> list1 =  Context.queryForCategory(category);
-		List<Integer> list2 = Context.queryForObject(getId());
+		List<Integer> list2 = Context.queryForObject(getType());
 		list2.retainAll(list1);
 		return list2;
 	}
 	
 	public List<Integer> queryTagForObject() {
 		// TODO Auto-generated method stub
-		return Context.queryForObject(getId());
+		return Context.queryForObject(getType());
 	}
 
 	@Override
@@ -999,7 +999,7 @@ public class LifeCard implements ITag
 		// TODO Auto-generated method stub
 		if (obj instanceof LifeCard) {
 			LifeCard life = (LifeCard) obj;
-			return getPlayId().equals(life.getPlayId());
+			return getId().equals(life.getId());
 		}else{
 			return false;
 		}

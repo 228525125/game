@@ -22,7 +22,7 @@ public class CallUnitEqualValidator extends Validator {
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		if(unit.getId().equals(call.getId()))
+		if(unit.getType().equals(call.getType()))
 			return true;
 		else{
 			addMessage(I18n.getMessage(CallUnitEqualValidator.class.getName()));

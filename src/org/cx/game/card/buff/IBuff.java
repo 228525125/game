@@ -16,12 +16,6 @@ public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRe
 	
 	public final static Integer Buff = 1009;
 	
-	/**
-	 * 类名，不包含包名
-	 * @return
-	 */
-	public String getCType();
-	
 	public String getName();
 	
 	public static final Integer Max_Bout = 999;

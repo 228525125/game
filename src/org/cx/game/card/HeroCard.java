@@ -18,8 +18,8 @@ import org.cx.game.widget.treasure.SkillCount;
 
 public class HeroCard extends LifeCard {
 
-	public HeroCard(Integer id) {
-		super(id);
+	public HeroCard(Integer type) {
+		super(type);
 		// TODO Auto-generated constructor stub
 		setHero(true);
 	}

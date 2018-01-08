@@ -550,7 +550,7 @@ public class HoneycombGround implements IGround {
 		// TODO Auto-generated method stub
 		List<LifeCard> ret = new ArrayList<LifeCard>();
 		for(LifeCard life : list()){
-			if(ids.contains(life.getId()))
+			if(ids.contains(life.getType()))
 				ret.add(life);
 		}
 		return ret;
@@ -561,7 +561,7 @@ public class HoneycombGround implements IGround {
 		// TODO Auto-generated method stub
 		List<LifeCard> ret = new ArrayList<LifeCard>();
 		for(LifeCard card : list()){
-			if(ids.contains(card.getId()) && player.equals(card.getPlayer()))
+			if(ids.contains(card.getType()) && player.equals(card.getPlayer()))
 				ret.add(card);
 		}
 		return ret;

@@ -22,7 +22,7 @@ public class PolicyGroup implements IPolicyGroup {
 	}
 	
 	@Override
-	public Integer getId() {
+	public Integer getType() {
 		// TODO Auto-generated method stub
 		return id;
 	}

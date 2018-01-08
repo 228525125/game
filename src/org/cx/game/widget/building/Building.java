@@ -27,7 +27,6 @@ public abstract class Building implements IBuilding, IRecover {
 	private Integer levelLimit = 1;
 	private IPlayer player = null;
 	private List<IOption> options = new ArrayList<IOption>();
-	private List<IProduct> products = new ArrayList<IProduct>();
 	private IResource consume = new Resource();
 	
 	private IBuilding owner = null;
