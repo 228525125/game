@@ -85,8 +85,6 @@ public class Death extends Action implements IDeath {
 		}else{
 			setStatus(IDeath.Status_Death);
 		}
-		
-		getOwner().initState();
 	}
 	
 	public class DeathAddToHpAction extends Action implements IAction {

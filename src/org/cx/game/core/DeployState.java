@@ -3,11 +3,8 @@ package org.cx.game.core;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.command.CommandBuffer;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.npc.NPC;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
 
 public class DeployState extends PlayState {
 	

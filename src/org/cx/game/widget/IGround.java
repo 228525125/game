@@ -201,11 +201,6 @@ public interface IGround {
 	public Integer getYBorder();
 	
 	/**
-	 * 把ground信息发送给前台
-	 */
-	public Map<String, Object> toMap();
-	
-	/**
 	 * 查询Life操作范围
 	 * @param card
 	 * @param action
@@ -341,13 +336,6 @@ public interface IGround {
 	 * 从容器中移出，即life不存在于place及cemetery
 	 */
 	public Boolean remove(LifeCard life) throws RuleValidatorException;
-	
-	/**
-	 * 
-	 * @return 容器当前元素的个数
- 	 */
-	public Integer getSize();
-	
 	
 	/**
 	 * 根据卡片查找位置

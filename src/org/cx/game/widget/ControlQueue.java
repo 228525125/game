@@ -38,9 +38,9 @@ public class ControlQueue extends Observable implements IControlQueue {
 	}
 	
 	@Override
-	public void add(Object object) {
+	public void add(IPlayer player) {
 		// TODO Auto-generated method stub
-		Place place = new Place(object);
+		Place place = new Place(player);
 		
 		/*
 		 * 这里为什么直接插入第二队列，它的效果就像你排队办事一样，你总是从最后一个排起
@@ -51,19 +51,19 @@ public class ControlQueue extends Observable implements IControlQueue {
 		this.queueList.add(place);
 	}
 	
-	public void remove(Object object) {
+	public void remove(IPlayer player) {
 		// TODO Auto-generated method stub
-		Place place = new Place(object);
+		Place place = new Place(player);
 		takeOut(place);
 		
 		this.queueList.remove(place);
 	}
 	
 	@Override
-	public Place getPlace(Object object) {
+	public Place getPlace(IPlayer player) {
 		// TODO Auto-generated method stub
 		for(Place place : this.queueList){
-			if(place.getObject().equals(object))
+			if(place.getObject().equals(player))
 				return place;
 		}
 		return null;
@@ -115,7 +115,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Collections.sort(other, new PlaceComparator());
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("queue", toListMap());
+		map.put("queue", getList());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Refurbish,map);
 		notifyObservers(info);
 	}
@@ -128,11 +128,10 @@ public class ControlQueue extends Observable implements IControlQueue {
 		// TODO Auto-generated method stub
 		queue.add(place);
 		Collections.sort(queue, new PlaceComparator());
-		
+
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("unit", place.getObject());
-		map.put("position", indexOf(place));
-		map.put("queue", toListMap());
+		map.put("player", place.getObject());
+		map.put("queue", getList());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Insert,map);
 		notifyObservers(info);
 	}
@@ -142,20 +141,17 @@ public class ControlQueue extends Observable implements IControlQueue {
 	 * @param place
 	 */
 	private void takeOut(Place place){
-		Integer position = indexOf(place);
 		if(!this.queue1.remove(place))
 			this.queue2.remove(place);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("unit", place.getObject());
-		map.put("position", position);
-		map.put("queue", toListMap());
+		map.put("player", place.getObject());
+		map.put("queue", getList());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Remove,map);
 		notifyObservers(info);
 	}
 	
 	public void moveToPrior(Place place){
-		Integer position = indexOf(place);
 		
 		if(!this.queue1.remove(place))
 			this.queue2.remove(place);
@@ -163,10 +159,8 @@ public class ControlQueue extends Observable implements IControlQueue {
 		this.priorQueue.add(place);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("unit", place.getObject());
-		map.put("beforePosition", position);
-		map.put("afterPosition", 0);
-		map.put("queue", toListMap());
+		map.put("player", place.getObject());
+		map.put("queue", getList());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Move,map);
 		notifyObservers(info);
 	}
@@ -210,9 +204,8 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Collections.sort(list, new PlaceComparator());   //插入增加活力的place，需要重新排序
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("unit", place.getObject());
-		map.put("position", indexOf(place));
-		map.put("queue", toListMap());
+		map.put("player", place.getObject());
+		map.put("queue", getList());
 		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Insert,map);
 		notifyObservers(info);
 	}
@@ -247,14 +240,14 @@ public class ControlQueue extends Observable implements IControlQueue {
 		return list;
 	}
 	
-	private List<Map<String, Object>> toListMap(){
+	private List<Map<String, Object>> getList(){
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		
 		for(int i=0;i<this.priorQueue.size();i++){
 			Map<String, Object> map = new HashMap<String, Object>();
 			Place place = this.priorQueue.get(i);
 			map.put("position",indexOf(place));
-			map.put("unit", place.getObject());
+			map.put("player", place.getObject());
 			map.put("count", place.getCount());
 			list.add(map);
 		}
@@ -263,7 +256,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			Map<String, Object> map = new HashMap<String, Object>();
 			Place place = this.queue.get(i);
 			map.put("position",indexOf(place));
-			map.put("unit", place.getObject());
+			map.put("player", place.getObject());
 			map.put("count", place.getCount());
 			list.add(map);
 		}
@@ -272,7 +265,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			Map<String, Object> map = new HashMap<String, Object>();
 			Place place  = otherQueue(this.queue).get(i);
 			map.put("position",indexOf(place));
-			map.put("unit", place.getObject());
+			map.put("player", place.getObject());
 			map.put("count", place.getCount());
 			list.add(map);
 		}
@@ -323,24 +316,18 @@ public class ControlQueue extends Observable implements IControlQueue {
 	}
 	
 	public class Place {
-		private Object obj = null;
+		private IPlayer obj = null;
 		private Integer count = 0;
 		private Integer speed = 0;
 		
-		public Place(Object object) {
+		public Place(IPlayer object) {
 			// TODO Auto-generated constructor stub
 			this.obj = object;
 			loadSpeed();
 		}
 		
 		public void loadSpeed(){
-			if (obj instanceof LifeCard) {
-				LifeCard life = (LifeCard) obj;
-				this.speed = life.getActivate().getSpeed();
-			}
-			if (obj instanceof IPlayer) {
-				this.speed = 100;
-			}
+			this.speed = 100;
 		}
 		
 		public Integer getCount(){
@@ -355,7 +342,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			return speed;
 		}
 		
-		public Object getObject(){
+		public IPlayer getObject(){
 			return obj;
 		}
 		

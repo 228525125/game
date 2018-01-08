@@ -27,6 +27,7 @@ public class Attack extends Action implements IAttack {
 	private Integer weaponAtk = 0;                    //武器攻击力
 	private Boolean counterAttack = false;            //是否是反击
 	private Boolean attackable = false;
+	private Boolean mobile = false;                   //是否可移动攻击
 	
 	public static String space = "8008";              //伤害间隔符
 	private Integer  dmg = 180081;                          //伤害 180082 = 1-2
@@ -53,6 +54,18 @@ public class Attack extends Action implements IAttack {
 	public void setMode(Integer mode) {
 		if(!mode.equals(this.mode))
 			this.mode = mode;
+	}
+	
+	/**
+	 * 移动攻击，例如，骑兵
+	 * @return
+	 */
+	public Boolean getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(Boolean mobile) {
+		this.mobile = mobile;
 	}
 
 	public Integer getAtk() {

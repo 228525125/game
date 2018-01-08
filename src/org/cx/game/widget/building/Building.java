@@ -17,7 +17,7 @@ import org.cx.game.tools.I18n;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
-public class Building implements IBuilding, IRecover {
+public abstract class Building implements IBuilding, IRecover {
 
 	private Integer position = 0;
 	private String name = null;
@@ -169,29 +169,6 @@ public class Building implements IBuilding, IRecover {
 		// TODO Auto-generated method stub
 		option.setOwner(this);
 		this.options.add(option);
-	}
-	
-	@Override
-	public List<IProduct> getProducts() {
-		// TODO Auto-generated method stub
-		return this.products;
-	}
-	
-	@Override
-	public void setProducts(List<IProduct> products) {
-		// TODO Auto-generated method stub
-		for(IProduct product : products)
-			product.setOwner(this);
-		this.products = products;
-	}
-	
-	@Override
-	public IProduct getProduct(Integer productType) {
-		// TODO Auto-generated method stub
-		for(IProduct product : this.products)
-			if(productType.equals(product.getType()))
-				return product;
-		return null;
 	}
 	
 	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();

@@ -184,12 +184,6 @@ public class HoneycombGround implements IGround {
 	}
 	
 	@Override
-	public Integer getSize() {
-		// TODO Auto-generated method stub
-		return this.lifeList.size();
-	}
-	
-	@Override
 	public Place getPlace(Integer position) {
 		// TODO Auto-generated method stub
 		return ground.get(position);
@@ -449,17 +443,8 @@ public class HoneycombGround implements IGround {
 		return yBorder;
 	}
 	
-	@Override
-	public Map<String, Object> toMap() {
-		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("xBorder", xBorder);
-		map.put("yBorder", yBorder);
-		map.put("imagePath", imagePath);
-		map.put("buildingList", buildingList);
-		map.put("disableList", disableList);
-		//map.put("strongHoldList", strongHoldList);
-		return map;
+	public String getImagePath() {
+		return this.imagePath;
 	}
 	
 	/**

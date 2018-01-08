@@ -24,8 +24,10 @@ public class HeroCard extends LifeCard {
 		setHero(true);
 	}
 	
-	@Override
-	public void initState() {
+	/**
+	 * 恢复，当英雄被复活时调用
+	 */
+	public void recover() {
 		// TODO Auto-generated method stub
 		clearBuff();            //首先执行是因为，Buff.invalid会影响死者属性
 		

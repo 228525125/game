@@ -119,21 +119,6 @@ public interface IBuilding {
 	 */
 	public void addOption(IOption option);
 	
-	/**
-	 * 产品
-	 * @return
-	 */
-	public List<IProduct> getProducts();
-	
-	public void setProducts(List<IProduct> products);
-	
-	/**
-	 * 
-	 * @param productType 产品类型
-	 * @return
-	 */
-	public IProduct getProduct(Integer productType);
-	
 	public IUpgrade getUpgrade(); 
 	
 	/**

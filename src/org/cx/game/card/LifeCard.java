@@ -22,13 +22,10 @@ import org.cx.game.action.IChuck;
 import org.cx.game.action.IConjure;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IPick;
-import org.cx.game.action.IUpgradeLife;
 import org.cx.game.action.IMove;
-import org.cx.game.action.IRenew;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Pick;
 import org.cx.game.action.Move;
-import org.cx.game.action.Renew;
 import org.cx.game.action.UpgradeLife;
 import org.cx.game.card.buff.IBuff;
 import org.cx.game.card.magic.IMagic;
@@ -37,9 +34,6 @@ import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.observer.NotifyInfo;
-import org.cx.game.observer.Observable;
-import org.cx.game.out.JsonOut;
 import org.cx.game.policy.GuardPolicy;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.policy.IPolicy;
@@ -146,23 +140,6 @@ public class LifeCard implements ITag
 	public void setRation(Integer ration) {
 		this.ration = ration;
 	}
-	
-	/**
-	 * 人数，LifeCard可以理解为一个小队
-	 */
-	private Integer nop = 1;
-
-	/**
-	 * 人数，LifeCard可以理解为一个小队
-	 * @return
-	 */
-	public Integer getNop() {
-		return nop;
-	}
-
-	public void setNop(Integer nop) {
-		this.nop = nop;
-	}
 
 	private Integer energy = 100;
 
@@ -202,32 +179,6 @@ public class LifeCard implements ITag
 
 	public void setHide(Boolean hide) {
 		this.hide = hide;
-	}
-	
-	private Boolean immuneMagic = false;
-
-	/**
-	 * 法术免疫状态
-	 */
-	public Boolean getImmuneMagic() {
-		return immuneMagic;
-	}
-
-	public void setImmuneMagic(Boolean immuneMagic) {
-		this.immuneMagic = immuneMagic;
-	}
-	
-	private Boolean immunePhysical = false;
-
-	/**
-	 * 物理免疫状态
-	 */
-	public Boolean getImmunePhysical() {
-		return immunePhysical;
-	}
-
-	public void setImmunePhysical(Boolean immunePhysical) {
-		this.immunePhysical = immunePhysical;
 	}
 
 	/**
@@ -750,6 +701,7 @@ public class LifeCard implements ITag
 			attack.setRange(attackRange);
 			attack.setLockChance(lockChance);
 			attack.setMode(attackMode);
+			attack.setMobile(mobile);
 			attack.setOwner(this);
 		}
 		return attack;
@@ -822,24 +774,10 @@ public class LifeCard implements ITag
 			call = new Call();
 			call.setConsume(consume);
 			call.setRation(ration);
-			call.setNop(nop);
 			call.setOwner(this);
 		}
 		
 		return call;
-	}
-
-	/**
-	 * 刷新
-	 */
-	private IRenew renew = null;
-	
-	public IRenew getRenew(){
-		if(null==renew){
-			renew = new Renew();
-			renew.setOwner(this);
-		}
-		return renew;
 	}
 	
 	/**
@@ -887,7 +825,7 @@ public class LifeCard implements ITag
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
 			upgrade = new UpgradeLife(upgradeRequirement);
-			upgrade.setLevel(level);
+			upgrade.setLevel(level);            //setLevel会触发upgradeRequirement
 			upgrade.setOwner(this);
 		}
 		return this.upgrade;
@@ -960,15 +898,6 @@ public class LifeCard implements ITag
 	public void call(Place place, Integer nop) throws RuleValidatorException {
 		getCall().execute(place, nop);
 	}
-	
-	/**
-	 * 刷新
-	 * @param place
-	 * @throws RuleValidatorException
-	 */
-	public void renew(Place place) throws RuleValidatorException {
-		getRenew().execute(place);
-	}
 
 	/**
 	 * 死亡
@@ -1005,7 +934,7 @@ public class LifeCard implements ITag
 	
 	/**
 	 * 初始化状态
-	 */
+	 
 	public void initState() {
 		// TODO Auto-generated method stub
 
@@ -1019,7 +948,6 @@ public class LifeCard implements ITag
 		getAttack().setLockChance(lockChance);
 		
 		getCall().setConsume(consume);
-		getCall().setNop(nop);
 		
 		getMove().setEnergy(energy);
 		getMove().setType(moveType);
@@ -1039,7 +967,7 @@ public class LifeCard implements ITag
 		for(IBuff buff : buffs){
 			buff.invalid();
 		}
-	}
+	}*/
 	
 	@Override
 	public int hashCode() {

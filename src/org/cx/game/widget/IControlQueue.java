@@ -1,5 +1,6 @@
 package org.cx.game.widget;
 
+import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
 import org.cx.game.rule.IRule;
@@ -16,7 +17,7 @@ public interface IControlQueue extends Observable, IInterceptable{
 	 * 将一个元素加入到控制列表中，插入时不用考虑位置
 	 * @param object
 	 */
-	public void add(Object object);
+	public void add(IPlayer player);
 	
 	/**
 	 * 
@@ -33,14 +34,14 @@ public interface IControlQueue extends Observable, IInterceptable{
 	 * 用于life death后从queue中移除，该方法只用于rule
 	 * @param object life 或者 player
 	 */
-	public void remove(Object object);
+	public void remove(IPlayer player);
 	
 	/**
 	 * 根据对象反查place
 	 * @param object
 	 * @return
 	 */
-	public Place getPlace(Object object);
+	public Place getPlace(IPlayer player);
 	
 	/**
 	 * 将一个place移入优先队列

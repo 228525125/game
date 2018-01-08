@@ -112,6 +112,14 @@ public interface IAttack extends IAction {
 	
 	public void setAttackable(Boolean attackable);
 	
+	/**
+	 * 移动攻击，例如，骑兵
+	 * @return
+	 */
+	public Boolean getMobile();
+	
+	public void setMobile(Boolean mobile);
+	
 	public IAttack clone();
 	
 	public LifeCard getOwner();
