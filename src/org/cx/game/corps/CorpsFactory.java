@@ -1,4 +1,4 @@
-package org.cx.game.card;
+package org.cx.game.corps;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -21,12 +21,12 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class CardFactory {
+public class CorpsFactory {
 
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
 		try {
-			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("life.path"))); 
+			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("corps.path"))); 
 		
 			Document document = saxReader.read(is);
 			return document.getRootElement();
@@ -43,12 +43,12 @@ public class CardFactory {
 		return null;
 	}
 
-	private static LifeCard getInstance(Element cardEl){
+	private static Corps getInstance(Element corpsEl){
 		ObjectTypeBuilder otb = new ObjectTypeBuilder();
 		try {
-			new ObjectTypeParse(otb).parse(cardEl);
-			LifeCard card = (LifeCard) otb.builder();
-			return card;
+			new ObjectTypeParse(otb).parse(corpsEl);
+			Corps corps = (Corps) otb.builder();
+			return corps;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,23 +59,23 @@ public class CardFactory {
 		return null;
 	}
 	
-	public static LifeCard getInstance(Integer cid, IPlayer player){
-		Element cardEl = getElement(cid);
-		LifeCard card = getInstance(cardEl);
-		card.setPlayer(player);
-		card.setId(ContextFactory.getContext().newCardPlayId());
-		return card;
+	public static Corps getInstance(Integer cid, IPlayer player){
+		Element corpsEl = getElement(cid);
+		Corps corps = getInstance(corpsEl);
+		corps.setPlayer(player);
+		corps.setId(ContextFactory.getContext().newPlayId());
+		return corps;
 	}
 	
-	public static List<LifeCard> getInstances(List<Integer> cid, IPlayer player){
-		List<LifeCard> list = new ArrayList<LifeCard>();
+	public static List<Corps> getInstances(List<Integer> cid, IPlayer player){
+		List<Corps> list = new ArrayList<Corps>();
 		
 		for(Integer id : cid){
-			Element cardEl = getElement(id);
-			LifeCard card = getInstance(cardEl);
-			card.setPlayer(player);
-			card.setId(ContextFactory.getContext().newCardPlayId());
-			list.add(getInstance(cardEl));
+			Element corpsEl = getElement(id);
+			Corps corps = getInstance(corpsEl);
+			corps.setPlayer(player);
+			corps.setId(ContextFactory.getContext().newPlayId());
+			list.add(getInstance(corpsEl));
 		}
 		return list;
 	}
@@ -84,12 +84,12 @@ public class CardFactory {
 		
 		Element el = null;
 		
-		Element cards = getRoot().element("cards");
+		Element cs = getRoot().element("corps");
 		
-		for(Iterator it = cards.elementIterator("card");it.hasNext();){
-			Element card = (Element) it.next();
-			if(cid.equals(Integer.valueOf(card.attribute("cardID").getText())))
-				el = card;
+		for(Iterator it = cs.elementIterator("card");it.hasNext();){
+			Element corps = (Element) it.next();
+			if(cid.equals(Integer.valueOf(corps.attribute("cardID").getText())))
+				el = corps;
 		}
 		
 		return el;
@@ -115,10 +115,5 @@ public class CardFactory {
 		ids.add(1410018);
 		ids.add(1440019);
 		ids.add(1440020);
-		
-		/*List<ICard> list = getInstances(ids);
-		for(ICard card : list){
-			System.out.println(card.getName());
-		}*/
 	}
 }

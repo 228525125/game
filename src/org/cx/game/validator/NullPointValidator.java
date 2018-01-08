@@ -22,7 +22,7 @@ public class NullPointValidator extends Validator {
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		if(null!=ground.getCard(position)){
+		if(null!=ground.getCorps(position)){
 			return true;
 		}else{
 			addMessage(I18n.getMessage(NullPointValidator.class.getName()));

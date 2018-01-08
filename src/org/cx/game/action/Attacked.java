@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.cx.game.action.Death.DeathAddToHpAction;
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.buff.IBuff;
-import org.cx.game.card.buff.TauntBuff;
-import org.cx.game.card.skill.IPassiveSkill;
-import org.cx.game.card.skill.ISkill;
+import org.cx.game.corps.Corps;
+import org.cx.game.corps.Hero;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.buff.IBuff;
+import org.cx.game.magic.skill.IPassiveSkill;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
 import org.cx.game.widget.treasure.EmpiricValue;
@@ -32,9 +31,9 @@ public class Attacked extends Action implements IAttacked {
 	private Integer landformDef = 0; //地形防御力
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 	
 	@Override
@@ -76,8 +75,8 @@ public class Attacked extends Action implements IAttacked {
 	@Override
 	public void updateArmourDef() {
 		// TODO Auto-generated method stub
-		if (getOwner() instanceof HeroCard) {
-			HeroCard hero = (HeroCard) getOwner();
+		if (getOwner() instanceof Hero) {
+			Hero hero = (Hero) getOwner();
 			Integer def = 0;
 			for(ITreasure treasure : hero.getTreasures()){
 				if (treasure instanceof TreasureEquipment) {
@@ -148,7 +147,7 @@ public class Attacked extends Action implements IAttacked {
 	@Override
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		LifeCard attackLife = (LifeCard) objects[0];
+		Corps attackLife = (Corps) objects[0];
 		IAttack attack = (IAttack) objects[1];
 		
 		/*
@@ -170,7 +169,7 @@ public class Attacked extends Action implements IAttacked {
 		map.put("attacked", getOwner());
 		map.put("position", getOwner().getPosition());
 		map.put("damage", damage);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attacked,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Attacked,map);
 		super.notifyObservers(info);
 		
 		//造成的实际伤害
@@ -179,17 +178,16 @@ public class Attacked extends Action implements IAttacked {
 		damage = ((DeathAddToHpAction) death.getAddToHpAction()).getDamage();
 		
 		//增加经验值
-		IUpgradeLife lu = (IUpgradeLife) attack.getOwner().getUpgrade();
-		lu.addToEmpiricValue(Math.abs(damage));
+		IUpgradeCorps uc = (IUpgradeCorps) attack.getOwner().getUpgrade();
+		uc.addToEmpiricValue(Math.abs(damage));
 		
 		/*
 		 * 反击
 		 */
 		if(IDeath.Status_Live.equals(getOwner().getDeath().getStatus())          //没有死亡 
 			&& getFightBack()                                           //是否反击过 
-			&& !attack.getCounterAttack()                                             //这次攻击方式是否是反击
-			&& 0<getOwner().getAttack().getAtk()                        //是否有攻击力 
-			&& getOwner().getBuff(TauntBuff.class).isEmpty()){        //没有被嘲讽
+			&& !attack.getCounterAttack()                               //这次攻击方式是否是反击
+			&& 0<getOwner().getAttack().getAtk()){                        //是否有攻击力 
 			try {
 				getOwner().getAttack().setCounterAttack(true);      //设置为反击
 				getOwner().attack(attackLife);
@@ -199,6 +197,6 @@ public class Attacked extends Action implements IAttacked {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		} 
 	}
 }

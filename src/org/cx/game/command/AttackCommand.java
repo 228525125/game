@@ -1,16 +1,15 @@
 package org.cx.game.command;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.Debug;
 import org.cx.game.validator.AttackAtkValidator;
 import org.cx.game.validator.AttackRangeValidator;
-import org.cx.game.validator.AttackTauntValidator;
 import org.cx.game.validator.AttackableValidator;
 import org.cx.game.validator.SelectGroundValidator;
-import org.cx.game.validator.SelectLifeCardNotHideValidator;
+import org.cx.game.validator.SelectCorpsNotHideValidator;
 
 public class AttackCommand extends InteriorCommand {
 
@@ -26,8 +25,8 @@ public class AttackCommand extends InteriorCommand {
 	public void setParameter(Object parameter) {
 		// TODO Auto-generated method stub
 		super.setParameter(parameter);
-		addValidator(new AttackTauntValidator(buffer, (LifeCard) parameter));
-		addValidator(new AttackRangeValidator((LifeCard) buffer.getCard(),(LifeCard) parameter));
+		//addValidator(new AttackTauntValidator(buffer, (Corps) parameter));
+		addValidator(new AttackRangeValidator((Corps) buffer.getCorps(),(Corps) parameter));
 	}
 	
 	@Override
@@ -35,10 +34,10 @@ public class AttackCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 		
-		LifeCard attack = (LifeCard) buffer.getCard();
-		LifeCard attacked = (LifeCard) parameter;
+		Corps attack = (Corps) buffer.getCorps();
+		Corps attacked = (Corps) parameter;
 		
-		doValidator(new SelectLifeCardNotHideValidator(attacked));
+		doValidator(new SelectCorpsNotHideValidator(attacked));
 		if(hasError())
 			throw new CommandValidatorException(getErrors().getMessage());
 		

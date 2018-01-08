@@ -1,10 +1,10 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 
 public interface IAttacked extends IAction {
 	
-	public LifeCard getOwner();
+	public Corps getOwner();
 	
 	/**
 	 * 是否可以反击

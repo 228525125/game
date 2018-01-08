@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.action.IDeath;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.ISkill;
+import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.Place;
@@ -67,8 +67,8 @@ public class ParameterExpressionBuffer {
 		return (TrickList) bufferMap.get(CommandBuffer.TRICKLIST);
 	}
 	
-	public LifeCard getCard(){
-		return (LifeCard)bufferMap.get(CommandBuffer.CARD);
+	public Corps getCorps(){
+		return (Corps)bufferMap.get(CommandBuffer.CORPS);
 	}
 	
 	public ISkill getSkill(){
@@ -89,7 +89,7 @@ public class ParameterExpressionBuffer {
 			bufferMap.remove(CommandBuffer.PLACE);
 			bufferMap.remove(CommandBuffer.CEMETERY);
 			bufferMap.remove(CommandBuffer.TRICKLIST);
-			bufferMap.remove(CommandBuffer.CARD);
+			bufferMap.remove(CommandBuffer.CORPS);
 			bufferMap.remove(CommandBuffer.SKILL);
 			bufferMap.remove(CommandBuffer.TRICK);
 			
@@ -149,26 +149,26 @@ public class ParameterExpressionBuffer {
 		
 	}
 	
-	public void setCard(LifeCard life){
-		if(null!=life){
-			setGround(life.getGround());
+	public void setCorps(Corps corps){
+		if(null!=corps){
+			setGround(corps.getGround());
 			
-			IGround ground = life.getGround();
+			IGround ground = corps.getGround();
 			
-			Place place = ground.getPlace(ground.getPosition(life));
+			Place place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place);
 			
-			if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
+			if(IDeath.Status_Death.equals(corps.getDeath().getStatus())){
 				setCemetery(place.getCemetery());
 			}
 			
-			bufferMap.put(CommandBuffer.CARD, life);
+			bufferMap.put(CommandBuffer.CORPS, corps);
 		}		
 	}
 	
 	public void setSkill(ISkill skill){
 		if(null!=skill){
-			setCard(skill.getOwner());
+			setCorps(skill.getOwner());
 			
 			bufferMap.put(CommandBuffer.SKILL, skill);
 		}

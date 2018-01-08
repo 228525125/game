@@ -8,9 +8,9 @@ import java.util.Observer;
 
 import org.cx.game.action.Execute;
 import org.cx.game.action.IExecute;
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.CorpsFactory;
+import org.cx.game.corps.Corps;
+import org.cx.game.corps.Hero;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.I18n;
@@ -29,9 +29,9 @@ import org.cx.game.widget.building.OptionCall.OptionCallExecute;
 public class OptionRevive extends Option implements IOption {
 
 	private String name = null;
-	private LifeCard hero = null;
+	private Corps hero = null;
 
-	public OptionRevive(LifeCard hero) {
+	public OptionRevive(Corps hero) {
 		// TODO Auto-generated constructor stub
 		this.hero = hero;
 		this.hero.getDeath().addObserver(new OptionObserver());
@@ -44,7 +44,7 @@ public class OptionRevive extends Option implements IOption {
 		// TODO Auto-generated method stub
 		if(null==name){
 			name = super.getName();
-			name += I18n.getMessage(HeroCard.class, hero.getType(), "name");
+			name += I18n.getMessage(Hero.class, hero.getType(), "name");
 		}
 		return name;
 	}
@@ -89,9 +89,9 @@ public class OptionRevive extends Option implements IOption {
 			if (arg instanceof NotifyInfo) {
 				NotifyInfo info = (NotifyInfo) arg;
 				
-				if(NotifyInfo.Card_LifeCard_Action_Death.equals(info.getType())){
+				if(NotifyInfo.Corps_Death.equals(info.getType())){
 					Map bean = (Map) info.getInfo();
-					LifeCard hero = (LifeCard) bean.get("card");
+					Corps hero = (Corps) bean.get("card");
 					
 					setSpacingWait(hero.getUpgrade().getLevel());
 					cooling();
@@ -103,9 +103,9 @@ public class OptionRevive extends Option implements IOption {
 	
 	public class OptionReviveExecute extends Execute implements IExecute {
 		
-		private LifeCard hero = null;
+		private Corps hero = null;
 
-		public OptionReviveExecute(LifeCard hero) {
+		public OptionReviveExecute(Corps hero) {
 			// TODO Auto-generated constructor stub
 			this.hero = hero;
 		}

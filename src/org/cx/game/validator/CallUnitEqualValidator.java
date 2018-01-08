@@ -1,6 +1,6 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.tools.I18n;
 
 /**
@@ -10,10 +10,10 @@ import org.cx.game.tools.I18n;
  */
 public class CallUnitEqualValidator extends Validator {
 
-	private LifeCard unit = null;
-	private LifeCard call = null;
+	private Corps unit = null;
+	private Corps call = null;
 	
-	public CallUnitEqualValidator(LifeCard unit, LifeCard call) {
+	public CallUnitEqualValidator(Corps unit, Corps call) {
 		// TODO Auto-generated constructor stub
 		this.unit = unit;
 		this.call = call;

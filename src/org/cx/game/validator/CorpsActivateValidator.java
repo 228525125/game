@@ -8,9 +8,9 @@ import org.cx.game.tools.I18n;
  * @author chenxian
  *
  */
-public class LifeCardActivateValidator extends SelectLifeCardValidator {
+public class CorpsActivateValidator extends SelectCorpsValidator {
 	
-	public LifeCardActivateValidator(CommandBuffer buffer) {
+	public CorpsActivateValidator(CommandBuffer buffer) {
 		// TODO Auto-generated constructor stub
 		super(buffer);
 	}
@@ -20,10 +20,10 @@ public class LifeCardActivateValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(getLifeCard().getActivate().getActivation()){
+			if(getCorps().getActivate().getActivation()){
 				ret = true;
 			}else{
-				addMessage(I18n.getMessage(LifeCardActivateValidator.class.getName()));
+				addMessage(I18n.getMessage(CorpsActivateValidator.class.getName()));
 				ret = false;
 			}
 		}

@@ -8,7 +8,7 @@ import org.cx.game.tools.I18n;
  * @author chenxian
  *
  */
-public class AttackableValidator extends SelectLifeCardValidator {
+public class AttackableValidator extends SelectCorpsValidator {
 
 	public AttackableValidator(CommandBuffer buffer) {
 		super(buffer);
@@ -20,7 +20,7 @@ public class AttackableValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(getLifeCard().getAttack().getAttackable()){
+			if(getCorps().getAttack().getAttackable()){
 				ret = true;
 			}else{
 				addMessage(I18n.getMessage(AttackableValidator.class.getName()));

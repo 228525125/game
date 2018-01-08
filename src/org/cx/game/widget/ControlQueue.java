@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
@@ -192,9 +192,9 @@ public class ControlQueue extends Observable implements IControlQueue {
 		if (place.getObject() instanceof IPlayer) {
 			speed = consume;
 		}
-		if (place.getObject() instanceof LifeCard) {
-			LifeCard life = (LifeCard) place.getObject();
-			speed = life.getActivate().getSpeed();
+		if (place.getObject() instanceof Corps) {
+			Corps corps = (Corps) place.getObject();
+			speed = corps.getActivate().getSpeed();
 		}
 		
 		place.setCount(count + speed);          //当加入下一个队列时，表示下一个回合，所以要增加一次活力

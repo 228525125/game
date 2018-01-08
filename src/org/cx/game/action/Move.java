@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.Debug;
@@ -120,9 +120,9 @@ public class Move extends Action implements IMove{
 	}
 
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class Move extends Action implements IMove{
 		map.put("route", route);
 		map.put("start", start);
 		map.put("position", getOwner().getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Move,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Move,map);
 		super.notifyObservers(info);
 		
 		/*

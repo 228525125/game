@@ -2,9 +2,9 @@ package org.cx.game.widget;
 
 import org.cx.game.action.Action;
 import org.cx.game.action.IAction;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.trick.ITrick;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.treasure.ITreasure;
 
@@ -42,7 +42,7 @@ public class Place {
 	
 	private TrickList trickList = new TrickList(this);
 	private Cemetery cemetery = new Cemetery(this);
-	private LifeCard life = null;
+	private Corps corps = null;
 	private Integer position = 0;
 	private IGround ground = null;
 	private IBuilding building  = null;
@@ -61,13 +61,13 @@ public class Place {
 		return ground;
 	}
 
-	public LifeCard getLife() {
+	public Corps getCorps() {
 		// TODO Auto-generated method stub
-		return life;
+		return corps;
 	}
 	
-	private void setLife(LifeCard life){
-		this.life = life;
+	private void setCorps(Corps corps){
+		this.corps = corps;
 	}
 
 	/**
@@ -99,16 +99,16 @@ public class Place {
 		return this.placeInAction;
 	}
 
-	void in(LifeCard life) throws RuleValidatorException {
+	void in(Corps corps) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		getPlaceInAction().action(life);
+		getPlaceInAction().action(corps);
 	}
 	
-	void inCemetery(LifeCard life) {
+	void inCemetery(Corps corps) {
 		// TODO Auto-generated method stub
-		getCemetery().add(life);
+		getCemetery().add(corps);
 		
-		life.setPosition(getPosition());
+		corps.setPosition(getPosition());
 	}
 	
 	void inTrickList(ITrick trick) {
@@ -116,22 +116,22 @@ public class Place {
 		getTrickList().add(trick);
 	}
 	
-	LifeCard out() throws RuleValidatorException {
+	Corps out() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		LifeCard life = getLife();
-		setLife(null);
+		Corps corps = getCorps();
+		setCorps(null);
 		setEmpty(true);
-		life.setPosition(null);
+		corps.setPosition(null);
 		getOwner().getEmptyList().add(position);
 		
-		return life;
+		return corps;
 	}
 	
-	void outCemetery(LifeCard life) {
+	void outCemetery(Corps corps) {
 		// TODO Auto-generated method stub
-		getCemetery().remove(life);
+		getCemetery().remove(corps);
 		
-		life.setPosition(null);
+		corps.setPosition(null);
 	}
 	
 	void outTrickList(ITrick trick) {
@@ -212,10 +212,10 @@ public class Place {
 		@Override
 		public void action(Object... objects) throws RuleValidatorException {
 			// TODO Auto-generated method stub
-			LifeCard life = (LifeCard) objects[0];
+			Corps corps = (Corps) objects[0];
 			
-			life.setPosition(position);
-			setLife(life);
+			corps.setPosition(position);
+			setCorps(corps);
 			
 			setEmpty(false);
 			getOwner().getOwner().getEmptyList().remove(position);
@@ -223,14 +223,14 @@ public class Place {
 			/*
 			 * 生成地形优势
 			 */
-			Integer profession = life.queryTagForCategory(LifeCard.Profession).get(0);
-			life.getAttack().setLandformAtk(life.getAtk()*LandformEffect.getAttackAdvantage(profession, getLandform())/100);
-			life.getAttacked().setLandformDef(life.getDef()*LandformEffect.getDefendAdvantage(profession, getLandform())/100);
+			Integer profession = corps.queryTagForCategory(Corps.Profession).get(0);
+			corps.getAttack().setLandformAtk(corps.getAtk()*LandformEffect.getAttackAdvantage(profession, getLandform())/100);
+			corps.getAttacked().setLandformDef(corps.getDef()*LandformEffect.getDefendAdvantage(profession, getLandform())/100);
 			
 			/*
 			 * 添加路径
 			 */
-			life.getMove().addMovePath(getPosition());
+			corps.getMove().addMovePath(getPosition());
 		}
 		
 		@Override

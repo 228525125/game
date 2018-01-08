@@ -2,7 +2,7 @@ package org.cx.game.widget.treasure;
 
 import org.cx.game.action.IPicked;
 import org.cx.game.action.Picked;
-import org.cx.game.card.HeroCard;
+import org.cx.game.corps.Hero;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 
@@ -74,7 +74,7 @@ public class TreasureEquipment extends Treasure implements ITreasure {
 			// TODO Auto-generated method stub
 			super.action(objects);
 			
-			HeroCard hero = (HeroCard) objects[0];
+			Hero hero = (Hero) objects[0];
 			hero.addTreasure(getOwner());
 		}
 	}

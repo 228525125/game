@@ -3,11 +3,11 @@ package org.cx.game.policy;
 import java.util.List;
 import java.util.Set;
 
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.CorpsFactory;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.IGround;
@@ -46,12 +46,12 @@ public class DisposeNPCPolicy extends Policy {
 		
 		for(String data : npcData){
 			String [] datas = data.split(",");
-			Integer cardID = Integer.valueOf(datas[0]);
+			Integer corpsID = Integer.valueOf(datas[0]);
 			Integer position = Integer.valueOf(datas[1]);
 			Integer nop = Integer.valueOf(datas[2]);
 			Integer policyID = Integer.valueOf(datas[3]);
 			
-			LifeCard npc = (LifeCard) CardFactory.getInstance(cardID, neutral);
+			Corps npc = (Corps) CorpsFactory.getInstance(corpsID, neutral);
 			Place place = ground.getPlace(position);
 			IPolicyGroup policy = PolicyGroupFactory.getInstance(policyID);
 			

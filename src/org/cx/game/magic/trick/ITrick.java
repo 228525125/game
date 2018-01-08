@@ -1,10 +1,10 @@
-package org.cx.game.card.trick;
+package org.cx.game.magic.trick;
 
-import org.cx.game.card.magic.IMagic;
 import org.cx.game.core.IPlayer;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
+import org.cx.game.magic.IMagic;
 import org.cx.game.observer.Observable;
 import org.cx.game.widget.TrickList;
 

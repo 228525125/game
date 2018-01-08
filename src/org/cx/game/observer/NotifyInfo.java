@@ -27,84 +27,52 @@ public class NotifyInfo {
 	public final static String Player_Resource = "Player_Resource";
 	public final static String Player_Ration = "Player_Ration";
 	public final static String Player_Bout = "Player_Bout";
+
+	public final static String Ground_LoadMap = "Ground_LoadMap";
 	
-	public final static String Container_Remove = "Container_Remove";
-	public final static String Container_Add = "Container_Add";
+	public final static String Place_In = "Place_In";
+	public final static String Place_Out = "Place_Out";
 	
-	public final static String Container_Ground_Place_Cemetery_Add = "Container_Ground_Place_Cemetery_Add";
-	public final static String Container_Ground_Place_Cemetery_Remove = "Container_Ground_Place_Cemetery_Remove";
+	public final static String Corps_Attack = "Corps_Attack";
+	public final static String Corps_Attacked = "Corps_Attacked";
 	
-	public final static String Container_Ground_Place_TrickList_Add = "Container_Ground_Place_TrickList_Add";
-	public final static String Container_Ground_Place_TrickList_Remove = "Container_Ground_Place_TrickList_Remove";
+	public final static String Corps_Conjure = "Corps_Conjure";
+	public final static String Corps_Affected = "Corps_Affected";
 	
-	public final static String Container_UseCard_Add = "Container_UseCard_Add";
-	public final static String Container_UseCard_Remove = "Container_UseCard_Remove";
+	public final static String Corps_Activate = "Corps_Activate";
+	public final static String Corps_Call = "Corps_Call";
+	public final static String Corps_Renew = "Corps_Renew";
+	public final static String Corps_Death = "Corps_Death";
+	public final static String Corps_Upgrade = "Corps_Upgrade";
+	public final static String Corps_Swap = "Corps_Swap";
+	public final static String Corps_Dodge = "Corps_Dodge";
+	public final static String Corps_Chuck = "Corps_Chuck";
+	public final static String Corps_Move = "Corps_Move";
+	public final static String Corps_Pick = "Corps_Pick";
+	public final static String Treasure_Picked = "Treasure_Picked";
 	
-	public final static String Container_CardGroup_Remove = "Container_CardGroup_Remove";
-	public final static String Container_CardGroup_Add = "Container_CardGroup_Add";
-	
-	public final static String Container_Ground_Add = "Container_Ground_Add";
-	public final static String Container_Ground_Remove = "Container_Ground_Remove";
-	public final static String Container_Ground_LoadMap = "Container_Ground_LoadMap";
-	
-	public final static String Container_Place_In = "Container_Place_In";
-	public final static String Container_Place_Out = "Container_Place_Out";
-	
-	public final static String Card_LifeCard_Action_Attack = "Card_LifeCard_Action_Attack";
-	public final static String Card_LifeCard_Action_Attacked = "Card_LifeCard_Action_Attacked";
-	
-	public final static String Card_LifeCard_Action_Conjure = "Card_LifeCard_Action_Conjure";
-	public final static String Card_LifeCard_Action_Affected = "Card_LifeCard_Action_Affected";
-	
-	public final static String Card_LifeCard_Action_Activate = "Card_LifeCard_Action_Activate";
-	public final static String Card_LifeCard_Action_Call = "Card_LifeCard_Action_Call";
-	public final static String Card_LifeCard_Action_Renew = "Card_LifeCard_Action_Renew";
-	public final static String Card_LifeCard_Action_Death = "Card_LifeCard_Action_Death";
-	public final static String Card_LifeCard_Mirage_Action_Death = "Card_LifeCard_Mirage_Action_Death";
-	public final static String Card_LifeCard_Action_Upgrade = "Card_LifeCard_Action_Upgrade";
-	public final static String Card_LifeCard_Action_Swap = "Card_LifeCard_Action_Swap";
-	public final static String Card_LifeCard_Action_Dodge = "Card_LifeCard_Action_Dodge";
-	public final static String Card_LifeCard_Action_Chuck = "Card_LifeCard_Action_Chuck";
-	public final static String Card_LifeCard_Action_Move = "Card_LifeCard_Action_Move";
-	public final static String Card_LifeCard_Action_Pick = "Card_LifeCard_Action_Pick";
-	public final static String Treasure_Action_Picked = "Treasure_Action_Picked";
-	
-	public final static String Card_LifeCard_State_Hide = "Card_LifeCard_State_Hide";
-	public final static String Card_LifeCard_State_Hp = "Card_LifeCard_State_Hp";
-	public final static String Card_LifeCard_State_Armour = "Card_LifeCard_State_Armour";
-	public final static String Card_LifeCard_State_Atk = "Card_LifeCard_State_Atk";
-	public final static String Card_LifeCard_State_Def = "Card_LifeCard_State_Def";
-	public final static String Card_LifeCard_State_Speed = "Card_LifeCard_State_Speed";
-	public final static String Card_LifeCard_State_Lock = "Card_LifeCard_State_Lock";
-	public final static String Card_LifeCard_State_Range = "Card_LifeCard_State_Range";
-	public final static String Card_LifeCard_State_Energy = "Card_LifeCard_State_Energy";
-	public final static String Card_LifeCard_State_Mode = "Card_LifeCard_State_Mode";
-	public final static String Card_LifeCard_State_Type = "Card_LifeCard_State_Type";
-	public final static String Card_LifeCard_State_Flee = "Card_LifeCard_State_Flee";
-	public final static String Card_LifeCard_State_Consume = "Card_LifeCard_State_Consume";
-	public final static String Card_LifeCard_State_EmpiricValue = "Card_LifeCard_State_EmpiricValue";
-	public final static String Card_LifeCard_State_SkillCount = "Card_LifeCard_State_SkillCount";
-	public final static String Card_LifeCard_State_Direction = "Card_LifeCard_State_Direction";
-	
-	
-	public final static String Card_LifeCard_Weapon_Hand = "Card_LifeCard_Weapon_Hand";
-	public final static String Card_LifeCard_Weapon_Output = "Card_LifeCard_Weapon_Output";
-	public final static String Card_LifeCard_Weapon_Bearkdown = "Card_LifeCard_Weapon_Bearkdown";
-	public final static String Card_LifeCard_Weapon_Atk = "Card_LifeCard_Weapon_Atk";
-	public final static String Card_LifeCard_Weapon_Wear = "Card_LifeCard_Weapon_Wear";
-	
-	public final static String Card_LifeCard_Skill_Upgrade = "Card_LifeCard_Skill_Upgrade";
-	
-	public final static String Card_TrickCard_Trigger = "Card_TrickCard_Trigger";
-	public final static String Card_TrickCard_Setup = "Card_TrickCard_Setup";
-	
-	public final static String Card_MagicCard_Apply = "Card_MagicCard_Apply";
+	public final static String Corps_Hide = "Corps_Hide";
+	public final static String Corps_Hp = "Corps_Hp";
+	public final static String Corps_Armour = "Corps_Armour";
+	public final static String Corps_Atk = "Corps_Atk";
+	public final static String Corps_Def = "Corps_Def";
+	public final static String Corps_Speed = "Corps_Speed";
+	public final static String Corps_Lock = "Corps_Lock";
+	public final static String Corps_Range = "Corps_Range";
+	public final static String Corps_Energy = "Corps_Energy";
+	public final static String Corps_Mode = "Corps_Mode";
+	public final static String Corps_Type = "Corps_Type";
+	public final static String Corps_Flee = "Corps_Flee";
+	public final static String Corps_Consume = "Corps_Consume";
+	public final static String Corps_EmpiricValue = "Corps_EmpiricValue";
+	public final static String Corps_SkillCount = "Corps_SkillCount";
+	public final static String Corps_Direction = "Corps_Direction";
 	
 	public final static String Building_Option_Execute = "Building_Option_Execute";
 	public final static String Building_Option_Spacing_Process = "Building_Option_Spacing_Process";
 	public final static String Building_Option_Execute_Process = "Building_Option_Execute_Process";
-	public final static String Building_Action_Upgrade = "Building_Action_Upgrade";
-	public final static String Building_Action_Upgrade_Product = "Building_Action_Upgrade_Product";
+	public final static String Building_Upgrade = "Building_Upgrade";
+	public final static String Building_Upgrade_Product = "Building_Upgrade_Product";
 	
 	public final static String Command_Error = "Command_Error";
 	public final static String Command_Select = "Command_Select";

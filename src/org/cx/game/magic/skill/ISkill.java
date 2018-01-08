@@ -1,9 +1,9 @@
-package org.cx.game.card.skill;
+package org.cx.game.magic.skill;
 
 import org.cx.game.action.IUpgrade;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.magic.IMagic;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.IMagic;
 
 
 public interface ISkill extends IMagic {
@@ -16,9 +16,9 @@ public interface ISkill extends IMagic {
 	 * 所属对象
 	 * @return
 	 */
-	public LifeCard getOwner();
+	public Corps getOwner();
 	
-	public void setOwner(LifeCard life);
+	public void setOwner(Corps corps);
 	
 	/**
 	 * 技能使用范围

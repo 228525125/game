@@ -1,15 +1,10 @@
 package org.cx.game.rule;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.cx.game.action.Call;
 import org.cx.game.action.ICall;
-import org.cx.game.action.IDeath;
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
+import org.cx.game.corps.Hero;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.IResource;
@@ -20,12 +15,6 @@ import org.cx.game.widget.treasure.IResource;
  *
  */
 public class CallRule extends Rule implements IRule {
-	
-	@Override
-	public String getIntercepterMethod() {
-		// TODO Auto-generated method stub
-		return "action";
-	}
 	
 	private Boolean isInvoke = true;
 	
@@ -46,24 +35,24 @@ public class CallRule extends Rule implements IRule {
 		
 		ICall call = getOwner();
 
-		LifeCard owner = call.getOwner();
+		Corps owner = call.getOwner();
 		IGround ground = owner.getPlayer().getContext().getGround();
 		
 		/*
 		 * 英雄复活要先把尸体回收
 		 */
-		if (owner instanceof HeroCard && null!= owner.getGround()) {
+		if (owner instanceof Hero && null!= owner.getGround()) {
 			ground.outCemetery(owner);
 		}
 		
 		/*
 		 * 招募分为创建一支部队和补充兵源，这里处理补充兵源的情况；
 		 */
-		LifeCard life = place.getLife();
-		if(null!=life){
-			Integer n = life.getCall().getNop();
+		Corps corps = place.getCorps();
+		if(null!=corps){
+			Integer n = corps.getCall().getNop();
 			n += this.nop;
-			life.getCall().setNop(n);
+			corps.getCall().setNop(n);
 			
 			this.isInvoke = false;
 		}
@@ -75,7 +64,7 @@ public class CallRule extends Rule implements IRule {
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
 		ICall call = getOwner();
-		LifeCard owner = call.getOwner();
+		Corps owner = call.getOwner();
 		
 		/*
 		 * 扣减资源

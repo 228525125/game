@@ -26,13 +26,13 @@ public interface IControlQueue extends Observable, IInterceptable{
 	public Object out();
 	
 	/**
-	 * 刷新，当place中的life的speed发生变化时，立即刷新，该方法只用于rule
+	 * 刷新，当place中的corps的speed发生变化时，立即刷新，该方法只用于rule
 	 */
 	public void refurbish();
 	
 	/**
-	 * 用于life death后从queue中移除，该方法只用于rule
-	 * @param object life 或者 player
+	 * 用于corps death后从queue中移除，该方法只用于rule
+	 * @param object corps 或者 player
 	 */
 	public void remove(IPlayer player);
 	

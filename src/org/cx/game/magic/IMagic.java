@@ -1,4 +1,4 @@
-package org.cx.game.card.magic;
+package org.cx.game.magic;
 
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tag.ITag;

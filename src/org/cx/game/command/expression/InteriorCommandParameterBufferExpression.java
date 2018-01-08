@@ -66,8 +66,8 @@ public class InteriorCommandParameterBufferExpression extends
 				ret = buffer.getTrickList();
 			}
 			
-			if(CommandBuffer.CARD.equals(item)){
-				ret = buffer.getCard();
+			if(CommandBuffer.CORPS.equals(item)){
+				ret = buffer.getCorps();
 			}			
 			
 			if(CommandBuffer.SKILL.equals(item)){

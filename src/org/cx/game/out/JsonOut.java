@@ -15,12 +15,12 @@ import org.cx.game.action.Death;
 import org.cx.game.action.Move;
 import org.cx.game.action.UpgradeBuilding;
 import org.cx.game.action.UpgradeHero;
-import org.cx.game.action.UpgradeLife;
+import org.cx.game.action.UpgradeCorps;
 import org.cx.game.action.UpgradeSkill;
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.trick.ITrick;
 import org.cx.game.core.Player;
+import org.cx.game.corps.Corps;
+import org.cx.game.corps.Hero;
+import org.cx.game.magic.trick.ITrick;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.ControlQueue;
@@ -90,37 +90,37 @@ public class JsonOut extends Response implements Observer {
 				}
 			});
 			
-			config.registerJsonBeanProcessor(LifeCard.class, new JsonBeanProcessor() {
+			config.registerJsonBeanProcessor(Corps.class, new JsonBeanProcessor() {
 				
 				@Override
 				public JSONObject processBean(Object arg0, JsonConfig arg1) {
 					// TODO Auto-generated method stub
-					LifeCard life = (LifeCard) arg0;
-					return new JSONObject().element("activate", life.getActivate(), getConfig())
-							.element("attack", life.getAttack(),getConfig())
-							.element("attacked", life.getAttacked(),getConfig())
-							.element("buffList", life.getBuffList(),getConfig())
-							.element("call", life.getCall(),getConfig())
-							.element("death", life.getDeath(),getConfig())
-							.element("hero", life.getHero())
-							.element("id", life.getType())
-							.element("move", life.getMove(),getConfig())
-							.element("name", life.getName())
-							.element("player", life.getPlayer(),getConfig())
-							.element("playId", life.getId())
-							.element("position", life.getPosition())
-							.element("skillList", life.getSkillList(),getConfig())
-							.element("star", life.getStar())
-							.element("upgrade", life.getUpgrade(),getConfig());
+					Corps corps = (Corps) arg0;
+					return new JSONObject().element("activate", corps.getActivate(), getConfig())
+							.element("attack", corps.getAttack(),getConfig())
+							.element("attacked", corps.getAttacked(),getConfig())
+							.element("buffList", corps.getBuffList(),getConfig())
+							.element("call", corps.getCall(),getConfig())
+							.element("death", corps.getDeath(),getConfig())
+							.element("hero", corps.getHero())
+							.element("id", corps.getType())
+							.element("move", corps.getMove(),getConfig())
+							.element("name", corps.getName())
+							.element("player", corps.getPlayer(),getConfig())
+							.element("playId", corps.getId())
+							.element("position", corps.getPosition())
+							.element("skillList", corps.getSkillList(),getConfig())
+							.element("star", corps.getStar())
+							.element("upgrade", corps.getUpgrade(),getConfig());
 				}
 			});
 			
-			config.registerJsonBeanProcessor(HeroCard.class, new JsonBeanProcessor() {
+			config.registerJsonBeanProcessor(Hero.class, new JsonBeanProcessor() {
 				
 				@Override
 				public JSONObject processBean(Object arg0, JsonConfig arg1) {
 					// TODO Auto-generated method stub
-					HeroCard hero = (HeroCard) arg0;
+					Hero hero = (Hero) arg0;
 					return new JSONObject().element("activate", hero.getActivate())
 							.element("affected", hero.getAffected(), getConfig())
 							.element("attack", hero.getAttack(), getConfig())
@@ -255,12 +255,12 @@ public class JsonOut extends Response implements Observer {
 				}
 			});
 			
-			config.registerJsonBeanProcessor(UpgradeLife.class, new JsonBeanProcessor() {
+			config.registerJsonBeanProcessor(UpgradeCorps.class, new JsonBeanProcessor() {
 				
 				@Override
 				public JSONObject processBean(Object arg0, JsonConfig arg1) {
 					// TODO Auto-generated method stub
-					UpgradeLife obj = (UpgradeLife) arg0;
+					UpgradeCorps obj = (UpgradeCorps) arg0;
 					return new JSONObject().element("level", obj.getLevel())
 							.element("levelLimit", obj.getLevelLimit())
 							.element("requirement", obj.getRequirement(), getConfig())
@@ -302,13 +302,13 @@ public class JsonOut extends Response implements Observer {
 				public JSONObject processBean(Object arg0, JsonConfig arg1) {
 					// TODO Auto-generated method stub
 					Cemetery obj = (Cemetery) arg0;
-					String lifeList = "";
-					for(LifeCard life : obj.getList()){
-						lifeList += life.getName();
+					String corpsList = "";
+					for(Corps corps : obj.getList()){
+						corpsList += corps.getName();
 					}
 					
 					return new JSONObject().element("size", obj.getSize())
-							.element("lifeList", lifeList);
+							.element("lifeList", corpsList);
 				}
 			});
 			
@@ -339,7 +339,7 @@ public class JsonOut extends Response implements Observer {
 							.element("disable", obj.getDisable())
 							.element("empty", obj.getEmpty())
 							.element("landform", obj.getLandform())
-							.element("life", obj.getLife(), getConfig())
+							.element("life", obj.getCorps(), getConfig())
 							.element("position", obj.getPosition())
 							.element("treasure", obj.getTreasure(), getConfig())
 							.element("trickList", obj.getTrickList(), getConfig());
@@ -378,7 +378,7 @@ public class JsonOut extends Response implements Observer {
 							.element("status", obj.getStatus())
 							.element("type", obj.getType())
 							.element("upgrade", obj.getUpgrade(), getConfig())
-							.element("cardID", obj.getCardID())
+							.element("cardID", obj.getCorpsID())
 							.element("nop", obj.getNop())
 							.element("yield", obj.getYield());
 				}

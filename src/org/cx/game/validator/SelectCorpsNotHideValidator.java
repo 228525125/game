@@ -1,19 +1,19 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.corps.Corps;
 import org.cx.game.tools.I18n;
 
 /**
- * 验证选择的LifeCard是否处于潜行状态
+ * 验证选择的Corps是否处于潜行状态
  * @author chenxian
  *
  */
-public class SelectLifeCardNotHideValidator extends Validator {
+public class SelectCorpsNotHideValidator extends Validator {
 	
-	private LifeCard attacked = null;
+	private Corps attacked = null;
 	
-	public SelectLifeCardNotHideValidator(LifeCard attacked) {
+	public SelectCorpsNotHideValidator(Corps attacked) {
 		// TODO Auto-generated constructor stub
 		this.attacked = attacked;
 	}
@@ -24,7 +24,7 @@ public class SelectLifeCardNotHideValidator extends Validator {
 		Boolean ret = super.validate(); 
 		if(ret){
 			if(this.attacked.getMove().getHide()){
-				addMessage(I18n.getMessage(SelectLifeCardNotHideValidator.class.getName()));
+				addMessage(I18n.getMessage(SelectCorpsNotHideValidator.class.getName()));
 				ret = false;
 			}else{
 				ret = true;

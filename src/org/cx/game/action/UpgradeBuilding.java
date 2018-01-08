@@ -36,7 +36,7 @@ public class UpgradeBuilding extends Upgrade implements IUpgradeBuilding {
 		map.put("position", getOwner().getPosition());
 		map.put("building", this);
 		map.put("level", getLevel());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Building_Action_Upgrade,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Building_Upgrade,map);
 		super.notifyObservers(info);
 	}
 	

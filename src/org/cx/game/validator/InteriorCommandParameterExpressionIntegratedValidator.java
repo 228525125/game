@@ -1,13 +1,13 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IActiveSkill;
-import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.command.expression.ParameterExpressionBuffer;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.IActiveSkill;
+import org.cx.game.magic.skill.ISkill;
+import org.cx.game.magic.trick.ITrick;
 import org.cx.game.tools.I18n;
 import org.cx.game.tools.Util;
 import org.cx.game.widget.Cemetery;
@@ -137,7 +137,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 					}
 				}
 				
-				if(CommandBuffer.CARD.equals(item)){
+				if(CommandBuffer.CORPS.equals(item)){
 					if(null==getBuffer().getGround()){
 						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
@@ -150,27 +150,27 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 								ret = false;
 								break;
 							}
-							LifeCard life = null;
+							Corps corps = null;
 							if(null!=place){
 								if(null!=getBuffer().getCemetery())
-									life = getBuffer().getCemetery().getLife(Integer.valueOf(position));
+									corps = getBuffer().getCemetery().getCorps(Integer.valueOf(position));
 								else
-									life = place.getLife();
+									corps = place.getCorps();
 							}
-							parameterObject = life;
-							getBuffer().setCard(life);
+							parameterObject = corps;
+							getBuffer().setCorps(corps);
 						}
 					}
 				}
 				
 				if(CommandBuffer.SKILL.equals(item)){
-					if(!(getBuffer().getCard() instanceof LifeCard)){
+					if(!(getBuffer().getCorps() instanceof Corps)){
 						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
-						LifeCard life = (LifeCard) getBuffer().getCard();
-						ISkill skill = life.getSkill(Integer.valueOf(position));
+						Corps corps = (Corps) getBuffer().getCorps();
+						ISkill skill = corps.getSkill(Integer.valueOf(position));
 						parameterObject = skill;
 						getBuffer().setSkill(skill);
 					}

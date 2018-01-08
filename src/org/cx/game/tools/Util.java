@@ -218,7 +218,7 @@ public class Util {
 		peBuffer.setOption(cBuffer.getOption());
 		peBuffer.setCemetery(cBuffer.getCemetery());
 		peBuffer.setTrickList(cBuffer.getTrickList());
-		peBuffer.setCard(cBuffer.getCard());
+		peBuffer.setCorps(cBuffer.getCorps());
 		peBuffer.setSkill(cBuffer.getSkill());
 		peBuffer.setTrick(cBuffer.getTrick());
 	}

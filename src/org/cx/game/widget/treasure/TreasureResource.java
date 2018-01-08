@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.cx.game.action.IPicked;
 import org.cx.game.action.Picked;
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.IGround;
 
@@ -56,8 +56,8 @@ public class TreasureResource extends Treasure implements ITreasure {
 			// TODO Auto-generated method stub
 			super.action(objects);
 			
-			LifeCard life = (LifeCard) objects[0];
-			life.getPlayer().addToResource(getResource());
+			Corps corps = (Corps) objects[0];
+			corps.getPlayer().addToResource(getResource());
 		}
 	}
 }

@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.cx.game.action.IDeath;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.ISkill;
-import org.cx.game.card.trick.ITrick;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.ISkill;
+import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.Place;
@@ -43,7 +43,7 @@ public class CommandBuffer {
 	
 	public static final String OPTION = "option";
 	
-	public static final String CARD = "card";
+	public static final String CORPS = "corps";
 	
 	public static final String SKILL = "skill";
 	
@@ -90,9 +90,9 @@ public class CommandBuffer {
 		}else if(TRICKLIST.equals(item)){
 			TrickList trickList = (TrickList) object;
 			setTrickList(trickList, bufferMap);
-		}else if(CARD.equals(item)){
-			LifeCard card = (LifeCard) object;
-			setCard(card, bufferMap);
+		}else if(CORPS.equals(item)){
+			Corps corps = (Corps) object;
+			setCorps(corps, bufferMap);
 		}else if(SKILL.equals(item)){
 			ISkill skill = (ISkill) object;
 			setSkill(skill, bufferMap);
@@ -141,8 +141,8 @@ public class CommandBuffer {
 		return (TrickList) element().get(TRICKLIST);
 	}
 	
-	public LifeCard getCard(){
-		return (LifeCard) element().get(CARD);
+	public Corps getCorps(){
+		return (Corps) element().get(CORPS);
 	}
 	
 	public ISkill getSkill(){
@@ -157,8 +157,8 @@ public class CommandBuffer {
 		element().clear();
 	}
 	
-	public LifeCard lastCard(){
-		return (LifeCard) last().get(CARD);
+	public Corps lastCorps(){
+		return (Corps) last().get(CORPS);
 	}
 	
 	public Object get(String item){
@@ -183,8 +183,8 @@ public class CommandBuffer {
 		if(TRICKLIST.equals(item)){
 			return getTrickList();
 		}
-		if (CARD.equals(item)) {
-			return getCard();
+		if (CORPS.equals(item)) {
+			return getCorps();
 		}
 		if (SKILL.equals(item)) {
 			return getSkill();
@@ -222,8 +222,8 @@ public class CommandBuffer {
 		if(item instanceof TrickList){
 			return TRICKLIST;
 		}
-		if (item instanceof LifeCard) {
-			return CARD;
+		if (item instanceof Corps) {
+			return CORPS;
 		}
 		if (item instanceof ISkill) {
 			return SKILL;
@@ -242,7 +242,7 @@ public class CommandBuffer {
 			bufferMap.remove(OPTION);
 			bufferMap.remove(CEMETERY);
 			bufferMap.remove(TRICKLIST);
-			bufferMap.remove(CARD);
+			bufferMap.remove(CORPS);
 			bufferMap.remove(SKILL);
 			bufferMap.remove(TRICK);
 			
@@ -305,26 +305,26 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setCard(LifeCard life, Map<String, Object> bufferMap){
-		if(null!=life){
-			setGround(life.getGround(), bufferMap);
+	private void setCorps(Corps corps, Map<String, Object> bufferMap){
+		if(null!=corps){
+			setGround(corps.getGround(), bufferMap);
 			
-			IGround ground = life.getGround();
+			IGround ground = corps.getGround();
 			
-			Place place = ground.getPlace(ground.getPosition(life));
+			Place place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place, bufferMap);
 			
-			if(IDeath.Status_Death.equals(life.getDeath().getStatus())){
+			if(IDeath.Status_Death.equals(corps.getDeath().getStatus())){
 				setCemetery(place.getCemetery(), bufferMap);
 			}
 
-			bufferMap.put(CARD, life);
+			bufferMap.put(CORPS, corps);
 		}
 	}
 	
 	private void setSkill(ISkill skill, Map<String, Object> bufferMap){
 		if(null!=skill){
-			setCard(skill.getOwner(), bufferMap);
+			setCorps(skill.getOwner(), bufferMap);
 			
 			bufferMap.put(SKILL, skill);
 		}

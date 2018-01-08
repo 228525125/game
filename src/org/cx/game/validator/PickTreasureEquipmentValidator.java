@@ -1,7 +1,7 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
+import org.cx.game.corps.Hero;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.Place;
 import org.cx.game.widget.treasure.TreasureEquipment;
@@ -13,12 +13,12 @@ import org.cx.game.widget.treasure.TreasureEquipment;
  */
 public class PickTreasureEquipmentValidator extends SelectPlaceExistTreasureValidator {
 
-	private LifeCard life = null;
+	private Corps corps = null;
 	
-	public PickTreasureEquipmentValidator(LifeCard life, Place place) {
+	public PickTreasureEquipmentValidator(Corps corps, Place place) {
 		super(place);
 		// TODO Auto-generated constructor stub
-		this.life = life;
+		this.corps = corps;
 	}
 	
 	@Override
@@ -28,7 +28,7 @@ public class PickTreasureEquipmentValidator extends SelectPlaceExistTreasureVali
 		
 		if(ret){
 			if (getTreasure() instanceof TreasureEquipment) {
-				if (!(this.life instanceof HeroCard)) {
+				if (!(this.corps instanceof Hero)) {
 					ret = false;
 					addMessage(I18n.getMessage(PickTreasureEquipmentValidator.class.getName()));
 				}

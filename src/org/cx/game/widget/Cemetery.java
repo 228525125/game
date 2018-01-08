@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 
@@ -17,7 +17,7 @@ import org.cx.game.observer.NotifyInfo;
  */
 public class Cemetery {
 	
-	private List<LifeCard> lifeList = new ArrayList<LifeCard>();
+	private List<Corps> corpsList = new ArrayList<Corps>();
 	
 	private Place place;
 	
@@ -31,17 +31,17 @@ public class Cemetery {
 	/**
 	 * 进入墓地
 	 */
-	void add(LifeCard life) {
+	void add(Corps corps) {
 		// TODO Auto-generated method stub
-		lifeList.add(life); 
+		corpsList.add(corps); 
 	}
 	
 	/**
 	 * 移出墓地
-	 * @param card
+	 * @param corps
 	 */
-	void remove(LifeCard life){				
-		lifeList.remove(life);
+	void remove(Corps corps){				
+		corpsList.remove(corps);
 	}
 	
 	public Place getOwner() {
@@ -51,34 +51,34 @@ public class Cemetery {
 	
 	
 	/**
-	 * 因为Cemetery的getPosition(life)返回Cemetery所在ground的position
-	 * @param life
+	 * 因为Cemetery的getPosition(corps)返回Cemetery所在ground的position
+	 * @param corps
 	 * @return
 	 */
-	public Integer indexOf(LifeCard life) {
+	public Integer indexOf(Corps corps) {
 		// TODO Auto-generated method stub
-		return lifeList.indexOf(life);
+		return corpsList.indexOf(corps);
 	}
 	
-	public Boolean contains(LifeCard life) {
+	public Boolean contains(Corps corps) {
 		// TODO Auto-generated method stub
-		return lifeList.contains(life);
+		return corpsList.contains(corps);
 	}
 	
 	public Integer getSize() {
 		// TODO Auto-generated method stub
-		return lifeList.size();
+		return corpsList.size();
 	}
 
-	public LifeCard getLife(Integer index) {
+	public Corps getCorps(Integer index) {
 		// TODO Auto-generated method stub
 		if(index<getSize())
-			return lifeList.get(index);
+			return corpsList.get(index);
 		else
 			return null;
 	}
 
-	public List<LifeCard> getList() {
-		return lifeList;
+	public List<Corps> getList() {
+		return corpsList;
 	}
 } 

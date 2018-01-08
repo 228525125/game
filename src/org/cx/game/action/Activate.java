@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.buff.AttackLockBuff;
-import org.cx.game.card.buff.IBuff;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.buff.IBuff;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.ActivateRule;
 import org.cx.game.tools.Debug;
 
 public class Activate extends Action implements IActivate {
@@ -55,7 +53,7 @@ public class Activate extends Action implements IActivate {
 			map.put("card", getOwner());
 			map.put("change", speed);
 			map.put("position", getOwner().getPosition());
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Speed,map);
+			NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Speed,map);
 			super.notifyObservers(info);
 		}
 	}
@@ -87,20 +85,16 @@ public class Activate extends Action implements IActivate {
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		map.put("activate", activate);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Activate,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Activate,map);
 		notifyObservers(info);
 		
-		LifeCard owner = getOwner();
+		Corps owner = getOwner();
 		
 		if(activation){
 			owner.getAttack().setAttackable(true);
 			owner.getMove().setMoveable(true);
 			owner.getMove().setEnergy(owner.getEnergy());
 			owner.getAttacked().setFightBack(true);
-			List<IBuff> buffs = owner.getNexusBuff(AttackLockBuff.class);  //清除锁定对象
-			for(IBuff buff : buffs){
-				buff.invalid();
-			}
 			
 			addToVigour(-IActivate.ActivationConsume);
 		}else{
@@ -110,9 +104,9 @@ public class Activate extends Action implements IActivate {
 	}
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 
 }

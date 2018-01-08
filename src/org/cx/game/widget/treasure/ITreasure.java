@@ -1,7 +1,7 @@
 package org.cx.game.widget.treasure;
 
 import org.cx.game.action.IPicked;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 
 /**
@@ -18,7 +18,7 @@ public interface ITreasure {
 	/**
 	 * 被捡起来
 	 */
-	public void picked(LifeCard life) throws RuleValidatorException;
+	public void picked(Corps corps) throws RuleValidatorException;
 	
 	/**
 	 * 在地图上的位置

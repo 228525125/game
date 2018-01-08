@@ -1,4 +1,4 @@
-package org.cx.game.card;
+package org.cx.game.corps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +26,14 @@ import org.cx.game.action.IMove;
 import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Pick;
 import org.cx.game.action.Move;
-import org.cx.game.action.UpgradeLife;
-import org.cx.game.card.buff.IBuff;
-import org.cx.game.card.magic.IMagic;
-import org.cx.game.card.skill.IActiveSkill;
-import org.cx.game.card.skill.ISkill;
+import org.cx.game.action.UpgradeCorps;
 import org.cx.game.core.Context;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.IMagic;
+import org.cx.game.magic.buff.IBuff;
+import org.cx.game.magic.skill.IActiveSkill;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.policy.GuardPolicy;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.policy.IPolicy;
@@ -52,12 +52,12 @@ import org.cx.game.widget.treasure.Resource;
  * @author chenxian
  *
  */
-public class LifeCard implements ITag
+public class Corps implements ITag
 {
 	
-	public final static Integer Life = 1007; 
+	public final static Integer Corps = 1007; 
 	
-	public LifeCard(Integer type) {
+	public Corps(Integer type) {
 		// TODO Auto-generated constructor stub
 		this.type = type;
 		
@@ -824,7 +824,7 @@ public class LifeCard implements ITag
 	
 	public IUpgrade getUpgrade() {
 		if(null==upgrade){
-			upgrade = new UpgradeLife(upgradeRequirement);
+			upgrade = new UpgradeCorps(upgradeRequirement);
 			upgrade.setLevel(level);            //setLevel会触发upgradeRequirement
 			upgrade.setOwner(this);
 		}
@@ -854,7 +854,7 @@ public class LifeCard implements ITag
 	 * 攻击
 	 * @param attacked 被攻击的卡片
 	 */
-	public void attack(LifeCard attacked) throws RuleValidatorException {
+	public void attack(Corps attacked) throws RuleValidatorException {
 		getAttack().execute(attacked);
 	}
 	
@@ -862,8 +862,8 @@ public class LifeCard implements ITag
 	 * 受攻击
 	 * @param attack
 	 */
-	public void attacked(LifeCard life, IAttack attack) throws RuleValidatorException {
-		getAttacked().execute(life,attack);
+	public void attacked(Corps corps, IAttack attack) throws RuleValidatorException {
+		getAttacked().execute(corps,attack);
 	}
 	
 	/**
@@ -997,9 +997,9 @@ public class LifeCard implements ITag
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
-		if (obj instanceof LifeCard) {
-			LifeCard life = (LifeCard) obj;
-			return getId().equals(life.getId());
+		if (obj instanceof Corps) {
+			Corps corps = (Corps) obj;
+			return getId().equals(corps.getId());
 		}else{
 			return false;
 		}

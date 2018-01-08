@@ -3,9 +3,9 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.magic.IMagic;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.IMagic;
 import org.cx.game.observer.NotifyInfo;
 
 /**
@@ -16,9 +16,9 @@ import org.cx.game.observer.NotifyInfo;
 public class Affected extends Action implements IAffected {
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class Affected extends Action implements IAffected {
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		map.put("magic", magic);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Affected,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Affected,map);
 		super.notifyObservers(info);
 		
 		if(magic.isTrigger(objects))

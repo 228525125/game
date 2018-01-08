@@ -1,5 +1,9 @@
 package org.cx.game.command.expression;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +17,7 @@ import org.cx.game.command.OutsideCommand;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.tools.I18n;
+import org.cx.game.tools.PropertiesUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -20,16 +25,17 @@ import org.dom4j.io.SAXReader;
 
 public class Calculator {
 	
-	private static final String filePath = "/org/cx/game/command/command.xml";
+	//private static final String filePath = "/org/cx/game/command/command.xml";
 	public static final String SPACE = " ";
 	
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
-		InputStream is=Calculator.class.getResourceAsStream(filePath); 
+		//InputStream is=Calculator.class.getResourceAsStream(filePath);		
 		try {
+			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("command.path")));
 			Document document = saxReader.read(is);
 			return document.getRootElement();
-		} catch (DocumentException e) {
+		} catch (DocumentException | FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

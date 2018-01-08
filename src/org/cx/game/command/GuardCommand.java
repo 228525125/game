@@ -1,9 +1,9 @@
 package org.cx.game.command;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.ValidatorException;
-import org.cx.game.validator.LifeCardActivateValidator;
+import org.cx.game.validator.CorpsActivateValidator;
 
 public class GuardCommand extends InteriorCommand {
 
@@ -11,7 +11,7 @@ public class GuardCommand extends InteriorCommand {
 		// TODO Auto-generated constructor stub
 		super(player);
 		
-		addValidator(new LifeCardActivateValidator(buffer));
+		addValidator(new CorpsActivateValidator(buffer));
 	}
 	
 	@Override
@@ -19,7 +19,7 @@ public class GuardCommand extends InteriorCommand {
 		// TODO Auto-generated method stub
 		super.execute();
 		
-		LifeCard life = (LifeCard) buffer.getCard();
-		life.activate(false);
+		Corps corps = (Corps) buffer.getCorps();
+		corps.activate(false);
 	}
 }

@@ -1,10 +1,10 @@
-package org.cx.game.card.buff;
+package org.cx.game.magic.buff;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.magic.IMagic;
+import org.cx.game.corps.Corps;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
+import org.cx.game.magic.IMagic;
 import org.cx.game.observer.Observable;
 
 /**
@@ -41,7 +41,7 @@ public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRe
 	/**
 	 * 受影响者
 	 */
-	public LifeCard getOwner();
+	public Corps getOwner();
 	
 	/**
 	 * 通知类型

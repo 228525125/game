@@ -1,9 +1,9 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 
 public interface IChuck extends IAction {
 
 	@Override
-	public LifeCard getOwner();
+	public Corps getOwner();
 }

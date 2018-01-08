@@ -3,7 +3,7 @@ package org.cx.game.policy.formula;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Validator;
 import org.cx.game.widget.GroundFactory;
@@ -16,25 +16,25 @@ import org.cx.game.widget.IGround;
  */
 public class ShechengneidedirenFormula extends Validator implements IFormula {
 	
-	private LifeCard life = null;
+	private Corps corps = null;
 	
-	private List<LifeCard> enemyList = new ArrayList<LifeCard>();
+	private List<Corps> enemyList = new ArrayList<Corps>();
 	
-	public ShechengneidedirenFormula(LifeCard life) {
+	public ShechengneidedirenFormula(Corps corps) {
 		// TODO Auto-generated constructor stub
-		this.life = life;
+		this.corps = corps;
 	}
 	
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
-		Integer range = this.life.getAttackRange();
+		Integer range = this.corps.getAttackRange();
 		IGround ground = GroundFactory.getGround();
-		List<Integer> list =ground.areaForDistance(this.life.getPosition(), range, IGround.Equal);
+		List<Integer> list =ground.areaForDistance(this.corps.getPosition(), range, IGround.Equal);
 		for(Integer p : list){
-			LifeCard life = ground.getCard(p);
-			if(null!=life && !this.life.getPlayer().equals(life.getPlayer()))
-				this.enemyList.add(life);
+			Corps corps = ground.getCorps(p);
+			if(null!=corps && !this.corps.getPlayer().equals(corps.getPlayer()))
+				this.enemyList.add(corps);
 		}
 		
 		Boolean ret = false;
@@ -47,15 +47,15 @@ public class ShechengneidedirenFormula extends Validator implements IFormula {
 		return ret;
 	}
 	
-	public LifeCard getNearEnemy(){
+	public Corps getNearEnemy(){
 		IGround ground = GroundFactory.getGround();
-		Integer distance = this.life.getAttackRange();
-		LifeCard enemy = null;
-		for(LifeCard life : this.enemyList){
-			Integer d = ground.distance(this.life.getPosition(), life.getPosition());
+		Integer distance = this.corps.getAttackRange();
+		Corps enemy = null;
+		for(Corps corps : this.enemyList){
+			Integer d = ground.distance(this.corps.getPosition(), corps.getPosition());
 			if(d<=distance){
 				distance = d;
-				enemy = life;
+				enemy = corps;
 			}
 		}
 		return enemy;

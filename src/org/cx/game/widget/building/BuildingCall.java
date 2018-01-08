@@ -7,24 +7,24 @@ import org.cx.game.widget.treasure.IResource;
 
 public class BuildingCall extends Building implements IBuilding {
 
-	private Integer cardID = null;       //可招募单位
+	private Integer corpsID = null;       //可招募单位
 	private Integer nop = 0;             //当前可招募数量
 	private Integer yield = null;        //产量/天
 	
-	public BuildingCall(Integer cardID, Integer yield, Integer buildingType) {
+	public BuildingCall(Integer corpsID, Integer yield, Integer buildingType) {
 		// TODO Auto-generated constructor stub
 		super(buildingType);
 		
-		this.cardID = cardID;
+		this.corpsID = corpsID;
 		this.yield = yield;
 		
-		IOption callOption = new OptionCall(cardID);
+		IOption callOption = new OptionCall(corpsID);
 		
 		addOption(callOption);
 	}
 
-	public Integer getCardID() {
-		return cardID;
+	public Integer getCorpsID() {
+		return corpsID;
 	}
 
 	public Integer getNop() {

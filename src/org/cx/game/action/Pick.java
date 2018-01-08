@@ -3,7 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.treasure.ITreasure;
@@ -12,9 +12,9 @@ import org.cx.game.widget.treasure.Treasure;
 public class Pick extends Action implements IPick {
 
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 	
 	@Override
@@ -33,7 +33,7 @@ public class Pick extends Action implements IPick {
 		map.put("card", getOwner());
 		map.put("treasure", treasure);
 		map.put("position", getOwner().getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Pick,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Pick,map);
 		super.notifyObservers(info);
 		
 		treasure.picked(getOwner());

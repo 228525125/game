@@ -5,14 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IActiveSkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.IActiveSkill;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.validator.QueryCommandValidator;
-import org.cx.game.validator.SelectLifeCardValidator;
+import org.cx.game.validator.SelectCorpsValidator;
+import org.cx.game.validator.SelectOptionValidator;
+import org.cx.game.validator.SelectSkillValidator;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.building.IOption;
 
@@ -38,37 +40,44 @@ public class QueryCommand extends InteriorCommand {
 	@Override
 	public void execute() throws ValidatorException {
 		// TODO Auto-generated method stub
-		addValidator(new QueryCommandValidator(parameter.toString(),buffer));
 		super.execute();
 		
 		IGround ground = player.getContext().getGround();
 		
 		if("conjure".equals(parameter)){
+			doValidator(new SelectSkillValidator(buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
 			positionList = ground.queryRange(buffer.getSkill(), map.get(parameter));
 		}else if("attack".equals(parameter)){
-			doValidator(new SelectLifeCardValidator(buffer));
+			doValidator(new SelectCorpsValidator(buffer));
 			if(hasError())
 				throw new CommandValidatorException(getErrors().getMessage());
 			
-			LifeCard life = (LifeCard) buffer.getCard();           
-			positionList = ground.queryRange(life, map.get(parameter));   //这里需要计算
+			Corps corps = (Corps) buffer.getCorps();           
+			positionList = ground.queryRange(corps, map.get(parameter));   //这里需要计算
 		}else if("move".equals(parameter)){
-			doValidator(new SelectLifeCardValidator(buffer));
+			doValidator(new SelectCorpsValidator(buffer));
 			if(hasError())
 				throw new CommandValidatorException(getErrors().getMessage());
 			
-			LifeCard life = (LifeCard) buffer.getCard();           
-			positionList = ground.queryRange(life, map.get(parameter));
+			Corps corps = (Corps) buffer.getCorps();           
+			positionList = ground.queryRange(corps, map.get(parameter));
 		}else if("execute".equals(parameter)){
+			doValidator(new SelectOptionValidator(buffer));
+			if(hasError())
+				throw new CommandValidatorException(getErrors().getMessage());
+			
 			IOption option = buffer.getOption();
 			positionList = ground.queryRange(option, map.get(parameter));
 		}else if("pick".equals(parameter)){
-			doValidator(new SelectLifeCardValidator(buffer));
+			doValidator(new SelectCorpsValidator(buffer));
 			if(hasError())
 				throw new CommandValidatorException(getErrors().getMessage());
 			
-			LifeCard life = (LifeCard) buffer.getCard();
-			positionList = ground.areaForDistance(life.getPosition(), 1, IGround.Contain);
+			Corps corps = (Corps) buffer.getCorps();
+			positionList = ground.areaForDistance(corps.getPosition(), 1, IGround.Contain);
 		}
 	
 		Map<String,Object> bean = new HashMap<String,Object>();

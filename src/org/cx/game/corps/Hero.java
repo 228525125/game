@@ -1,24 +1,19 @@
-package org.cx.game.card;
+package org.cx.game.corps;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.cx.game.action.UpgradeHero;
 import org.cx.game.action.IUpgradeHero;
-import org.cx.game.action.IUpgradeLife;
-import org.cx.game.action.IUpgrade;
-import org.cx.game.action.UpgradeLife;
-import org.cx.game.card.buff.IBuff;
-import org.cx.game.card.skill.ISkill;
+import org.cx.game.magic.buff.IBuff;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.ITreasure;
-import org.cx.game.widget.treasure.SkillCount;
 
-public class HeroCard extends LifeCard {
+public class Hero extends Corps {
 
-	public HeroCard(Integer type) {
+	public Hero(Integer type) {
 		super(type);
 		// TODO Auto-generated constructor stub
 		setHero(true);

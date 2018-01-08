@@ -50,9 +50,9 @@ public class SelectCommand extends InteriorCommand {
 			map.put("position", buffer.getTrickList().getOwner().getPosition());
 		}
 		
-		if(null!=buffer.getCard()){
-			map.put(CommandBuffer.CARD, buffer.getCard());
-			map.put("position", buffer.getCard().getPosition());
+		if(null!=buffer.getCorps()){
+			map.put("card", buffer.getCorps());
+			map.put("position", buffer.getCorps().getPosition());
 		}
 		
 		if(null!=buffer.getSkill())

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.CorpsFactory;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.GroundFactory;
@@ -72,7 +72,7 @@ public class StartState extends PlayState {
 		 * 英雄登场
 		 
 		for(IPlayer player : context.getPlayerList()){
-			LifeCard hero = player.getHero();
+			Corps hero = player.getHero();
 			if(null!=hero){
 				IPlace place = ground.getPlace(player.getHeroEntry());
 				try {
@@ -88,8 +88,8 @@ public class StartState extends PlayState {
 		 * 登记英雄
 		 */
 		for(IPlayer player : context.getPlayerList()){
-			for(Integer heroCardID : player.getHeroCardIDList()){
-				LifeCard hero = (LifeCard) CardFactory.getInstance(heroCardID, player);
+			for(Integer heroID : player.getHeroIDList()){
+				Corps hero = (Corps) CorpsFactory.getInstance(heroID, player);
 				IBuilding town = ground.getBuilding(player.getHomePosition());
 				IOption reviveOption = new OptionRevive(hero);
 				reviveOption.setOwner(town);
@@ -103,7 +103,7 @@ public class StartState extends PlayState {
 		/*
 		 * 控制player的hero被激活
 		 
-		LifeCard hero = context.getControlPlayer().getHero();
+		Corps hero = context.getControlPlayer().getHero();
 		if(null!=hero){
 			Integer speed = hero.getActivate().getSpeed();
 			hero.getActivate().addToVigour(speed);

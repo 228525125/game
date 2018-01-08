@@ -1,11 +1,11 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 
 public interface IAffected extends IAction {
 		
 	@Override
-	public LifeCard getOwner();
+	public Corps getOwner();
 	
 	/**
 	 * 魔法伤害，当魔法造成伤害时，必须调用该方法

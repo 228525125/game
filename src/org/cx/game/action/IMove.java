@@ -2,7 +2,7 @@ package org.cx.game.action;
 
 import java.util.List;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 
 public interface IMove extends IAction{
 
@@ -90,6 +90,6 @@ public interface IMove extends IAction{
 	 */
 	public void addMovePath(Integer position);
 	
-	public LifeCard getOwner();
+	public Corps getOwner();
 
 }

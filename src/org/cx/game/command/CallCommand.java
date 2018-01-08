@@ -1,10 +1,10 @@
 package org.cx.game.command;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.SelectGroundValidator;
-import org.cx.game.validator.SelectLifeCardValidator;
+import org.cx.game.validator.SelectCorpsValidator;
 import org.cx.game.validator.SelectPlaceEmptyValidator;
 import org.cx.game.widget.Place;
 
@@ -19,7 +19,7 @@ public class CallCommand extends InteriorCommand {
 	public CallCommand(IPlayer player) {
 		// TODO Auto-generated constructor stub
 		super(player);
-		addValidator(new SelectLifeCardValidator(buffer));
+		addValidator(new SelectCorpsValidator(buffer));
 	}
 	
 	@Override
@@ -35,8 +35,8 @@ public class CallCommand extends InteriorCommand {
 		super.execute();
 		
 		Place place = (Place) parameter;
-		LifeCard life = (LifeCard) buffer.getCard();
-		//life.call(place);
+		Corps corps = (Corps) buffer.getCorps();
+		//corps.call(place);
 		buffer.clear();
 	}
 }

@@ -9,11 +9,11 @@ import java.util.Map.Entry;
 import org.cx.game.action.Action;
 import org.cx.game.action.Death;
 import org.cx.game.action.IAction;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IActiveSkill;
-import org.cx.game.card.skill.ISkill;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.Context.ContextAddBout;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.IActiveSkill;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
@@ -92,16 +92,16 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		this.heroPosition = position;
 	}
 	
-	private List<LifeCard> heroList = new ArrayList<LifeCard>();
+	private List<Corps> heroList = new ArrayList<Corps>();
 	
 	@Override
-	public void addHero(LifeCard hero) {
+	public void addHero(Corps hero) {
 		// TODO Auto-generated method stub
 		this.heroList.add(hero);
 	}
 	
 	@Override
-	public List<LifeCard> getHeroList() {
+	public List<Corps> getHeroList() {
 		// TODO Auto-generated method stub
 		return this.heroList;
 	}
@@ -199,33 +199,33 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 		return super.equals(arg0);
 	}
 	
-	private List<Integer> heroCardIDList = new ArrayList<Integer>();
+	private List<Integer> heroIDList = new ArrayList<Integer>();
 	
 	@Override
-	public List<Integer> getHeroCardIDList() {
+	public List<Integer> getHeroIDList() {
 		// TODO Auto-generated method stub
-		return this.heroCardIDList;
+		return this.heroIDList;
 	}
 	
 	@Override
-	public void addHeroCardID(Integer cardID) {
+	public void addHeroID(Integer ID) {
 		// TODO Auto-generated method stub
-		this.heroCardIDList.add(cardID);
+		this.heroIDList.add(ID);
 	}
 	
 	@Override
-	public List<LifeCard> getAttendantList(Integer status) {
+	public List<Corps> getAttendantList(Integer status) {
 		// TODO Auto-generated method stub
 		return getContext().getGround().list(this, status);
 	}
 	
 	@Override
-	public List<LifeCard> getAttendantList(Boolean activate) {
+	public List<Corps> getAttendantList(Boolean activate) {
 		// TODO Auto-generated method stub
-		List<LifeCard> list = new ArrayList<LifeCard>();
-		for(LifeCard life : getAttendantList(Death.Status_Live)){
-			if(activate.equals(life.getActivate().getActivation()))
-				list.add(life);
+		List<Corps> list = new ArrayList<Corps>();
+		for(Corps corps : getAttendantList(Death.Status_Live)){
+			if(activate.equals(corps.getActivate().getActivation()))
+				list.add(corps);
 		}
 		return list;
 	}
@@ -324,11 +324,11 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 			/*
 			 * 获得控制权的玩家单位被激活
 			 */
-			for(LifeCard life : getAttendantList(Death.Status_Live)){
-				Integer speed = life.getActivate().getSpeed();
-				life.getActivate().addToVigour(speed);
+			for(Corps corps : getAttendantList(Death.Status_Live)){
+				Integer speed = corps.getActivate().getSpeed();
+				corps.getActivate().addToVigour(speed);
 				try {
-					life.activate(true);
+					corps.activate(true);
 				} catch (RuleValidatorException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -338,9 +338,9 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 			/*
 			 * 计算技能冷却
 			 */
-			List<LifeCard> lList = getAttendantList(Death.Status_Live);
-			for(LifeCard life : lList){
-				for(ISkill skill : life.getSkillList()){
+			List<Corps> lList = getAttendantList(Death.Status_Live);
+			for(Corps corps : lList){
+				for(ISkill skill : corps.getSkillList()){
 					if (skill instanceof IActiveSkill) {
 						IActiveSkill as = (IActiveSkill) skill;
 						Integer cooldown = as.getCooldownRemain();

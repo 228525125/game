@@ -4,13 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.action.IUpgradeSkill;
-import org.cx.game.action.IUpgrade;
 import org.cx.game.action.Upgrade;
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.ISkill;
-import org.cx.game.core.ContextFactory;
-import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Hero;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.treasure.SkillCount;
@@ -46,15 +42,8 @@ public class UpgradeSkill extends Upgrade implements IUpgradeSkill {
 		/*
 		 * 扣除技能点
 		 */
-		HeroCard hero = (HeroCard) getOwner().getOwner();
+		Hero hero = (Hero) getOwner().getOwner();
 		IUpgradeHero up = hero.getUpgrade();
 		up.addToSkillCount(getRequirement());
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("position", getOwner().getOwner().getPosition());
-		map.put("card", getOwner().getOwner());
-		map.put("level", getLevel());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Skill_Upgrade,map);
-		super.notifyObservers(info);
 	}
 }

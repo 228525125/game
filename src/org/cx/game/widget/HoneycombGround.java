@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -15,14 +14,14 @@ import org.cx.game.action.Death;
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.ActiveSkill;
-import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.core.Player;
+import org.cx.game.corps.CorpsFactory;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.ActiveSkill;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
@@ -49,7 +48,7 @@ public class HoneycombGround implements IGround {
 	private String imagePath = "";                                     //背景图片
 	
 	private Map<Integer,Place> ground = new HashMap<Integer,Place>();
-	private List<LifeCard> lifeList = new ArrayList<LifeCard>();
+	private List<Corps> corpsList = new ArrayList<Corps>();
 	private List<IBuilding> buildingList = new ArrayList<IBuilding>();                 //建筑
 	private Map<Integer, IBuilding> buildingMap = new HashMap<Integer, IBuilding>();   //位置 - 建筑
 	private List<Integer> disableList = new ArrayList<Integer>();       //不可用的单元格（暂时没用），当地图中间需要被镂空时，会用到
@@ -132,53 +131,53 @@ public class HoneycombGround implements IGround {
 		neutral.setComputer(true);
 	}
 
-	public void add(Integer position, LifeCard card) throws RuleValidatorException {
+	public void add(Integer position, Corps corps) throws RuleValidatorException {
 		// TODO 自动生成方法存根
-		this.lifeList.add(card);
+		this.corpsList.add(corps);
 		
 		Place place = getPlace(position);
-		place.in(card);
+		place.in(corps);
 		
-		card.setGround(this);
+		corps.setGround(this);
 	}
 	
 	@Override
-	public Boolean remove(LifeCard card) throws RuleValidatorException {
+	public Boolean remove(Corps corps) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		Boolean ret = this.lifeList.remove(card);
+		Boolean ret = this.corpsList.remove(corps);
 		
 		if(ret){
-			Integer status = card.getDeath().getStatus();
+			Integer status = corps.getDeath().getStatus();
 			
 			if(IDeath.Status_Live.equals(status)){
-				Integer position = card.getPosition();
+				Integer position = corps.getPosition();
 				Place place = getPlace(position);
 				place.out();
 			}
 			
 			if(IDeath.Status_Death.equals(status)){
-				Integer position = card.getPosition();
+				Integer position = corps.getPosition();
 				Place place = getPlace(position);
-				place.outCemetery(card);
+				place.outCemetery(corps);
 			}
 			
-			card.setGround(null);
+			corps.setGround(null);
 		}
 		
 		return ret;
 	}
 	
 	@Override
-	public Boolean contains(LifeCard card) {
+	public Boolean contains(Corps corps) {
 		// TODO Auto-generated method stub
-		return ground.containsValue(card);
+		return ground.containsValue(corps);
 	}
 	
 	@Override
-	public LifeCard getCard(Integer position) {
+	public Corps getCorps(Integer position) {
 		// TODO Auto-generated method stub
 		if(null!=ground.get(position))
-			return ground.get(position).getLife();
+			return ground.get(position).getCorps();
 		else
 			return null;
 	}
@@ -353,65 +352,65 @@ public class HoneycombGround implements IGround {
 		return this.neutral;
 	}
 	
-	public List<Integer> queryRange(LifeCard life, String action){
+	public List<Integer> queryRange(Corps corps, String action){
 		List<Integer> positionList = new ArrayList<Integer>();
 		if(NotifyInfo.Command_Query_Attack.equals(action)){
-			Integer range = life.getAttack().getRange();
+			Integer range = corps.getAttack().getRange();
 			/*
 			 * 这里要考虑远程单位射程切换为近战时的变化
 			 * 当远程单位在战场上时，如果附近有敌方单位，则只能近身攻击
 			 */
-			if(IAttack.Mode_Far.equals(life.getAttack().getMode())){
-				List<Integer> list = areaForDistance(life.getPosition(), 1, IGround.Equal);
+			if(IAttack.Mode_Far.equals(corps.getAttack().getMode())){
+				List<Integer> list = areaForDistance(corps.getPosition(), 1, IGround.Equal);
 				for(Integer position : list){
-					LifeCard lifeCard = getCard(position);
-					if(null!=lifeCard && !lifeCard.getPlayer().equals(lifeCard.getPlayer())){
+					Corps c = getCorps(position);
+					if(null!=c && !c.getPlayer().equals(c.getPlayer())){
 						range = 1;
 						break;
 					}
 				}
 			}
 			
-			positionList = areaForDistance(life.getPosition(), range, Contain);  //1：表示范围内的所有单元格，0：表示等于范围的单元格
-			positionList.remove(life.getPosition());
+			positionList = areaForDistance(corps.getPosition(), range, Contain);  //1：表示范围内的所有单元格，0：表示等于范围的单元格
+			positionList.remove(corps.getPosition());
 		}
 		
 		if(NotifyInfo.Command_Query_Move.equals(action)){
-			Integer step = life.getMove().getEnergy()/life.getMove().getConsume();
-			switch (life.getMove().getType()) {
+			Integer step = corps.getMove().getEnergy()/corps.getMove().getConsume();
+			switch (corps.getMove().getType()) {
 			case 141:    //步行
-				positionList = areaForDistance(life.getPosition(), step, Contain, IMove.Type_Walk);
+				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Walk);
 				//distance(280083, 280083, IMove.Type_Walk);
 				break;
 			case 142:    //骑行
-				positionList = areaForDistance(life.getPosition(), step, Contain, IMove.Type_Equitation);
+				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Equitation);
 				break;
 			case 143:    //驾驶
-				positionList = areaForDistance(life.getPosition(), step, Contain, IMove.Type_Drive);
+				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Drive);
 				break;
 			case 144:    //飞行
-				positionList = areaForDistance(life.getPosition(), step, Contain);
+				positionList = areaForDistance(corps.getPosition(), step, Contain);
 				break;
 				
 			default:
 				break;
 			}
-			positionList.remove(life.getPosition());
+			positionList.remove(corps.getPosition());
 		}
 		return positionList;
 	}
 	
 	public List<Integer> queryRange(ISkill skill, String action){
 		List<Integer> positionList = new ArrayList<Integer>();
-		if(NotifyInfo.Command_Query_Conjure.equals(action) && skill.getOwner() instanceof LifeCard){
+		if(NotifyInfo.Command_Query_Conjure.equals(action) && skill.getOwner() instanceof Corps){
 			
 			//ActiveSkill的技能范围由自己给出逻辑
 			if (skill instanceof ActiveSkill) {
 				ActiveSkill as = (ActiveSkill) skill;
 				positionList = as.getConjureRange(this);
 			}else{
-				LifeCard card = (LifeCard) skill.getOwner();
-				Integer position = card.getPosition();
+				Corps corps = (Corps) skill.getOwner();
+				Integer position = corps.getPosition();
 				positionList = areaForDistance(position, skill.getRange(), Contain);
 			}
 		}
@@ -450,12 +449,12 @@ public class HoneycombGround implements IGround {
 	/**
 	 * 只能查找战场上的生物位置，包含墓地
 	 */
-	public Integer getPosition(LifeCard life) {
+	public Integer getPosition(Corps corps) {
 		// TODO Auto-generated method stub
 		for(Entry<Integer, Place> entry : ground.entrySet()){
-			if(life.equals(entry.getValue().getLife())){
+			if(corps.equals(entry.getValue().getCorps())){
 				return entry.getKey();
-			}else if(entry.getValue().getCemetery().contains(life)){
+			}else if(entry.getValue().getCemetery().contains(corps)){
 				return entry.getKey();
 			}
 		}
@@ -463,11 +462,11 @@ public class HoneycombGround implements IGround {
 	}
 
 	@Override
-	public List<Integer> move(LifeCard life, Integer position, Integer type) throws RuleValidatorException {
+	public List<Integer> move(Corps corps, Integer position, Integer type) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		List<Integer> route = new ArrayList<Integer>();
 		
-		List path = route(getPosition(life), position, type);
+		List path = route(getPosition(corps), position, type);
 		path.remove(0);                         //路径包含起点
 		
 		for(int i=0;i<path.size();i++){   
@@ -475,37 +474,37 @@ public class HoneycombGround implements IGround {
 			/*
 			 * moveable状态可能会在place.in中改变
 			 */
-			if(!life.getMove().getMoveable())
+			if(!corps.getMove().getMoveable())
 				break;
 			
-			Integer original = life.getPosition();
+			Integer original = corps.getPosition();
 			Node node = (Node) path.get(i);
 			
 			Place place = getPlace(original);
 			place.out();
 			place = getPlace(pointToInteger(node._Pos.x, node._Pos.y));
-			place.in(life);
+			place.in(corps);
 			
 			/*
 			 * 减少精力
 			 */
-			Integer energy = life.getMove().getEnergy();
+			Integer energy = corps.getMove().getEnergy();
 			energy -= node.consume;
-			life.getMove().setEnergy(energy);
+			corps.getMove().setEnergy(energy);
 			
 			/*
 			 * 生成朝向信息
 			 */
 			if(null!=original){
-				IGround ground = life.getPlayer().getContext().getGround();
-				Integer direction = ground.getDirection(original, life.getPosition());
-				life.getMove().setDirection(direction);
+				IGround ground = corps.getPlayer().getContext().getGround();
+				Integer direction = ground.getDirection(original, corps.getPosition());
+				corps.getMove().setDirection(direction);
 			}
 			
 			/*
 			 * 添加路径
 			 */
-			route.add(life.getPosition());
+			route.add(corps.getPosition());
 		}
 		
 		return route;
@@ -525,84 +524,84 @@ public class HoneycombGround implements IGround {
 	}
 	
 	@Override
-	public void inCemetery(LifeCard life) throws RuleValidatorException {
+	public void inCemetery(Corps corps) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		Place place = getPlace(life.getPosition());
+		Place place = getPlace(corps.getPosition());
 		place.out();
-		place.inCemetery(life);
+		place.inCemetery(corps);
 	}
 	
 	@Override
-	public void outCemetery(LifeCard life) {
+	public void outCemetery(Corps corps) {
 		// TODO Auto-generated method stub
-		Place place = getPlace(life.getPosition());
-		place.outCemetery(life);
+		Place place = getPlace(corps.getPosition());
+		place.outCemetery(corps);
 	}
 	
 	@Override
-	public List<LifeCard> list() {
+	public List<Corps> list() {
 		// TODO Auto-generated method stub
-		return this.lifeList;
+		return this.corpsList;
 	}
 	
 	@Override
-	public List<LifeCard> listForID(List<Integer> ids) {
+	public List<Corps> listForID(List<Integer> ids) {
 		// TODO Auto-generated method stub
-		List<LifeCard> ret = new ArrayList<LifeCard>();
-		for(LifeCard life : list()){
-			if(ids.contains(life.getType()))
-				ret.add(life);
+		List<Corps> ret = new ArrayList<Corps>();
+		for(Corps corps : list()){
+			if(ids.contains(corps.getType()))
+				ret.add(corps);
 		}
 		return ret;
 	}
 
 	@Override
-	public List<LifeCard> listForID(IPlayer player, List<Integer> ids) {
+	public List<Corps> listForID(IPlayer player, List<Integer> ids) {
 		// TODO Auto-generated method stub
-		List<LifeCard> ret = new ArrayList<LifeCard>();
-		for(LifeCard card : list()){
-			if(ids.contains(card.getType()) && player.equals(card.getPlayer()))
-				ret.add(card);
+		List<Corps> ret = new ArrayList<Corps>();
+		for(Corps corps : list()){
+			if(ids.contains(corps.getType()) && player.equals(corps.getPlayer()))
+				ret.add(corps);
 		}
 		return ret;
 	}
 
 	@Override
-	public List<LifeCard> list(IPlayer player, Integer status) {
+	public List<Corps> list(IPlayer player, Integer status) {
 		// TODO Auto-generated method stub
-		List<LifeCard> ret = new ArrayList<LifeCard>();
+		List<Corps> ret = new ArrayList<Corps>();
 		
-		for(LifeCard life : list()){
-			if(player.equals(life.getPlayer()) && status.equals(life.getDeath().getStatus()))
-				ret.add(life);
+		for(Corps corps : list()){
+			if(player.equals(corps.getPlayer()) && status.equals(corps.getDeath().getStatus()))
+				ret.add(corps);
 		}
 		
 		return ret;
 	}
 	
 	@Override
-	public List<LifeCard> list(Integer status) {
+	public List<Corps> list(Integer status) {
 		// TODO Auto-generated method stub
-		List<LifeCard> ret = new ArrayList<LifeCard>();
+		List<Corps> ret = new ArrayList<Corps>();
 		
-		for(LifeCard life : list()){
-			if(status.equals(life.getDeath().getStatus()))
-				ret.add(life);
+		for(Corps corps : list()){
+			if(status.equals(corps.getDeath().getStatus()))
+				ret.add(corps);
 		}
 		
 		return ret;
 	}
 	
 	@Override
-	public List<LifeCard> list(Integer stand, Integer step, Integer type) {
+	public List<Corps> list(Integer stand, Integer step, Integer type) {
 		// TODO Auto-generated method stub
-		List<LifeCard> ls = new ArrayList<LifeCard>();
+		List<Corps> ls = new ArrayList<Corps>();
 		
 		List<Integer> list = this.areaForDistance(stand, step, type);
 		for(Integer position : list){
-			LifeCard life = this.getCard(position);
-			if(null!=life){
-				ls.add(life);
+			Corps corps = this.getCorps(position);
+			if(null!=corps){
+				ls.add(corps);
 			}
 		}
 		
@@ -1134,14 +1133,14 @@ public class HoneycombGround implements IGround {
 		List<Integer> pList = new ArrayList<Integer>();         //敌方单位的站位，友方允许穿过
 		List<Integer> nList = new ArrayList<Integer>();         //敌方单位附近1个单元格
 		
-		List<LifeCard> cList = list(control, Death.Status_Live);
-		List<LifeCard> eList = list(Death.Status_Live);            //非友方单位
+		List<Corps> cList = list(control, Death.Status_Live);
+		List<Corps> eList = list(Death.Status_Live);            //非友方单位
 		eList.removeAll(cList);
 		
-		for(LifeCard life : eList){
-			pList.add(life.getPosition());
+		for(Corps corps : eList){
+			pList.add(corps.getPosition());
 			
-			List<Integer> list = areaForDistance(life.getPosition(), 1, IGround.Contain);
+			List<Integer> list = areaForDistance(corps.getPosition(), 1, IGround.Contain);
 			list.removeAll(nList);
 			nList.addAll(list);
 		}

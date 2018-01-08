@@ -1,6 +1,6 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.widget.building.IBuilding;
 
 /**
@@ -10,11 +10,11 @@ import org.cx.game.widget.building.IBuilding;
  */
 public class CallNopValidator extends Validator {
 	
-	private LifeCard callUnit = null;
+	private Corps callUnit = null;
 	private Integer nop = 0;
 	private IBuilding town = null;
 
-	public CallNopValidator(LifeCard callUnit, Integer nop, IBuilding town) {
+	public CallNopValidator(Corps callUnit, Integer nop, IBuilding town) {
 		// TODO Auto-generated constructor stub
 		this.callUnit = callUnit;
 		this.nop = nop;

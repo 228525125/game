@@ -2,7 +2,7 @@ package org.cx.game.validator;
 
 import java.util.List;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
@@ -14,10 +14,10 @@ import org.cx.game.widget.IGround;
  */
 public class AttackRangeValidator extends Validator {
 
-	private LifeCard attack = null;
-	private LifeCard attacked = null;
+	private Corps attack = null;
+	private Corps attacked = null;
 	
-	public AttackRangeValidator(LifeCard attack, LifeCard attacked) {
+	public AttackRangeValidator(Corps attack, Corps attacked) {
 		// TODO Auto-generated constructor stub
 		this.attack = attack;
 		this.attacked = attacked;
@@ -36,7 +36,7 @@ public class AttackRangeValidator extends Validator {
 		}
 	}
 
-	public void setAttacked(LifeCard attacked) {
+	public void setAttacked(Corps attacked) {
 		this.attacked = attacked;
 	}
 }

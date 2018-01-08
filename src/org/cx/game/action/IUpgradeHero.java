@@ -2,7 +2,7 @@ package org.cx.game.action;
 
 import org.cx.game.widget.treasure.SkillCount;
 
-public interface IUpgradeHero extends IUpgradeLife {
+public interface IUpgradeHero extends IUpgradeCorps {
 
 	public SkillCount getSkillCount();
 	

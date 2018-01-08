@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.trick.ITrick;
+import org.cx.game.corps.Corps;
 import org.cx.game.intercepter.IIntercepter;
+import org.cx.game.magic.trick.ITrick;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
 
@@ -33,7 +33,7 @@ public class TrickList {
 	}
 	
 	/**
-	 * 因为TrickList的getPosition(ICard)返回TrickList所在ground的position
+	 * 因为TrickList的getPosition()返回TrickList所在ground的position
 	 * @param trick
 	 * @return
 	 */

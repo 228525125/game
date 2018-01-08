@@ -8,7 +8,7 @@ import org.cx.game.tools.I18n;
  * @author chenxian
  *
  */
-public class MoveEnergyValidator extends SelectLifeCardValidator {
+public class MoveEnergyValidator extends SelectCorpsValidator {
 
 	public MoveEnergyValidator(CommandBuffer buffer) {
 		super(buffer);
@@ -20,7 +20,7 @@ public class MoveEnergyValidator extends SelectLifeCardValidator {
 		// TODO Auto-generated method stub
 		Boolean ret = super.validate();
 		if(ret){
-			if(getLifeCard().getMove().getEnergy()<1){
+			if(getCorps().getMove().getEnergy()<1){
 				ret = false;
 				addMessage(I18n.getMessage(MoveEnergyValidator.class.getName()));
 			}

@@ -1,7 +1,7 @@
 package org.cx.game.command;
 
-import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.UpgradeConsumeValidator;

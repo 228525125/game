@@ -76,7 +76,7 @@ public class ObjectTypeParse implements IParse {
 		 */
 		for(Iterator it = objEl.elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			String proName = el.getName();           //life属性名称
+			String proName = el.getName();           //corps属性名称
 			
 			Attribute attr = el.attribute("type");
 			if(null==attr)

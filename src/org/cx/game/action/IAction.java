@@ -15,7 +15,7 @@ public interface IAction extends IInterceptable, Observable, IValidatable, Clone
 
 	public Object getOwner();
 	
-	public void setOwner(Object card);
+	public void setOwner(Object obj);
 	
 	/**
 	 * 执行action方法，该方法加入代理模式
@@ -27,7 +27,7 @@ public interface IAction extends IInterceptable, Observable, IValidatable, Clone
 	/**
 	 * 请使用execute来调用该方法
 	 * 由具体子类提供实现；
-	 * @param objects 由于objects是数组，因此在拦截器的写法如：LifeCard attacked = (LifeCard) ((Object[]) args[0])[0];
+	 * @param objects 由于objects是数组，因此在拦截器的写法如：Corps attacked = (Corps) ((Object[]) args[0])[0];
 	 * @throws RuleValidatorException
 	 */
 	public void action(Object...objects) throws RuleValidatorException;

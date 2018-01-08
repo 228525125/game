@@ -3,7 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
@@ -15,9 +15,9 @@ public class Death extends Action implements IDeath {
 	private Integer status = IDeath.Status_Exist;
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 
 	public Integer getHp() {
@@ -74,7 +74,7 @@ public class Death extends Action implements IDeath {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Death,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Death,map);
 		super.notifyObservers(info);           //通知所有卡片对象，死亡事件		
 		
 		IGround ground = getOwner().getGround();     //只有在战场上才会死亡
@@ -109,7 +109,7 @@ public class Death extends Action implements IDeath {
 				map.put("card", getOwner().getOwner());
 				map.put("change", this.damage);
 				map.put("position", getOwner().getOwner().getPosition());
-				NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_State_Hp,map);
+				NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Hp,map);
 				super.notifyObservers(info);
 				
 				/*

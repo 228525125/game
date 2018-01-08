@@ -3,20 +3,20 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.widget.treasure.EmpiricValue;
 
-public class UpgradeLife extends Upgrade implements IUpgradeLife {
+public class UpgradeCorps extends Upgrade implements IUpgradeCorps {
 	
-	public UpgradeLife(Map<Integer, String> requirement) {
+	public UpgradeCorps(Map<Integer, String> requirement) {
 		super(requirement);
 		// TODO Auto-generated constructor stub
 	}
 
-	private EmpiricValue empiricValue = new EmpiricValue();          //经验值
+	private EmpiricValue empiricValue = new EmpiricValue(0);          //经验值
 	
 	public EmpiricValue getEmpiricValue() {
 		// TODO Auto-generated method stub
@@ -67,9 +67,9 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 	}
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 	
 	@Override
@@ -89,7 +89,7 @@ public class UpgradeLife extends Upgrade implements IUpgradeLife {
 		map.put("position", getOwner().getPosition());
 		map.put("card", getOwner());
 		map.put("level", getLevel());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Upgrade,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Upgrade,map);
 		super.notifyObservers(info);
 	}
 

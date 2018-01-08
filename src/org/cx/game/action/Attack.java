@@ -3,13 +3,12 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.HeroCard;
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.buff.AttackLockBuff;
-import org.cx.game.card.buff.IBuff;
-import org.cx.game.card.skill.IPassiveSkill;
-import org.cx.game.card.skill.ISkill;
+import org.cx.game.corps.Corps;
+import org.cx.game.corps.Hero;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.magic.buff.IBuff;
+import org.cx.game.magic.skill.IPassiveSkill;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.GroundFactory;
 import org.cx.game.widget.IGround;
@@ -33,9 +32,9 @@ public class Attack extends Action implements IAttack {
 	private Integer  dmg = 180081;                          //伤害 180082 = 1-2
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 	
 	public Integer getRange() {
@@ -102,8 +101,8 @@ public class Attack extends Action implements IAttack {
 	}
 
 	public void updateWeaponAtk() {
-		if (getOwner() instanceof HeroCard) {
-			HeroCard hero = (HeroCard) getOwner();
+		if (getOwner() instanceof Hero) {
+			Hero hero = (Hero) getOwner();
 			Integer atk = 0;
 			for(ITreasure treasure : hero.getTreasures()){
 				if (treasure instanceof TreasureEquipment) {
@@ -222,23 +221,20 @@ public class Attack extends Action implements IAttack {
 	public void action(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
-		LifeCard attacked = (LifeCard) objects[0];
+		Corps attacked = (Corps) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("attack", getOwner());
 		map.put("attacked", attacked);
 		map.put("position", getOwner().getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Attack,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Attack,map);
 		super.notifyObservers(info);
 		
 		IAttack clone = clone();
 		
-		IGround ground = GroundFactory.getGround();
+		IGround ground = getOwner().getGround();
 		Integer distance = ground.distance(attacked.getPosition(), getOwner().getPosition());
-		if(IDeath.Status_Live == attacked.getDeath().getStatus()
-		&& 1==distance){                                           //近身
-			new AttackLockBuff(getOwner(),attacked).effect();
-			
+		if(1==distance){                                           //近身
 			clone.setMode(IAttack.Mode_Near);             //如果是远程，这里要设置为近身攻击模式
 		}
 		

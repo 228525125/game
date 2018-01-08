@@ -3,10 +3,10 @@ package org.cx.game.policy;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.command.Command;
 import org.cx.game.command.Invoker;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.PolicyValidatorException;
 import org.cx.game.exception.ValidatorException;

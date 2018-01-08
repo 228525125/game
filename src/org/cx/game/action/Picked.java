@@ -3,7 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
@@ -21,16 +21,16 @@ public class Picked extends Action implements IPicked {
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
-		LifeCard life = (LifeCard) objects[0];
+		Corps corps = (Corps) objects[0];
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("card", life);
+		map.put("card", corps);
 		map.put("treasure", getOwner());
 		map.put("position", getOwner().getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Treasure_Action_Picked,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Treasure_Picked,map);
 		super.notifyObservers(info);
 		
-		IGround ground = life.getGround();
+		IGround ground = corps.getGround();
 		ground.picked(getOwner());
 	}
 }

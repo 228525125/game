@@ -3,7 +3,7 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.IGround;
@@ -19,9 +19,9 @@ public class Call extends Action implements ICall {
 	private Integer nop = 1;           //人数 
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class Call extends Action implements ICall {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("card", getOwner());
 		map.put("position", place.getPosition());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Call,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Call,map);
 		super.notifyObservers(info);           //通知所有卡片对象，召唤事件
 		
 		/*

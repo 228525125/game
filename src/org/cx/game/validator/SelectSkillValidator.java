@@ -1,7 +1,7 @@
 package org.cx.game.validator;
 
-import org.cx.game.card.skill.ISkill;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.tools.I18n;
 
 /**

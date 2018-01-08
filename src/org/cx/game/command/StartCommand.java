@@ -15,7 +15,7 @@ public class StartCommand extends InteriorCommand {
 	public void execute() throws ValidatorException {
 		// TODO Auto-generated method stub
 		
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Container_Ground_LoadMap,context.getGround());
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Ground_LoadMap,context.getGround());
 		notifyObservers(info);    //通知观察者
 		
 		context.start();

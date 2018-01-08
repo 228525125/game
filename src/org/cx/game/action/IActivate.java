@@ -1,6 +1,6 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 
 public interface IActivate extends IAction {
 
@@ -14,7 +14,7 @@ public interface IActivate extends IAction {
 	 */
 	public void setActivation(Boolean activate);
 	
-	public LifeCard getOwner();
+	public Corps getOwner();
 	
 	/**
 	 * 速度

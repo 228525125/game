@@ -3,11 +3,10 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IActiveSkill;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.IActiveSkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.IRule;
 
 /**
  * 施法一个主动技能
@@ -17,9 +16,9 @@ import org.cx.game.rule.IRule;
 public class Conjure extends Action implements IConjure {
 	
 	@Override
-	public LifeCard getOwner() {
+	public Corps getOwner() {
 		// TODO Auto-generated method stub
-		return (LifeCard) super.getOwner();
+		return (Corps) super.getOwner();
 	}
 
 	@Override
@@ -32,7 +31,7 @@ public class Conjure extends Action implements IConjure {
 		map.put("card", getOwner());
 		map.put("position", getOwner().getPosition());
 		map.put("skill", skill);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Card_LifeCard_Action_Conjure,map);
+		NotifyInfo info = new NotifyInfo(NotifyInfo.Corps_Conjure,map);
 		super.notifyObservers(info);	
 		
 		Object [] parameter = (Object[]) objects[1];

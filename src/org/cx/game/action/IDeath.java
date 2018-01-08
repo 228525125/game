@@ -1,7 +1,7 @@
 package org.cx.game.action;
 
 import org.cx.game.action.Death.DeathAddToHpAction;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IRecover;
@@ -56,5 +56,5 @@ public interface IDeath extends IAction {
 	
 	public void setStatus(Integer status);
 	
-	public LifeCard getOwner();
+	public Corps getOwner();
 }

@@ -1,9 +1,9 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.widget.treasure.EmpiricValue;
 
-public interface IUpgradeLife extends IUpgrade {
+public interface IUpgradeCorps extends IUpgrade {
 
 	public EmpiricValue getEmpiricValue();
 	
@@ -12,5 +12,5 @@ public interface IUpgradeLife extends IUpgrade {
 	public void addToEmpiricValue(EmpiricValue empiricValue);
 	
 	@Override
-	public LifeCard getOwner();
+	public Corps getOwner();
 }

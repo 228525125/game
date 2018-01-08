@@ -1,7 +1,7 @@
 package org.cx.game.validator;
 
 import org.cx.game.action.IPick;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.IGround;
 import org.cx.game.widget.Place;
@@ -14,20 +14,20 @@ import org.cx.game.widget.Place;
 public class PickRangeValidator extends Validator {
 
 	private Place place = null;
-	private LifeCard life = null;
+	private Corps corps = null;
 	
-	public PickRangeValidator(LifeCard life, Place place) {
+	public PickRangeValidator(Corps corps, Place place) {
 		// TODO Auto-generated constructor stub
 		this.place = place;
-		this.life = life;
+		this.corps = corps;
 	}
 	
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
-		IGround ground = this.life.getPlayer().getContext().getGround();
-		Integer distance = ground.distance(this.life.getPosition(), this.place.getPosition());
+		IGround ground = this.corps.getPlayer().getContext().getGround();
+		Integer distance = ground.distance(this.corps.getPosition(), this.place.getPosition());
 		if(IPick.Pick_Range_Defautl<distance){
 			ret = false;
 			addMessage(I18n.getMessage(PickRangeValidator.class.getName()));

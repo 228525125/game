@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.cx.game.action.IAction;
-import org.cx.game.card.LifeCard;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.widget.IGround;
@@ -51,9 +51,9 @@ public interface IPlayer
 	 * 英雄编号
 	 * @return
 	 */
-	public List<Integer> getHeroCardIDList();
+	public List<Integer> getHeroIDList();
 	
-	public void addHeroCardID(Integer cardID);
+	public void addHeroID(Integer ID);
 	
 	/**
 	 * 玩家主城坐标
@@ -67,23 +67,23 @@ public interface IPlayer
 	 * 玩家拥有的英雄
 	 * @return
 	 */
-	public List<LifeCard> getHeroList();
+	public List<Corps> getHeroList();
 	
-	public void addHero(LifeCard hero);
+	public void addHero(Corps hero);
 	
 	/**
 	 * 获取所有随从
 	 * @param status
 	 * @return
 	 */
-	public List<LifeCard> getAttendantList(Integer status);
+	public List<Corps> getAttendantList(Integer status);
 	
 	/**
 	 * 获取激活状态的随从
 	 * @param activate
 	 * @return
 	 */
-	public List<LifeCard> getAttendantList(Boolean activate);
+	public List<Corps> getAttendantList(Boolean activate);
 	
 	/**
 	 * 人口限制

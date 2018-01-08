@@ -1,6 +1,6 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 
 /**
  * 捡起物品
@@ -12,5 +12,5 @@ public interface IPick extends IAction {
 	public final static Integer Pick_Range_Defautl = 1;
 	
 	@Override
-	public LifeCard getOwner();
+	public Corps getOwner();
 }

@@ -1,9 +1,9 @@
 package org.cx.game.policy;
 
-import org.cx.game.card.LifeCard;
 import org.cx.game.command.Command;
 import org.cx.game.command.CommandFactory;
 import org.cx.game.command.Invoker;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.ValidatorException;
 
 /**
@@ -20,13 +20,13 @@ public class GuardPolicy extends Policy {
 		// TODO Auto-generated method stub
 		super.calculate();
 
-		LifeCard owner = (LifeCard) getOwner().getOwner();
+		Corps owner = (Corps) getOwner().getOwner();
 		
 		this.cmdStr = "guard";
 		
 		setPri(IPolicy.PRI_Min);
 		
-		String cmd = "select ground place"+owner.getPosition()+" card;";
+		String cmd = "select ground place"+owner.getPosition()+" corps;";
 		try {
 			Command command= CommandFactory.getInstance(owner.getPlayer(),cmd);
 			command.execute();

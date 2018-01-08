@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.cx.game.action.Execute;
 import org.cx.game.action.IExecute;
-import org.cx.game.card.CardFactory;
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.CorpsFactory;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.CallConsumeValidator;
@@ -20,12 +20,12 @@ import org.cx.game.widget.building.OptionBuild.OptionBuildExecute;
 
 public class OptionCall extends Option implements IOption {
 
-	private Integer cardID = 0;
+	private Integer corpsID = 0;
 	private String name = null;
 	
-	public OptionCall(Integer cardId) {
+	public OptionCall(Integer corpsId) {
 		// TODO Auto-generated constructor stub
-		this.cardID = cardId;
+		this.corpsID = corpsId;
 		
 		//setParameterTypeValidator(new Class[]{IPlace.class}, new String[]{"empty"}, new Object[]{true});
 	}
@@ -35,7 +35,7 @@ public class OptionCall extends Option implements IOption {
 		// TODO Auto-generated method stub
 		if(null==name){
 			name = super.getName();
-			name += I18n.getMessage(LifeCard.class, this.cardID, "name");
+			name += I18n.getMessage(Corps.class, this.corpsID, "name");
 		}
 		return name;
 	}
@@ -53,7 +53,7 @@ public class OptionCall extends Option implements IOption {
 
 	public IExecute getExecute() {
 		if(null==this.execute){
-			IExecute execute = new OptionCallExecute(this.cardID);
+			IExecute execute = new OptionCallExecute(this.corpsID);
 			execute.setOwner(this);
 			this.execute = execute;
 		}
@@ -64,17 +64,17 @@ public class OptionCall extends Option implements IOption {
 	public void execute(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		Place place = (Place) objects[0];
-		LifeCard life = (LifeCard) CardFactory.getInstance(cardID, getOwner().getPlayer());
+		Corps corps = (Corps) CorpsFactory.getInstance(corpsID, getOwner().getPlayer());
 		
-		if(null!=place.getLife())            //如果是补充兵源，就判断招募的兵源是否一致
-			getExecute().addValidator(new CallUnitEqualValidator(place.getLife(), life));
+		if(null!=place.getCorps())            //如果是补充兵源，就判断招募的兵源是否一致
+			getExecute().addValidator(new CallUnitEqualValidator(place.getCorps(), corps));
 		
-		getExecute().addValidator(new CallConsumeValidator(life, getNumber()));
+		getExecute().addValidator(new CallConsumeValidator(corps, getNumber()));
 		getExecute().addValidator(new CallRangeValidator(getOwner(), place));
-		getExecute().addValidator(new RationLimitValidator(life, getNumber()));
+		getExecute().addValidator(new RationLimitValidator(corps, getNumber()));
 		//验证单个队伍人口上限
 		
-		getExecute().addValidator(new CallNopValidator(life, getNumber(), getOwner()));
+		getExecute().addValidator(new CallNopValidator(corps, getNumber(), getOwner()));
 		
 		super.execute(objects);		
 	}
@@ -99,11 +99,11 @@ public class OptionCall extends Option implements IOption {
 	
 	public class OptionCallExecute extends Execute implements IExecute {
 		
-		private Integer cardID = null;
+		private Integer corpsID = null;
 
-		public OptionCallExecute(Integer cardID) {
+		public OptionCallExecute(Integer corpsID) {
 			// TODO Auto-generated constructor stub
-			this.cardID = cardID;
+			this.corpsID = corpsID;
 		}
 		
 		@Override
@@ -113,8 +113,8 @@ public class OptionCall extends Option implements IOption {
 			
 			Place place = (Place) objects[0];
 			
-			LifeCard life = (LifeCard) CardFactory.getInstance(cardID, getOwner().getOwner().getPlayer());
-			life.call(place, getNumber());
+			Corps corps = (Corps) CorpsFactory.getInstance(corpsID, getOwner().getOwner().getPlayer());
+			corps.call(place, getNumber());
 		}
 	}
 }

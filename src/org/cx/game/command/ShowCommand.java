@@ -46,9 +46,9 @@ public class ShowCommand extends InteriorCommand {
 			map.put(CommandBuffer.TRICKLIST, buffer.getTrickList());
 		}
 		
-		if(null!=buffer.getCard()){
-			map.put(CommandBuffer.CARD, buffer.getCard());
-			map.put("position", buffer.getCard().getPosition());
+		if(null!=buffer.getCorps()){
+			map.put("card", buffer.getCorps());
+			map.put("position", buffer.getCorps().getPosition());
 		}
 		
 		if(null!=buffer.getSkill())

@@ -1,6 +1,6 @@
 package org.cx.game.action;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
@@ -122,5 +122,5 @@ public interface IAttack extends IAction {
 	
 	public IAttack clone();
 	
-	public LifeCard getOwner();
+	public Corps getOwner();
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.card.LifeCard;
+import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.JsonOut;
@@ -22,10 +22,10 @@ public class DoneState extends PlayState {
 	public void done() throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		IPlayer curPlayer = context.getControlPlayer();
-		List<LifeCard> list = curPlayer.getAttendantList(true);
-		for(LifeCard life : list){
+		List<Corps> list = curPlayer.getAttendantList(true);
+		for(Corps corps : list){
 			try {
-				life.activate(false);
+				corps.activate(false);
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

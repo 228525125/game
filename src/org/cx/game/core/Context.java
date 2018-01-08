@@ -35,7 +35,7 @@ public class Context extends Observable implements IContext
 {	
 	private String playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
 	private IControlQueue queue = new ControlQueue();
-	private Long newCardPlayId = 1l;                          //用于记录本场比赛中生成的id 
+	private Long newPlayId = 1l;                          //用于记录本场比赛中生成的id 
 	
 	private final static Map<Integer,Integer> TagCategory_1 = new HashMap<Integer,Integer>();
 	private final static Map<Integer,List<Integer>> TagCategory_2 = new HashMap<Integer,List<Integer>>();
@@ -304,9 +304,9 @@ public class Context extends Observable implements IContext
 	}
 
 	@Override
-	public Long newCardPlayId() {
+	public Long newPlayId() {
 		// TODO Auto-generated method stub
-		return newCardPlayId++;
+		return newPlayId++;
 	}
 
 	@Override

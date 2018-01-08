@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cx.game.card.LifeCard;
-import org.cx.game.card.skill.IActiveSkill;
-import org.cx.game.card.skill.ISkill;
 import org.cx.game.core.IPlayer;
+import org.cx.game.corps.Corps;
+import org.cx.game.magic.skill.IActiveSkill;
+import org.cx.game.magic.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.Observable;
 import org.cx.game.policy.IPolicyGroup;
@@ -30,13 +30,12 @@ public interface IGround {
 	
 	/**
 	 * 加入容器
-	 * 如果是Ground，card只能是life，为什么trick不经过该方法，因为1、ground保存了所有card；2、trick不是card类型
 	 * @param position
-	 * @param card
+	 * @param corps
 	 */
-	public void add(Integer position, LifeCard card) throws RuleValidatorException;
+	public void add(Integer position, Corps corps) throws RuleValidatorException;
 	
-	public LifeCard getCard(Integer position);
+	public Corps getCorps(Integer position);
 	
 	/**
 	 * 两个坐标之间的最短距离，不考虑地形
@@ -201,12 +200,12 @@ public interface IGround {
 	public Integer getYBorder();
 	
 	/**
-	 * 查询Life操作范围
-	 * @param card
+	 * 查询corps操作范围
+	 * @param corps
 	 * @param action
 	 * @return
 	 */
-	public List<Integer> queryRange(LifeCard life, String action);
+	public List<Integer> queryRange(Corps corps, String action);
 	
 	/**
 	 * 物品被拾取
@@ -232,11 +231,11 @@ public interface IGround {
 	
 	/**
 	 * 移动到指定位置
-	 * @param life 生物
+	 * @param corps 生物
 	 * @param position 指定位置
 	 * @param type 移动类型
 	 */
-	public List<Integer> move(LifeCard life, Integer position, Integer type) throws RuleValidatorException;
+	public List<Integer> move(Corps corps, Integer position, Integer type) throws RuleValidatorException;
 	
 	public static final Integer Relative_Top = 0;
 	public static final Integer Relative_LeftTop = 10;
@@ -277,14 +276,14 @@ public interface IGround {
 	 * @param player
 	 * @return
 	 */
-	public List<LifeCard> list(IPlayer player, Integer status);
+	public List<Corps> list(IPlayer player, Integer status);
 	
 	/**
 	 * 获取战场上所有生物
 	 * @param player
 	 * @return
 	 */
-	public List<LifeCard> list(Integer status);
+	public List<Corps> list(Integer status);
 	
 	/**
 	 * 获取指定范围内的随从
@@ -293,22 +292,22 @@ public interface IGround {
 	 * @param type
 	 * @return
 	 */
-	public List<LifeCard> list(Integer stand, Integer step, Integer type);
+	public List<Corps> list(Integer stand, Integer step, Integer type);
 	
 	/**
-	 * 根据ID查找card
+	 * 根据ID查找corps
 	 * @param ids 需要查找的卡片编号，非playID
 	 * @return
 	 */
-	public List<LifeCard> listForID(List<Integer> ids);
+	public List<Corps> listForID(List<Integer> ids);
 	
 	/**
-	 * 根据player和ID查询card
+	 * 根据player和ID查询corps
 	 * @param player
 	 * @param ids
 	 * @return
 	 */
-	public List<LifeCard> listForID(IPlayer player, List<Integer> ids);
+	public List<Corps> listForID(IPlayer player, List<Integer> ids);
 	
 	/**
 	 * 从起点到终点的最短路径，根据移动范围来获取路径上的那个点
@@ -333,38 +332,38 @@ public interface IGround {
 	public IPlayer getNeutral();
 	
 	/**
-	 * 从容器中移出，即life不存在于place及cemetery
+	 * 从容器中移出，即corps不存在于place及cemetery
 	 */
-	public Boolean remove(LifeCard life) throws RuleValidatorException;
+	public Boolean remove(Corps corps) throws RuleValidatorException;
 	
 	/**
 	 * 根据卡片查找位置
-	 * @param card
+	 * @param corps
 	 * @return
 	 */
-	public Integer getPosition(LifeCard card);
+	public Integer getPosition(Corps corps);
 	
 	/**
 	 * 进入墓地，例如在战场上死亡
-	 * @param life 
+	 * @param corps 
 	 */
-	public void inCemetery(LifeCard life) throws RuleValidatorException;
+	public void inCemetery(Corps corps) throws RuleValidatorException;
 	
 	/**
 	 * 移出墓地，例如英雄复活
-	 * @param life
+	 * @param corps
 	 */
-	public void outCemetery(LifeCard life);
+	public void outCemetery(Corps corps);
 	
-	public List<LifeCard> list();
+	public List<Corps> list();
 	
 	public String getName();
 	
-	public Boolean contains(LifeCard card);
+	public Boolean contains(Corps corps);
 	
 	/**
 	 * 用于show
-	 * @return 以map形式返回容器所有card
+	 * @return 以map形式返回容器所有corps
 	 */
 	public List toList();
 
