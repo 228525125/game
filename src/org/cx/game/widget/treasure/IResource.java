@@ -22,6 +22,11 @@ public interface IResource {
 	
 	public void add(IResource resource);
 	
+	/**
+	 * 执行条件 get(type)=null 或 0!=resValue
+	 * @param type
+	 * @param resValue
+	 */
 	public void add(Integer type, Integer resValue);
 	
 	public Set<Entry<Integer, Integer>> entrySet();

@@ -7,6 +7,7 @@ import java.util.Iterator;
 import org.cx.game.command.InteriorCommand;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
+import org.cx.game.tools.XmlUtil;
 import org.cx.game.validator.IValidator;
 import org.dom4j.Element;
 
@@ -31,16 +32,16 @@ public class InteriorCommandExpression extends CommandExpression {
 		String action = getAction(getCmd());
 		
 		try {
-			Element commands = getRoot().element("commands");
-			for(Iterator it = commands.elementIterator("command");it.hasNext();){
+			Element commands = getRoot().element(XmlUtil.Command_Commands);
+			for(Iterator it = commands.elementIterator(XmlUtil.Command_Command);it.hasNext();){
 				Element command = (Element) it.next();
-				if(action.equals(command.attribute("name").getText())){
+				if(action.equals(command.attribute(XmlUtil.Command_Command_Name).getText())){
 					this.element = command;
-					Class clazz = Class.forName(this.element.attribute("class").getText());
+					Class clazz = Class.forName(this.element.attribute(XmlUtil.Command_Command_Class).getText());
 					Constructor<InteriorCommand> c = clazz.getDeclaredConstructor(new Class[]{IPlayer.class});
 					ret = c.newInstance(player);
 					
-					if(null!=this.element.attribute("parameter") && "request".equals(this.element.attribute("parameter").getText())){
+					if(null!=this.element.attribute(XmlUtil.Command_Command_Parameter) && XmlUtil.Command_Command_Parameter_Request.equals(this.element.attribute(XmlUtil.Command_Command_Parameter).getText())){
 						setParamRequest(true);
 					}else{
 						setParamRequest(false);

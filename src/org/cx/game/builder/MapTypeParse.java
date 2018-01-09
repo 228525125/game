@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.Util;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
@@ -23,10 +24,10 @@ public class MapTypeParse implements IParse {
 		/*
 		 * 类型名
 		 */
-		String className = el.attribute("type").getText();
+		String className = el.attribute(XmlUtil.Attribute_Type).getText();
 		builder.setClassName(className);
 		
-		String mapType = el.attribute("interface").getText();
+		String mapType = el.attribute(XmlUtil.Attribute_Interface).getText();
 		builder.setMapType(mapType);
 		
 		/*
@@ -35,8 +36,8 @@ public class MapTypeParse implements IParse {
 		for(Iterator it = el.elementIterator();it.hasNext();){
 			Element mapEl = (Element) it.next();
 
-			Element keyEl = mapEl.element("key");
-			Element valueEl = mapEl.element("value");
+			Element keyEl = mapEl.element(XmlUtil.Element_Key);
+			Element valueEl = mapEl.element(XmlUtil.Element_Value);
 			Object key = parseObject(keyEl);
 			Object value = parseObject(valueEl);
 			

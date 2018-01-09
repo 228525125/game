@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.Util;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
@@ -23,10 +24,10 @@ public class CollectionTypeParse implements IParse {
 		/*
 		 * 类型名
 		 */
-		String className = collEl.attribute("type").getText();
+		String className = collEl.attribute(XmlUtil.Attribute_Type).getText();
 		builder.setClassName(className);
 		
-		String collectionType = collEl.attribute("interface").getText();
+		String collectionType = collEl.attribute(XmlUtil.Attribute_Interface).getText();
 		builder.setCollectionType(collectionType);
 		
 		/*
@@ -34,7 +35,7 @@ public class CollectionTypeParse implements IParse {
 		 */
 		for(Iterator it = collEl.elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			Attribute attr = el.attribute("type");
+			Attribute attr = el.attribute(XmlUtil.Attribute_Type);
 			if(null==attr)
 				continue;
 			

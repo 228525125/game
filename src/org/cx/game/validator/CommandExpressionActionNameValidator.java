@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.tools.I18n;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Element;
 
 /**
@@ -28,10 +29,10 @@ public class CommandExpressionActionNameValidator extends Validator {
 		// TODO Auto-generated method stub
 		Boolean ret = false;
 		String name = cmd.split(Calculator.SPACE)[0];
-		Element commands = el.element("commands");
-		for(Iterator it = commands.elementIterator("command");it.hasNext();){
+		Element commands = el.element(XmlUtil.Command_Commands);
+		for(Iterator it = commands.elementIterator(XmlUtil.Command_Command);it.hasNext();){
 			this.command = (Element) it.next();
-			if(name.equals(command.attribute("name").getText())){
+			if(name.equals(command.attribute(XmlUtil.Command_Command_Name).getText())){
 				ret = true;
 				break;
 			}

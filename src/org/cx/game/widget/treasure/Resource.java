@@ -64,7 +64,7 @@ public class Resource implements IResource {
 	@Override
 	public void add(Integer type, Integer resValue) {
 		// TODO Auto-generated method stub
-		if(0!=resValue){
+		if(0!=resValue || null==this.resource.get(type)){
 			Integer value = null==this.resource.get(type) ? 0 : this.resource.get(type);
 			value += resValue;
 			this.resource.put(type, value);

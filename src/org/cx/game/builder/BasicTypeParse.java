@@ -2,6 +2,7 @@ package org.cx.game.builder;
 
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Element;
 
 public class BasicTypeParse implements IParse {
@@ -16,7 +17,7 @@ public class BasicTypeParse implements IParse {
 	@Override
 	public void parse(Element el) throws ParseException, BuilderException {
 		// TODO Auto-generated method stub
-		Class cls = ObjectTypeParse.getType(el.attribute("type").getText());
+		Class cls = ObjectTypeParse.getType(el.attribute(XmlUtil.Attribute_Type).getText());
 		builder.setClazz(cls);
 		String value = el.getText();
 		builder.setValue(value);

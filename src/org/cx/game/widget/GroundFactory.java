@@ -11,6 +11,7 @@ import org.cx.game.builder.ObjectTypeParse;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -48,7 +49,7 @@ public class GroundFactory {
 		Element mapEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			if(mapId.equals(el.attribute("id").getText()))
+			if(mapId.equals(el.attribute(XmlUtil.Map_Map_Id).getText()))
 				mapEl = el;
 		}
 		

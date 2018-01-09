@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cx.game.tools.PropertiesUtil;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -73,17 +74,17 @@ public class LandformEffect {
 	
 	static {
 		Element gameEl = getRoot("move.path");
-		Element moveEl = gameEl.element("move");
-		Element consumeEl = moveEl.element("consume"); 
+		Element moveEl = gameEl.element(XmlUtil.Move_Move);
+		Element consumeEl = moveEl.element(XmlUtil.Move_Consume); 
 		for(Iterator it = consumeEl.elementIterator();it.hasNext();){
 			Element typeEl = (Element) it.next();
-			Integer moveType = Integer.valueOf(typeEl.attribute("type").getText());
+			Integer moveType = Integer.valueOf(typeEl.attribute(XmlUtil.Move_MoveType_Type).getText());
 			
 			Map<Integer, Integer> landform_consume = new HashMap<Integer, Integer>();
 			
 			for(Iterator itr = typeEl.elementIterator();itr.hasNext();){
 				Element landformEl = (Element) itr.next();
-				Integer landform = Integer.valueOf(landformEl.attribute("type").getText());
+				Integer landform = Integer.valueOf(landformEl.attribute(XmlUtil.Move_Landform_Type).getText());
 				Integer consume = Integer.valueOf(landformEl.getText());
 				
 				landform_consume.put(landform, consume);
@@ -94,17 +95,17 @@ public class LandformEffect {
 		}
 		
 		gameEl = getRoot("advantage.path");
-		Element advantageEl = gameEl.element("advantage");
+		Element advantageEl = gameEl.element(XmlUtil.Advantage_Advantage);
 		
 		for(Iterator it = advantageEl.elementIterator();it.hasNext();){
 			Element professionEl = (Element) it.next();
-			Integer profession = Integer.valueOf(professionEl.attribute("type").getText());
+			Integer profession = Integer.valueOf(professionEl.attribute(XmlUtil.Advantage_Profession_Type).getText());
 			
 			Map<Integer, String> landform_profession = new HashMap<Integer, String>();
 			
 			for(Iterator itr = professionEl.elementIterator();itr.hasNext();){
 				Element landformEl = (Element) itr.next();
-				Integer landform = Integer.valueOf(landformEl.attribute("type").getText());
+				Integer landform = Integer.valueOf(landformEl.attribute(XmlUtil.Advantage_Profession_Type).getText());
 				String value = landformEl.getText();
 				
 				landform_profession.put(landform, value);

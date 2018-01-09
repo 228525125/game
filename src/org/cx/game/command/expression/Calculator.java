@@ -18,6 +18,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.tools.PropertiesUtil;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -119,11 +120,11 @@ public class Calculator {
 	 */
 	public static String itemToType(String item){
 		Element root = getRoot();
-		Element types = root.element("types");
-		for(Iterator<Element> it = types.elementIterator("type");it.hasNext();){
+		Element types = root.element(XmlUtil.Command_Types);
+		for(Iterator<Element> it = types.elementIterator(XmlUtil.Command_Type);it.hasNext();){
 			Element type = it.next();
-			String typeName = type.attribute("name").getText();
-			for(Iterator<Element> iter = type.elementIterator("item");iter.hasNext();){
+			String typeName = type.attribute(XmlUtil.Command_Type_Name).getText();
+			for(Iterator<Element> iter = type.elementIterator(XmlUtil.Command_Item);iter.hasNext();){
 				Element el = iter.next();
 				if(el.getText().equals(item))
 					return typeName;

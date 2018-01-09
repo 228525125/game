@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.Util;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
@@ -21,23 +22,23 @@ public class ObjectTypeParse implements IParse {
 		/*
 		 * 类型名
 		 */
-		String className = objEl.attribute("type").getText();
+		String className = objEl.attribute(XmlUtil.Attribute_Type).getText();
 		builder.setClassName(className);
 		
 		/*
 		 * 使用工厂方法创建对象
 		 */
-		Attribute factory = objEl.attribute("factory");
+		Attribute factory = objEl.attribute(XmlUtil.Attribute_Factory);
 		if(null!=factory){
 			Class factoryClass = getType(factory.getText());
 			builder.setFactoryClass(factoryClass);
 			
-			Element param = objEl.element("factoryMethodParameter");
+			Element param = objEl.element(XmlUtil.Element_FactoryMethodParameter);
 			if(null!=param){
 				for(Iterator it = param.elementIterator();it.hasNext();){
 					Element el = (Element) it.next();
 					
-					Class cls = getType(el.attribute("type").getText());
+					Class cls = getType(el.attribute(XmlUtil.Attribute_Type).getText());
 					
 					if(Util.isWrapClass(cls)){  //工厂方法参数是基本类型
 						BasicTypeBuilder btb = new BasicTypeBuilder();
@@ -54,12 +55,12 @@ public class ObjectTypeParse implements IParse {
 		 * 使用类的构造函数创建对象
 		 * 获取构造参数
 		 */
-		Element param = objEl.element("parameter");
+		Element param = objEl.element(XmlUtil.Element_Parameter);
 		if(null!=param){
 			for(Iterator it = param.elementIterator();it.hasNext();){
 				Element el = (Element) it.next();
 				
-				Class cls = getType(el.attribute("type").getText());
+				Class cls = getType(el.attribute(XmlUtil.Attribute_Type).getText());
 				
 				if(Util.isWrapClass(cls)){  //构造函数参数是基本类型
 					BasicTypeBuilder btb = new BasicTypeBuilder();
@@ -78,11 +79,11 @@ public class ObjectTypeParse implements IParse {
 			Element el = (Element) it.next();
 			String proName = el.getName();           //corps属性名称
 			
-			Attribute attr = el.attribute("type");
+			Attribute attr = el.attribute(XmlUtil.Attribute_Type);
 			if(null==attr)
 				continue;
 			
-			Attribute inter = el.attribute("interface");   //如果带interface属性，表示使用接口赋值
+			Attribute inter = el.attribute(XmlUtil.Attribute_Interface);   //如果带interface属性，表示使用接口赋值
 			if(null!=inter)
 				attr = inter;
 			
@@ -96,11 +97,11 @@ public class ObjectTypeParse implements IParse {
 				BasicTypeBuilder btb = new BasicTypeBuilder();
 				new BasicTypeParse(btb).parse(el);
 				propertyValue = btb.builder();
-			}else if(null!=el.attribute("collection")){    //Collection
+			}else if(null!=el.attribute(XmlUtil.Attribute_Collection)){    //Collection
 				CollectionTypeBuilder ctb = new CollectionTypeBuilder();
 				new CollectionTypeParse(ctb).parse(el);
 				propertyValue = ctb.builder();
-			}else if(null!=el.attribute("map")){    //Map
+			}else if(null!=el.attribute(XmlUtil.Attribute_Map)){    //Map
 				MapTypeBuilder mtb = new MapTypeBuilder();
 				new MapTypeParse(mtb).parse(el);
 				propertyValue = mtb.builder();
@@ -115,13 +116,13 @@ public class ObjectTypeParse implements IParse {
 	}
 	
 	public static Class getType(String className){
-		if("int".equals(className)){
+		if(XmlUtil.Attribute_Value_Int.equals(className)){
 			return Integer.class;
-		}else if("str".equals(className)){
+		}else if(XmlUtil.Attribute_Value_Str.equals(className)){
 			return String.class;
-		}else if("double".equals(className)){
+		}else if(XmlUtil.Attribute_Value_Double.equals(className)){
 			return Double.class;
-		}else if("bool".equals(className)){
+		}else if(XmlUtil.Attribute_Value_Bool.equals(className)){
 			return Boolean.class;
 		}
 		try {

@@ -13,6 +13,7 @@ import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.tools.PropertiesUtil;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -44,7 +45,7 @@ public class BuildingFactory {
 		Element buildingEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			if(typeID.equals(Integer.valueOf(el.attribute("id").getText()))){
+			if(typeID.equals(Integer.valueOf(el.attribute(XmlUtil.Building_Building_Id).getText()))){
 				buildingEl = el;
 				break;
 			}

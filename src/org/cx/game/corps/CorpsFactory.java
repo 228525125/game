@@ -16,6 +16,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
+import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -84,11 +85,11 @@ public class CorpsFactory {
 		
 		Element el = null;
 		
-		Element cs = getRoot().element("corps");
+		Element cs = getRoot().element(XmlUtil.Corps_Corps);
 		
-		for(Iterator it = cs.elementIterator("card");it.hasNext();){
+		for(Iterator it = cs.elementIterator(XmlUtil.Corps_Card);it.hasNext();){
 			Element corps = (Element) it.next();
-			if(cid.equals(Integer.valueOf(corps.attribute("cardID").getText())))
+			if(cid.equals(Integer.valueOf(corps.attribute(XmlUtil.Corps_Card_Id).getText())))
 				el = corps;
 		}
 		
