@@ -1,5 +1,6 @@
 package org.cx.game.command.expression;
 
+import org.cx.game.core.IPlayer;
 import org.dom4j.Element;
 
 /**
@@ -9,8 +10,15 @@ import org.dom4j.Element;
  */
 public class InteriorCommandParameterExpression extends ParameterExpression {
 
-	public InteriorCommandParameterExpression(String cmd, Element cmdEl) {
+	private IPlayer player = null;
+	
+	public InteriorCommandParameterExpression(IPlayer player, String cmd, Element cmdEl) {
 		// TODO Auto-generated constructor stub
 		super(cmd, cmdEl);
+		this.player = player;
+	}
+	
+	public IPlayer getPlayer() {
+		return player;
 	}
 }

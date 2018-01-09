@@ -1,9 +1,6 @@
 package org.cx.game.validator;
 
 import org.cx.game.command.Command;
-import org.cx.game.command.ReloadCommand;
-import org.cx.game.command.SelectCommand;
-import org.cx.game.command.ShowCommand;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.tools.I18n;
@@ -28,9 +25,7 @@ public class ControlPowerValidator extends Validator {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		IContext context = player.getContext();
-		if(command instanceof SelectCommand || command instanceof ShowCommand || command instanceof ReloadCommand)		
-			return true;
-		else if(player.equals(context.getControlPlayer()))
+		if(player.equals(context.getControlPlayer()))
 			return true;
 		else{
 			addMessage(I18n.getMessage(ControlPowerValidator.class.getName()));

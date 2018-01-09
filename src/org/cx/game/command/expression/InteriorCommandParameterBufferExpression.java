@@ -15,18 +15,15 @@ import org.dom4j.Element;
  */
 public class InteriorCommandParameterBufferExpression extends
 		InteriorCommandParameterExpression {
-
-	private IPlayer player = null;
 	
 	private ParameterExpressionBuffer buffer = null;
 	
 	public InteriorCommandParameterBufferExpression(IPlayer own,
 			String cmd, Element cmdEl) {
-		super(cmd, cmdEl);
-		this.player = own;
+		super(own, cmd, cmdEl);
 		this.buffer = new ParameterExpressionBuffer(own);
 		Util.copyBuffer(buffer, own.getCommandBuffer());
-		addValidator(new InteriorCommandParameterExpressionObjectTypeValidator(getParameter(), player, cmdEl, buffer));    //隐含完整性验证
+		addValidator(new InteriorCommandParameterExpressionObjectTypeValidator(getParameter(), own, cmdEl, buffer));    //隐含完整性验证
 	}
 	
 	@Override

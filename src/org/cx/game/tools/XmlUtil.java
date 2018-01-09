@@ -44,6 +44,7 @@ public class XmlUtil {
 	public final static String Command_Command_Parameter = "parameter";
 	public final static String Command_Command_Parameter_Request = "request";
 	public final static String Command_Parameter = "parameter";
+	public final static String Command_Parameter_Expression = "expression";
 	
 	public final static String Advantage_Advantage = "advantage";
 	public final static String Advantage_Profession_Type = "type";
