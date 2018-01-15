@@ -26,7 +26,7 @@ public interface ISkill extends IMagic {
 	 */
 	public Integer getRange();
 	
-	public IUpgrade getUpgrade(); 
+	public IUpgrade getUpgrade();
 	
 	/**
 	 * 升级技能

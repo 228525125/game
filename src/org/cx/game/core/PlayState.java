@@ -3,14 +3,13 @@ package org.cx.game.core;
 import java.util.Observable;
 
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.out.JsonOut;
-import org.cx.game.rule.RuleGroupFactory;
+import org.cx.game.out.ResponseFactory;
 
 public abstract class PlayState extends Observable implements org.cx.game.observer.Observable{
 
 	public PlayState() {
 		// TODO Auto-generated constructor stub
-		addObserver(JsonOut.getInstance());
+		addObserver(ResponseFactory.getResponse());
 	}
 	
 	protected IContext context;

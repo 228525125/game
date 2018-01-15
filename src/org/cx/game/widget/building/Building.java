@@ -28,6 +28,7 @@ public abstract class Building implements IBuilding, IRecover {
 	private IPlayer player = null;
 	private List<IOption> options = new ArrayList<IOption>();
 	private IResource consume = new Resource();
+	private List<IBuilding> buildings = new ArrayList<IBuilding>();
 	
 	private IBuilding owner = null;
 	
@@ -40,9 +41,6 @@ public abstract class Building implements IBuilding, IRecover {
 	public Building(Integer buildingType) {
 		// TODO Auto-generated constructor stub
 		this.type = buildingType;
-		
-		IOption optionBuild = new OptionBuild();				
-		addOption(optionBuild);
 	}
 	
 	public String getName() {
@@ -79,11 +77,6 @@ public abstract class Building implements IBuilding, IRecover {
 	public void setLevelLimit(Integer levelLimit) {
 		// TODO Auto-generated method stub
 		this.levelLimit = levelLimit;
-		
-		if(1<levelLimit){
-			IOption optionBuildingUpgrade = new OptionBuildingUpgrade();
-			addOption(optionBuildingUpgrade);
-		}
 	}
 	
 	@Override
@@ -101,6 +94,17 @@ public abstract class Building implements IBuilding, IRecover {
 
 	public void setNeedBuilding(List<Integer> needBuilding) {
 		this.needBuilding = needBuilding;
+	}
+	
+	@Override
+	public List<IBuilding> getBuildings() {
+		// TODO Auto-generated method stub
+		return this.buildings;
+	}
+	
+	public IBuilding getBuilding(Integer index) {
+		// TODO Auto-generated method stub
+		return this.buildings.get(index);
 	}
 
 	public Integer getPosition() {

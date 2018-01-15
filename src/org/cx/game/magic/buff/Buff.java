@@ -16,7 +16,8 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IntercepterAscComparator;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
+import org.cx.game.out.Response;
+import org.cx.game.out.ResponseFactory;
 import org.cx.game.tools.I18n;
 
 /**
@@ -54,7 +55,7 @@ public abstract class Buff extends Observable implements IBuff {
 		this.bout = bout;
 		recordIntercepter(corps.getPlayer().getAddBoutAction(), this);
 		
-		addObserver(JsonOut.getInstance());
+		addObserver(ResponseFactory.getResponse());
 	}
 	
 	@Override

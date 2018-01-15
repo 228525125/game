@@ -7,10 +7,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.cx.game.action.Action;
-import org.cx.game.action.Death;
 import org.cx.game.action.IAction;
+import org.cx.game.action.IDeath;
 import org.cx.game.command.CommandBuffer;
-import org.cx.game.core.Context.ContextAddBout;
 import org.cx.game.corps.Corps;
 import org.cx.game.magic.skill.IActiveSkill;
 import org.cx.game.magic.skill.ISkill;
@@ -18,7 +17,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
-import org.cx.game.out.JsonOut;
+import org.cx.game.out.ResponseFactory;
 import org.cx.game.policy.DonePolicy;
 import org.cx.game.policy.PolicyGroupFactory;
 import org.cx.game.policy.IPolicyGroup;
@@ -40,7 +39,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	
 	public Player(Integer id, String name) {
 		// TODO Auto-generated constructor stub
-		addObserver(JsonOut.getInstance());
+		addObserver(ResponseFactory.getResponse());
 		
 		this.id = id;
 		this.name = name;
@@ -223,7 +222,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 	public List<Corps> getAttendantList(Boolean activate) {
 		// TODO Auto-generated method stub
 		List<Corps> list = new ArrayList<Corps>();
-		for(Corps corps : getAttendantList(Death.Status_Live)){
+		for(Corps corps : getAttendantList(IDeath.Status_Live)){
 			if(activate.equals(corps.getActivate().getActivation()))
 				list.add(corps);
 		}
@@ -324,7 +323,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 			/*
 			 * 获得控制权的玩家单位被激活
 			 */
-			for(Corps corps : getAttendantList(Death.Status_Live)){
+			for(Corps corps : getAttendantList(IDeath.Status_Live)){
 				Integer speed = corps.getActivate().getSpeed();
 				corps.getActivate().addToVigour(speed);
 				try {
@@ -338,7 +337,7 @@ public class Player extends java.util.Observable implements IPlayer ,Observable{
 			/*
 			 * 计算技能冷却
 			 */
-			List<Corps> lList = getAttendantList(Death.Status_Live);
+			List<Corps> lList = getAttendantList(IDeath.Status_Live);
 			for(Corps corps : lList){
 				for(ISkill skill : corps.getSkillList()){
 					if (skill instanceof IActiveSkill) {

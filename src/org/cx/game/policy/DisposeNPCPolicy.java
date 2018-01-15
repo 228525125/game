@@ -3,7 +3,6 @@ package org.cx.game.policy;
 import java.util.List;
 import java.util.Set;
 
-import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.corps.CorpsFactory;
@@ -27,7 +26,8 @@ public class DisposeNPCPolicy extends Policy {
 		// TODO Auto-generated method stub
 		super.calculate();
 		
-		IContext context = ContextFactory.getContext();
+		IPlayer owner = (IPlayer) getOwner().getOwner();
+		IContext context = owner.getContext();
 		setPri(IPolicy.PRI_Min);
 		
 		if(!already && 1==context.getBout()){

@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-import org.cx.game.action.IDeath;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.IPlayer;
 import org.cx.game.corps.Corps;
@@ -314,9 +313,9 @@ public class CommandBuffer {
 			Place place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place, bufferMap);
 			
-			if(IDeath.Status_Death.equals(corps.getDeath().getStatus())){
+			/*if(IDeath.Status_Death.equals(corps.getDeath().getStatus())){
 				setCemetery(place.getCemetery(), bufferMap);
-			}
+			}*/
 
 			bufferMap.put(CORPS, corps);
 		}

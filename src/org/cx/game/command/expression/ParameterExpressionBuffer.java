@@ -3,7 +3,7 @@ package org.cx.game.command.expression;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.action.IDeath;
+import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.IPlayer;
 import org.cx.game.corps.Corps;
@@ -158,9 +158,9 @@ public class ParameterExpressionBuffer {
 			Place place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place);
 			
-			if(IDeath.Status_Death.equals(corps.getDeath().getStatus())){
+			/*if(IAction.Status_Death.equals(corps.getDeath().getStatus())){
 				setCemetery(place.getCemetery());
-			}
+			}*/
 			
 			bufferMap.put(CommandBuffer.CORPS, corps);
 		}		

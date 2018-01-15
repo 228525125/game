@@ -3,20 +3,14 @@ package org.cx.game.command.expression;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.cx.game.command.Command;
-import org.cx.game.command.CommandBuffer;
-import org.cx.game.command.IExternalCommand;
 import org.cx.game.command.InteriorCommand;
-import org.cx.game.command.OutsideCommand;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
-import org.cx.game.tools.I18n;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
@@ -58,21 +52,6 @@ public class Calculator {
 		return command;
 	}
 	
-	public OutsideCommand parseForCommand(String cmd) throws SyntaxValidatorException {		
-		Element root = getRoot();
-		OutsideCommand command = null;
-		
-		OutsideCommandExpression commandExpriession = new OutsideCommandExpression(cmd, root);   //默认第一个字段为command
-		command = commandExpriession.interpreter();
-
-		if(commandExpriession.getParamRequest()){
-			ParameterExpression parameterExpression = new OutsideCommandParameterExpression(cmd, commandExpriession.getElement()); //默认第二个字段为参数
-			Object parameter = parameterExpression.interpreter();
-			command.setParameter(parameter);
-		}
-		return command;
-	}
-	
 	private void intergrityValidate(String cmd) throws SyntaxValidatorException {
 		String[] cs = cmd.split(SPACE);
 		if(cs.length==0)
@@ -85,7 +64,7 @@ public class Calculator {
 	 * @param cmd
 	 * @return
 	 * @throws SyntaxValidatorException
-	 */
+	
 	public List<InteriorCommand> parseForList(IPlayer player,String cmd) throws SyntaxValidatorException {			
 		intergrityValidate(cmd);      //完整性验证
 		
@@ -94,24 +73,7 @@ public class Calculator {
 			list.add(parseForCommand(player,c));
 		}
 		return list;
-	}
-	
-	/**
-	 * 存在语句顺序问题，不推荐使用
-	 * @param cmd
-	 * @param external
-	 * @return
-	 * @throws SyntaxValidatorException
-	 */
-	public List<OutsideCommand> parseForList(String cmd, IExternalCommand external) throws SyntaxValidatorException {			
-		intergrityValidate(cmd);      //完整性验证
-		
-		List<OutsideCommand> list = new ArrayList<OutsideCommand>();
-		for(String c : cmd.split(";")){
-			list.add(parseForCommand(c));
-		}
-		return list;
-	}
+	} */
 	
 	/**
 	 * 根据xml描述将item转换为type

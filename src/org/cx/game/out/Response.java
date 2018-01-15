@@ -1,9 +1,10 @@
 package org.cx.game.out;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Observer;
 
-public abstract class Response {
+public abstract class Response implements Observer {
+	
+	public static final String Response_Format_DEFAULT = "default";
 	
 	public static ThreadLocal<StringBuffer> process = new ThreadLocal<StringBuffer>(){
 		@Override

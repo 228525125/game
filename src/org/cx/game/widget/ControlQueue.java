@@ -12,7 +12,8 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.corps.Corps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
+import org.cx.game.out.Response;
+import org.cx.game.out.ResponseFactory;
 import org.cx.game.rule.RuleGroupFactory;
 
 public class ControlQueue extends Observable implements IControlQueue {
@@ -29,7 +30,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 	
 	public ControlQueue() {
 		// TODO Auto-generated constructor stub
-		addObserver(JsonOut.getInstance());
+		addObserver(ResponseFactory.getResponse());
 		
 		map.put(1, queue1);
 		map.put(2, queue2);

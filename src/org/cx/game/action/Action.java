@@ -9,7 +9,8 @@ import java.util.Observable;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.ProxyFactory;
-import org.cx.game.out.JsonOut;
+import org.cx.game.out.Response;
+import org.cx.game.out.ResponseFactory;
 import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidator;
@@ -24,7 +25,7 @@ public abstract class Action extends Observable implements IAction {
 
 	public Action() {
 		// TODO Auto-generated constructor stub
-		addObserver(JsonOut.getInstance());
+		addObserver(ResponseFactory.getResponse());
 		
 		RuleGroupFactory.bindingRule(this);
 	}

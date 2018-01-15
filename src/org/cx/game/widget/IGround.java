@@ -52,7 +52,7 @@ public interface IGround {
 	 * @param moveType
 	 * @return 如果stop不可到达，即MAP中为-1，则返回9999
 	 */
-	public Integer distance(Integer start, Integer stop, Integer moveType);
+	public Integer distance(Integer start, Integer stop, Integer moveType, IPlayer control);
 	
 	/**
 	 * 边界上
@@ -72,7 +72,7 @@ public interface IGround {
 	 * @param moveType  移动类型
 	 * @return
 	 */
-	public List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType);
+	public List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType, IPlayer control);
 	
 	public final static Integer Shade_Range = 5;
 	
@@ -317,7 +317,7 @@ public interface IGround {
 	 * @param moveType 移动类型
 	 * @return
 	 */
-	public Integer getPointByWay(Integer stand, Integer dest, Integer step, Integer moveType);
+	public Integer getPointByWay(Integer stand, Integer dest, Integer step, Integer moveType, IPlayer control);
 	
 	/**
 	 * 采用String格式来表示中立生物的信息："ID,位置,数量,策略"

@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.cx.game.tools.I18n;
-import org.cx.game.validator.CallConsumeValidator;
 
 public class Resource implements IResource {
 

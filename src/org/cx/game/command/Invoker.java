@@ -2,8 +2,6 @@ package org.cx.game.command;
 
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.Camera;
-import org.cx.game.core.ContextFactory;
-import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.core.Record;
 import org.cx.game.exception.SyntaxValidatorException;
@@ -14,6 +12,12 @@ public class Invoker {
 
 	private Command command;
 	private String response = "";
+	private String playNo = "";
+	
+	public Invoker(String playNo) {
+		// TODO Auto-generated constructor stub
+		this.playNo = playNo;
+	}
 
 	private void setCommand(Command command) {
 		this.command = command;
@@ -43,8 +47,6 @@ public class Invoker {
 		if(!"".equals(response) && 0<response.split(";").length){
 			String[] resps = response.split(";");
 			
-			IContext context = ContextFactory.getContext();
-			String playNo = context.getPlayNo();
 			Integer sequence = camera.getNewSequence();
 			for(int i=0;i<resps.length;i++){
 				Record r = new Record();
@@ -71,24 +73,6 @@ public class Invoker {
 			
 			for(String c : cmd.split(";")){
 				InteriorCommand command = CommandFactory.getInstance(player,c);
-				setCommand(command);
-				action();
-			}
-		} catch (ValidatorException e) {
-			// TODO: handle exception
-			throw e;
-		} finally {
-			response();
-		}
-	}
-	
-	public void receiveCommand(String cmd, IExternalCommand external) throws ValidatorException {
-		try {
-			intergrityValidate(cmd);    //验证命令完整性
-		
-			for(String c : cmd.split(";")){
-				OutsideCommand command = CommandFactory.getInstance(c);
-				command.setExternal(external);
 				setCommand(command);
 				action();
 			}

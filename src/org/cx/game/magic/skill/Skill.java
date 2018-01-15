@@ -12,7 +12,8 @@ import org.cx.game.magic.skill.ISkill;
 import org.cx.game.core.Context;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
+import org.cx.game.out.Response;
+import org.cx.game.out.ResponseFactory;
 import org.cx.game.tools.I18n;
 
 public abstract class Skill extends Observable implements ISkill {
@@ -29,7 +30,7 @@ public abstract class Skill extends Observable implements ISkill {
 		// TODO Auto-generated constructor stub
 		this.type = type;
 		
-		addObserver(JsonOut.getInstance());
+		addObserver(ResponseFactory.getResponse());
 		
 		setAction("Skill");
 	}

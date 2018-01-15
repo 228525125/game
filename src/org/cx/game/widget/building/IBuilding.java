@@ -78,6 +78,19 @@ public interface IBuilding {
 	public List<Integer> getNeedBuilding();
 	
 	/**
+	 * 
+	 * @return 内部建筑物
+	 */
+	public List<IBuilding> getBuildings();
+	
+	/**
+	 * 根据顺序号获取内部建筑
+	 * @param index
+	 * @return
+	 */
+	public IBuilding getBuilding(Integer index);
+	
+	/**
 	 * 建筑物等级上限
 	 * @return
 	 */

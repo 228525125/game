@@ -16,7 +16,6 @@ import org.cx.game.widget.Place;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
-import org.cx.game.widget.building.BuildingTown;
 
 /**
  * 验证参数是否能够通过buffer进行完整的解析
@@ -86,9 +85,8 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 							parameterObject = building;
 							getBuffer().setBuilding(building);
 						}else{                                //否则缓存内部建筑
-							if(null!=getBuffer().getBuilding() && getBuffer().getBuilding() instanceof BuildingTown){
-								BuildingTown town = (BuildingTown) getBuffer().getBuilding();
-								IBuilding building = town.getBuilding(Integer.valueOf(position));
+							if(null!=getBuffer().getBuilding() && !getBuffer().getBuilding().getBuildings().isEmpty()){
+								IBuilding building = getBuffer().getBuilding().getBuilding(Integer.valueOf(position));
 								parameterObject = building;
 								getBuffer().setBuilding(building);
 							}else{

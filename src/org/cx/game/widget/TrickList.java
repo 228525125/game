@@ -10,7 +10,6 @@ import org.cx.game.corps.Corps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
 
 public class TrickList {
 

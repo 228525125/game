@@ -45,6 +45,7 @@ public class XmlUtil {
 	public final static String Command_Command_Parameter_Request = "request";
 	public final static String Command_Parameter = "parameter";
 	public final static String Command_Parameter_Expression = "expression";
+	public final static String Command_Option = "option";
 	
 	public final static String Advantage_Advantage = "advantage";
 	public final static String Advantage_Profession_Type = "type";
@@ -63,6 +64,10 @@ public class XmlUtil {
 	public final static String Building_Building_Id = "id";
 	
 	public final static String Rule_RuleGroup_Id = "id";
+	
+	public final static String GameConfig_ResponseFormat = "response-format";
+	public final static String GameConfig_FormatName = "format-name";
+	public final static String GameConfig_FormatClass = "format-class";
 	
 	//----------------通用---------------
 	

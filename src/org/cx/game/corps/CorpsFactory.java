@@ -11,11 +11,11 @@ import java.util.List;
 
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
-import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
+import org.cx.game.tools.Util;
 import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -64,7 +64,7 @@ public class CorpsFactory {
 		Element corpsEl = getElement(cid);
 		Corps corps = getInstance(corpsEl);
 		corps.setPlayer(player);
-		corps.setId(ContextFactory.getContext().newPlayId());
+		corps.setId(Util.newCount());
 		return corps;
 	}
 	
@@ -75,7 +75,7 @@ public class CorpsFactory {
 			Element corpsEl = getElement(id);
 			Corps corps = getInstance(corpsEl);
 			corps.setPlayer(player);
-			corps.setId(ContextFactory.getContext().newPlayId());
+			corps.setId(Util.newCount());
 			list.add(getInstance(corpsEl));
 		}
 		return list;

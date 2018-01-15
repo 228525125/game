@@ -1,6 +1,5 @@
 package org.cx.game.action;
 
-import org.cx.game.action.Death.DeathAddToHpAction;
 import org.cx.game.corps.Corps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -13,6 +12,10 @@ import org.cx.game.observer.Observable;
  *
  */
 public interface IDeath extends IAction {
+	
+	public final static Integer Status_Live = 0;         //战斗
+	public final static Integer Status_Death = 1;        //死亡
+	public final static Integer Status_Exist = 2;        //存在
 	
 	/**
 	 * 当前生命值
@@ -43,10 +46,6 @@ public interface IDeath extends IAction {
 	public Integer getHpLimit();
 	
 	public void setHpLimit(Integer hpLimit);
-	
-	public final static Integer Status_Live = 0;         //战斗
-	public final static Integer Status_Death = 1;        //死亡
-	public final static Integer Status_Exist = 2;        //存在
 	
 	/**
 	 * 状态

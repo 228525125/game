@@ -14,42 +14,45 @@ public interface IContext extends Observable {
 	public final static String Ground = "Ground";
 	public final static String ControlPlayer = "ControlPlayer";
 	
-	public abstract IControlQueue getControlQueue();
+	public IControlQueue getControlQueue();
 
-	public abstract void setControlQueue(IControlQueue queue);
+	public void setControlQueue(IControlQueue queue);
+	
+	public PlayState getDeployState();
+	
+	public PlayState getDoneState();
+	
+	public PlayState getStartState();
+	
+	public PlayState getFinishState();
 
-	public final static StartState startState = new StartState();
-	public final static DeployState deployState = new DeployState();
-	public final static DoneState doneState = new DoneState();
-	public final static FinishState finishState = new FinishState();
-
-	public abstract void setPlayState(PlayState playState);
+	public void setPlayState(PlayState playState);
 
 	/**
 	 * 比赛开始
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void start() throws RuleValidatorException;
+	public void start() throws RuleValidatorException;
 
 	/**
 	 *  玩家部署
 	 * @throws RuleValidatorException 
 	 *
 	 */
-	public abstract void deploy() throws RuleValidatorException;
+	public void deploy() throws RuleValidatorException;
 
 	/**
 	 *  回合结束
 	 * @throws RuleValidatorException 
 	 *
 	 */
-	public abstract void done() throws RuleValidatorException;
+	public void done() throws RuleValidatorException;
 
 	/**
 	 * 比赛结束
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void finish() throws RuleValidatorException;
+	public void finish() throws RuleValidatorException;
 	
 	/**
 	 * 当前天数，从游戏开始算起
@@ -67,16 +70,14 @@ public interface IContext extends Observable {
 	
 	public void addWeek() throws RuleValidatorException; 
 
-	public abstract int getBout();
+	public int getBout();
 
 	/**
 	 * 当玩家开始部署时，回合数加1
 	 * @throws RuleValidatorException 
 	 *
 	 */
-	public abstract void addBout() throws RuleValidatorException;
-
-	//public abstract Corps getControlLife(); 半回合制
+	public void addBout() throws RuleValidatorException;
 	
 	public List<IPlayer> getPlayerList();
 
@@ -88,15 +89,15 @@ public interface IContext extends Observable {
 	 * 交换比赛控制权
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void switchControl() throws RuleValidatorException;
-
-	public abstract String getPlayNo();
+	public void switchControl() throws RuleValidatorException;
 	
 	/**
 	 * 生成一个唯一的游戏内Id
 	 * @return
 	 */
 	public Long newPlayId();
+	
+	public String getPlayNo();
 	
 	public IGround getGround();
 

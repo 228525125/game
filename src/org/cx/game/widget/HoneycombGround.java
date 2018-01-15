@@ -10,11 +10,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.cx.game.action.Death;
 import org.cx.game.action.IAttack;
 import org.cx.game.action.IDeath;
 import org.cx.game.action.IMove;
-import org.cx.game.core.ContextFactory;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.core.Player;
@@ -25,7 +23,6 @@ import org.cx.game.magic.skill.ISkill;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.JsonOut;
 import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.tools.CellularDistrict;
 import org.cx.game.tools.Node;
@@ -379,14 +376,14 @@ public class HoneycombGround implements IGround {
 			Integer step = corps.getMove().getEnergy()/corps.getMove().getConsume();
 			switch (corps.getMove().getType()) {
 			case 141:    //步行
-				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Walk);
+				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Walk, corps.getPlayer());
 				//distance(280083, 280083, IMove.Type_Walk);
 				break;
 			case 142:    //骑行
-				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Equitation);
+				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Equitation, corps.getPlayer());
 				break;
 			case 143:    //驾驶
-				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Drive);
+				positionList = areaForDistance(corps.getPosition(), step, Contain, IMove.Type_Drive, corps.getPlayer());
 				break;
 			case 144:    //飞行
 				positionList = areaForDistance(corps.getPosition(), step, Contain);
@@ -466,7 +463,7 @@ public class HoneycombGround implements IGround {
 		// TODO Auto-generated method stub
 		List<Integer> route = new ArrayList<Integer>();
 		
-		List path = route(getPosition(corps), position, type);
+		List path = route(getPosition(corps), position, type, corps.getPlayer());
 		path.remove(0);                         //路径包含起点
 		
 		for(int i=0;i<path.size();i++){   
@@ -641,12 +638,12 @@ public class HoneycombGround implements IGround {
 	private static final Integer Distance_Max = 9999;
 	
 	@Override
-	public Integer distance(Integer start, Integer stop, Integer moveType) {
+	public Integer distance(Integer start, Integer stop, Integer moveType, IPlayer control) {
 		// TODO Auto-generated method stub
 		Integer ret = 0;
 		
 		if(!start.equals(stop)){
-			List path = route(start, stop, moveType);
+			List path = route(start, stop, moveType, control);
 			if(null!=path){                        //如果stop不可到达，即MAP为-1，则path为null
 				path.remove(0);                     //因为path包含起始位置，因此这里要删除
 				
@@ -691,7 +688,7 @@ public class HoneycombGround implements IGround {
 	
 	@Override
 	public List<Integer> areaForDistance(Integer position, Integer step,
-			Integer type, Integer moveType) {
+			Integer type, Integer moveType, IPlayer control) {
 		// TODO Auto-generated method stub
 		List<Integer> list = new ArrayList<Integer>();
 		
@@ -703,13 +700,13 @@ public class HoneycombGround implements IGround {
 		for(Integer curPos : posList){
 			switch (type) {
 			case 0:
-				if(step.equals(distance(position, curPos, moveType)))
+				if(step.equals(distance(position, curPos, moveType, control)))
 					if(getPlace(curPos).getEmpty())             //友方可以穿人，因此在计算路径时，不考虑友军站位，但这里就要判断
 						list.add(curPos);
 				break;
 					
 			case 1:
-				if(step>=distance(position, curPos, moveType))
+				if(step>=distance(position, curPos, moveType, control))
 					if(getPlace(curPos).getEmpty())
 						list.add(curPos);
 				break;	
@@ -908,9 +905,9 @@ public class HoneycombGround implements IGround {
 	
 	@Override
 	public Integer getPointByWay(Integer stand, Integer dest, Integer step,
-			Integer moveType) {
+			Integer moveType, IPlayer control) {
 		// TODO Auto-generated method stub
-		List path = route(stand, dest, moveType);
+		List path = route(stand, dest, moveType, control);
 		for(int i=0;i<path.size();i++){
 			Node node = (Node) path.get(i);
 			Integer pos = pointToInteger(node._Pos.x, node._Pos.y);
@@ -1126,15 +1123,13 @@ public class HoneycombGround implements IGround {
 	 * 加载战场单位的站位情况；
 	 * 为什么是独立为一个方法，主要考虑hide状态下系统不会去加载站位情况
 	 */
-	private void updateMAP_Stance(){
-		IContext context = ContextFactory.getContext();
-		IPlayer control = context.getControlPlayer();
+	private void updateMAP_Stance(IPlayer control){
 		
 		List<Integer> pList = new ArrayList<Integer>();         //敌方单位的站位，友方允许穿过
 		List<Integer> nList = new ArrayList<Integer>();         //敌方单位附近1个单元格
 		
-		List<Corps> cList = list(control, Death.Status_Live);
-		List<Corps> eList = list(Death.Status_Live);            //非友方单位
+		List<Corps> cList = list(control, IDeath.Status_Live);
+		List<Corps> eList = list(IDeath.Status_Live);            //非友方单位
 		eList.removeAll(cList);
 		
 		for(Corps corps : eList){
@@ -1198,11 +1193,12 @@ public class HoneycombGround implements IGround {
 	 * @param start
 	 * @param stop 
 	 * @param moveType 移动类型
+	 * @param control 当前控制者，用于计算敌人的站位
 	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达，即MAP中为-1，则返回null
 	 */
-	private List route(Integer start, Integer stop, Integer moveType){
+	private List route(Integer start, Integer stop, Integer moveType, IPlayer control){
 		updateMAP_Landform(moveType);           //加载地形
-		updateMAP_Stance();                     //加载站位
+		updateMAP_Stance(control);                     //加载站位
 		
 		PathFinding pathFinding = new PathFinding(MAP,hit);
 		
