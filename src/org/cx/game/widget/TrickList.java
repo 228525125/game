@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.observer.NotifyInfo;
@@ -15,9 +15,9 @@ public class TrickList {
 
 	private List<ITrick> trickList = new ArrayList<ITrick>();
 	
-	private Place place;
+	private AbstractPlace place;
 	
-	public TrickList(Place place) {
+	public TrickList(AbstractPlace place) {
 		// TODO Auto-generated constructor stub
 		super();
 		this.place = place;
@@ -54,7 +54,7 @@ public class TrickList {
 			return null;
 	}
 
-	public Place getOwner() {
+	public AbstractPlace getOwner() {
 		// TODO Auto-generated method stub
 		return place;
 	}

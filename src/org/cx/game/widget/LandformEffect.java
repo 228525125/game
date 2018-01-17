@@ -62,7 +62,7 @@ public class LandformEffect {
 		return moveType_Landform.get(moveType).get(landform);
 	}
 	
-	public static List<Integer> getDisable(Integer moveType, Map<Integer, Place> ground){
+	public static List<Integer> getDisable(Integer moveType, Map<Integer, AbstractPlace> ground){
 		List<Integer> list = new ArrayList<Integer>();
 		for(Integer pos : ground.keySet()){
 			if(Integer.valueOf(-1).equals(moveType_Landform.get(moveType).get(ground.get(pos).getLandform())))

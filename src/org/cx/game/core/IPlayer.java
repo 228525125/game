@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.widget.IGround;
@@ -67,23 +67,16 @@ public interface IPlayer
 	 * 玩家拥有的英雄
 	 * @return
 	 */
-	public List<Corps> getHeroList();
+	public List<AbstractCorps> getHeroList();
 	
-	public void addHero(Corps hero);
+	public void addHero(AbstractCorps hero);
 	
 	/**
 	 * 获取所有随从
 	 * @param status
 	 * @return
 	 */
-	public List<Corps> getAttendantList(Integer status);
-	
-	/**
-	 * 获取激活状态的随从
-	 * @param activate
-	 * @return
-	 */
-	public List<Corps> getAttendantList(Boolean activate);
+	public List<AbstractCorps> getAttendantList(Integer status);
 	
 	/**
 	 * 人口限制

@@ -6,7 +6,7 @@ import java.util.Observable;
 
 import org.cx.game.exception.CommandValidatorException;
 import org.cx.game.exception.ValidatorException;
-import org.cx.game.out.Response;
+import org.cx.game.out.AbstractResponse;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;

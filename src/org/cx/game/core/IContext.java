@@ -2,7 +2,7 @@ package org.cx.game.core;
 
 import java.util.List;
 
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
@@ -15,18 +15,16 @@ public interface IContext extends Observable {
 	public final static String ControlPlayer = "ControlPlayer";
 	
 	public IControlQueue getControlQueue();
+	
+	public AbstractPlayState getDeployState();
+	
+	public AbstractPlayState getDoneState();
+	
+	public AbstractPlayState getStartState();
+	
+	public AbstractPlayState getFinishState();
 
-	public void setControlQueue(IControlQueue queue);
-	
-	public PlayState getDeployState();
-	
-	public PlayState getDoneState();
-	
-	public PlayState getStartState();
-	
-	public PlayState getFinishState();
-
-	public void setPlayState(PlayState playState);
+	public void setPlayState(AbstractPlayState playState);
 
 	/**
 	 * 比赛开始
@@ -55,6 +53,11 @@ public interface IContext extends Observable {
 	public void finish() throws RuleValidatorException;
 	
 	/**
+	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
+	 */
+	public int getBout();
+	
+	/**
 	 * 当前天数，从游戏开始算起
 	 * @return
 	 */
@@ -68,9 +71,7 @@ public interface IContext extends Observable {
 	 */
 	public Integer getWeek();
 	
-	public void addWeek() throws RuleValidatorException; 
-
-	public int getBout();
+	public void addWeek() throws RuleValidatorException;
 
 	/**
 	 * 当玩家开始部署时，回合数加1

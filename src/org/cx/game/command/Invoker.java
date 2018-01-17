@@ -6,7 +6,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.core.Record;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.exception.ValidatorException;
-import org.cx.game.out.Response;
+import org.cx.game.out.AbstractResponse;
 
 public class Invoker {
 
@@ -35,8 +35,8 @@ public class Invoker {
 	 * 把执行中观察的结果反馈给前台
 	 */
 	private void response(){
-		response = Response.process.get().toString();
-		Response.process.get().delete(0, Response.process.get().length());
+		response = AbstractResponse.process.get().toString();
+		AbstractResponse.process.get().delete(0, AbstractResponse.process.get().length());
 		
 		record();
 	}

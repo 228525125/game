@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
 
@@ -17,11 +17,11 @@ import org.cx.game.observer.NotifyInfo;
  */
 public class Cemetery {
 	
-	private List<Corps> corpsList = new ArrayList<Corps>();
+	private List<AbstractCorps> corpsList = new ArrayList<AbstractCorps>();
 	
-	private Place place;
+	private AbstractPlace place;
 	
-	public Cemetery(Place place) {
+	public Cemetery(AbstractPlace place) {
 		// TODO Auto-generated constructor stub
 		super();
 		this.place = place;
@@ -31,7 +31,7 @@ public class Cemetery {
 	/**
 	 * 进入墓地
 	 */
-	void add(Corps corps) {
+	void add(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		corpsList.add(corps); 
 	}
@@ -40,11 +40,11 @@ public class Cemetery {
 	 * 移出墓地
 	 * @param corps
 	 */
-	void remove(Corps corps){				
+	void remove(AbstractCorps corps){				
 		corpsList.remove(corps);
 	}
 	
-	public Place getOwner() {
+	public AbstractPlace getOwner() {
 		// TODO Auto-generated method stub
 		return place;
 	}
@@ -55,12 +55,12 @@ public class Cemetery {
 	 * @param corps
 	 * @return
 	 */
-	public Integer indexOf(Corps corps) {
+	public Integer indexOf(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		return corpsList.indexOf(corps);
 	}
 	
-	public Boolean contains(Corps corps) {
+	public Boolean contains(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		return corpsList.contains(corps);
 	}
@@ -70,7 +70,7 @@ public class Cemetery {
 		return corpsList.size();
 	}
 
-	public Corps getCorps(Integer index) {
+	public AbstractCorps getCorps(Integer index) {
 		// TODO Auto-generated method stub
 		if(index<getSize())
 			return corpsList.get(index);
@@ -78,7 +78,7 @@ public class Cemetery {
 			return null;
 	}
 
-	public List<Corps> getList() {
+	public List<AbstractCorps> getList() {
 		return corpsList;
 	}
 } 

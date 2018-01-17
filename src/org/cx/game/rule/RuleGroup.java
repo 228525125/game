@@ -3,7 +3,6 @@ package org.cx.game.rule;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cx.game.action.Attack;
 import org.cx.game.action.IAction;
 import org.cx.game.intercepter.IInterceptable;
 
@@ -33,15 +32,5 @@ public class RuleGroup {
 		}
 		
 		this.ruleList.clear();          //清除多余规则，释放内存
-	}
-	
-	public static void main(String[] args) {
-		IAction ac = new Attack();
-		Class acl = ac.getClass();
-		/*System.out.println("Attack的父类是："+acl.getSuperclass());
-		for(Class clazz : acl.getInterfaces())
-			System.out.println("Attack的接口包括："+clazz);*/
-		
-		System.out.println(ac.getClass().equals(Attack.class));
 	}
 }

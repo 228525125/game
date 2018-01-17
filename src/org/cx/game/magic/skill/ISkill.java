@@ -1,7 +1,10 @@
 package org.cx.game.magic.skill;
 
+import java.util.List;
+
+import org.cx.game.action.IAction;
 import org.cx.game.action.IUpgrade;
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.magic.IMagic;
 
@@ -16,9 +19,11 @@ public interface ISkill extends IMagic {
 	 * 所属对象
 	 * @return
 	 */
-	public Corps getOwner();
+	public AbstractCorps getOwner();
 	
-	public void setOwner(Corps corps);
+	public void setOwner(AbstractCorps corps);
+	
+	public List<Integer> getConjureRange();
 	
 	/**
 	 * 技能使用范围
@@ -26,7 +31,7 @@ public interface ISkill extends IMagic {
 	 */
 	public Integer getRange();
 	
-	public IUpgrade getUpgrade();
+	public IAction getUpgrade();
 	
 	/**
 	 * 升级技能

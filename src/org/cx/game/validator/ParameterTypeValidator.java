@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.cx.game.magic.skill.IActiveSkill;
 import org.cx.game.tools.I18n;
 
 /**

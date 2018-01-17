@@ -1,19 +1,17 @@
 package org.cx.game.widget.building;
 
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.intercepter.Intercepter;
+import org.cx.game.intercepter.AbstractIntercepter;
 
-public class ProcessOptionExecute extends Process {
+public class ProcessOptionExecute extends AbstractProcess {
 
-	private IOption option = null;
 	private Object[] parameter = null; 
 	
 	public ProcessOptionExecute(Integer waitBout, IOption option) {
-		super(waitBout, option);
+		super(waitBout, option.getOwner().getPlayer(), option);
 		// TODO Auto-generated constructor stub
-		this.option = option;
 		
-		recordIntercepter(this.option.getExecute(), new Intercepter() {
+		recordIntercepter(getOwner().getExecute(), new AbstractIntercepter() {
 			
 			@Override
 			public void before(Object[] args) {
@@ -40,9 +38,10 @@ public class ProcessOptionExecute extends Process {
 		// TODO Auto-generated method stub
 		if(Integer.valueOf(0).equals(getRemainBout())){
 			invalid();
+			getOwner().setAllow(true);
 
 			try {
-				this.option.getExecute().execute(parameter);         //参数 可能有问题
+				getOwner().getExecute().execute(parameter);         //参数 可能有问题
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -6,12 +6,12 @@ import java.util.Map;
 import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.core.IPlayer;
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.ISkill;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.Place;
+import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
@@ -47,8 +47,8 @@ public class ParameterExpressionBuffer {
 		return (IGround) bufferMap.get(CommandBuffer.GROUND);
 	}
 	
-	public Place getPlace(){
-		return (Place) bufferMap.get(CommandBuffer.PLACE);
+	public AbstractPlace getPlace(){
+		return (AbstractPlace) bufferMap.get(CommandBuffer.PLACE);
 	}
 	
 	public IBuilding getBuilding(){
@@ -67,8 +67,8 @@ public class ParameterExpressionBuffer {
 		return (TrickList) bufferMap.get(CommandBuffer.TRICKLIST);
 	}
 	
-	public Corps getCorps(){
-		return (Corps)bufferMap.get(CommandBuffer.CORPS);
+	public AbstractCorps getCorps(){
+		return (AbstractCorps)bufferMap.get(CommandBuffer.CORPS);
 	}
 	
 	public ISkill getSkill(){
@@ -107,7 +107,7 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setPlace(Place place){
+	public void setPlace(AbstractPlace place){
 		if(null!=place){
 			setGround(place.getOwner());
 			
@@ -149,13 +149,13 @@ public class ParameterExpressionBuffer {
 		
 	}
 	
-	public void setCorps(Corps corps){
+	public void setCorps(AbstractCorps corps){
 		if(null!=corps){
 			setGround(corps.getGround());
 			
 			IGround ground = corps.getGround();
 			
-			Place place = ground.getPlace(ground.getPosition(corps));
+			AbstractPlace place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place);
 			
 			/*if(IAction.Status_Death.equals(corps.getDeath().getStatus())){

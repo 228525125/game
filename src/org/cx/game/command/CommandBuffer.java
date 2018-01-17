@@ -7,12 +7,12 @@ import java.util.Queue;
 
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.IPlayer;
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.ISkill;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.Place;
+import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
@@ -75,7 +75,7 @@ public class CommandBuffer {
 			IGround ground = (IGround) object;
 			setGround(ground, bufferMap);
 		}else if(PLACE.equals(item)){
-			Place place = (Place) object;
+			AbstractPlace place = (AbstractPlace) object;
 			setPlace(place, bufferMap);
 		}else if(BUILDING.equals(item)){
 			IBuilding building = (IBuilding) object;
@@ -90,7 +90,7 @@ public class CommandBuffer {
 			TrickList trickList = (TrickList) object;
 			setTrickList(trickList, bufferMap);
 		}else if(CORPS.equals(item)){
-			Corps corps = (Corps) object;
+			AbstractCorps corps = (AbstractCorps) object;
 			setCorps(corps, bufferMap);
 		}else if(SKILL.equals(item)){
 			ISkill skill = (ISkill) object;
@@ -120,8 +120,8 @@ public class CommandBuffer {
 		return (IGround) element().get(GROUND);
 	}
 	
-	public Place getPlace(){
-		return (Place) element().get(PLACE);
+	public AbstractPlace getPlace(){
+		return (AbstractPlace) element().get(PLACE);
 	}
 	
 	public IBuilding getBuilding(){
@@ -140,8 +140,8 @@ public class CommandBuffer {
 		return (TrickList) element().get(TRICKLIST);
 	}
 	
-	public Corps getCorps(){
-		return (Corps) element().get(CORPS);
+	public AbstractCorps getCorps(){
+		return (AbstractCorps) element().get(CORPS);
 	}
 	
 	public ISkill getSkill(){
@@ -156,8 +156,8 @@ public class CommandBuffer {
 		element().clear();
 	}
 	
-	public Corps lastCorps(){
-		return (Corps) last().get(CORPS);
+	public AbstractCorps lastCorps(){
+		return (AbstractCorps) last().get(CORPS);
 	}
 	
 	public Object get(String item){
@@ -206,7 +206,7 @@ public class CommandBuffer {
 		if (item instanceof IGround) {
 			return GROUND;
 		}
-		if (item instanceof Place) {
+		if (item instanceof AbstractPlace) {
 			return PLACE;
 		}
 		if (item instanceof IBuilding) {
@@ -221,7 +221,7 @@ public class CommandBuffer {
 		if(item instanceof TrickList){
 			return TRICKLIST;
 		}
-		if (item instanceof Corps) {
+		if (item instanceof AbstractCorps) {
 			return CORPS;
 		}
 		if (item instanceof ISkill) {
@@ -263,7 +263,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setPlace(Place place, Map<String, Object> bufferMap){
+	private void setPlace(AbstractPlace place, Map<String, Object> bufferMap){
 		if(null!=place){
 			setGround(place.getOwner(), bufferMap);
 			
@@ -304,13 +304,13 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setCorps(Corps corps, Map<String, Object> bufferMap){
+	private void setCorps(AbstractCorps corps, Map<String, Object> bufferMap){
 		if(null!=corps){
 			setGround(corps.getGround(), bufferMap);
 			
 			IGround ground = corps.getGround();
 			
-			Place place = ground.getPlace(ground.getPosition(corps));
+			AbstractPlace place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place, bufferMap);
 			
 			/*if(IDeath.Status_Death.equals(corps.getDeath().getStatus())){

@@ -4,15 +4,14 @@ import org.cx.game.command.CommandBuffer;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.command.expression.ParameterExpressionBuffer;
 import org.cx.game.core.IPlayer;
-import org.cx.game.corps.Corps;
-import org.cx.game.magic.skill.IActiveSkill;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.ISkill;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.tools.I18n;
 import org.cx.game.tools.Util;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.IGround;
-import org.cx.game.widget.Place;
+import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
@@ -68,7 +67,7 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						ret = false;
 						break;
 					}else{
-						Place place = getBuffer().getGround().getPlace(Integer.valueOf(position));
+						AbstractPlace place = getBuffer().getGround().getPlace(Integer.valueOf(position));
 						parameterObject = place;
 						getBuffer().setPlace(place);
 					}
@@ -142,13 +141,13 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						break;
 					}else{
 						if(null!=getBuffer().getGround()){
-							Place place = getBuffer().getPlace();
+							AbstractPlace place = getBuffer().getPlace();
 							if(null==place){
 								addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 								ret = false;
 								break;
 							}
-							Corps corps = null;
+							AbstractCorps corps = null;
 							if(null!=place){
 								if(null!=getBuffer().getCemetery())
 									corps = getBuffer().getCemetery().getCorps(Integer.valueOf(position));
@@ -162,12 +161,12 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				}
 				
 				if(CommandBuffer.SKILL.equals(item)){
-					if(!(getBuffer().getCorps() instanceof Corps)){
+					if(!(getBuffer().getCorps() instanceof AbstractCorps)){
 						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
-						Corps corps = (Corps) getBuffer().getCorps();
+						AbstractCorps corps = (AbstractCorps) getBuffer().getCorps();
 						ISkill skill = corps.getSkill(Integer.valueOf(position));
 						parameterObject = skill;
 						getBuffer().setSkill(skill);

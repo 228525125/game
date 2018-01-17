@@ -1,6 +1,6 @@
 package org.cx.game.magic.buff;
 
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
@@ -41,7 +41,7 @@ public interface IBuff extends IInterceptable,Observable,IIntercepter,IMagic,IRe
 	/**
 	 * 受影响者
 	 */
-	public Corps getOwner();
+	public AbstractCorps getOwner();
 	
 	/**
 	 * 通知类型

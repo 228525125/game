@@ -1,15 +1,10 @@
 package org.cx.game.widget.building;
 
-import org.cx.game.action.IExecute;
-
-public class ProcessOptionSpacing extends Process {
-
-	private IOption option = null;
+public class ProcessOptionSpacing extends AbstractProcess {
 	
 	public ProcessOptionSpacing(Integer waitBout, IOption option) {
 		// TODO Auto-generated constructor stub
-		super(waitBout, option);
-		this.option = option;
+		super(waitBout, option.getOwner().getPlayer(), option);
 	}
 	
 	@Override
@@ -23,7 +18,7 @@ public class ProcessOptionSpacing extends Process {
 		// TODO Auto-generated method stub
 		if(Integer.valueOf(0).equals(getRemainBout())){
 			invalid();
-			this.option.setAllow(true);
+			getOwner().setAllow(true);
 		}
 	}
 

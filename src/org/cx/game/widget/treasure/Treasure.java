@@ -1,6 +1,6 @@
 package org.cx.game.widget.treasure;
 
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 
@@ -31,7 +31,7 @@ public abstract class Treasure implements ITreasure {
 	}
 
 	@Override
-	public void picked(Corps corps) throws RuleValidatorException {
+	public void picked(AbstractCorps corps) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		getPicked().execute(corps);
 	}

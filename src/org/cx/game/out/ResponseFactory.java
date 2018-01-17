@@ -24,16 +24,16 @@ import org.dom4j.io.SAXReader;
 
 public class ResponseFactory {
 	
-	private static Response response = null;
+	private static AbstractResponse response = null;
 	
-	public static Response getResponse(){
+	public static AbstractResponse getResponse(){
 		if(null==response){
-			response = getInstance(Response.Response_Format_DEFAULT);
+			response = getInstance(AbstractResponse.Response_Format_DEFAULT);
 		}
 		return response;
 	}
 	
-	public static Response getInstance(String responseName){
+	public static AbstractResponse getInstance(String responseName){
 		Element configEl = getRoot();
 		Element responseEl = configEl.element(XmlUtil.GameConfig_ResponseFormat);
 		for(Iterator it = responseEl.elementIterator();it.hasNext();){
@@ -42,7 +42,7 @@ public class ResponseFactory {
 				Class clazz;
 				try {
 					clazz = Class.forName(el.element(XmlUtil.GameConfig_FormatClass).getText());
-					return (Response) clazz.newInstance();
+					return (AbstractResponse) clazz.newInstance();
 				} catch (ReflectiveOperationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

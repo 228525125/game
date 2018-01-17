@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.core.IPlayer;
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.building.ProcessOptionExecute;
 import org.cx.game.widget.building.ProcessOptionSpacing;
-import org.cx.game.widget.building.Process;
+import org.cx.game.widget.building.AbstractProcess;
 
-public class Execute extends Action implements IExecute {
+public class Execute extends AbstractAction implements IExecute {
 	
 	public IOption getOwner() {
 		// TODO Auto-generated method stub
@@ -24,11 +24,9 @@ public class Execute extends Action implements IExecute {
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		
-		IPlayer player = null;
 		Integer position = null;
 		
 		IBuilding building = getOwner().getOwner();
-		player = building.getPlayer();
 		position = building.getPosition();
 		
 		Map<String,Object> map = new HashMap<String,Object>();

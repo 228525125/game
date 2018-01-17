@@ -44,11 +44,11 @@ public class CorpsFactory {
 		return null;
 	}
 
-	private static Corps getInstance(Element corpsEl){
+	private static AbstractCorps getInstance(Element corpsEl){
 		ObjectTypeBuilder otb = new ObjectTypeBuilder();
 		try {
 			new ObjectTypeParse(otb).parse(corpsEl);
-			Corps corps = (Corps) otb.builder();
+			AbstractCorps corps = (AbstractCorps) otb.builder();
 			return corps;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -60,20 +60,20 @@ public class CorpsFactory {
 		return null;
 	}
 	
-	public static Corps getInstance(Integer cid, IPlayer player){
+	public static AbstractCorps getInstance(Integer cid, IPlayer player){
 		Element corpsEl = getElement(cid);
-		Corps corps = getInstance(corpsEl);
+		AbstractCorps corps = getInstance(corpsEl);
 		corps.setPlayer(player);
 		corps.setId(Util.newCount());
 		return corps;
 	}
 	
-	public static List<Corps> getInstances(List<Integer> cid, IPlayer player){
-		List<Corps> list = new ArrayList<Corps>();
+	public static List<AbstractCorps> getInstances(List<Integer> cid, IPlayer player){
+		List<AbstractCorps> list = new ArrayList<AbstractCorps>();
 		
 		for(Integer id : cid){
 			Element corpsEl = getElement(id);
-			Corps corps = getInstance(corpsEl);
+			AbstractCorps corps = getInstance(corpsEl);
 			corps.setPlayer(player);
 			corps.setId(Util.newCount());
 			list.add(getInstance(corpsEl));

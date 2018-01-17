@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Observable;
 
 import org.cx.game.core.IPlayer;
-import org.cx.game.corps.Corps;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.Response;
+import org.cx.game.out.AbstractResponse;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.rule.RuleGroupFactory;
 
@@ -188,14 +188,10 @@ public class ControlQueue extends Observable implements IControlQueue {
 	
 	private void insertOtherQueue(Place place){
 		Integer count = place.getCount();
-		Integer consume = 100;        
+		Integer consume = 100;
 		Integer speed = 0;
 		if (place.getObject() instanceof IPlayer) {
 			speed = consume;
-		}
-		if (place.getObject() instanceof Corps) {
-			Corps corps = (Corps) place.getObject();
-			speed = corps.getActivate().getSpeed();
 		}
 		
 		place.setCount(count + speed);          //当加入下一个队列时，表示下一个回合，所以要增加一次活力
