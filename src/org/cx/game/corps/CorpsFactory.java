@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
@@ -64,7 +65,6 @@ public class CorpsFactory {
 		Element corpsEl = getElement(cid);
 		AbstractCorps corps = getInstance(corpsEl);
 		corps.setPlayer(player);
-		corps.setId(Util.newCount());
 		return corps;
 	}
 	
@@ -75,7 +75,6 @@ public class CorpsFactory {
 			Element corpsEl = getElement(id);
 			AbstractCorps corps = getInstance(corpsEl);
 			corps.setPlayer(player);
-			corps.setId(Util.newCount());
 			list.add(getInstance(corpsEl));
 		}
 		return list;

@@ -3,8 +3,8 @@ package org.cx.game.widget.building;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.action.IUpgrade;
-import org.cx.game.action.AbstractUpgrade;
+import org.cx.game.action.Upgrade;
+import org.cx.game.action.IAction;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -15,7 +15,7 @@ import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
-public class UpgradeBuilding extends AbstractUpgrade implements IUpgrade {
+public class UpgradeBuilding extends Upgrade implements IAction {
 	
 	public UpgradeBuilding(Map<Integer, String> requirement) {
 		super(requirement);
@@ -25,10 +25,7 @@ public class UpgradeBuilding extends AbstractUpgrade implements IUpgrade {
 	@Override
 	public void action(Object... objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		
-		Integer level = getLevel();
-		level += 1;
-		setLevel(level);
+		super.action(objects);
 		
 		getOwner().setStatus(IBuilding.Building_Status_Complete);
 		

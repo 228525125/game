@@ -1,5 +1,6 @@
 package org.cx.game.widget;
 
+import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
@@ -92,7 +93,8 @@ public abstract class AbstractPlace {
 
 	void in(AbstractCorps corps) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		getPlaceInAction().execute(corps);
+		IAction action = new ActionProxyHelper(getPlaceInAction());
+		action.action(corps);
 	}
 	
 	void inCemetery(AbstractCorps corps) {

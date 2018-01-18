@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.ISkill;
 import org.cx.game.core.AbstractContext;
@@ -121,7 +123,8 @@ public abstract class AbstractSkill extends Observable implements ISkill {
 	@Override
 	public void upgrade() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		getUpgrade().execute();
+		IAction action = new ActionProxyHelper(getUpgrade());
+		action.action();
 	}
 
 }

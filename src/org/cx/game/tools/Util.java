@@ -162,13 +162,13 @@ public class Util {
 	/**
 	 * 用于分配playId
 	 */
-	private static Long count = 0l;
+	private static Integer count = 1;
 	
 	/**
 	 * 始终返回一个唯一的值
 	 * @return
 	 */
-	public static Long newCount(){
+	public static Integer newCount(){
 		return count+=1;
 	}
 	

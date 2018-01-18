@@ -3,7 +3,6 @@ package org.cx.game.magic.skill;
 import java.util.List;
 
 import org.cx.game.action.IAction;
-import org.cx.game.action.IUpgrade;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.magic.IMagic;

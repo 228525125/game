@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.corps.AbstractCorps;
@@ -39,6 +40,8 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		this.name = name;
 		
 		this.resource = new Resource(0, 0, 0, 0);
+		
+		commandBuffer = new CommandBuffer(this);
 	}
 	
 	@Override
@@ -88,14 +91,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		return this.heroList;
 	}
 	
-	/*private Map<String,Object> data = new HashMap<String,Object>();
-	
-	@Override
-	public Object getObject(String type) {
-		// TODO Auto-generated method stub
-		return data.get(type);
-	}*/
-	
 	@Override
 	public CommandBuffer getCommandBuffer() {
 		// TODO Auto-generated method stub
@@ -112,12 +107,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	public void setContext(IContext context) {
 		// TODO Auto-generated method stub
 		this.context = context;
-		
-		//command会用到
-		//data.put(CommandBuffer.GROUND, this.ground);
-		//data.put(CommandBuffer.OWN, this);
-		
-		commandBuffer = new CommandBuffer(this);
 	}
 	
 	public IResource getResource() {
@@ -228,10 +217,9 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		}
 	}
 	
-	public abstract IAction getAddBoutAction();
-	
 	public void addBout() throws RuleValidatorException{
-		getAddBoutAction().execute();
+		IAction action = new ActionProxyHelper(getAddBoutAction());
+		action.action();
 	}
 	
 	/**

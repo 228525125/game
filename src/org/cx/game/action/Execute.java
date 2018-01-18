@@ -13,7 +13,7 @@ import org.cx.game.widget.building.ProcessOptionExecute;
 import org.cx.game.widget.building.ProcessOptionSpacing;
 import org.cx.game.widget.building.AbstractProcess;
 
-public class Execute extends AbstractAction implements IExecute {
+public class Execute extends AbstractAction implements IAction {
 	
 	public IOption getOwner() {
 		// TODO Auto-generated method stub

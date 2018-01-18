@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.cx.game.action.IAction;
-import org.cx.game.action.IExecute;
 import org.cx.game.core.IContext;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;

@@ -39,22 +39,6 @@ public abstract class AbstractAction extends Observable implements IAction {
 	public Object getOwner() {
 		return owner;
 	}
-	
-	@Override
-	public void execute(Object... objects) throws RuleValidatorException {
-		// TODO Auto-generated method stub
-		/* 
-		 * 执行规则验证
-		 */
-		doValidator();
-		
-		if(hasError()){
-			throw new RuleValidatorException(getErrors().getMessage());
-		}else{
-			Object proxy = ProxyFactory.getProxy(this);     
-			((IAction)proxy).action(objects);
-		}
-	}
 
 	@Override
 	public void addIntercepter(IIntercepter intercepter) {

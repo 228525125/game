@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.UUID;
 
+import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.IAction;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.ResponseFactory;
@@ -120,5 +122,26 @@ public abstract class AbstractContext extends Observable implements IContext
 	public IGround getGround() {
 		// TODO Auto-generated method stub
 		return this.ground;
-	}	
+	}
+	
+	@Override
+	public void addBout() throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		IAction action = new ActionProxyHelper(getAddBoutAction());
+		action.action();
+	}
+	
+	@Override
+	public void addDay() throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		IAction action = new ActionProxyHelper(getAddDayAction());
+		action.action();
+	}
+	
+	@Override
+	public void addWeek() throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		IAction action = new ActionProxyHelper(getAddWeekAction());
+		action.action();
+	}
 }

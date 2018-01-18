@@ -2,11 +2,8 @@ package org.cx.game.widget.building;
 
 import java.util.List;
 
-import org.cx.game.action.IExecute;
+import org.cx.game.action.Execute;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.exception.ValidatorException;
-import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.observer.Observable;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.widget.IGround;
 
@@ -79,7 +76,7 @@ public interface IOption extends IValidatable {
 	 */
 	public List<Integer> getExecuteRange(IGround ground);
 	
-	public IExecute getExecute();
+	public Execute getExecute();
 	
 	/**
 	 * 执行选项

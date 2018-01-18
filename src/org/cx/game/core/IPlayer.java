@@ -26,11 +26,7 @@ public interface IPlayer
 	
 	public void setContext(IContext context);
 	
-	//public Object getObject(String type);
-	
 	public IResource getResource();
-	
-	public void setResource(IResource res);
 	
 	/**
 	 * 改变资源
@@ -94,14 +90,14 @@ public interface IPlayer
 
 	public void addToRation(Integer ration);
 	
+	public IAction getAddBoutAction();
+	
 	/**
 	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
 	 */
 	public Integer getBout();
 	
 	public void addBout() throws RuleValidatorException;
-	
-	public IAction getAddBoutAction();
 	
 	/**
 	 * 是否为非玩家控制角色

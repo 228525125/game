@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.cx.game.action.IUpgrade;
+import org.cx.game.action.Upgrade;
+import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.IAction;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -179,11 +181,11 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 		this.upgradeRequirement = upgradeRequirement;
 	}
 	
-	private IUpgrade upgrade = null;
+	private Upgrade upgrade = null;
 
-	public IUpgrade getUpgrade() {
+	public Upgrade getUpgrade() {
 		if(null==upgrade){
-			IUpgrade upgrade = new UpgradeBuilding(upgradeRequirement);
+			Upgrade upgrade = new UpgradeBuilding(upgradeRequirement);
 			upgrade.setLevel(level);
 			upgrade.setLevelLimit(levelLimit);
 			upgrade.setOwner(this);			
@@ -195,7 +197,8 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 	@Override
 	public void upgrade() throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		this.upgrade.execute();
+		IAction action = new ActionProxyHelper(getUpgrade());
+		action.action();
 	}
 	
 	public void demolish(){

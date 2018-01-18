@@ -3,7 +3,7 @@ package org.cx.game.widget.building;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.action.IUpgrade;
+import org.cx.game.action.Upgrade;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.Observable;
@@ -132,7 +132,7 @@ public interface IBuilding {
 	 */
 	public void addOption(IOption option);
 	
-	public IUpgrade getUpgrade(); 
+	public Upgrade getUpgrade(); 
 	
 	/**
 	 * 升级建筑

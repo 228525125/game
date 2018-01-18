@@ -2,6 +2,7 @@ package org.cx.game.core;
 
 import java.util.List;
 
+import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
@@ -52,10 +53,21 @@ public interface IContext extends Observable {
 	 */
 	public void finish() throws RuleValidatorException;
 	
+	public IAction getAddBoutAction();
+	
 	/**
 	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
 	 */
 	public int getBout();
+	
+	/**
+	 * 当玩家开始部署时，回合数加1
+	 * @throws RuleValidatorException 
+	 *
+	 */
+	public void addBout() throws RuleValidatorException;
+	
+	public IAction getAddDayAction();
 	
 	/**
 	 * 当前天数，从游戏开始算起
@@ -65,6 +77,8 @@ public interface IContext extends Observable {
 	
 	public void addDay() throws RuleValidatorException;
 	
+	public IAction getAddWeekAction();
+	
 	/**
 	 * 周
 	 * @return
@@ -72,13 +86,6 @@ public interface IContext extends Observable {
 	public Integer getWeek();
 	
 	public void addWeek() throws RuleValidatorException;
-
-	/**
-	 * 当玩家开始部署时，回合数加1
-	 * @throws RuleValidatorException 
-	 *
-	 */
-	public void addBout() throws RuleValidatorException;
 	
 	public List<IPlayer> getPlayerList();
 

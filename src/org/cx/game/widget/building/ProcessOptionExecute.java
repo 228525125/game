@@ -1,5 +1,7 @@
 package org.cx.game.widget.building;
 
+import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.IAction;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.AbstractIntercepter;
 
@@ -41,7 +43,8 @@ public class ProcessOptionExecute extends AbstractProcess {
 			getOwner().setAllow(true);
 
 			try {
-				getOwner().getExecute().execute(parameter);         //参数 可能有问题
+				IAction action = new ActionProxyHelper(getOwner().getExecute());
+				action.action(parameter);
 			} catch (RuleValidatorException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

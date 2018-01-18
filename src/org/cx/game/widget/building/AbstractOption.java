@@ -3,6 +3,8 @@ package org.cx.game.widget.building;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.IAction;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
@@ -142,7 +144,8 @@ public abstract class AbstractOption implements IOption {
 			
 		firing();
 		
-		getExecute().execute(objects);
+		IAction action = new ActionProxyHelper(getExecute());
+		action.action(objects);
 	}
 	
 	private ParameterTypeValidator parameterValidator = null;

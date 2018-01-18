@@ -3,28 +3,27 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 import org.cx.game.widget.treasure.ResourceFactory;
 
-public abstract class AbstractUpgrade extends AbstractAction implements IUpgrade {
+public class Upgrade extends AbstractAction implements IAction {
 
 	private Integer level = 0;
 	private Integer levelLimit = 1;
 	private Map<Integer, String> requirement = new HashMap<Integer, String>();
 	
-	public AbstractUpgrade(Map<Integer, String> requirement) {
+	public Upgrade(Map<Integer, String> requirement) {
 		// TODO Auto-generated constructor stub
 		this.requirement = requirement;
 	}
 	
-	@Override
 	public Integer getLevel() {
 		// TODO Auto-generated method stub
 		return this.level;
 	}
 
-	@Override
 	public void setLevel(Integer level) {
 		// TODO Auto-generated method stub
 		if(!level.equals(this.level)){
@@ -42,7 +41,6 @@ public abstract class AbstractUpgrade extends AbstractAction implements IUpgrade
 		}
 	}
 	
-	@Override
 	public IResource getRequirement() {
 		// TODO Auto-generated method stub
 		String resString = this.requirement.get(Integer.valueOf(getLevel()+1));
@@ -50,5 +48,13 @@ public abstract class AbstractUpgrade extends AbstractAction implements IUpgrade
 			return ResourceFactory.getInstance(resString);
 		else
 			return null;
+	}
+
+	@Override
+	public void action(Object... objects) throws RuleValidatorException {
+		// TODO Auto-generated method stub
+		Integer level = getLevel();
+		level += 1;
+		setLevel(level);
 	}
 }
