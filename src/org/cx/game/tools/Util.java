@@ -222,5 +222,27 @@ public class Util {
 		peBuffer.setSkill(cBuffer.getSkill());
 		peBuffer.setTrick(cBuffer.getTrick());
 	}
+	
+	/**
+	 * 
+	 * @param obj
+	 * @return obj本身的Class，obj子类以及接口的Class
+	
+	public static List<Class> getClasses(Object obj){
+		List<Class> list = new ArrayList<Class>();
+		Class clazz = obj.getClass();
+		list.add(clazz);
+		
+		for(Class c : clazz.getInterfaces())
+			list.add(c);
+		
+		Class superClass = clazz.getSuperclass();
+		while(null!=superClass){
+			list.add(superClass);
+			superClass = superClass.getSuperclass();
+		}
+		
+		return list;
+	} */
 
 }

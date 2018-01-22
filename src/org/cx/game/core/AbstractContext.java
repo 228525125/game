@@ -18,9 +18,8 @@ import org.cx.game.widget.IGround;
 
 public abstract class AbstractContext extends Observable implements IContext
 {	
-	private String playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
+	private String playNo = null;
 	private IControlQueue queue = new ControlQueue();
-	private Long newPlayId = 1l;                          //用于记录本场比赛中生成的id 
 	
 	private AbstractPlayState playState = null;
 	
@@ -31,6 +30,8 @@ public abstract class AbstractContext extends Observable implements IContext
 	
 	public AbstractContext(IGround ground, IPlayer[] players) {
 		// TODO Auto-generated constructor stub
+		playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
+		
 		for(int i=0;i<players.length;i++){
 			playerList.add(players[i]);
 		}
@@ -106,19 +107,6 @@ public abstract class AbstractContext extends Observable implements IContext
 	}
 
 	@Override
-	public void notifyObservers(Object arg0) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg0);
-	}
-
-	@Override
-	public Long newPlayId() {
-		// TODO Auto-generated method stub
-		return newPlayId++;
-	}
-
-	@Override
 	public IGround getGround() {
 		// TODO Auto-generated method stub
 		return this.ground;
@@ -143,5 +131,12 @@ public abstract class AbstractContext extends Observable implements IContext
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddWeekAction());
 		action.action();
+	}
+	
+	@Override
+	public void notifyObservers(Object arg0) {
+		// TODO Auto-generated method stub
+		super.setChanged();
+		super.notifyObservers(arg0);
 	}
 }

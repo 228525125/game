@@ -1,6 +1,7 @@
 package org.cx.game.magic.buff;
 
 import org.cx.game.corps.AbstractCorps;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;

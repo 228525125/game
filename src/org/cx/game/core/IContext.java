@@ -99,12 +99,6 @@ public interface IContext extends Observable {
 	 */
 	public void switchControl() throws RuleValidatorException;
 	
-	/**
-	 * 生成一个唯一的游戏内Id
-	 * @return
-	 */
-	public Long newPlayId();
-	
 	public String getPlayNo();
 	
 	public IGround getGround();

@@ -150,13 +150,9 @@ public abstract class AbstractCorps implements ITag
 	/**
 	 * 自身Buff
 	 */
-	public abstract List<IBuff> getBuffList();
-	public abstract void addBuff(IBuff buff);
-	/**
-	 * 该方法仅用于Buff.invalid
-	 * @param buff
-	 */
-	public abstract void removeBuff(IBuff buff);
+	public abstract List<IBuff> getBuffList();	
+	public abstract IAction getAddBuffAction();
+	public abstract IAction getRemoveBuffAction();
 	public abstract List<IBuff> getBuff(Class clazz);
 	public abstract List<IBuff> getBuff(String className);
 	public abstract void clearBuff();
@@ -165,7 +161,7 @@ public abstract class AbstractCorps implements ITag
 	public abstract List<ISkill> getSkillList();
 	public abstract void setSkillList(List<ISkill> skillList);
 	public abstract ISkill getSkill(Integer type);
-	public abstract void addSkill(ISkill skill);
+	public abstract IAction getAddSkillAction();
 	public abstract Boolean containsSkill(Class clazz);
 
 	public abstract void setGroupPolicy(IPolicyGroup gp);
@@ -174,28 +170,51 @@ public abstract class AbstractCorps implements ITag
 	 * 使用AI自动操作
 	 */
 	public abstract void automation();
-
 	public abstract IAction getActivate();
-
 	public abstract IAction getAttack();
-	
 	public abstract IAction getAttacked();
-
 	public abstract IAction getConjure();
-	
 	public abstract IAction getAffected();
-	
 	public abstract IAction getMove();
-
 	public abstract IAction getCall();
-	
 	public abstract IAction getDeath();
-
 	public abstract IAction getChuck();
-	
 	public abstract IAction getUpgrade();
-	
 	public abstract IAction getPick();
+	
+	public void addBuff(IBuff buff) {
+		IAction action = new ActionProxyHelper(getAddBuffAction());
+		try {
+			action.action(buff);
+		} catch (RuleValidatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 该方法仅用于Buff.invalid
+	 * @param buff
+	 */
+	public void removeBuff(IBuff buff) {
+		IAction action = new ActionProxyHelper(getRemoveBuffAction());
+		try {
+			action.action(buff);
+		} catch (RuleValidatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void addSkill(ISkill skill) {
+		IAction action = new ActionProxyHelper(getAddSkillAction());
+		try {
+			action.action(skill);
+		} catch (RuleValidatorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 激活
