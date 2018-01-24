@@ -9,8 +9,8 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
-import org.cx.game.widget.building.ProcessOptionExecute;
-import org.cx.game.widget.building.ProcessOptionSpacing;
+import org.cx.game.widget.building.OptionExecuteProcess;
+import org.cx.game.widget.building.OptionSpacingProcess;
 import org.cx.game.widget.building.AbstractProcess;
 
 public class Execute extends AbstractAction implements IAction {

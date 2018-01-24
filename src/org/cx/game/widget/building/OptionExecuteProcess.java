@@ -5,11 +5,11 @@ import org.cx.game.action.IAction;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.AbstractIntercepter;
 
-public class ProcessOptionExecute extends AbstractProcess {
+public class OptionExecuteProcess extends AbstractProcess {
 
 	private Object[] parameter = null; 
 	
-	public ProcessOptionExecute(Integer waitBout, IOption option) {
+	public OptionExecuteProcess(Integer waitBout, IOption option) {
 		super(waitBout, option.getOwner().getPlayer(), option);
 		// TODO Auto-generated constructor stub
 		
@@ -18,7 +18,7 @@ public class ProcessOptionExecute extends AbstractProcess {
 			@Override
 			public void before(Object[] args) {
 				// TODO Auto-generated method stub
-				ProcessOptionExecute.this.parameter = (Object[]) args[0];
+				OptionExecuteProcess.this.parameter = (Object[]) args[0];
 			}
 			
 			@Override

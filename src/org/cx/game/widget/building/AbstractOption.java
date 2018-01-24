@@ -94,7 +94,7 @@ public abstract class AbstractOption implements IOption {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
 			setAllow(false);
-			this.spacingProcess = new ProcessOptionSpacing(this.spacingWait, this);
+			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, this);
 		}else
 			setAllow(true);
 	}
@@ -112,7 +112,7 @@ public abstract class AbstractOption implements IOption {
 	private void firing() {
 		if(!Integer.valueOf(0).equals(getExecuteWait())){
 			setAllow(false);
-			this.executeProcess = new ProcessOptionExecute(getExecuteWait(), this);
+			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), this);
 			
 			beforeExecute();
 		}else
