@@ -68,13 +68,6 @@ public interface IPlayer
 	public void addHero(AbstractCorps hero);
 	
 	/**
-	 * 获取所有随从
-	 * @param status
-	 * @return
-	 */
-	public List<AbstractCorps> getAttendantList(Integer status);
-	
-	/**
 	 * 人口限制
 	 * @return
 	 */
@@ -90,14 +83,14 @@ public interface IPlayer
 
 	public void addToRation(Integer ration);
 	
-	public IAction getAddBoutAction();
-	
 	/**
 	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
 	 */
 	public Integer getBout();
 	
 	public void addBout() throws RuleValidatorException;
+	
+	public IAction getAddBoutAction();
 	
 	/**
 	 * 是否为非玩家控制角色

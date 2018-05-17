@@ -11,7 +11,6 @@ import org.cx.game.builder.ObjectTypeBuilder;
 import org.cx.game.builder.ObjectTypeParse;
 import org.cx.game.exception.BuilderException;
 import org.cx.game.exception.ParseException;
-import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.XmlUtil;
 import org.dom4j.Document;

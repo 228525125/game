@@ -10,7 +10,6 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.magic.IMagic;
 import org.cx.game.magic.buff.IBuff;
 import org.cx.game.magic.skill.ISkill;
-import org.cx.game.policy.IPolicyGroup;
 import org.cx.game.tag.ITag;
 import org.cx.game.tag.TagHelper;
 import org.cx.game.tools.I18n;
@@ -164,12 +163,6 @@ public abstract class AbstractCorps implements ITag
 	public abstract IAction getAddSkillAction();
 	public abstract Boolean containsSkill(Class clazz);
 
-	public abstract void setGroupPolicy(IPolicyGroup gp);
-	
-	/**
-	 * 使用AI自动操作
-	 */
-	public abstract void automation();
 	public abstract IAction getActivate();
 	public abstract IAction getAttack();
 	public abstract IAction getAttacked();

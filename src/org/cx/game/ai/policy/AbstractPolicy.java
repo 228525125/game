@@ -1,50 +1,46 @@
-package org.cx.game.policy;
+package org.cx.game.ai.policy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.command.Command;
-import org.cx.game.command.Invoker;
-import org.cx.game.core.IPlayer;
-import org.cx.game.corps.AbstractCorps;
-import org.cx.game.exception.CommandValidatorException;
-import org.cx.game.exception.PolicyValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
 
-public abstract class AbstractPolicy implements IPolicy,IValidatable {
+/**
+ * 策略，是状态的逻辑，不同的状态拥有自己的策略，state.execute方法中被计算，并分解成行为；
+ * 策略用到的所有信息都可应该通过T类获取；
+ * @author chenxian
+ *
+ * @param <T> Agent 智能体
+ */
+public abstract class AbstractPolicy<T> implements IValidatable {
+	
+	public final static Integer PRI_Max = 200;
+	public final static Integer PRI_Very = 180;
+	public final static Integer PRI_High = 150;
+	public final static Integer PRI_Middle = 100;
+	public final static Integer PRI_Default = 100;
+	public final static Integer PRI_Low = 50;
+	public final static Integer PRI_Bottom = 20;
+	public final static Integer PRI_Min = 0;
 	
 	private Integer pri = 0;
 	private Boolean ready = false;
 	
+	private T agent = null;
 	protected Command command = null;
-	
-	private IPolicyGroup groupPolicy = null;
 	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
 
-	@Override
-	public IPolicyGroup getOwner() {
-		// TODO Auto-generated method stub
-		return this.groupPolicy;
-	}
-
-	@Override
-	public void setOwner(IPolicyGroup groupPolicy) {
-		// TODO Auto-generated method stub
-		this.groupPolicy = groupPolicy;
-	}
-
-	@Override
 	public Integer getPri() {
 		// TODO Auto-generated method stub
 		return this.pri;
 	}
-
-	@Override
+	
 	public void setPri(int pri) {
 		// TODO Auto-generated method stub
 		this.pri = pri;
@@ -54,25 +50,28 @@ public abstract class AbstractPolicy implements IPolicy,IValidatable {
 			setReady(false);
 	}
 	
-	@Override
 	public Boolean isReady() {
 		// TODO Auto-generated method stub
 		return this.ready;
 	}
 	
-	@Override
 	public void setReady(Boolean ready) {
 		// TODO Auto-generated method stub
 		this.ready = ready;
 	}
 	
-	@Override
+	public T getAgent(){
+		return this.agent;
+	}
+	public void setAgent(T agent){
+		this.agent = agent;
+	}
+	
 	public void calculate() {
 		// TODO Auto-generated method stub
 		this.errors.clearErrors();
 	}
 	
-	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {

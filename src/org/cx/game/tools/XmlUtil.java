@@ -47,13 +47,23 @@ public class XmlUtil {
 	public final static String Command_Parameter_Expression = "expression";
 	public final static String Command_Option = "option";
 	
-	public final static String Advantage_Advantage = "advantage";
-	public final static String Advantage_Profession_Type = "type";
+	/*public final static String Advantage_Advantage = "advantage";
+	public final static String Advantage_Profession_Type = "type";*/
 	
-	public final static String Move_Move = "move";
+	/*public final static String Move_Move = "move";
 	public final static String Move_Consume = "consume";
 	public final static String Move_MoveType_Type = "type";
-	public final static String Move_Landform_Type = "type";
+	public final static String Move_Landform_Type = "type";*/
+	
+	public final static String GameParameter_TopographicAdvantage = "topographicAdvantage";
+	public final static String GameParameter_Landform = "landform";
+	public final static String GameParameter_Landform_Code = "code";
+	public final static String GameParameter_Object = "object";
+	public final static String GameParameter_Object_Type = "type";
+	public final static String GameParameter_Object_Type_MoveConsume = "MoveConsume";
+	public final static String GameParameter_Object_Type_OffensiveAndDefensiveOfProfession = "OffensiveAndDefensiveOfProfession";
+	public final static String GameParameter_Object_Code = "code";
+	
 	
 	public final static String Corps_Corps = "corps";
 	public final static String Corps_Card = "card";

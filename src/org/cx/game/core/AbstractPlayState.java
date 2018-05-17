@@ -6,13 +6,13 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.out.ResponseFactory;
 
 public abstract class AbstractPlayState extends Observable implements org.cx.game.observer.Observable{
-
+	
+	protected IContext context;
+	
 	public AbstractPlayState() {
 		// TODO Auto-generated constructor stub
 		addObserver(ResponseFactory.getResponse());
 	}
-	
-	protected IContext context;
 
 	public void setContext(IContext context) {
 		this.context = context;
@@ -40,7 +40,7 @@ public abstract class AbstractPlayState extends Observable implements org.cx.gam
 	 * 比赛结束
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void finish() throws RuleValidatorException;;
+	public abstract void finish() throws RuleValidatorException;
 	
 	@Override
 	public void notifyObservers(Object arg0) {

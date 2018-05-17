@@ -115,7 +115,6 @@ public abstract class AbstractPlace {
 		setCorps(null);
 		setEmpty(true);
 		corps.setPosition(null);
-		getOwner().getEmptyList().add(position);
 		
 		return corps;
 	}
@@ -135,11 +134,11 @@ public abstract class AbstractPlace {
 	/**
 	 * 是否可用，有一些因为地形原因而导致不可用(暂时没用)
 	 * @return
-	 */
+	 
 	public Boolean getDisable() {
 		// TODO Auto-generated method stub
 		return this.disable;
-	}
+	}*/
 	
 	/**
 	 * 位置上是否为空

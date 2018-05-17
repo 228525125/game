@@ -28,9 +28,11 @@ import org.dom4j.io.SAXReader;
  */
 public class LandformEffect {
 
-	private static Map<Integer, Map<Integer, Integer>> moveType_Landform = new HashMap<Integer, Map<Integer, Integer>>();  //移动类型与地形对应的消耗
+	private static Map<Integer, Map<Integer, Integer>> landform_MoveType = new HashMap<Integer, Map<Integer, Integer>>();  //地形与移动类型对应的消耗
 	
-	private static Map<Integer, Map<Integer, String>> professionType_Landform = new HashMap<Integer, Map<Integer, String>>();    //职业类型与地形的优劣关系
+	private static Map<Integer, Map<Integer, String>> landform_ProfessionType = new HashMap<Integer, Map<Integer, String>>();    //地形与职业类型的优劣关系
+	
+	private static final Integer Object_Code_Default = 40;               //<object type="MoveConsume" code="40" description="移动消耗默认">1</object>
 	
 	private static Element getRoot(String path) {
 		SAXReader saxReader = new SAXReader();
@@ -49,23 +51,40 @@ public class LandformEffect {
 	}
 	
 	public static Integer getAttackAdvantage(Integer profession, Integer landform){
-		String value = professionType_Landform.get(profession).get(landform);
-		return Integer.valueOf(value.split(",")[0]);
+		Map<Integer, String> profession_atkdef = landform_ProfessionType.get(landform);
+		String value = profession_atkdef.get(profession);
+		if(null==value){
+			value = profession_atkdef.get(Object_Code_Default);
+		}
+		
+		return Integer.valueOf(value.split(",")[0]); 
 	}
 	
 	public static Integer getDefendAdvantage(Integer profession, Integer landform){
-		String value = professionType_Landform.get(profession).get(landform);
+		Map<Integer, String> profession_atkdef = landform_ProfessionType.get(landform);
+		String value = profession_atkdef.get(profession);
+		if(null==value){
+			value = profession_atkdef.get(Object_Code_Default);
+		}
+		
 		return Integer.valueOf(value.split(",")[1]);
 	}
 	
 	public static Integer getConsume(Integer moveType, Integer landform){
-		return moveType_Landform.get(moveType).get(landform);
+		Map<Integer, Integer> moveType_consume = landform_MoveType.get(landform);
+		Integer consume = moveType_consume.get(moveType);
+		if(null==consume){
+			consume = moveType_consume.get(Object_Code_Default);
+		}
+
+		return consume;
 	}
 	
 	public static List<Integer> getDisable(Integer moveType, Map<Integer, AbstractPlace> ground){
 		List<Integer> list = new ArrayList<Integer>();
 		for(Integer pos : ground.keySet()){
-			if(Integer.valueOf(-1).equals(moveType_Landform.get(moveType).get(ground.get(pos).getLandform())))
+			Integer landform = ground.get(pos).getLandform();
+			if(Integer.valueOf(-1).equals(getConsume(moveType, landform)))
 				list.add(pos);
 		}
 		
@@ -73,47 +92,40 @@ public class LandformEffect {
 	}
 	
 	static {
-		Element gameEl = getRoot("move.path");
-		Element moveEl = gameEl.element(XmlUtil.Move_Move);
-		Element consumeEl = moveEl.element(XmlUtil.Move_Consume); 
-		for(Iterator it = consumeEl.elementIterator();it.hasNext();){
-			Element typeEl = (Element) it.next();
-			Integer moveType = Integer.valueOf(typeEl.attribute(XmlUtil.Move_MoveType_Type).getText());
+		Element parameterEl = getRoot("gameparameter.path");
+		Element topographicAdvantageEl = parameterEl.element(XmlUtil.GameParameter_TopographicAdvantage); 
+		for(Iterator it = topographicAdvantageEl.elementIterator();it.hasNext();){
+			Element landformEl = (Element) it.next();
+			Integer landform = Integer.valueOf(landformEl.attribute(XmlUtil.GameParameter_Landform_Code).getText());
 			
-			Map<Integer, Integer> landform_consume = new HashMap<Integer, Integer>();
+			Map<Integer, Integer> moveType_consume = new HashMap<Integer, Integer>();
 			
-			for(Iterator itr = typeEl.elementIterator();itr.hasNext();){
-				Element landformEl = (Element) itr.next();
-				Integer landform = Integer.valueOf(landformEl.attribute(XmlUtil.Move_Landform_Type).getText());
-				Integer consume = Integer.valueOf(landformEl.getText());
-				
-				landform_consume.put(landform, consume);
-				
+			for(Iterator itr = landformEl.elementIterator(XmlUtil.GameParameter_Object);itr.hasNext();){
+				Element objEl = (Element) itr.next();
+				if(XmlUtil.GameParameter_Object_Type_MoveConsume.equals(objEl.attribute(XmlUtil.GameParameter_Object_Type).getText())){
+					Element moveEl = objEl;
+					Integer moveType = Integer.valueOf(moveEl.attribute(XmlUtil.GameParameter_Object_Code).getText());
+					Integer consume = Integer.valueOf(moveEl.getText());
+					
+					moveType_consume.put(moveType, consume);
+				}
 			}
 			
-			moveType_Landform.put(moveType, landform_consume);
-		}
-		
-		gameEl = getRoot("advantage.path");
-		Element advantageEl = gameEl.element(XmlUtil.Advantage_Advantage);
-		
-		for(Iterator it = advantageEl.elementIterator();it.hasNext();){
-			Element professionEl = (Element) it.next();
-			Integer profession = Integer.valueOf(professionEl.attribute(XmlUtil.Advantage_Profession_Type).getText());
+			landform_MoveType.put(landform, moveType_consume);
 			
-			Map<Integer, String> landform_profession = new HashMap<Integer, String>();
-			
-			for(Iterator itr = professionEl.elementIterator();itr.hasNext();){
-				Element landformEl = (Element) itr.next();
-				Integer landform = Integer.valueOf(landformEl.attribute(XmlUtil.Advantage_Profession_Type).getText());
-				String value = landformEl.getText();
-				
-				landform_profession.put(landform, value);
-				
+			Map<Integer, String> profession_atkdef = new HashMap<Integer, String>();
+			for(Iterator itr = landformEl.elementIterator(XmlUtil.GameParameter_Object);itr.hasNext();){
+				Element objEl = (Element) itr.next();
+				if(XmlUtil.GameParameter_Object_Type_OffensiveAndDefensiveOfProfession.equals(objEl.attribute(XmlUtil.GameParameter_Object_Type).getText())){
+					Element professionEl = objEl;
+					Integer professionType = Integer.valueOf(professionEl.attribute(XmlUtil.GameParameter_Object_Code).getText());
+					String value = professionEl.getText();
+					
+					profession_atkdef.put(professionType, value);
+				}
 			}
 			
-			professionType_Landform.put(profession, landform_profession);
+			landform_ProfessionType.put(landform, profession_atkdef);
 		}
-		
 	}
 }

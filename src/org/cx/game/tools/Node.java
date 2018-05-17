@@ -28,7 +28,7 @@ public class Node implements Comparable {
 
 	// get the cost of the Path
 	public int GetCost(Node node) {
-		return CellularDistrict.getShortPathLength(CellularDistrict.pointToInteger(this._Pos.x, this._Pos.y), CellularDistrict.pointToInteger(node._Pos.x, node._Pos.y));
+		return CellularDistrict.getShortPathLength(CellularDistrict.pointToLong(this._Pos.x, this._Pos.y), CellularDistrict.pointToLong(node._Pos.x, node._Pos.y));
 	}
 
 	// check if the node is the destination point

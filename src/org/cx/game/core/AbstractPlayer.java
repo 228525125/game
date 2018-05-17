@@ -179,12 +179,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	}
 	
 	@Override
-	public List<AbstractCorps> getAttendantList(Integer status) {
-		// TODO Auto-generated method stub
-		return getContext().getGround().list(this, status);
-	}
-	
-	@Override
 	public Integer getRationLimit() {
 		return rationLimit;
 	}
