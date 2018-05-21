@@ -91,7 +91,7 @@ public abstract class AbstractPlace {
 	
 	public abstract IAction getPlaceInAction();
 
-	void in(AbstractCorps corps) throws RuleValidatorException {
+	void in(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getPlaceInAction());
 		action.action(corps);
@@ -109,7 +109,7 @@ public abstract class AbstractPlace {
 		getTrickList().add(trick);
 	}
 	
-	AbstractCorps out() throws RuleValidatorException {
+	AbstractCorps out() {
 		// TODO Auto-generated method stub
 		AbstractCorps corps = getCorps();
 		setCorps(null);

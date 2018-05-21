@@ -33,7 +33,7 @@ public abstract class Treasure implements ITreasure {
 	}
 
 	@Override
-	public void picked(AbstractCorps corps) throws RuleValidatorException {
+	public void picked(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getPicked());
 		action.action(corps);

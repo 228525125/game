@@ -53,8 +53,7 @@ public abstract class AbstractGround implements IGround {
 	//-------------------- Corps ---------------------
 
 	@Override
-	public void add(Integer position, AbstractCorps corps)
-			throws RuleValidatorException {
+	public void placement(Integer position, AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		this.livingCorpsList.add(corps);
 		
@@ -107,7 +106,7 @@ public abstract class AbstractGround implements IGround {
 	}
 	
 	@Override
-	public void inCemetery(AbstractCorps corps) throws RuleValidatorException {
+	public void inCemetery(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		AbstractPlace place = getPlace(corps.getPosition());
 		place.out();

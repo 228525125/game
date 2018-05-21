@@ -22,25 +22,25 @@ public abstract class AbstractPlayState extends Observable implements org.cx.gam
 	 * 比赛开始
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void start() throws RuleValidatorException;
+	public abstract void start();
 	
 	/**
 	 * 玩家部署
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void deploy() throws RuleValidatorException;;
+	public abstract void deploy();
 	
 	/**
 	 * 回合结束
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void done() throws RuleValidatorException;
+	public abstract void done();
 	
 	/**
 	 * 比赛结束
 	 * @throws RuleValidatorException 
 	 */
-	public abstract void finish() throws RuleValidatorException;
+	public abstract void finish();
 	
 	@Override
 	public void notifyObservers(Object arg0) {

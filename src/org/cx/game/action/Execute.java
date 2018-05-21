@@ -21,7 +21,7 @@ public class Execute extends AbstractAction implements IAction {
 	}
 	
 	@Override
-	public void action(Object... objects) throws RuleValidatorException {
+	public void action(Object... objects) {
 		// TODO Auto-generated method stub
 		
 		Integer position = null;

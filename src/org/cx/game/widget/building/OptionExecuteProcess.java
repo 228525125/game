@@ -42,13 +42,8 @@ public class OptionExecuteProcess extends AbstractProcess {
 			invalid();
 			getOwner().setAllow(true);
 
-			try {
-				IAction action = new ActionProxyHelper(getOwner().getExecute());
-				action.action(parameter);
-			} catch (RuleValidatorException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			IAction action = new ActionProxyHelper(getOwner().getExecute());
+			action.action(parameter);
 		}
 	}
 

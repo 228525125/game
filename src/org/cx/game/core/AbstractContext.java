@@ -56,19 +56,19 @@ public abstract class AbstractContext extends Observable implements IContext
 		this.playState.setContext(this);
 	}
 
-	public void start() throws RuleValidatorException{
+	public void start(){
 		this.playState.start();
 	}
 	
-	public void deploy() throws RuleValidatorException{
+	public void deploy(){
 		this.playState.deploy();
 	}
 	
-	public void done() throws RuleValidatorException{
+	public void done(){
 		this.playState.done();
 	}
 	
-	public void finish() throws RuleValidatorException{
+	public void finish(){
 		this.playState.finish();
 	}
 	
@@ -94,7 +94,7 @@ public abstract class AbstractContext extends Observable implements IContext
 		notifyObservers(info);
 	}
 	
-	public void switchControl() throws RuleValidatorException{
+	public void switchControl() {
 		Object object = queue.out();
 		
 		setControlPlayer((IPlayer) object);
@@ -113,21 +113,21 @@ public abstract class AbstractContext extends Observable implements IContext
 	}
 	
 	@Override
-	public void addBout() throws RuleValidatorException {
+	public void addBout() {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddBoutAction());
 		action.action();
 	}
 	
 	@Override
-	public void addDay() throws RuleValidatorException {
+	public void addDay() {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddDayAction());
 		action.action();
 	}
 	
 	@Override
-	public void addWeek() throws RuleValidatorException {
+	public void addWeek() {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddWeekAction());
 		action.action();

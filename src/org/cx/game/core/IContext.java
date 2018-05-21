@@ -31,27 +31,27 @@ public interface IContext extends Observable {
 	 * 比赛开始
 	 * @throws RuleValidatorException 
 	 */
-	public void start() throws RuleValidatorException;
+	public void start();
 
 	/**
 	 *  玩家部署
 	 * @throws RuleValidatorException 
 	 *
 	 */
-	public void deploy() throws RuleValidatorException;
+	public void deploy();
 
 	/**
 	 *  回合结束
 	 * @throws RuleValidatorException 
 	 *
 	 */
-	public void done() throws RuleValidatorException;
+	public void done();
 
 	/**
 	 * 比赛结束
 	 * @throws RuleValidatorException 
 	 */
-	public void finish() throws RuleValidatorException;
+	public void finish();
 	
 	public IAction getAddBoutAction();
 	
@@ -65,7 +65,7 @@ public interface IContext extends Observable {
 	 * @throws RuleValidatorException 
 	 *
 	 */
-	public void addBout() throws RuleValidatorException;
+	public void addBout();
 	
 	public IAction getAddDayAction();
 	
@@ -75,7 +75,7 @@ public interface IContext extends Observable {
 	 */
 	public Integer getDay();
 	
-	public void addDay() throws RuleValidatorException;
+	public void addDay();
 	
 	public IAction getAddWeekAction();
 	
@@ -85,7 +85,7 @@ public interface IContext extends Observable {
 	 */
 	public Integer getWeek();
 	
-	public void addWeek() throws RuleValidatorException;
+	public void addWeek();
 	
 	public List<IPlayer> getPlayerList();
 
@@ -97,7 +97,7 @@ public interface IContext extends Observable {
 	 * 交换比赛控制权
 	 * @throws RuleValidatorException 
 	 */
-	public void switchControl() throws RuleValidatorException;
+	public void switchControl();
 	
 	public String getPlayNo();
 	

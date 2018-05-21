@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.cx.game.core.IPlayer;
 import org.cx.game.corps.AbstractCorps;
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.treasure.ITreasure;
 
@@ -58,11 +57,11 @@ public interface IGround {
 	public Integer getYBorder();
 	
 	/**
-	 * 加入容器
-	 * @param position
+	 * 在指定位置放置一个corps
+	 * @param position 位置
 	 * @param corps
 	 */
-	public void add(Integer position, AbstractCorps corps) throws RuleValidatorException;
+	public void placement(Integer position, AbstractCorps corps);
 	
 	public AbstractCorps getCorps(Integer position);
 	
@@ -90,7 +89,7 @@ public interface IGround {
 	 * 进入墓地，例如在战场上死亡
 	 * @param corps 
 	 */
-	public void inCemetery(AbstractCorps corps) throws RuleValidatorException;
+	public void inCemetery(AbstractCorps corps);
 	
 	/**
 	 * 移出墓地，例如英雄复活
@@ -227,6 +226,6 @@ public interface IGround {
 	/**
 	 * 从容器中移出，即corps不存在于place及cemetery；        该方法容易产生误解，不建议保留
 	 
-	public Boolean removeCorps(AbstractCorps corps) throws RuleValidatorException;*/
+	public Boolean removeCorps(AbstractCorps corps);*/
 
 }

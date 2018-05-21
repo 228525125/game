@@ -177,12 +177,7 @@ public abstract class AbstractCorps implements ITag
 	
 	public void addBuff(IBuff buff) {
 		IAction action = new ActionProxyHelper(getAddBuffAction());
-		try {
-			action.action(buff);
-		} catch (RuleValidatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		action.action(buff);
 	}
 	
 	/**
@@ -191,22 +186,12 @@ public abstract class AbstractCorps implements ITag
 	 */
 	public void removeBuff(IBuff buff) {
 		IAction action = new ActionProxyHelper(getRemoveBuffAction());
-		try {
-			action.action(buff);
-		} catch (RuleValidatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		action.action(buff);
 	}
 	
 	public void addSkill(ISkill skill) {
 		IAction action = new ActionProxyHelper(getAddSkillAction());
-		try {
-			action.action(skill);
-		} catch (RuleValidatorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		action.action(skill);
 	}
 	
 	/**
@@ -214,7 +199,7 @@ public abstract class AbstractCorps implements ITag
 	 * @param activate
 	 * @throws RuleValidatorException
 	 */
-	public void activate(Boolean activate) throws RuleValidatorException {
+	public void activate(Boolean activate) {
 		IAction action = new ActionProxyHelper(getActivate());
 		action.action(activate);
 	}
@@ -223,7 +208,7 @@ public abstract class AbstractCorps implements ITag
 	 * 攻击
 	 * @param attacked 被攻击的卡片
 	 */
-	public void attack(AbstractCorps attacked) throws RuleValidatorException {
+	public void attack(AbstractCorps attacked) {
 		IAction action = new ActionProxyHelper(getAttack());
 		action.action(attacked);
 	}
@@ -232,7 +217,7 @@ public abstract class AbstractCorps implements ITag
 	 * 受攻击
 	 * @param attack
 	 */
-	public void attacked(AbstractCorps corps, IAction attack) throws RuleValidatorException {
+	public void attacked(AbstractCorps corps, IAction attack) {
 		IAction action = new ActionProxyHelper(getAttacked());
 		action.action(corps,attack);
 	}
@@ -241,7 +226,7 @@ public abstract class AbstractCorps implements ITag
 	 * 受到法术影响
 	 * @param magic
 	 */
-	public void affected(IMagic magic) throws RuleValidatorException {
+	public void affected(IMagic magic) {
 		IAction action = new ActionProxyHelper(getAffected());
 		action.action(magic);
 	}
@@ -251,7 +236,7 @@ public abstract class AbstractCorps implements ITag
 	 * @param skill ActiveSkill
 	 * @param objects
 	 */
-	public void conjure(ISkill skill, Object...objects) throws RuleValidatorException {
+	public void conjure(ISkill skill, Object...objects) {
 		IAction action = new ActionProxyHelper(getConjure());
 		action.action(skill,objects);
 	}
@@ -260,7 +245,7 @@ public abstract class AbstractCorps implements ITag
 	 * 移动到指定位置
 	 * @param position 指定位置
 	 */
-	public void move(AbstractPlace place) throws RuleValidatorException {
+	public void move(AbstractPlace place) {
 		IAction action = new ActionProxyHelper(getMove());
 		action.action(place);
 	}
@@ -269,7 +254,7 @@ public abstract class AbstractCorps implements ITag
 	 * 召唤
 	 *
 	 */
-	public void call(AbstractPlace place, Integer nop) throws RuleValidatorException {
+	public void call(AbstractPlace place, Integer nop) {
 		IAction action = new ActionProxyHelper(getCall());
 		action.action(place,nop);
 	}
@@ -277,7 +262,7 @@ public abstract class AbstractCorps implements ITag
 	/**
 	 * 死亡
 	 */
-	public void death() throws RuleValidatorException {
+	public void death() {
 		IAction action = new ActionProxyHelper(getDeath());
 		action.action();
 	}
@@ -285,7 +270,7 @@ public abstract class AbstractCorps implements ITag
 	/**
 	 * 丢弃
 	 */
-	public void chuck() throws RuleValidatorException {
+	public void chuck() {
 		IAction action = new ActionProxyHelper(getChuck());
 		action.action();
 	}
@@ -294,7 +279,7 @@ public abstract class AbstractCorps implements ITag
 	 * 升级
 	 * @throws RuleValidatorException
 	 */
-	public void upgrade() throws RuleValidatorException {
+	public void upgrade() {
 		IAction action = new ActionProxyHelper(getUpgrade());
 		action.action();
 	}
@@ -304,7 +289,7 @@ public abstract class AbstractCorps implements ITag
 	 * @param treasure
 	 * @throws RuleValidatorException
 	 */
-	public void pick(ITreasure treasure) throws RuleValidatorException {
+	public void pick(ITreasure treasure) {
 		IAction action = new ActionProxyHelper(getPick());
 		action.action(treasure);
 	}

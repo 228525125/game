@@ -25,19 +25,10 @@ public class ActionProxyHelper implements IAction {
 	}
 	
 	@Override
-	public void action(Object... objects) throws RuleValidatorException {
+	public void action(Object... objects) {
 		// TODO Auto-generated method stub
-		/* 
-		 * 执行规则验证
-		 */
-		original.doValidator();
-		
-		if(!original.hasError()){
-			Object proxy = ProxyFactory.getProxy(this.original);     
-			((IAction)proxy).action(objects);
-		}else{
-			throw new RuleValidatorException(original.getErrors().getMessage());
-		}		
+		Object proxy = ProxyFactory.getProxy(this.original);     
+		((IAction)proxy).action(objects);		
 	}
 	
 	@Override
@@ -128,47 +119,5 @@ public class ActionProxyHelper implements IAction {
 	public void notifyObservers(Object arg) {
 		// TODO Auto-generated method stub
 		original.notifyObservers(arg);
-	}
-	
-	@Override
-	public void addValidator(IValidator validator) {
-		// TODO Auto-generated method stub
-		original.addValidator(validator);
-	}
-	
-	@Override
-	public void deleteValidator(IValidator validator) {
-		// TODO Auto-generated method stub
-		original.deleteValidator(validator);
-	}
-	
-	@Override
-	public void doValidator() {
-		// TODO Auto-generated method stub
-		original.doValidator();
-	}
-	
-	@Override
-	public void doValidator(IValidator validator) {
-		// TODO Auto-generated method stub
-		original.doValidator(validator);
-	}
-	
-	@Override
-	public Errors getErrors() {
-		// TODO Auto-generated method stub
-		return original.getErrors();
-	}
-	
-	@Override
-	public List<IValidator> getValidators() {
-		// TODO Auto-generated method stub
-		return original.getValidators();
-	}
-	
-	@Override
-	public Boolean hasError() {
-		// TODO Auto-generated method stub
-		return original.hasError();
 	}
 }

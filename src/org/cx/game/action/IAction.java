@@ -11,7 +11,7 @@ import org.cx.game.validator.ParameterTypeValidator;
  * @author jiuhuan
  *
  */
-public interface IAction extends IInterceptable, Observable, IValidatable, Cloneable{
+public interface IAction extends IInterceptable, Observable, Cloneable{
 
 	public Object getOwner();
 	
@@ -22,6 +22,6 @@ public interface IAction extends IInterceptable, Observable, IValidatable, Clone
 	 * @param objects 由于objects是数组，因此在拦截器的写法如：Corps attacked = (Corps) ((Object[]) args[0])[0];
 	 * @throws RuleValidatorException
 	 */
-	public void action(Object...objects) throws RuleValidatorException;
+	public void action(Object...objects);
 	
 }

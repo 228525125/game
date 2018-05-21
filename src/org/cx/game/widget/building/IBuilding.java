@@ -138,7 +138,7 @@ public interface IBuilding {
 	 * 升级建筑
 	 * @throws RuleValidatorException
 	 */
-	public void upgrade() throws RuleValidatorException;
+	public void upgrade();
 	
 	/**
 	 * 摧毁

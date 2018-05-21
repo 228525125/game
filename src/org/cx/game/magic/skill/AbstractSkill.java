@@ -121,7 +121,7 @@ public abstract class AbstractSkill extends Observable implements ISkill {
 	}
 	
 	@Override
-	public void upgrade() throws RuleValidatorException {
+	public void upgrade() {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getUpgrade());
 		action.action();

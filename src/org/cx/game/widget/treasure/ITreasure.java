@@ -18,7 +18,7 @@ public interface ITreasure {
 	/**
 	 * 被捡起来
 	 */
-	public void picked(AbstractCorps corps) throws RuleValidatorException;
+	public void picked(AbstractCorps corps);
 	
 	/**
 	 * 在地图上的位置

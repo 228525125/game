@@ -36,6 +36,6 @@ public interface ISkill extends IMagic {
 	 * 升级技能
 	 * @throws RuleValidatorException
 	 */
-	public void upgrade() throws RuleValidatorException;
+	public void upgrade();
 
 }

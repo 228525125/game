@@ -20,8 +20,6 @@ public abstract class AbstractAction extends Observable implements IAction {
 
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private Object owner;
-	private List<IValidator> validatorList = new ArrayList<IValidator>();
-	private Errors errors = new Errors();
 
 	public AbstractAction() {
 		// TODO Auto-generated constructor stub
@@ -76,50 +74,5 @@ public abstract class AbstractAction extends Observable implements IAction {
 		// TODO Auto-generated method stub
 		super.setChanged();
 		super.notifyObservers(arg);
-	}
-	
-	@Override
-	public void addValidator(IValidator validator) {
-		// TODO Auto-generated method stub
-		validatorList.add(validator);
-	}
-
-	@Override
-	public void deleteValidator(IValidator validator) {
-		// TODO Auto-generated method stub
-		validatorList.remove(validator);
-	}
-
-	@Override
-	public List<IValidator> getValidators() {
-		// TODO Auto-generated method stub
-		return validatorList;
-	}
-	
-	@Override
-	public void doValidator() {
-		// TODO Auto-generated method stub
-		for(IValidator v : validatorList)
-			if(!v.validate())
-				errors.addError(v);
-	}
-	
-	@Override
-	public void doValidator(IValidator validator) {
-		// TODO Auto-generated method stub
-		if(validator.validate())
-			errors.addError(validator);
-	}
-	
-	@Override
-	public Errors getErrors() {
-		// TODO Auto-generated method stub
-		return errors;
-	}
-	
-	@Override
-	public Boolean hasError() {
-		// TODO Auto-generated method stub
-		return errors.hasError();
 	}
 }
