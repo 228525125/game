@@ -53,7 +53,7 @@ public abstract class AbstractGround implements IGround {
 	//-------------------- Corps ---------------------
 
 	@Override
-	public void placement(Integer position, AbstractCorps corps) {
+	public void placementCorps(Integer position, AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		this.livingCorpsList.add(corps);
 		
@@ -130,8 +130,13 @@ public abstract class AbstractGround implements IGround {
 	//-------------------- Building -------------------------
 
 	@Override
-	public void addBuilding(IBuilding building) {
+	public void placementBuilding(Integer position, IBuilding building) {
 		// TODO Auto-generated method stub
+		building.setPosition(position);
+		
+		AbstractPlace place = getPlace(position);
+		place.setBuilding(building);
+		
 		buildingList.add(building);
 	}
 
@@ -156,7 +161,10 @@ public abstract class AbstractGround implements IGround {
 		ground.put(place.getPosition(), place);
 	}
 
-	@Override
+	/**
+	 * 设置地形
+	 * @param landformMap 地形数据
+	 */
 	public void setLandformMap(Map<Integer, Integer> landformMap) {
 		// TODO Auto-generated method stub
 		this.landformMap = landformMap;
@@ -178,7 +186,10 @@ public abstract class AbstractGround implements IGround {
 	
 	//-------------------------- Treasure ---------------------------
 	
-	@Override
+	/**
+	 * 初始地图时，放置物品
+	 * @param treasureMap
+	 */
 	public void setTreasureMap(Map<Integer, ITreasure> treasureMap) {
 		this.treasureMap = treasureMap;
 		

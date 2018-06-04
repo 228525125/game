@@ -18,7 +18,9 @@ import org.cx.game.widget.treasure.IResource;
  */
 public interface IPlayer
 {		
-	public Integer getId();
+	public Integer getTroop();
+	
+	public void setTroop(Integer troop);
 	
 	public String getName();
 	
@@ -42,30 +44,6 @@ public interface IPlayer
 	public void addToResource(Integer resType, Integer res);
 	
 	public CommandBuffer getCommandBuffer();
-	
-	/**
-	 * 英雄编号
-	 * @return
-	 */
-	public List<Integer> getHeroIDList();
-	
-	public void addHeroID(Integer ID);
-	
-	/**
-	 * 玩家主城坐标
-	 * @return
-	 */
-	public Integer getHomePosition();
-	
-	public void setHomePosition(Integer position);
-	
-	/**
-	 * 玩家拥有的英雄
-	 * @return
-	 */
-	public List<AbstractCorps> getHeroList();
-	
-	public void addHero(AbstractCorps hero);
 	
 	/**
 	 * 人口限制

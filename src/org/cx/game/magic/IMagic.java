@@ -1,6 +1,5 @@
 package org.cx.game.magic;
 
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tag.ITag;
 
 /**
@@ -10,6 +9,10 @@ import org.cx.game.tag.ITag;
  */
 public interface IMagic extends ITag {
 
+	/**
+	 * 
+	 * @return 唯一编号
+	 */
 	public Integer getType();
 	
 	/**

@@ -18,10 +18,9 @@ import org.cx.game.widget.treasure.Resource;
 
 public abstract class AbstractPlayer extends java.util.Observable implements IPlayer ,Observable{
 	
-	private Integer id = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一
+	private Integer troop = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一
 	private String name = null;
 	private Boolean isComputer = false;
-	private Integer heroPosition = null;
 	private Integer rationLimit = 10;
 	private Integer ration = 0;
 	
@@ -29,14 +28,11 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	private IContext context = null;
 	private CommandBuffer commandBuffer = null;
 	
-	private List<Integer> heroIDList = new ArrayList<Integer>();
-	private List<AbstractCorps> heroList = new ArrayList<AbstractCorps>();
-	
 	public AbstractPlayer(Integer id, String name) {
 		// TODO Auto-generated constructor stub
 		addObserver(ResponseFactory.getResponse());
 		
-		this.id = id;
+		this.troop = id;
 		this.name = name;
 		
 		this.resource = new Resource(0, 0, 0, 0);
@@ -45,8 +41,14 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	}
 	
 	@Override
-	public Integer getId() {
-		return id;
+	public Integer getTroop() {
+		return troop;
+	}
+	
+	@Override
+	public void setTroop(Integer troop) {
+		// TODO Auto-generated method stub
+		this.troop = troop;
 	}
 
 	@Override
@@ -65,30 +67,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	public void setComputer(Boolean isComputer) {
 		// TODO Auto-generated method stub
 		this.isComputer = isComputer;
-	}
-
-	@Override
-	public Integer getHomePosition() {
-		// TODO Auto-generated method stub
-		return heroPosition;
-	}
-
-	@Override
-	public void setHomePosition(Integer position) {
-		// TODO Auto-generated method stub
-		this.heroPosition = position;
-	}
-	
-	@Override
-	public void addHero(AbstractCorps hero) {
-		// TODO Auto-generated method stub
-		this.heroList.add(hero);
-	}
-	
-	@Override
-	public List<AbstractCorps> getHeroList() {
-		// TODO Auto-generated method stub
-		return this.heroList;
 	}
 	
 	@Override
@@ -161,21 +139,9 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		// TODO Auto-generated method stub
 		if (arg0 instanceof IPlayer) {
 			IPlayer player = (IPlayer) arg0;
-			return player.getId().equals(getId());
+			return player.getTroop().equals(getTroop());
 		}
 		return super.equals(arg0);
-	}
-	
-	@Override
-	public List<Integer> getHeroIDList() {
-		// TODO Auto-generated method stub
-		return this.heroIDList;
-	}
-	
-	@Override
-	public void addHeroID(Integer ID) {
-		// TODO Auto-generated method stub
-		this.heroIDList.add(ID);
 	}
 	
 	@Override

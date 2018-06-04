@@ -28,27 +28,13 @@ public abstract class AbstractContext extends Observable implements IContext
 	private IPlayer controlPlayer=null;
 	private IGround ground = null;
 	
-	public AbstractContext(IGround ground, IPlayer[] players) {
+	public AbstractContext(IGround ground) {
 		// TODO Auto-generated constructor stub
 		playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
-		
-		for(int i=0;i<players.length;i++){
-			playerList.add(players[i]);
-		}
-		
-		for(IPlayer player : playerList){
-			this.queue.add(player);
-		}
 		
 		this.ground = ground;
 		
 		addObserver(ResponseFactory.getResponse());
-	}
-	
-	
-
-	public IControlQueue getControlQueue() {
-		return queue;
 	}
 
 	public void setPlayState(AbstractPlayState playState) {
@@ -70,6 +56,21 @@ public abstract class AbstractContext extends Observable implements IContext
 	
 	public void finish(){
 		this.playState.finish();
+	}
+	
+	@Override
+	public void addPlayer(IPlayer player) {
+		// TODO Auto-generated method stub
+		this.playerList.add(player);
+		this.queue.add(player);
+		player.setContext(this);
+	}
+	
+	@Override
+	public void removePlayer(IPlayer player) {
+		// TODO Auto-generated method stub
+		this.playerList.remove(player);
+		this.queue.remove(player);
 	}
 	
 	@Override

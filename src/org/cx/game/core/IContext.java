@@ -15,7 +15,7 @@ public interface IContext extends Observable {
 	public final static String Ground = "Ground";
 	public final static String ControlPlayer = "ControlPlayer";
 	
-	public IControlQueue getControlQueue();
+	//public IControlQueue getControlQueue();
 	
 	public AbstractPlayState getDeployState();
 	
@@ -87,6 +87,22 @@ public interface IContext extends Observable {
 	
 	public void addWeek();
 	
+	/**
+	 * 用于增加中立部队
+	 * @param player 
+	 */
+	public void addPlayer(IPlayer player);
+	
+	/**
+	 * 阵营玩家和非阵营玩家结束后，都会被移除；
+	 * @param player
+	 */
+	public void removePlayer(IPlayer player);
+	
+	/**
+	 * 所有player，包含中立player
+	 * @return
+	 */
 	public List<IPlayer> getPlayerList();
 
 	public IPlayer getControlPlayer();

@@ -61,7 +61,7 @@ public interface IGround {
 	 * @param position 位置
 	 * @param corps
 	 */
-	public void placement(Integer position, AbstractCorps corps);
+	public void placementCorps(Integer position, AbstractCorps corps);
 	
 	public AbstractCorps getCorps(Integer position);
 	
@@ -104,7 +104,12 @@ public interface IGround {
 	 */
 	public Integer getPosition(AbstractCorps corps);
 	
-	public void addBuilding(IBuilding building);
+	/**
+	 * 放置一个建筑物到战场
+	 * @param position
+	 * @param building
+	 */
+	public void placementBuilding(Integer position, IBuilding building);
 
 	public List<IBuilding> getBuildingList();
 	
@@ -122,12 +127,6 @@ public interface IGround {
 	public void addPlace(AbstractPlace place);
 	
 	/**
-	 * 设置地形
-	 * @param landformMap 地形数据
-	 */
-	public void setLandformMap(Map<Integer, Integer> landformMap);
-	
-	/**
 	 * 
 	 * @return 地形数据
 	 */
@@ -140,18 +139,10 @@ public interface IGround {
 	public Map<Integer, ITreasure> getTreasureMap();
 	
 	/**
-	 * 初始地图时，放置物品
-	 * @param treasureMap
-	 */
-	public void setTreasureMap(Map<Integer, ITreasure> treasureMap);
-	
-	/**
 	 * 移除物品
 	 * @param treasure
 	 */
 	public void removeTreasure(ITreasure treasure);
-	
-	
 	
 	/**
 	 * 两个坐标之间的最短距离，不考虑地形
