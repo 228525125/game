@@ -15,10 +15,6 @@ import org.cx.game.widget.treasure.ITreasure;
  */
 public interface IGround {
 	
-	public static final Integer Landform = 1011;
-	
-	public static final String Ground = "Ground";
-	
 	/**
 	 * 边界上
 	 */
@@ -38,6 +34,8 @@ public interface IGround {
 	public static final Integer Relative_Right = 3;
 	public static final Integer Relative_RightBottom = 4;
 	
+	public Integer getId();
+	
 	/**
 	 * 战场地图名称
 	 * @return
@@ -55,6 +53,11 @@ public interface IGround {
 	 * @return
 	 */
 	public Integer getYBorder();
+	
+	/**
+	 * 该方法在对象被创建后调用
+	 */
+	public void afterConstruct();
 	
 	/**
 	 * 在指定位置放置一个corps
@@ -136,7 +139,7 @@ public interface IGround {
 	 * 地图上的物品
 	 * @return
 	 */
-	public Map<Integer, ITreasure> getTreasureMap();
+	public List<ITreasure> getTreasureList();
 	
 	/**
 	 * 移除物品

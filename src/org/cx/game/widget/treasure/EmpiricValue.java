@@ -1,5 +1,7 @@
 package org.cx.game.widget.treasure;
 
+import org.cx.game.tools.CommonIdentifier;
+
 public class EmpiricValue extends Resource implements IResource {
 
 	public EmpiricValue() {
@@ -7,15 +9,15 @@ public class EmpiricValue extends Resource implements IResource {
 	}
 	
 	public EmpiricValue(Integer empValue) {
-		add(EmpiricValue, empValue);
+		add(CommonIdentifier.EmpiricValue, empValue);
 	}
 	
 	public void add(Integer value){
-		add(EmpiricValue, value);
+		add(CommonIdentifier.EmpiricValue, value);
 	}
 	
 	public Integer get(){
-		return get(EmpiricValue);
+		return get(CommonIdentifier.EmpiricValue);
 	}
 	
 	public Integer getValue(){

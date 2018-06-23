@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.tools.I18n;
 
 public class Resource implements IResource {
@@ -15,18 +16,18 @@ public class Resource implements IResource {
 	
 	public Resource() {
 		// TODO Auto-generated constructor stub
-		this.resource.put(Gold, 0);
-		this.resource.put(Wood, 0);
-		this.resource.put(Stone, 0);
-		this.resource.put(Ore, 0);
+		this.resource.put(CommonIdentifier.Gold, 0);
+		this.resource.put(CommonIdentifier.Wood, 0);
+		this.resource.put(CommonIdentifier.Stone, 0);
+		this.resource.put(CommonIdentifier.Ore, 0);
 	}
 	
 	public Resource(Integer gold, Integer wood, Integer stone, Integer ore) {
 		// TODO Auto-generated constructor stub
-		this.resource.put(Gold, gold);
-		this.resource.put(Wood, wood);
-		this.resource.put(Stone, stone);
-		this.resource.put(Ore, ore);
+		this.resource.put(CommonIdentifier.Gold, gold);
+		this.resource.put(CommonIdentifier.Wood, wood);
+		this.resource.put(CommonIdentifier.Stone, stone);
+		this.resource.put(CommonIdentifier.Ore, ore);
 	}
 	
 	/**
@@ -37,10 +38,10 @@ public class Resource implements IResource {
 		// TODO Auto-generated constructor stub
 		String [] res = resourceString.split(",");
 		
-		this.resource.put(Gold, res.length>0 ? Integer.valueOf(res[0]) : 0);
-		this.resource.put(Wood, res.length>1 ? Integer.valueOf(res[1]) : 0);
-		this.resource.put(Stone, res.length>2 ? Integer.valueOf(res[2]) : 0);
-		this.resource.put(Ore, res.length>3 ? Integer.valueOf(res[3]) : 0);
+		this.resource.put(CommonIdentifier.Gold, res.length>0 ? Integer.valueOf(res[0]) : 0);
+		this.resource.put(CommonIdentifier.Wood, res.length>1 ? Integer.valueOf(res[1]) : 0);
+		this.resource.put(CommonIdentifier.Stone, res.length>2 ? Integer.valueOf(res[2]) : 0);
+		this.resource.put(CommonIdentifier.Ore, res.length>3 ? Integer.valueOf(res[3]) : 0);
 	}
 	
 	@Override
@@ -109,18 +110,18 @@ public class Resource implements IResource {
 	}
 	
 	public Integer getGold(){
-		return get(Gold);
+		return get(CommonIdentifier.Gold);
 	}
 	
 	public Integer getWood(){
-		return get(Wood);
+		return get(CommonIdentifier.Wood);
 	}
 	
 	public Integer getStone(){
-		return get(Stone);
+		return get(CommonIdentifier.Stone);
 	}
 	
 	public Integer getOre(){
-		return get(Ore);
+		return get(CommonIdentifier.Ore);
 	}
 }

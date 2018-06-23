@@ -7,7 +7,7 @@ package org.cx.game.validator;
  */
 public interface IValidator {
 	
-	public static final String ErrorMessage_NULL = "";
+	static final String ErrorMessage_NULL = "";
 	
 	/**
 	 * 错误提示信息

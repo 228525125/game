@@ -15,9 +15,15 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.AbstractResponse;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.rule.RuleGroupFactory;
+import org.cx.game.tools.CommonIdentifier;
 
 public class ControlQueue extends Observable implements IControlQueue {
 
+	/**
+	 * 获取一次控制权需要消耗的能量
+	 */
+	static final Integer consume = 100;
+	
 	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
 	private List<Place> queueList = new ArrayList<Place>();                // queue1 + queue2
 	private List<Place> queue1 = new ArrayList<Place>();                   // 两个队列用于切换，实现按优先级排序
@@ -117,7 +123,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Refurbish,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Refurbish,map);
 		notifyObservers(info);
 	}
 	
@@ -133,7 +139,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", place.getObject());
 		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Insert,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Insert,map);
 		notifyObservers(info);
 	}
 	
@@ -148,7 +154,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", place.getObject());
 		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Remove,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Remove,map);
 		notifyObservers(info);
 	}
 	
@@ -162,7 +168,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", place.getObject());
 		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Move,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Move,map);
 		notifyObservers(info);
 	}
 	
@@ -203,7 +209,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("player", place.getObject());
 		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_ControlQueue_Insert,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Insert,map);
 		notifyObservers(info);
 	}
 	

@@ -9,6 +9,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.rule.IRule;
+import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.Util;
 import org.cx.game.widget.building.IBuilding;
@@ -30,10 +31,10 @@ public class UpgradeBuilding extends Upgrade implements IAction {
 		getOwner().setStatus(IBuilding.Building_Status_Complete);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("position", getOwner().getPosition());
+		map.put("position", getOwner().getPlace().getPosition());
 		map.put("building", this);
 		map.put("level", getLevel());
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Building_Upgrade,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Building_Upgrade,map);
 		super.notifyObservers(info);
 	}
 	

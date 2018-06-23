@@ -38,7 +38,13 @@ public class InteriorCommandParameterExpressionFormatValidator extends Validator
 				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;
-			}			
+			}
+			
+			/*if(CommandBuffer.GROUND.equals(type) && !Util.isInteger(position)){
+				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
+				ret = false;
+				break;
+			}*/
 			
 			if(CommandBuffer.PLACE.equals(type) && !Util.isInteger(position)){
 				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));

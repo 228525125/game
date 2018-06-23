@@ -10,8 +10,6 @@ import org.cx.game.magic.IMagic;
 
 public interface ISkill extends IMagic {
 	
-	public final static Integer Skill = 1008;
-	
 	public String getName();
 	
 	/**

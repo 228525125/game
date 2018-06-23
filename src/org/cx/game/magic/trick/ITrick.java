@@ -14,9 +14,9 @@ public interface ITrick extends IInterceptable,Observable,IIntercepter,IMagic,IR
 	
 	public IPlayer getPlayer();
 	
-	public final static Integer Setup_Range = 1;
+	final static Integer Setup_Range = 1;
 	
-	public final static Integer Setup_Bout = 10;
+	final static Integer Setup_Bout = 10;
 	
 	public String getName();
 	

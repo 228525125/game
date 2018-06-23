@@ -251,11 +251,6 @@ public class CommandBuffer {
 	
 	private void setGround(IGround ground, Map<String, Object> bufferMap){
 		if(null!=ground){
-			/*IPlayer player = container.getPlayer();;
-			if (container instanceof IGround) {
-				player = getPlayer();
-			}*/
-			
 			player = getPlayer();
 			setPlayer(player, bufferMap);
 			
@@ -273,8 +268,7 @@ public class CommandBuffer {
 	
 	private void setBuilding(IBuilding building, Map<String, Object> bufferMap){
 		if(null!=building){
-			IGround ground = getPlayer().getContext().getGround();
-			setPlace(ground.getPlace(building.getPosition()), bufferMap);
+			setPlace(building.getPlace(), bufferMap);
 			
 			bufferMap.put(BUILDING, building);
 		}

@@ -35,21 +35,11 @@ public class GroundFactory {
 		return null;
 	}
 	
-	private static IGround ground = null;
-	
-	/**
-	 * 该方法必须在createGround被调用后，才有效；
-	 * @return
-	 */
-	public static IGround getGround(){
-		return ground;
-	}
-	
-	public static IGround getInstance(String mapId){
+	public static IGround getInstance(Integer mapId){
 		Element mapEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			if(mapId.equals(el.attribute(XmlUtil.Map_Map_Id).getText()))
+			if(mapId.equals(Integer.valueOf(el.attribute(XmlUtil.Map_Map_Id).getText())))
 				mapEl = el;
 		}
 		
@@ -57,7 +47,8 @@ public class GroundFactory {
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
 				new ObjectTypeParse(otb).parse(mapEl);
-				ground = (IGround) otb.builder();
+				IGround ground = (IGround) otb.builder();
+				ground.afterConstruct();
 				return ground;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

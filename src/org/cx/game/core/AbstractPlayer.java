@@ -13,6 +13,7 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.ResponseFactory;
+import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
@@ -100,7 +101,7 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", this);
 			map.put("resource", this.resource);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Player_Resource,map);
 			notifyObservers(info);
 		}
 	}
@@ -114,7 +115,7 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("player", this);
 			map.put("resource", this.resource);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Resource,map);
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Player_Resource,map);
 			notifyObservers(info);
 		}
 	}
@@ -172,7 +173,7 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 			map.put("player", this);
 			map.put("ration", this.ration);
 			map.put("change", ration);
-			NotifyInfo info = new NotifyInfo(NotifyInfo.Player_Ration,map);
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Player_Ration,map);
 			notifyObservers(info);
 		}
 	}

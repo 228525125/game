@@ -181,6 +181,7 @@ public abstract class AbstractPlace {
 	void setBuilding(IBuilding building) {
 		// TODO Auto-generated method stub
 		this.building = building;
+		building.setPlace(this);
 	}
 	
 	public ITreasure getTreasure() {
@@ -195,6 +196,7 @@ public abstract class AbstractPlace {
 		// TODO Auto-generated method stub
 		if(null!=treasure)
 			treasure.setPosition(position);
+		
 		this.treasure = treasure;
 	}
 }

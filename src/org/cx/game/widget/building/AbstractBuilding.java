@@ -15,28 +15,27 @@ import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
 public abstract class AbstractBuilding implements IBuilding, IRecover {
 
-	private Integer position = 0;
 	private String name = null;
 	private Integer type = 0;
 	private Integer buildWait = 0;
 	private Integer level = 1;
 	private Integer levelLimit = 1;
-	private IPlayer player = null;
-	private List<IOption> options = new ArrayList<IOption>();
-	private IResource consume = new Resource();
-	private List<IBuilding> buildings = new ArrayList<IBuilding>();
-	
-	private IBuilding owner = null;
-	
 	private Integer status = IBuilding.Building_Status_Nothingness;
 	
-	private List<Integer> needBuilding = new ArrayList<Integer>();
+	private AbstractPlace place = null;
+	private IPlayer player = null;
+	private IResource consume = new Resource();
+	private IBuilding owner = null;
 	
+	private List<IOption> options = new ArrayList<IOption>();
+	private List<IBuilding> buildings = new ArrayList<IBuilding>();
+	private List<Integer> needBuilding = new ArrayList<Integer>();
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
 	public AbstractBuilding(Integer buildingType) {
@@ -108,15 +107,17 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 		return this.buildings.get(index);
 	}
 
-	public Integer getPosition() {
+	public AbstractPlace getPlace() {
 		// TODO Auto-generated method stub
-		return position;
+		if(null!=getOwner())
+			return getOwner().getPlace();
+		return this.place;
 	}
 	
 	@Override
-	public void setPosition(Integer position) {
+	public void setPlace(AbstractPlace place) {
 		// TODO Auto-generated method stub
-		this.position = position;
+		this.place = place;
 	}
 
 	@Override

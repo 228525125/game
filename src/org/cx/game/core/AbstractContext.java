@@ -12,6 +12,7 @@ import org.cx.game.action.IAction;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.ResponseFactory;
+import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
@@ -91,7 +92,7 @@ public abstract class AbstractContext extends Observable implements IContext
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("control", controlPlayer);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Context_Control,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_Control,map);
 		notifyObservers(info);
 	}
 	
@@ -111,6 +112,12 @@ public abstract class AbstractContext extends Observable implements IContext
 	public IGround getGround() {
 		// TODO Auto-generated method stub
 		return this.ground;
+	}
+	
+	@Override
+	public void setGround(IGround ground) {
+		// TODO Auto-generated method stub
+		this.ground = ground;
 	}
 	
 	@Override

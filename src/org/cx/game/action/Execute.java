@@ -7,6 +7,7 @@ import org.cx.game.core.IPlayer;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
+import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.building.IBuilding;
 import org.cx.game.widget.building.IOption;
 import org.cx.game.widget.building.OptionExecuteProcess;
@@ -27,13 +28,13 @@ public class Execute extends AbstractAction implements IAction {
 		Integer position = null;
 		
 		IBuilding building = getOwner().getOwner();
-		position = building.getPosition();
+		position = building.getPlace().getPosition();
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("building", building);
 		map.put("option", getOwner());
 		map.put("position", position);
-		NotifyInfo info = new NotifyInfo(NotifyInfo.Building_Option_Execute,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Building_Option_Execute,map);
 		super.notifyObservers(info);
 		
 		/*

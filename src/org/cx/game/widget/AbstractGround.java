@@ -15,6 +15,9 @@ import org.cx.game.widget.treasure.ITreasure;
 
 public abstract class AbstractGround implements IGround {
 
+	
+	private Integer id = null;
+	private String name = "";
 	private Integer xBorder = 0;                                       //边界x轴长度
 	private Integer yBorder = 0;                                       //边界y轴长度
 	
@@ -25,17 +28,26 @@ public abstract class AbstractGround implements IGround {
 	private Map<Integer, Integer> landformMap = new HashMap<Integer, Integer>();
 	
 	private Map<Integer, ITreasure> treasureMap = new HashMap<Integer, ITreasure>();
+	private List<ITreasure> treasureList = new ArrayList<ITreasure>();
 	
-	public AbstractGround(Integer xBorder, Integer yBorder) {
+	public AbstractGround(Integer id, String name, Integer xBorder, Integer yBorder) {
 		// TODO Auto-generated constructor stub
+		this.id = id;
+		this.name = name;
 		this.xBorder = xBorder;
 		this.yBorder = yBorder;
 	}
 	
 	@Override
+	public Integer getId() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+	
+	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return Ground;
+		return this.name;
 	}
 
 	@Override
@@ -131,10 +143,8 @@ public abstract class AbstractGround implements IGround {
 
 	@Override
 	public void placementBuilding(Integer position, IBuilding building) {
-		// TODO Auto-generated method stub
-		building.setPosition(position);
-		
-		AbstractPlace place = getPlace(position);
+		// TODO Auto-generated method stub		
+		AbstractPlace place = getPlace(position);		
 		place.setBuilding(building);
 		
 		buildingList.add(building);
@@ -198,12 +208,18 @@ public abstract class AbstractGround implements IGround {
 			AbstractPlace place = getPlace(position);
 			ITreasure treasure = entry.getValue();
 			place.setTreasure(treasure);
+			this.treasureList.add(treasure);
 		}
 	}
 
-	@Override
-	public Map<Integer, ITreasure> getTreasureMap() {
+	Map<Integer, ITreasure> getTreasureMap() {
 		return treasureMap;
+	}
+	
+	@Override
+	public List<ITreasure> getTreasureList() {
+		// TODO Auto-generated method stub
+		return this.treasureList;
 	}
 
 	@Override
@@ -211,6 +227,8 @@ public abstract class AbstractGround implements IGround {
 		// TODO Auto-generated method stub
 		AbstractPlace place = getPlace(treasure.getPosition());
 		place.setTreasure(null);
+		this.treasureMap.remove(treasure);
+		this.treasureList.remove(treasure);
 	}
 	
 	//--------------------------- Treasure End ----------------------------

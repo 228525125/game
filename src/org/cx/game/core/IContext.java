@@ -3,19 +3,13 @@ package org.cx.game.core;
 import java.util.List;
 
 import org.cx.game.action.IAction;
-import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.observer.Observable;
-import org.cx.game.widget.IControlQueue;
 import org.cx.game.widget.IGround;
 
 public interface IContext extends Observable {
 
-	public final static String Ground = "Ground";
-	public final static String ControlPlayer = "ControlPlayer";
-	
-	//public IControlQueue getControlQueue();
+	final static String ControlPlayer = "ControlPlayer";
 	
 	public AbstractPlayState getDeployState();
 	
@@ -117,6 +111,23 @@ public interface IContext extends Observable {
 	
 	public String getPlayNo();
 	
+	/**
+	 * 根据id查找对应的ground
+	 * @param id mapId
+	 * @return
+	 */
+	public IGround getGround(Integer id);
+	
+	/**
+	 * 
+	 * @return 当前ground
+	 */
 	public IGround getGround();
+	
+	/**
+	 * 切换当前ground，因为有area的存在
+	 * @param ground
+	 */
+	public void setGround(IGround ground);
 
 }

@@ -38,66 +38,6 @@ public interface IMagic extends ITag {
 	public void affect(Object...objects);		
 	
 	/**
-	 * 物理buff
-	 */
-	public static final Integer Style_physical = 111;
-	
-	/**
-	 * 魔法buff
-	 */
-	public static final Integer Style_Magic = 112;
-	
-	/**
-	 * 移动限制
-	 */
-	public static final Integer Func_Astrict = 201;
-	
-	/**
-	 * 直接伤害
-	 */
-	public static final Integer Func_Damage = 202;
-	
-	/**
-	 * 召唤
-	 */
-	public static final Integer Func_Call = 203;
-	
-	/**
-	 * 增益
-	 */
-	public static final Integer Func_Cure = 204;
-	
-	/**
-	 * 损益
-	 */
-	public static final Integer Func_Loss = 205;
-	
-	/**
-	 * 持续伤害
-	 */
-	public static final Integer Func_SustainedHarm = 206;
-	
-	/**
-	 * 陷阱
-	 */
-	public static final Integer Func_Trick = 207;
-	
-	/**
-	 * 冲锋
-	 */
-	public static final Integer Func_Bump = 208;
-	
-	/**
-	 * 秘术
-	 */
-	public static final Integer Func_Mystery = 209;
-	
-	/**
-	 * 其他功能
-	 */
-	public static final Integer Func_Other = 299;
-	
-	/**
 	 * 描述
 	 * @return
 	 */

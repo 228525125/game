@@ -5,18 +5,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 public interface IResource {
-	
-	public final static Integer Gold = 701;                    //金币
-	
-	public final static Integer Wood = 702;                    //木材
-	
-	public final static Integer Stone = 703;                   //石材
-	
-	public final static Integer Ore = 704;                     //矿石
-	
-	public final static Integer EmpiricValue = 710;             //经验值
-	
-	public final static Integer SkillCount = 720;              //技能点
 
 	public Integer get(Integer type);
 	

@@ -45,6 +45,13 @@ public class CorpsFactory {
 		return null;
 	}
 
+	public static AbstractCorps getInstance(Integer cid, IPlayer player){
+		Element corpsEl = getElement(cid);
+		AbstractCorps corps = getInstance(corpsEl);
+		corps.setPlayer(player);
+		return corps;
+	}
+	
 	private static AbstractCorps getInstance(Element corpsEl){
 		ObjectTypeBuilder otb = new ObjectTypeBuilder();
 		try {
@@ -59,25 +66,6 @@ public class CorpsFactory {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-	public static AbstractCorps getInstance(Integer cid, IPlayer player){
-		Element corpsEl = getElement(cid);
-		AbstractCorps corps = getInstance(corpsEl);
-		corps.setPlayer(player);
-		return corps;
-	}
-	
-	public static List<AbstractCorps> getInstances(List<Integer> cid, IPlayer player){
-		List<AbstractCorps> list = new ArrayList<AbstractCorps>();
-		
-		for(Integer id : cid){
-			Element corpsEl = getElement(id);
-			AbstractCorps corps = getInstance(corpsEl);
-			corps.setPlayer(player);
-			list.add(getInstance(corpsEl));
-		}
-		return list;
 	}
 	
 	private static Element getElement(Integer cid){

@@ -7,9 +7,14 @@ import org.cx.game.action.Upgrade;
 import org.cx.game.core.IPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.Observable;
+import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.treasure.IResource;
 
 public interface IBuilding {
+	
+	static final Integer Building_Status_Nothingness = 0;        //不存在
+	static final Integer Building_Status_Build = 1;              //建造过程中
+	static final Integer Building_Status_Complete = 2;           //完工
 
 	public String getName();
 	
@@ -20,36 +25,6 @@ public interface IBuilding {
 	public IBuilding getOwner();
 	
 	public void setOwner(IBuilding building);
-	
-	public static final Integer Building = 1010;
-	
-	public static final Integer Building_Bridge = 502;  //桥
-	
-	public static final Integer Building_Smithyt = 503; //铁匠铺
-	
-	public static final Integer Building_Hieron = 504;  //神殿
-	
-	public static final Integer Building_Village = 505; //村庄
-	
-	public static final Integer Building_Chengshi = 601; //城市
-	
-	public static final Integer Building_Ganglou = 602; //岗楼
-	
-	public static final Integer Building_Jianta = 603; //箭塔
-	
-	public static final Integer Building_Shijiuta = 604; //狮鹫塔
-	
-	public static final Integer Building_Bingying = 605; //兵营
-	
-	public static final Integer Building_Siyuan = 606; //寺院
-	
-	public static final Integer Building_Mapeng = 607; //马棚
-	
-	public static final Integer Building_Xunlianchang = 608; //训练场
-	
-	public static final Integer Building_Status_Nothingness = 0;        //不存在
-	public static final Integer Building_Status_Build = 1;              //建造过程中
-	public static final Integer Building_Status_Complete = 2;           //完工
 	
 	/**
 	 * 类型：城镇/桥 等
@@ -97,12 +72,12 @@ public interface IBuilding {
 	public Integer getLevelLimit();
 	
 	/**
-	 * 坐标
+	 * 所属位置
 	 * @return
 	 */
-	public Integer getPosition();
+	public AbstractPlace getPlace();
 	
-	public void setPosition(Integer position);
+	public void setPlace(AbstractPlace place);
 	
 	/**
 	 * 占领者

@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.cx.game.widget.GroundFactory;
-
 public class PropertiesUtil {
 
 	public static String getConfigure(String name) {
 		Properties prop = new Properties();
 		
-		InputStream in = GroundFactory.class.getResourceAsStream("/resource/configure.properties");
+		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("resource/configure.properties");
 		try {
 			prop.load(in);
 		} catch (IOException e) {
@@ -20,5 +18,10 @@ public class PropertiesUtil {
 		}
 		String path = prop.getProperty(name);
 		return path;
+	}
+	
+	public static void main(String[] args) {
+		String value = getConfigure("area.path");
+		System.out.println(value);
 	}
 }
