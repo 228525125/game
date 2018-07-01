@@ -74,6 +74,15 @@ public abstract class AbstractGround implements IGround {
 		
 		corps.setGround(this);
 	}
+	
+	@Override
+	public void removeCorps(AbstractCorps corps) {
+		// TODO Auto-generated method stub
+		AbstractPlace place = getPlace(corps.getPosition());
+		place.out();
+		
+		this.livingCorpsList.remove(corps);
+	}
 
 	@Override
 	public AbstractCorps getCorps(Integer position) {

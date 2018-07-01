@@ -66,6 +66,12 @@ public interface IGround {
 	 */
 	public void placementCorps(Integer position, AbstractCorps corps);
 	
+	/**
+	 * 移除corps
+	 * @param corps
+	 */
+	public void removeCorps(AbstractCorps corps);
+	
 	public AbstractCorps getCorps(Integer position);
 	
 	public Boolean contains(AbstractCorps corps);
