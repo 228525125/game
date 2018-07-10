@@ -3,18 +3,17 @@ package org.cx.game.command.expression;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.corps.AbstractCorps;
-import org.cx.game.magic.skill.ISkill;
+import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.Cemetery;
-import org.cx.game.widget.IGround;
+import org.cx.game.widget.AbstractGround;
 import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
-import org.cx.game.widget.building.IBuilding;
-import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.AbstractBuilding;
+import org.cx.game.widget.building.AbstractOption;
 
 /**
  * 参数表达式缓存，与命令缓存（CommandBuffer）进行了区分
@@ -25,9 +24,9 @@ public class ParameterExpressionBuffer {
 
 	private Map<String,Object> bufferMap = new HashMap<String,Object>();
 	
-	private IPlayer player;
+	private AbstractPlayer player;
 	
-	public ParameterExpressionBuffer(IPlayer player) {
+	public ParameterExpressionBuffer(AbstractPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
 	}
@@ -36,27 +35,27 @@ public class ParameterExpressionBuffer {
 	 * 
 	 * @return 当前具有控制权的玩家
 	 */
-	public IPlayer getPlayer(){
+	public AbstractPlayer getPlayer(){
 		if(null==bufferMap.get(CommandBuffer.PLAYER))
 			return player;
 		else
-			return (IPlayer) bufferMap.get(CommandBuffer.PLAYER);
+			return (AbstractPlayer) bufferMap.get(CommandBuffer.PLAYER);
 	}
 	
-	public IGround getGround(){
-		return (IGround) bufferMap.get(CommandBuffer.GROUND);
+	public AbstractGround getGround(){
+		return (AbstractGround) bufferMap.get(CommandBuffer.GROUND);
 	}
 	
 	public AbstractPlace getPlace(){
 		return (AbstractPlace) bufferMap.get(CommandBuffer.PLACE);
 	}
 	
-	public IBuilding getBuilding(){
-		return (IBuilding) bufferMap.get(CommandBuffer.BUILDING);
+	public AbstractBuilding getBuilding(){
+		return (AbstractBuilding) bufferMap.get(CommandBuffer.BUILDING);
 	}
 	
-	public IOption getOption(){
-		return (IOption) bufferMap.get(CommandBuffer.OPTION);
+	public AbstractOption getOption(){
+		return (AbstractOption) bufferMap.get(CommandBuffer.OPTION);
 	}
 	
 	public Cemetery getCemetery(){
@@ -71,8 +70,8 @@ public class ParameterExpressionBuffer {
 		return (AbstractCorps)bufferMap.get(CommandBuffer.CORPS);
 	}
 	
-	public ISkill getSkill(){
-		return (ISkill) bufferMap.get(CommandBuffer.SKILL);
+	public AbstractSkill getSkill(){
+		return (AbstractSkill) bufferMap.get(CommandBuffer.SKILL);
 	}
 	
 	public ITrick getTrick(){
@@ -83,7 +82,7 @@ public class ParameterExpressionBuffer {
 		bufferMap.clear();
 	}
 	
-	public void setPlayer(IPlayer player){
+	public void setPlayer(AbstractPlayer player){
 		if(null!=player){
 			bufferMap.remove(CommandBuffer.GROUND);
 			bufferMap.remove(CommandBuffer.PLACE);
@@ -97,7 +96,7 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setGround(IGround ground){
+	public void setGround(AbstractGround ground){
 		if(null!=ground){
 			player = getPlayer();
 			
@@ -115,7 +114,7 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setBuilding(IBuilding building){
+	public void setBuilding(AbstractBuilding building){
 		if(null!=building){
 			setPlace(building.getPlace());
 			
@@ -123,7 +122,7 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setOption(IOption option){
+	public void setOption(AbstractOption option){
 		if(null!=option){
 			setBuilding(option.getOwner());
 			
@@ -152,7 +151,7 @@ public class ParameterExpressionBuffer {
 		if(null!=corps){
 			setGround(corps.getGround());
 			
-			IGround ground = corps.getGround();
+			AbstractGround ground = corps.getGround();
 			
 			AbstractPlace place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place);
@@ -165,7 +164,7 @@ public class ParameterExpressionBuffer {
 		}		
 	}
 	
-	public void setSkill(ISkill skill){
+	public void setSkill(AbstractSkill skill){
 		if(null!=skill){
 			setCorps(skill.getOwner());
 			

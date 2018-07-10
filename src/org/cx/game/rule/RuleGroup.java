@@ -15,16 +15,16 @@ public class RuleGroup {
 
 	public final static Integer RuleGroup_System = 10500001;
 	
-	private List<IRule> ruleList = new ArrayList<IRule>();
+	private List<AbstractRule> ruleList = new ArrayList<AbstractRule>();
 	
-	public void setRuleList(List<IRule> ruleList) {
+	public void setRuleList(List<AbstractRule> ruleList) {
 		this.ruleList = ruleList;
 	}
 	
 	public void bindingRule(IInterceptable interceptable){
 		Class clazz = interceptable.getClass();
 		
-		for(IRule rule : ruleList){
+		for(AbstractRule rule : ruleList){
 			if(rule.getInterceptable().equals(clazz)){
 				interceptable.addIntercepter(rule);
 				rule.setOwner(interceptable);

@@ -11,12 +11,11 @@ import org.cx.game.tools.I18n;
  * @author chenxian
  *
  */
-public abstract class Treasure implements ITreasure {
+public abstract class Treasure {
 
 	private String name = null;
 	private Integer position = null;
 	
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		if(null==name)
@@ -24,6 +23,10 @@ public abstract class Treasure implements ITreasure {
 		return name;
 	}
 	
+	/**
+	 * 在地图上的位置
+	 * @return
+	 */
 	public Integer getPosition() {
 		return position;
 	}
@@ -31,8 +34,12 @@ public abstract class Treasure implements ITreasure {
 	public void setPosition(Integer position) {
 		this.position = position;
 	}
+	
+	public abstract IAction getPicked();
 
-	@Override
+	/**
+	 * 被捡起来
+	 */
 	public void picked(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getPicked());

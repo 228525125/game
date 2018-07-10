@@ -1,16 +1,16 @@
 package org.cx.game.command;
 
-import org.cx.game.core.IContext;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractContext;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.validator.ControlPowerValidator;
 
 public class InteriorCommand extends Command {
 
-	protected IPlayer player;
-	protected IContext context;	
+	protected AbstractPlayer player;
+	protected AbstractContext context;	
 	protected CommandBuffer buffer;
 	
-	public InteriorCommand(IPlayer player) {
+	public InteriorCommand(AbstractPlayer player) {
 		super();
 		// TODO Auto-generated constructor stub
 		this.player = player;

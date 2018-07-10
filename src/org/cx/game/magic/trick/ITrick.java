@@ -1,6 +1,6 @@
 package org.cx.game.magic.trick;
 
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
@@ -12,7 +12,7 @@ public interface ITrick extends IInterceptable,Observable,IIntercepter,IMagic,IR
 	
 	public TrickList getOwner();
 	
-	public IPlayer getPlayer();
+	public AbstractPlayer getPlayer();
 	
 	final static Integer Setup_Range = 1;
 	

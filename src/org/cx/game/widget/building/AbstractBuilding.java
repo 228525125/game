@@ -4,43 +4,60 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.cx.game.action.Upgrade;
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
-import org.cx.game.core.IPlayer;
-import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.intercepter.IInterceptable;
-import org.cx.game.intercepter.IIntercepter;
-import org.cx.game.intercepter.IRecover;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.AbstractPlace;
-import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
-public abstract class AbstractBuilding implements IBuilding, IRecover {
+public abstract class AbstractBuilding {
 
+	static final Integer Building_Status_Nothingness = 0;        //不存在
+	static final Integer Building_Status_Build = 1;              //建造过程中
+	static final Integer Building_Status_Complete = 2;           //完工
+	
 	private String name = null;
 	private Integer type = 0;
 	private Integer buildWait = 0;
 	private Integer level = 1;
 	private Integer levelLimit = 1;
-	private Integer status = IBuilding.Building_Status_Nothingness;
+	private Integer status = Building_Status_Nothingness;
 	
 	private AbstractPlace place = null;
-	private IPlayer player = null;
-	private IResource consume = new Resource();
-	private IBuilding owner = null;
+	private AbstractPlayer player = null;
+	private Resource consume = new Resource();
+	private AbstractBuilding owner = null;
+	private Upgrade upgrade = null;
 	
-	private List<IOption> options = new ArrayList<IOption>();
-	private List<IBuilding> buildings = new ArrayList<IBuilding>();
+	private List<AbstractOption> options = new ArrayList<AbstractOption>();
+	private List<AbstractBuilding> buildings = new ArrayList<AbstractBuilding>();
 	private List<Integer> needBuilding = new ArrayList<Integer>();
-	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
+	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();
 	
-	public AbstractBuilding(Integer buildingType) {
+	public AbstractBuilding(Integer type) {
 		// TODO Auto-generated constructor stub
-		this.type = buildingType;
+		this.type = type;
+	}
+	
+	/**
+	 * 唯一标识
+	 * @return
+	 */
+	public Integer getType() {
+		// TODO Auto-generated method stub
+		return this.type;
+	}
+	
+	/**
+	 * 分类
+	 * @return
+	 */
+	public Integer getCategory() {
+		String type = this.type.toString().substring(0, 3);
+		return Integer.parseInt(type);
 	}
 	
 	public String getName() {
@@ -49,6 +66,10 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 		return name;
 	}
 	
+	/**
+	 * 状态，Nothingness / Build / Complete
+	 * @return
+	 */
 	public Integer getStatus() {
 		return status;
 	}
@@ -57,18 +78,155 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 		this.status = status;
 	}
 	
+	/**
+	 * 父建筑，例如 城堡；
+	 * @return
+	 */
+	public AbstractBuilding getOwner() {
+		// TODO Auto-generated method stub
+		return owner;
+	}
+	
+	public void setOwner(AbstractBuilding building) {
+		// TODO Auto-generated method stub
+		this.owner = building;
+	}
+	
+	/**
+	 * 所属位置
+	 * @return
+	 */
+	public AbstractPlace getPlace() {
+		// TODO Auto-generated method stub
+		return this.place;
+	}
+	
+	public void setPlace(AbstractPlace place) {
+		// TODO Auto-generated method stub
+		this.place = place;
+		
+		/*
+		 * 主建筑物的位置，决定了子建筑物的位置
+		 */
+		for(AbstractBuilding building : getBuildings()){
+			building.setPlace(place);
+		}
+	}
+	
+	public AbstractPlayer getPlayer() {
+		// TODO Auto-generated method stub
+		return this.player;
+	}
+
+	public void setPlayer(AbstractPlayer player) {
+		// TODO Auto-generated method stub
+		this.player = player;
+	}
+	
+	/**
+	 * 
+	 * @return 内部建筑物
+	 */
+	public List<AbstractBuilding> getBuildings() {
+		// TODO Auto-generated method stub
+		return this.buildings;
+	}
+	
+	/**
+	 * 根据顺序号获取内部建筑
+	 * @param index
+	 * @return
+	 */
+	public AbstractBuilding getBuilding(Integer index) {
+		// TODO Auto-generated method stub
+		return this.buildings.get(index);
+	}
+	
+	/**
+	 * 添加子建筑物
+	 * @param building
+	 */
+	public void addBuilding(AbstractBuilding building) {
+		this.buildings.add(building);
+		
+		building.setPlace(getPlace());
+	}
+	
+	/**
+	 * 选项
+	 * @return
+	 */
+	public List<AbstractOption> getOptions() {
+		// TODO Auto-generated method stub
+		return this.options;
+	}
+	
+	public void setOptions(List<AbstractOption> options) {
+		// TODO Auto-generated method stub
+		for(AbstractOption option : options)
+			addOption(option);
+	}
+	
+	/**
+	 * 
+	 * @param index 选项顺序号
+	 * @return
+	 */
+	public AbstractOption getOption(Integer index) {
+		// TODO Auto-generated method stub
+		return this.options.get(index);
+	}
+	
+	public void addOption(AbstractOption option) {
+		// TODO Auto-generated method stub
+		option.setOwner(this);
+		this.options.add(option);
+	}
+	
 	public void setBuildWait(Integer bout) {
 		// TODO Auto-generated method stub
 		this.buildWait = bout;
 	}
 	
-	@Override
+	/**
+	 * 建造周期
+	 * @return
+	 */
 	public Integer getBuildWait() {
 		// TODO Auto-generated method stub
 		return this.buildWait;
 	}
 	
-	@Override
+	/**
+	 * 前置建筑物
+	 * @return 建筑物type
+	 */
+	public List<Integer> getNeedBuilding() {
+		return needBuilding;
+	}
+
+	public void setNeedBuilding(List<Integer> needBuilding) {
+		this.needBuilding = needBuilding;
+	}
+	
+	/**
+	 * 建造所需资源
+	 * @return
+	 */
+	public Resource getConsume() {
+		// TODO Auto-generated method stub
+		return consume;
+	}
+	
+	public void setConsume(Resource consume) {
+		// TODO Auto-generated method stub
+		this.consume = consume;
+	}
+	
+	/**
+	 * 建筑物等级上限
+	 * @return
+	 */
 	public Integer getLevelLimit() {
 		// TODO Auto-generated method stub
 		return this.levelLimit;
@@ -79,110 +237,9 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 		this.levelLimit = levelLimit;
 	}
 	
-	@Override
-	public Boolean isUpgrade() {
-		// TODO Auto-generated method stub
-		if(null!=getUpgrade()){
-			return getUpgrade().getLevel()<getUpgrade().getLevelLimit();
-		}
-		return false;
-	}
-
-	public List<Integer> getNeedBuilding() {
-		return needBuilding;
-	}
-
-	public void setNeedBuilding(List<Integer> needBuilding) {
-		this.needBuilding = needBuilding;
-	}
-	
-	@Override
-	public List<IBuilding> getBuildings() {
-		// TODO Auto-generated method stub
-		return this.buildings;
-	}
-	
-	public IBuilding getBuilding(Integer index) {
-		// TODO Auto-generated method stub
-		return this.buildings.get(index);
-	}
-
-	public AbstractPlace getPlace() {
-		// TODO Auto-generated method stub
-		if(null!=getOwner())
-			return getOwner().getPlace();
-		return this.place;
-	}
-	
-	@Override
-	public void setPlace(AbstractPlace place) {
-		// TODO Auto-generated method stub
-		this.place = place;
-	}
-
-	@Override
-	public IBuilding getOwner() {
-		// TODO Auto-generated method stub
-		return owner;
-	}
-	
-	@Override
-	public void setOwner(IBuilding building) {
-		// TODO Auto-generated method stub
-		this.owner = building;
-	}
-	
-	@Override
-	public IPlayer getPlayer() {
-		// TODO Auto-generated method stub
-		return this.player;
-	}
-
-	@Override
-	public void setPlayer(IPlayer player) {
-		// TODO Auto-generated method stub
-		this.player = player;
-	}
-
-	@Override
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return this.type;
-	}
-	
-	@Override
-	public List<IOption> getOptions() {
-		// TODO Auto-generated method stub
-		return this.options;
-	}
-	
-	@Override
-	public void setOptions(List<IOption> options) {
-		// TODO Auto-generated method stub
-		for(IOption option : options)
-			addOption(option);
-	}
-	
-	@Override
-	public IOption getOption(Integer index) {
-		// TODO Auto-generated method stub
-		return this.options.get(index);
-	}
-	
-	@Override
-	public void addOption(IOption option) {
-		// TODO Auto-generated method stub
-		option.setOwner(this);
-		this.options.add(option);
-	}
-	
-	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();
-	
 	public void setUpgradeRequirement(Map<Integer, String> upgradeRequirement) {
 		this.upgradeRequirement = upgradeRequirement;
 	}
-	
-	private Upgrade upgrade = null;
 
 	public Upgrade getUpgrade() {
 		if(null==upgrade){
@@ -195,57 +252,35 @@ public abstract class AbstractBuilding implements IBuilding, IRecover {
 		return upgrade;
 	}
 	
-	@Override
+	/**
+	 * 升级建筑
+	 */
 	public void upgrade() {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getUpgrade());
 		action.action();
 	}
 	
+	/**
+	 * 摧毁
+	 */
 	public void demolish(){
-		resetIntercepter();
+		
 	}
 	
-	@Override
+	/**
+	 * 开始建造
+	 */
 	public void build() {
 		// TODO Auto-generated method stub
-		setStatus(IBuilding.Building_Status_Complete);
+		setStatus(Building_Status_Complete);
 	}
 	
-	@Override
-	public IResource getConsume() {
+	/*public Boolean isUpgrade() {
 		// TODO Auto-generated method stub
-		return consume;
-	}
-	
-	@Override
-	public void setConsume(IResource consume) {
-		// TODO Auto-generated method stub
-		this.consume = consume;
-	}
-	
-	public void resetIntercepter() {
-		// TODO Auto-generated method stub
-		resetIntercepter(IIntercepter.Level_Current);
-	}
-	
-	@Override
-	public void resetIntercepter(Integer level) {
-		// TODO Auto-generated method stub
-		for(Map<IInterceptable, IIntercepter> map : resetList){
-			for(Entry<IInterceptable, IIntercepter> entry : map.entrySet()){
-				IInterceptable interceptable = entry.getKey();
-				IIntercepter intercepter = entry.getValue();	
-				if(level.equals(intercepter.getLevel()))
-					interceptable.deleteIntercepter(intercepter);
-			}
+		if(null!=getUpgrade()){
+			return getUpgrade().getLevel()<getUpgrade().getLevelLimit();
 		}
-	}
-	
-	public void recordIntercepter(IInterceptable interceptable, IIntercepter intercepter){
-		interceptable.addIntercepter(intercepter);
-		Map entry = new HashMap<IInterceptable, IIntercepter>();
-		entry.put(interceptable, intercepter);
-		resetList.add(entry);
-	}
+		return false;
+	}*/
 }

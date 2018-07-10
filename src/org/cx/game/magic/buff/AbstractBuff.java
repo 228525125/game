@@ -1,22 +1,18 @@
 package org.cx.game.magic.buff;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Map.Entry;
 
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.IMagic;
-import org.cx.game.core.AbstractContext;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
-import org.cx.game.intercepter.IntercepterAscComparator;
+import org.cx.game.intercepter.IRecover;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.AbstractResponse;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.tag.TagHelper;
 import org.cx.game.tools.I18n;
@@ -30,24 +26,25 @@ import org.cx.game.tools.I18n;
  * @author chenxian
  *
  */
-public abstract class AbstractBuff extends Observable implements IBuff {
+public abstract class AbstractBuff extends Observable implements org.cx.game.observer.Observable,IIntercepter,IMagic,IRecover {
 
+	protected static final Integer Max_Bout = 999;
+	protected final static String Affect = "_Affect";
+	
 	private Integer type = 0;                         //buff的id 对应magic的id
 	private String name = null;
-	private String depiction = null;
-	private AbstractCorps owner;
-	private Map<String,List<IIntercepter>> intercepterList = new HashMap<String,List<IIntercepter>>();
-	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
+	private String depiction = null;	
 	private Boolean isDelete = false;
 	private String action = null;
 	private Integer bout = 0;
 	private Integer beginBout = 0;
 	private Boolean duplication = false;  //是否可以叠加
-	
 	private Integer atk = 0;
 	private Integer def = 0;
 	
-	protected final static String Affect = "_Affect";
+	private AbstractCorps owner = null;
+
+	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 
 	public AbstractBuff(Integer type, Integer bout, AbstractCorps corps) {
 		// TODO Auto-generated constructor stub
@@ -59,60 +56,8 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 		addObserver(ResponseFactory.getResponse());
 	}
 	
-	@Override
-	public Integer getType() {
-		// TODO Auto-generated method stub
-		return this.type;
-	}
-	
-	@Override
-	public Integer getBout() {
-		// TODO Auto-generated method stub
-		return bout;
-	}
-	
-	@Override
-	public void setBout(Integer bout) {
-		// TODO Auto-generated method stub
-		this.bout = bout;
-	}
-
-	public AbstractCorps getOwner() {
-		return owner;
-	}
-	
-	public void setOwner(AbstractCorps owner){
-		this.owner = owner;
-	}
-	
-	@Override
-	public Integer getAtk() {
-		// TODO Auto-generated method stub
-		return this.atk;
-	}
-	
-	public void setAtk(Integer atk) {
-		this.atk = atk;
-	}
-	
-	@Override
-	public Integer getDef() {
-		// TODO Auto-generated method stub
-		return this.def;
-	}
-	
-	public void setDef(Integer def) {
-		this.def = def;
-	}
-	
 	public String getName() {
 		// TODO Auto-generated method stub
-		/* 在没有分包之前，buff的名字自动选用skill的名字代替，分包后逻辑发生变化了
-		 * if(null==name){
-			String clazz = this.getClass().getName();
-			if(-1!=clazz.indexOf("Buff"))
-				name = I18n.getMessage(clazz.substring(0, clazz.indexOf("Buff"))+".name");
-		}*/
 		if(null==name)
 			name = I18n.getMessage(this, "name");
 		return name;
@@ -126,15 +71,109 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 	}
 	
 	@Override
-	public void before(Object[] args) {
+	public Integer getType() {
 		// TODO Auto-generated method stub
-		
+		return this.type;
+	}
+	
+	/**
+	 * 持续回合
+	 * @return
+	 */
+	public Integer getBout() {
+		// TODO Auto-generated method stub
+		return bout;
+	}
+	
+	public void setBout(Integer bout) {
+		// TODO Auto-generated method stub
+		this.bout = bout;
+	}
+	
+	/**
+	 * 是否可以叠加
+	 * @return
+	 */
+	public Boolean isDuplication() {
+		return duplication;
+	}
+
+	public void setDuplication(Boolean duplication) {
+		this.duplication = duplication;
+	}
+
+	/**
+	 * 通知类型
+	 * @return
+	 */
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	/**
+	 * 受影响者
+	 */
+	public AbstractCorps getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(AbstractCorps owner){
+		this.owner = owner;
+	}
+	
+	/**
+	 * buff增加的攻击力，在extraAtk中体现
+	 * @return
+	 */
+	public Integer getAtk() {
+		// TODO Auto-generated method stub
+		return this.atk;
+	}
+	
+	public void setAtk(Integer atk) {
+		this.atk = atk;
+	}
+	
+	/**
+	 * buff增加的防御力，在extraAtk中体现
+	 * @return
+	 */
+	public Integer getDef() {
+		// TODO Auto-generated method stub
+		return this.def;
+	}
+	
+	public void setDef(Integer def) {
+		this.def = def;
 	}
 	
 	@Override
-	public void after(Object[] args) {
+	public Boolean isTrigger(Object[] args) {
 		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	/**
+	 * 生效，表示buff显示存在
+	 */
+	public void effect() {
+		// TODO Auto-generated method stub
+		owner.addBuff(this);
 		
+		beginBout = getOwner().getPlayer().getBout();
+	}
+	
+	/**
+	 * 失效，与effect对应
+	 */
+	public void invalid() {
+		// TODO Auto-generated method stub
+		resetIntercepter();           //清除buff的拦截器
+		owner.removeBuff(this);
 	}
 	
 	@Override
@@ -150,20 +189,7 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 		notifyObservers(info);
 	}
 	
-	@Override
-	public void effect() {
-		// TODO Auto-generated method stub
-		owner.addBuff(this);
-		
-		beginBout = getOwner().getPlayer().getBout();
-	}
-	
-	@Override
-	public void invalid() {
-		// TODO Auto-generated method stub
-		resetIntercepter();           //清除buff的拦截器
-		owner.removeBuff(this);
-	}
+	//---------------- IRecover ------------------
 	
 	public void resetIntercepter() {
 		// TODO Auto-generated method stub
@@ -190,22 +216,10 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 		resetList.add(entry);
 	}
 	
-	public Boolean isDuplication() {
-		return duplication;
-	}
+	//---------------- IRecover End -------------------
 
-	public void setDuplication(Boolean duplication) {
-		this.duplication = duplication;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
+	//---------------- IIntercepter -------------------
+	
 	@Override
 	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
@@ -228,58 +242,9 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 	}
 	
 	@Override
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
-	}
-	
-	@Override
-	public Integer getOrder() {
-		// TODO Auto-generated method stub
-		return IIntercepter.Order_Default;
-	}
-	
-	@Override
 	public Integer getLevel() {
 		// TODO Auto-generated method stub
 		return IIntercepter.Level_Current;
-	}
-	
-	@Override
-	public void notifyObservers(Object arg) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg);
 	}
 	
 	@Override
@@ -293,6 +258,23 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 		// TODO Auto-generated method stub
 		return this.isDelete;
 	}
+	
+	@Override
+	public Integer getOrder() {
+		// TODO Auto-generated method stub
+		return IIntercepter.Order_Default;
+	}
+	
+	//---------------- IIntercepter End -------------------
+	
+	@Override
+	public void notifyObservers(Object arg) {
+		// TODO Auto-generated method stub
+		super.setChanged();
+		super.notifyObservers(arg);
+	}
+	
+	//------------------ ITag --------------------
 	
 	@Override
 	public Boolean contains(Integer tag) {
@@ -315,10 +297,6 @@ public abstract class AbstractBuff extends Observable implements IBuff {
 		// TODO Auto-generated method stub
 		return TagHelper.queryForObject(getType());
 	}
-
-	@Override
-	public Boolean isTrigger(Object[] args) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	
+	//------------------ ITag End --------------------
 }

@@ -5,18 +5,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
 import org.cx.game.command.InteriorCommand;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.tools.XmlUtil;
-import org.cx.game.validator.IValidator;
 import org.dom4j.Element;
 
 public class InteriorCommandExpression extends CommandExpression {
 
-	private IPlayer player = null;
+	private AbstractPlayer player = null;
 	private Element element = null;
 	
-	public InteriorCommandExpression(IPlayer player, String cmd, Element root) {
+	public InteriorCommandExpression(AbstractPlayer player, String cmd, Element root) {
 		super(cmd, root);
 		// TODO Auto-generated constructor stub
 		this.player = player;
@@ -38,7 +37,7 @@ public class InteriorCommandExpression extends CommandExpression {
 				if(action.equals(command.attribute(XmlUtil.Command_Command_Name).getText())){
 					this.element = command;
 					Class clazz = Class.forName(this.element.attribute(XmlUtil.Command_Command_Class).getText());
-					Constructor<InteriorCommand> c = clazz.getDeclaredConstructor(new Class[]{IPlayer.class});
+					Constructor<InteriorCommand> c = clazz.getDeclaredConstructor(new Class[]{AbstractPlayer.class});
 					ret = c.newInstance(player);
 					
 					if(null!=this.element.attribute(XmlUtil.Command_Command_Parameter) && XmlUtil.Command_Command_Parameter_Request.equals(this.element.attribute(XmlUtil.Command_Command_Parameter).getText())){

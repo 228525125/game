@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import org.cx.game.core.IPlayer;
-import org.cx.game.corps.AbstractCorps;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.AbstractResponse;
 import org.cx.game.out.ResponseFactory;
-import org.cx.game.rule.RuleGroupFactory;
 import org.cx.game.tools.CommonIdentifier;
 
-public class ControlQueue extends Observable implements IControlQueue {
+/**
+ * 控制队列
+ * @author chenxian
+ *
+ */
+public class ControlQueue extends Observable implements org.cx.game.observer.Observable {
 
 	/**
 	 * 获取一次控制权需要消耗的能量
@@ -44,8 +46,11 @@ public class ControlQueue extends Observable implements IControlQueue {
 		this.curQueue = 1;
 	}
 	
-	@Override
-	public void add(IPlayer player) {
+	/**
+	 * 将一个元素加入到控制列表中，插入时不用考虑位置
+	 * @param object
+	 */
+	public void add(AbstractPlayer player) {
 		// TODO Auto-generated method stub
 		Place place = new Place(player);
 		
@@ -58,7 +63,11 @@ public class ControlQueue extends Observable implements IControlQueue {
 		this.queueList.add(place);
 	}
 	
-	public void remove(IPlayer player) {
+	/**
+	 * 用于corps death后从queue中移除，该方法只用于rule
+	 * @param object corps 或者 player
+	 */
+	public void remove(AbstractPlayer player) {
 		// TODO Auto-generated method stub
 		Place place = new Place(player);
 		takeOut(place);
@@ -66,8 +75,12 @@ public class ControlQueue extends Observable implements IControlQueue {
 		this.queueList.remove(place);
 	}
 	
-	@Override
-	public Place getPlace(IPlayer player) {
+	/**
+	 * 根据对象反查place
+	 * @param object
+	 * @return
+	 */
+	public Place getPlace(AbstractPlayer player) {
 		// TODO Auto-generated method stub
 		for(Place place : this.queueList){
 			if(place.getObject().equals(player))
@@ -76,7 +89,10 @@ public class ControlQueue extends Observable implements IControlQueue {
 		return null;
 	}
 	
-	@Override
+	/**
+	 * 
+	 * @return 返回排序最靠前的一个元素
+	 */
 	public Object out() {
 		// TODO Auto-generated method stub
 		Object object = null;
@@ -107,6 +123,27 @@ public class ControlQueue extends Observable implements IControlQueue {
 		return object;
 	}
 	
+	/**
+	 * 将一个place移入优先队列
+	 * @param place
+	 */
+	public void moveToPrior(Place place){
+		
+		if(!this.queue1.remove(place))
+			this.queue2.remove(place);
+		
+		this.priorQueue.add(place);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", place.getObject());
+		map.put("queue", getList());
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Move,map);
+		notifyObservers(info);
+	}
+	
+	/**
+	 * 刷新，当place中的corps的speed发生变化时，立即刷新，该方法只用于rule
+	 */
 	public void refurbish() {
 		// TODO Auto-generated method stub
 		for(int i=0;i<queue.size();i++){
@@ -125,6 +162,11 @@ public class ControlQueue extends Observable implements IControlQueue {
 		map.put("queue", getList());
 		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Refurbish,map);
 		notifyObservers(info);
+	}
+	
+	public Integer getLength() {
+		// TODO Auto-generated method stub
+		return this.queueList.size();
 	}
 	
 	/**
@@ -158,20 +200,6 @@ public class ControlQueue extends Observable implements IControlQueue {
 		notifyObservers(info);
 	}
 	
-	public void moveToPrior(Place place){
-		
-		if(!this.queue1.remove(place))
-			this.queue2.remove(place);
-		
-		this.priorQueue.add(place);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", place.getObject());
-		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Move,map);
-		notifyObservers(info);
-	}
-	
 	private void swapQueue(){
 		if(1==this.curQueue){
 			this.queue = map.get(2);
@@ -196,7 +224,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 		Integer count = place.getCount();
 		Integer consume = 100;
 		Integer speed = 0;
-		if (place.getObject() instanceof IPlayer) {
+		if (place.getObject() instanceof AbstractPlayer) {
 			speed = consume;
 		}
 		
@@ -282,48 +310,12 @@ public class ControlQueue extends Observable implements IControlQueue {
 		super.notifyObservers(arg);
 	}
 	
-	@Override
-	public void addIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		List<IIntercepter> intercepters = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=intercepters){
-			intercepters.add(intercepter);
-		}else{
-			intercepters = new ArrayList<IIntercepter>();
-			intercepters.add(intercepter);
-			intercepterList.put(intercepter.getIntercepterMethod(), intercepters);
-		}
-	}
-
-	@Override
-	public void deleteIntercepter(IIntercepter intercepter) {
-		// TODO Auto-generated method stub
-		/*List<IIntercepter> list = intercepterList.get(intercepter.getIntercepterMethod());
-		if(null!=list){
-			list.remove(intercepter);
-		}*/
-		
-		intercepter.delete();
-	}
-
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		intercepterList.clear();
-	}
-
-	@Override
-	public Map<String,List<IIntercepter>> getIntercepterList() {
-		// TODO Auto-generated method stub
-		return intercepterList;
-	}
-	
 	public class Place {
-		private IPlayer obj = null;
+		private AbstractPlayer obj = null;
 		private Integer count = 0;
 		private Integer speed = 0;
 		
-		public Place(IPlayer object) {
+		public Place(AbstractPlayer object) {
 			// TODO Auto-generated constructor stub
 			this.obj = object;
 			loadSpeed();
@@ -345,7 +337,7 @@ public class ControlQueue extends Observable implements IControlQueue {
 			return speed;
 		}
 		
-		public IPlayer getObject(){
+		public AbstractPlayer getObject(){
 			return obj;
 		}
 		
@@ -372,11 +364,5 @@ public class ControlQueue extends Observable implements IControlQueue {
 			else
 				return -1;
 		}
-	}
-
-	@Override
-	public Integer getLength() {
-		// TODO Auto-generated method stub
-		return this.queueList.size();
 	}
 }

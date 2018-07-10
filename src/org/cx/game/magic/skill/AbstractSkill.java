@@ -8,7 +8,7 @@ import java.util.Observable;
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
-import org.cx.game.magic.skill.ISkill;
+import org.cx.game.magic.IMagic;
 import org.cx.game.core.AbstractContext;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
@@ -16,15 +16,16 @@ import org.cx.game.out.ResponseFactory;
 import org.cx.game.tag.TagHelper;
 import org.cx.game.tools.I18n;
 
-public abstract class AbstractSkill extends Observable implements ISkill {
+public abstract class AbstractSkill extends Observable implements IMagic, org.cx.game.observer.Observable {
 
+	protected final static String UseSkill = "_UseSkill";
+	
 	private Integer type;
 	private String name;
-	private String depiction = null;
-	private AbstractCorps owner;
+	private String depiction = null;	
 	private String action = null;
 	
-	protected final static String UseSkill = "_UseSkill";
+	private AbstractCorps owner = null;
 	
 	public AbstractSkill(Integer type) {
 		// TODO Auto-generated constructor stub
@@ -41,19 +42,6 @@ public abstract class AbstractSkill extends Observable implements ISkill {
 	
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	@Override
-	public void affect(Object... objects) {
-		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", owner.getPlayer());
-		map.put("container", owner.getGround());
-		map.put("corps", owner);
-		map.put("skill", this);
-		map.put("position", owner.getPosition());
-		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
-		notifyObservers(info);
 	}
 	
 	@Override
@@ -79,19 +67,41 @@ public abstract class AbstractSkill extends Observable implements ISkill {
 		return owner;
 	}
 	
-	@Override
 	public void setOwner(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		this.owner = corps;		
 	}
-
-	@Override
-	public void notifyObservers(Object arg) {
+	
+	public abstract IAction getUpgrade();
+	
+	public void upgrade() {
 		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg);
+		IAction action = new ActionProxyHelper(getUpgrade());
+		action.action();
 	}
 
+	
+	@Override
+	public Boolean isTrigger(Object[] args) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	@Override
+	public void affect(Object... objects) {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("player", owner.getPlayer());
+		map.put("container", owner.getGround());
+		map.put("corps", owner);
+		map.put("skill", this);
+		map.put("position", owner.getPosition());
+		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
+		notifyObservers(info);
+	}
+	
+	//-------------------- ITag ----------------------
+	
 	@Override
 	public Boolean contains(Integer tag) {
 		// TODO Auto-generated method stub
@@ -114,17 +124,13 @@ public abstract class AbstractSkill extends Observable implements ISkill {
 		return TagHelper.queryForObject(getType());
 	}
 	
-	@Override
-	public Boolean isTrigger(Object[] args) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	//-------------------- ITag End ----------------------
 	
 	@Override
-	public void upgrade() {
+	public void notifyObservers(Object arg) {
 		// TODO Auto-generated method stub
-		IAction action = new ActionProxyHelper(getUpgrade());
-		action.action();
+		super.setChanged();
+		super.notifyObservers(arg);
 	}
 
 }

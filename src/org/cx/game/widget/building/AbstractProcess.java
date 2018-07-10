@@ -6,15 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.cx.game.action.IAction;
-import org.cx.game.core.IContext;
-import org.cx.game.core.IPlayer;
-import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
-import org.cx.game.observer.NotifyInfo;
-import org.cx.game.observer.Observable;
 
 public abstract class AbstractProcess implements IIntercepter, IRecover {
 
@@ -26,9 +21,9 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
 	private Object owner = null;
-	private IPlayer player = null;
+	private AbstractPlayer player = null;
 	
-	public AbstractProcess(Integer waitBout, IPlayer player, Object owner) {
+	public AbstractProcess(Integer waitBout, AbstractPlayer player, Object owner) {
 		// TODO Auto-generated constructor stub
 		this.waitBout = waitBout;
 		this.owner = owner;

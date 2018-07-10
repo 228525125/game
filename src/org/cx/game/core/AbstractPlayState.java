@@ -7,14 +7,14 @@ import org.cx.game.out.ResponseFactory;
 
 public abstract class AbstractPlayState extends Observable implements org.cx.game.observer.Observable{
 	
-	protected IContext context;
+	protected AbstractContext context;
 	
 	public AbstractPlayState() {
 		// TODO Auto-generated constructor stub
 		addObserver(ResponseFactory.getResponse());
 	}
 
-	public void setContext(IContext context) {
+	public void setContext(AbstractContext context) {
 		this.context = context;
 	}
 	

@@ -35,7 +35,7 @@ public class GroundFactory {
 		return null;
 	}
 	
-	public static IGround getInstance(Integer mapId){
+	public static AbstractGround getInstance(Integer mapId){
 		Element mapEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
@@ -47,7 +47,7 @@ public class GroundFactory {
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
 				new ObjectTypeParse(otb).parse(mapEl);
-				IGround ground = (IGround) otb.builder();
+				AbstractGround ground = (AbstractGround) otb.builder();
 				ground.afterConstruct();
 				return ground;
 			} catch (ParseException e) {

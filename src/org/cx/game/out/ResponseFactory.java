@@ -5,18 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
 import java.util.Iterator;
 
-import org.cx.game.builder.ObjectTypeBuilder;
-import org.cx.game.builder.ObjectTypeParse;
-import org.cx.game.command.expression.InteriorCommandParameterExpression;
-import org.cx.game.core.IPlayer;
-import org.cx.game.exception.BuilderException;
-import org.cx.game.exception.ParseException;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.XmlUtil;
-import org.cx.game.widget.building.IBuilding;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;

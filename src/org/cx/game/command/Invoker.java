@@ -2,7 +2,7 @@ package org.cx.game.command;
 
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.core.Camera;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.core.Record;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.exception.ValidatorException;
@@ -67,7 +67,7 @@ public class Invoker {
 			throw new SyntaxValidatorException("org.cx.game.command.Invoker.intergrityValidate");
 	}
 	
-	public void receiveCommand(IPlayer player,String cmd) throws ValidatorException {
+	public void receiveCommand(AbstractPlayer player,String cmd) throws ValidatorException {
 		try {
 			intergrityValidate(cmd);    //验证命令完整性
 			

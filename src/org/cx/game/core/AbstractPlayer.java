@@ -14,19 +14,18 @@ import org.cx.game.observer.NotifyInfo;
 import org.cx.game.observer.Observable;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.tools.CommonIdentifier;
-import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 
-public abstract class AbstractPlayer extends java.util.Observable implements IPlayer ,Observable{
+public abstract class AbstractPlayer extends java.util.Observable implements Observable{
 	
-	private Integer troop = 0;    //这里的id不是玩家的唯一标号，它根据比赛中的位置来定的，仅针对一场比赛是唯一
+	private Integer troop = 0;
 	private String name = null;
 	private Boolean isComputer = false;
 	private Integer rationLimit = 10;
 	private Integer ration = 0;
 	
-	private IResource resource = null;
-	private IContext context = null;
+	private Resource resource = null;
+	private AbstractContext context = null;
 	private CommandBuffer commandBuffer = null;
 	
 	public AbstractPlayer(Integer id, String name) {
@@ -40,60 +39,59 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		
 		commandBuffer = new CommandBuffer(this);
 	}
-	
-	@Override
-	public Integer getTroop() {
-		return troop;
-	}
-	
-	@Override
-	public void setTroop(Integer troop) {
-		// TODO Auto-generated method stub
-		this.troop = troop;
-	}
 
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return this.name;
 	}
 	
-	@Override
-	public Boolean getComputer() {
+	public Boolean isComputer() {
 		// TODO Auto-generated method stub
 		return this.isComputer;
 	}
 	
-	@Override
-	public void setComputer(Boolean isComputer) {
+	public void setIsComputer(Boolean isComputer) {
 		// TODO Auto-generated method stub
 		this.isComputer = isComputer;
 	}
 	
-	@Override
 	public CommandBuffer getCommandBuffer() {
 		// TODO Auto-generated method stub
 		return commandBuffer;
 	}
 
-	@Override
-	public IContext getContext() {
+	public AbstractContext getContext() {
 		// TODO Auto-generated method stub
 		return context;
 	}
 	
-	@Override
-	public void setContext(IContext context) {
+	public void setContext(AbstractContext context) {
 		// TODO Auto-generated method stub
 		this.context = context;
 	}
 	
-	public IResource getResource() {
+	/**
+	 * 阵营，它根据比赛中的位置来定的
+	 * @return
+	 */
+	public Integer getTroop() {
+		return troop;
+	}
+	
+	public void setTroop(Integer troop) {
+		// TODO Auto-generated method stub
+		this.troop = troop;
+	}
+	
+	/**
+	 * 资源
+	 * @return
+	 */
+	public Resource getResource() {
 		return resource;
 	}
 	
-	@Override
-	public void addToResource(IResource res) {
+	public void addToResource(Resource res) {
 		// TODO Auto-generated method stub
 		if(!res.isEmpty()){
 			this.resource.add(res);
@@ -106,7 +104,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		}
 	}
 	
-	@Override
 	public void addToResource(Integer resType, Integer res) {
 		// TODO Auto-generated method stub
 		if(0!=res){
@@ -124,45 +121,32 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	 * 用于xml配置
 	 * @param res
 	 */
-	public void setResource(IResource res){
+	public void setResource(Resource res){
 		this.resource = res;
 	}
-
-	@Override
-	public void notifyObservers(Object arg0) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg0);
-	}
 	
-	@Override
-	public boolean equals(Object arg0) {
-		// TODO Auto-generated method stub
-		if (arg0 instanceof IPlayer) {
-			IPlayer player = (IPlayer) arg0;
-			return player.getTroop().equals(getTroop());
-		}
-		return super.equals(arg0);
-	}
-	
-	@Override
+	/**
+	 * 人口限制
+	 * @return
+	 */
 	public Integer getRationLimit() {
 		return rationLimit;
 	}
-	
-	@Override
+
 	public void setRationLimit(Integer ration) {
 		// TODO Auto-generated method stub
 		this.rationLimit = ration;
 	}
 	
-	@Override
+	/**
+	 * 人口总数
+	 * @return
+	 */
 	public Integer getRation() {
 		// TODO Auto-generated method stub
 		return ration;
 	}
 	
-	@Override
 	public void addToRation(Integer ration) {
 		// TODO Auto-generated method stub
 		if(0<ration){
@@ -178,7 +162,14 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 		}
 	}
 	
-	public void addBout() throws RuleValidatorException{
+	/**
+	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
+	 */
+	public abstract Integer getBout();
+	
+	public abstract IAction getAddBoutAction();
+	
+	public void addBout() {
 		IAction action = new ActionProxyHelper(getAddBoutAction());
 		action.action();
 	}
@@ -187,4 +178,21 @@ public abstract class AbstractPlayer extends java.util.Observable implements IPl
 	 * 使用AI自动操作
 	 */
 	public abstract void automation();
+
+	@Override
+	public void notifyObservers(Object arg0) {
+		// TODO Auto-generated method stub
+		super.setChanged();
+		super.notifyObservers(arg0);
+	}
+	
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		if (arg0 instanceof AbstractPlayer) {
+			AbstractPlayer player = (AbstractPlayer) arg0;
+			return player.getTroop().equals(getTroop());
+		}
+		return super.equals(arg0);
+	}
 }

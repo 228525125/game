@@ -1,16 +1,13 @@
 package org.cx.game.widget.treasure;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.cx.game.tools.CommonIdentifier;
-import org.cx.game.tools.I18n;
 
-public class Resource implements IResource {
+public class Resource {
 
 	private Map<Integer, Integer> resource = new HashMap<Integer, Integer>();
 	
@@ -44,14 +41,17 @@ public class Resource implements IResource {
 		this.resource.put(CommonIdentifier.Ore, res.length>3 ? Integer.valueOf(res[3]) : 0);
 	}
 	
-	@Override
 	public Integer get(Integer type) {
 		// TODO Auto-generated method stub
 		return this.resource.get(type);
 	}
 	
-	@Override
-	public void add(IResource resource){
+	/**
+	 * 执行条件 get(type)=null 或 0!=resValue
+	 * @param type
+	 * @param resValue
+	 */
+	public void add(Resource resource){
 		if(!resource.isEmpty()){
 			for(Entry<Integer, Integer> entry : resource.entrySet()){
 				Integer type = entry.getKey();
@@ -61,7 +61,6 @@ public class Resource implements IResource {
 		}
 	}
 
-	@Override
 	public void add(Integer type, Integer resValue) {
 		// TODO Auto-generated method stub
 		if(0!=resValue || null==this.resource.get(type)){
@@ -71,12 +70,10 @@ public class Resource implements IResource {
 		}
 	}
 	
-	@Override
 	public Set<Entry<Integer, Integer>> entrySet(){
 		return this.resource.entrySet();
 	}
 	
-	@Override
 	public Boolean isEmpty() {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
@@ -89,8 +86,12 @@ public class Resource implements IResource {
 		return ret;
 	}
 	
-	@Override
-	public Boolean absoluteLessThan(IResource res) {
+	/**
+	 * 绝对值小于，例如判断CallConsume时，会用到；
+	 * @param res
+	 * @return
+	 */
+	public Boolean absoluteLessThan(Resource res) {
 		// TODO Auto-generated method stub
 		Boolean ret = true;
 		for(Entry<Integer,Integer> entry : res.entrySet()){

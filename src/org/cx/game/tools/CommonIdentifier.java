@@ -24,4 +24,10 @@ public class CommonIdentifier {
 	public final static Integer Ore = 704;                     //矿石
 	public final static Integer EmpiricValue = 710;            //经验值
 	public final static Integer SkillCount = 720;              //技能点
+	
+	//---------------- Corps ----------------//
+	
+	public final static Integer Death_Status_Live = 0;         //战斗
+	public final static Integer Death_Status_Death = 1;        //死亡
+	public final static Integer Death_Status_Exist = 2;        //存在
 }

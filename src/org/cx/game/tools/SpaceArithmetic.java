@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cx.game.widget.IGround;
+import org.cx.game.widget.AbstractGround;
 
 /**
  * 空间算法，主要应用于战场；
@@ -52,40 +52,40 @@ public class SpaceArithmetic {
 		
 		if(p1[1]%2==0){
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==1)
-				ret = IGround.Relative_LeftTop;
+				ret = AbstractGround.Relative_LeftTop;
 			
 			if(p1[0]-p2[0]==0 && p1[1]-p2[1]==1)
-				ret = IGround.Relative_RightTop;
+				ret = AbstractGround.Relative_RightTop;
 				
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==0)
-				ret = IGround.Relative_Left;
+				ret = AbstractGround.Relative_Left;
 					
 			if(p1[0]-p2[0]==-1 && p1[1]-p2[1]==0)
-				ret = IGround.Relative_Right;
+				ret = AbstractGround.Relative_Right;
 						
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==-1)
-				ret = IGround.Relative_LeftBottom;
+				ret = AbstractGround.Relative_LeftBottom;
 							
 			if(p1[0]-p2[0]==0 && p1[1]-p2[1]==-1)
-				ret = IGround.Relative_RightBottom;
+				ret = AbstractGround.Relative_RightBottom;
 		}else{
 			if(p1[0]-p2[0]==0 && p1[1]-p2[1]==1)
-				ret = IGround.Relative_LeftTop;
+				ret = AbstractGround.Relative_LeftTop;
 			
 			if(p1[0]-p2[0]==-1 && p1[1]-p2[1]==1)
-				ret = IGround.Relative_RightTop;
+				ret = AbstractGround.Relative_RightTop;
 				
 			if(p1[0]-p2[0]==1 && p1[1]-p2[1]==0)
-				ret = IGround.Relative_Left;
+				ret = AbstractGround.Relative_Left;
 					
 			if(p1[0]-p2[0]==-1 && p1[1]-p2[1]==0)
-				ret = IGround.Relative_Right;
+				ret = AbstractGround.Relative_Right;
 						
 			if(p1[0]-p2[0]==0 && p1[1]-p2[1]==-1)
-				ret = IGround.Relative_LeftBottom;
+				ret = AbstractGround.Relative_LeftBottom;
 							
 			if(p1[0]-p2[0]==-1 && p1[1]-p2[1]==-1)
-				ret = IGround.Relative_RightBottom;
+				ret = AbstractGround.Relative_RightBottom;
 		}
 		
 		return ret;
@@ -167,50 +167,50 @@ public class SpaceArithmetic {
 		
 		switch (direction) {
 		case 10:
-			position = getPosition(stand, IGround.Relative_Left);
+			position = getPosition(stand, AbstractGround.Relative_Left);
 			list.add(position);
 			
-			position = getPosition(stand, IGround.Relative_RightTop);
+			position = getPosition(stand, AbstractGround.Relative_RightTop);
 			list.add(position);
 			
 			break;
 		case 2:
-			position = getPosition(stand, IGround.Relative_LeftTop);
+			position = getPosition(stand, AbstractGround.Relative_LeftTop);
 			list.add(position);
 			
-			position = getPosition(stand, IGround.Relative_Right);
+			position = getPosition(stand, AbstractGround.Relative_Right);
 			list.add(position);
 			
 			break;
 		case 9:
-			position = getPosition(stand, IGround.Relative_LeftTop);
+			position = getPosition(stand, AbstractGround.Relative_LeftTop);
 			list.add(position);
 			
-			position = getPosition(stand, IGround.Relative_LeftBottom);
+			position = getPosition(stand, AbstractGround.Relative_LeftBottom);
 			list.add(position);
 			
 			break;
 		case 3:
-			position = getPosition(stand, IGround.Relative_RightTop);
+			position = getPosition(stand, AbstractGround.Relative_RightTop);
 			list.add(position);
 			
-			position = getPosition(stand, IGround.Relative_RightBottom);
+			position = getPosition(stand, AbstractGround.Relative_RightBottom);
 			list.add(position);
 			
 			break;
 		case 8:
-			position = getPosition(stand, IGround.Relative_Left);
+			position = getPosition(stand, AbstractGround.Relative_Left);
 			list.add(position);
 			
-			position = getPosition(stand, IGround.Relative_RightBottom);
+			position = getPosition(stand, AbstractGround.Relative_RightBottom);
 			list.add(position);
 			
 			break;
 		case 4:
-			position = getPosition(stand, IGround.Relative_Right);
+			position = getPosition(stand, AbstractGround.Relative_Right);
 			list.add(position);
 			
-			position = getPosition(stand, IGround.Relative_LeftBottom);
+			position = getPosition(stand, AbstractGround.Relative_LeftBottom);
 			list.add(position);
 			
 			break;
@@ -328,43 +328,43 @@ public class SpaceArithmetic {
     	n += 1;
     	addCoordinateMap(n, starPoint);
     	
-    	starPoint = getPosition(starPoint, IGround.Relative_Left);
+    	starPoint = getPosition(starPoint, AbstractGround.Relative_Left);
 		n += 1;
 		addCoordinateMap(n, starPoint);
     	
     	for (int i = 1; i < circleNumber+1; i++) {
 			for (int j = 1; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_LeftTop);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_LeftTop);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_RightTop);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_RightTop);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_Right);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_Right);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_RightBottom);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_RightBottom);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_LeftBottom);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_LeftBottom);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i+1; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_Left);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_Left);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}

@@ -1,7 +1,7 @@
 package org.cx.game.command.expression;
 
 import org.cx.game.command.CommandBuffer;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.tools.Util;
 import org.cx.game.validator.InteriorCommandParameterExpressionObjectTypeValidator;
@@ -18,7 +18,7 @@ public class InteriorCommandParameterBufferExpression extends
 	
 	private ParameterExpressionBuffer buffer = null;
 	
-	public InteriorCommandParameterBufferExpression(IPlayer own,
+	public InteriorCommandParameterBufferExpression(AbstractPlayer own,
 			String cmd, Element cmdEl) {
 		super(own, cmd, cmdEl);
 		this.buffer = new ParameterExpressionBuffer(own);

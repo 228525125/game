@@ -5,16 +5,8 @@ import java.util.Map;
 
 import org.cx.game.action.Upgrade;
 import org.cx.game.action.IAction;
-import org.cx.game.core.IPlayer;
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.rule.IRule;
 import org.cx.game.tools.CommonIdentifier;
-import org.cx.game.tools.PropertiesUtil;
-import org.cx.game.tools.Util;
-import org.cx.game.widget.building.IBuilding;
-import org.cx.game.widget.treasure.IResource;
-import org.cx.game.widget.treasure.Resource;
 
 public class UpgradeBuilding extends Upgrade implements IAction {
 	
@@ -28,7 +20,7 @@ public class UpgradeBuilding extends Upgrade implements IAction {
 		// TODO Auto-generated method stub
 		super.action(objects);
 		
-		getOwner().setStatus(IBuilding.Building_Status_Complete);
+		getOwner().setStatus(AbstractBuilding.Building_Status_Complete);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("position", getOwner().getPlace().getPosition());
@@ -39,8 +31,8 @@ public class UpgradeBuilding extends Upgrade implements IAction {
 	}
 	
 	@Override
-	public IBuilding getOwner() {
+	public AbstractBuilding getOwner() {
 		// TODO Auto-generated method stub
-		return (IBuilding) super.getOwner();
+		return (AbstractBuilding) super.getOwner();
 	}
 }

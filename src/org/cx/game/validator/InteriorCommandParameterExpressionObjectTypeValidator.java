@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.command.expression.Calculator;
 import org.cx.game.command.expression.ParameterExpressionBuffer;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.tools.I18n;
 import org.dom4j.Element;
 
@@ -20,7 +20,7 @@ public class InteriorCommandParameterExpressionObjectTypeValidator extends
 	private Element cmdEl = null;
 	
 	public InteriorCommandParameterExpressionObjectTypeValidator(String parameter,
-			IPlayer player, Element cmdEl, ParameterExpressionBuffer buffer) {
+			AbstractPlayer player, Element cmdEl, ParameterExpressionBuffer buffer) {
 		super(parameter, player, buffer);
 		// TODO Auto-generated constructor stub
 		this.cmdEl = cmdEl;

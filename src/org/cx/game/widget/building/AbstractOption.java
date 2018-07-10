@@ -4,30 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.Execute;
 import org.cx.game.action.IAction;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
+import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
+import org.cx.game.widget.AbstractGround;
 
-public abstract class AbstractOption implements IOption {
+public abstract class AbstractOption implements IValidatable {
 
-	private List<IValidator> validatorList = new ArrayList<IValidator>();
-	private Errors errors = new Errors();
+	private Integer number = 1;                //选项参数
 	private Integer spacingWait = 0;                   //间隔等待
 	private Integer executeWait = 0;                   //执行等待
-	private AbstractProcess spacingProcess = null;
-	private AbstractProcess executeProcess = null;
 	
 	private String name = null;
 	private Boolean allow = true;
 	
-	private IBuilding owner = null;
+	private AbstractProcess spacingProcess = null;
+	private AbstractProcess executeProcess = null;
+	private AbstractBuilding owner = null;
 	
-	private Integer number = 1;                //选项参数
-	
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		if(null==name)
@@ -35,18 +34,20 @@ public abstract class AbstractOption implements IOption {
 		return name;
 	}
 	
-	@Override
-	public IBuilding getOwner() {
+	public AbstractBuilding getOwner() {
 		// TODO Auto-generated method stub
 		return this.owner;
 	}
-	
-	@Override
-	public void setOwner(IBuilding building) {
+
+	public void setOwner(AbstractBuilding building) {
 		// TODO Auto-generated method stub
 		this.owner = building;
 	}
 	
+	/**
+	 * 选项参数
+	 * @return 执行数量
+	 */
 	public Integer getNumber() {
 		return number;
 	}
@@ -55,13 +56,15 @@ public abstract class AbstractOption implements IOption {
 		this.number = number;
 	}
 	
-	@Override
 	public void setSpacingWait(Integer spacingWait) {
 		// TODO Auto-generated method stub
 		this.spacingWait = spacingWait;
 	}
 	
-	@Override
+	/**
+	 * 选项被执行后，下一次可执行需间隔的回合数
+	 * @param spacingWait 间隔回合数
+	 */
 	public Integer getSpacingWait() {
 		// TODO Auto-generated method stub
 		return this.spacingWait;
@@ -71,25 +74,55 @@ public abstract class AbstractOption implements IOption {
 		this.executeWait = executeWait;
 	}
 	
-	@Override
+	/**
+	 * 选项需要等待一定回合后才被执行
+	 * @param executeWait 等待回合数
+	 */
 	public Integer getExecuteWait() {
 		// TODO Auto-generated method stub
 		return this.executeWait;
 	}
 	
-	@Override
+	/**
+	 * 查询执行范围
+	 * @param ground
+	 * @return
+	 */
+	public abstract List<Integer> getExecuteRange(AbstractGround ground);
+	
+	/**
+	 * 间隔剩余回合数
+	 * @return
+	 */
 	public Integer getSpacingRemainBout() {
 		// TODO Auto-generated method stub
 		return null!=this.spacingProcess ? this.spacingProcess.getRemainBout() : 0;
 	}
 	
-	@Override
+	/**
+	 * 距离执行完成还有多少回合
+	 * @return
+	 */
 	public Integer getExecuteRemainBout() {
 		// TODO Auto-generated method stub
 		return null!=this.executeProcess ? this.executeProcess.getRemainBout() : 0;
 	}
 	
-	@Override
+	/**
+	 * 是否可以执行，这里主要判断选项的执行周期是否结束
+	 * @return
+	 */
+	public Boolean getAllow() {
+		return allow;
+	}
+
+	public void setAllow(Boolean allow) {
+		this.allow = allow;
+	}
+	
+	/**
+	 * 开始执行间隔周期
+	 */
 	public void cooling() {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
@@ -107,27 +140,15 @@ public abstract class AbstractOption implements IOption {
 	}
 	
 	/**
-	 * 开始Execute方法进度
+	 * 在子类中，定义不同的Execute；
+	 * @return
 	 */
-	private void firing() {
-		if(!Integer.valueOf(0).equals(getExecuteWait())){
-			setAllow(false);
-			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), this);
-			
-			beforeExecute();
-		}else
-			setAllow(true);
-	}
-
-	public Boolean getAllow() {
-		return allow;
-	}
-
-	public void setAllow(Boolean allow) {
-		this.allow = allow;
-	}
+	public abstract Execute getExecute();
 	
-	@Override
+	/**
+	 * 执行选项
+	 * @param objects
+	 */
 	public void execute(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		/*
@@ -147,6 +168,9 @@ public abstract class AbstractOption implements IOption {
 		IAction action = new ActionProxyHelper(getExecute());
 		action.action(objects);
 	}
+	
+	private Errors errors = new Errors();	
+	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	
 	private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
@@ -169,7 +193,6 @@ public abstract class AbstractOption implements IOption {
 		this.validatorValue = validatorValue;
 	}
 	
-	@Override
 	public void addValidator(IValidator validator) {
 		// TODO Auto-generated method stub
 		validatorList.add(validator);
@@ -212,6 +235,19 @@ public abstract class AbstractOption implements IOption {
 	public Boolean hasError() {
 		// TODO Auto-generated method stub
 		return errors.hasError();
-	}	
+	}
+	
+	/**
+	 * 开始Execute方法进度
+	 */
+	private void firing() {
+		if(!Integer.valueOf(0).equals(getExecuteWait())){
+			setAllow(false);
+			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), this);
+			
+			beforeExecute();
+		}else
+			setAllow(true);
+	}
 
 }

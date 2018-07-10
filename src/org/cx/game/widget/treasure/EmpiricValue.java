@@ -2,7 +2,7 @@ package org.cx.game.widget.treasure;
 
 import org.cx.game.tools.CommonIdentifier;
 
-public class EmpiricValue extends Resource implements IResource {
+public class EmpiricValue extends Resource {
 
 	public EmpiricValue() {
 		// TODO Auto-generated constructor stub

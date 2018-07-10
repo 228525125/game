@@ -9,7 +9,7 @@ public class OptionExecuteProcess extends AbstractProcess {
 
 	private Object[] parameter = null; 
 	
-	public OptionExecuteProcess(Integer waitBout, IOption option) {
+	public OptionExecuteProcess(Integer waitBout, AbstractOption option) {
 		super(waitBout, option.getOwner().getPlayer(), option);
 		// TODO Auto-generated constructor stub
 		
@@ -30,9 +30,9 @@ public class OptionExecuteProcess extends AbstractProcess {
 	}
 	
 	@Override
-	public IOption getOwner() {
+	public AbstractOption getOwner() {
 		// TODO Auto-generated method stub
-		return (IOption) super.getOwner();
+		return (AbstractOption) super.getOwner();
 	}
 
 	@Override
@@ -40,7 +40,6 @@ public class OptionExecuteProcess extends AbstractProcess {
 		// TODO Auto-generated method stub
 		if(Integer.valueOf(0).equals(getRemainBout())){
 			invalid();
-			getOwner().setAllow(true);
 
 			IAction action = new ActionProxyHelper(getOwner().getExecute());
 			action.action(parameter);

@@ -2,7 +2,7 @@ package org.cx.game.widget.treasure;
 
 import org.cx.game.tools.CommonIdentifier;
 
-public class SkillCount extends Resource implements IResource {
+public class SkillCount extends Resource {
 
 	public SkillCount() {
 		// TODO Auto-generated constructor stub

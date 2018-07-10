@@ -3,22 +3,16 @@ package org.cx.game.action;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.core.IPlayer;
-import org.cx.game.corps.AbstractCorps;
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.tools.CommonIdentifier;
-import org.cx.game.widget.building.IBuilding;
-import org.cx.game.widget.building.IOption;
-import org.cx.game.widget.building.OptionExecuteProcess;
-import org.cx.game.widget.building.OptionSpacingProcess;
-import org.cx.game.widget.building.AbstractProcess;
+import org.cx.game.widget.building.AbstractBuilding;
+import org.cx.game.widget.building.AbstractOption;
 
 public class Execute extends AbstractAction implements IAction {
 	
-	public IOption getOwner() {
+	public AbstractOption getOwner() {
 		// TODO Auto-generated method stub
-		return (IOption) super.getOwner();
+		return (AbstractOption) super.getOwner();
 	}
 	
 	@Override
@@ -27,7 +21,7 @@ public class Execute extends AbstractAction implements IAction {
 		
 		Integer position = null;
 		
-		IBuilding building = getOwner().getOwner();
+		AbstractBuilding building = getOwner().getOwner();
 		position = building.getPlace().getPosition();
 		
 		Map<String,Object> map = new HashMap<String,Object>();

@@ -2,15 +2,15 @@ package org.cx.game.widget.building;
 
 public class OptionSpacingProcess extends AbstractProcess {
 	
-	public OptionSpacingProcess(Integer waitBout, IOption option) {
+	public OptionSpacingProcess(Integer waitBout, AbstractOption option) {
 		// TODO Auto-generated constructor stub
 		super(waitBout, option.getOwner().getPlayer(), option);
 	}
 	
 	@Override
-	public IOption getOwner() {
+	public AbstractOption getOwner() {
 		// TODO Auto-generated method stub
-		return (IOption) super.getOwner();
+		return (AbstractOption) super.getOwner();
 	}
 
 	@Override
@@ -18,7 +18,6 @@ public class OptionSpacingProcess extends AbstractProcess {
 		// TODO Auto-generated method stub
 		if(Integer.valueOf(0).equals(getRemainBout())){
 			invalid();
-			getOwner().setAllow(true);
 		}
 	}
 

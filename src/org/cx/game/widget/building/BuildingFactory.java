@@ -40,7 +40,7 @@ public class BuildingFactory {
 		return null;
 	}
 	
-	public static IBuilding getInstance(Integer typeID){
+	public static AbstractBuilding getInstance(Integer typeID){
 		Element buildingEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
@@ -54,7 +54,7 @@ public class BuildingFactory {
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
 				new ObjectTypeParse(otb).parse(buildingEl);
-				IBuilding building = (IBuilding) otb.builder();
+				AbstractBuilding building = (AbstractBuilding) otb.builder();
 				return building;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

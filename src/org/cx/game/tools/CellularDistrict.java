@@ -3,7 +3,7 @@ package org.cx.game.tools;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.widget.IGround;
+import org.cx.game.widget.AbstractGround;
 
 /** 
  * 蜂窝小区，以1为中心，顺时针编号，编号最大限定为100000。 求任意两编号之间的最短距离。 两个相邻小区的距离为1 
@@ -123,43 +123,43 @@ public class CellularDistrict {
     	n += 1;
 		addCoordinateMap(n, starPoint);
     	
-    	starPoint = getPosition(starPoint, IGround.Relative_Left);
+    	starPoint = getPosition(starPoint, AbstractGround.Relative_Left);
 		n += 1;
 		addCoordinateMap(n, starPoint);
     	
     	for (int i = 1; i < circleNumber+1; i++) {
 			for (int j = 1; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_LeftTop);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_LeftTop);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_RightTop);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_RightTop);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_Right);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_Right);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_RightBottom);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_RightBottom);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_LeftBottom);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_LeftBottom);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i+1; j++) {
-				starPoint = getPosition(starPoint, IGround.Relative_Left);
+				starPoint = getPosition(starPoint, AbstractGround.Relative_Left);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}

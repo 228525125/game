@@ -6,16 +6,16 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.cx.game.command.expression.Calculator;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.corps.AbstractCorps;
-import org.cx.game.magic.skill.ISkill;
+import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.magic.trick.ITrick;
+import org.cx.game.widget.AbstractGround;
 import org.cx.game.widget.Cemetery;
-import org.cx.game.widget.IGround;
 import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
-import org.cx.game.widget.building.IBuilding;
-import org.cx.game.widget.building.IOption;
+import org.cx.game.widget.building.AbstractBuilding;
+import org.cx.game.widget.building.AbstractOption;
 
 /**
  * CommandBuffer是对命令中选择的对象进行缓存
@@ -48,9 +48,9 @@ public class CommandBuffer {
 	
 	public static final String TRICK = "trick";
 	
-	private IPlayer player;	
+	private AbstractPlayer player;	
 	
-	public CommandBuffer(IPlayer player) {
+	public CommandBuffer(AbstractPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
 		
@@ -70,18 +70,18 @@ public class CommandBuffer {
 		String item = Calculator.itemToType(objectToItem(object));
 		
 		if(PLAYER.equals(item)){
-			setPlayer((IPlayer)object, bufferMap);
+			setPlayer((AbstractPlayer)object, bufferMap);
 		}else if(GROUND.equals(item)){
-			IGround ground = (IGround) object;
+			AbstractGround ground = (AbstractGround) object;
 			setGround(ground, bufferMap);
 		}else if(PLACE.equals(item)){
 			AbstractPlace place = (AbstractPlace) object;
 			setPlace(place, bufferMap);
 		}else if(BUILDING.equals(item)){
-			IBuilding building = (IBuilding) object;
+			AbstractBuilding building = (AbstractBuilding) object;
 			setBuilding(building, bufferMap);
 		}else if(OPTION.equals(item)){
-			IOption option = (IOption) object;
+			AbstractOption option = (AbstractOption) object;
 			setOption(option, bufferMap);
 		}else if(CEMETERY.equals(item)){
 			Cemetery cemetery = (Cemetery) object;
@@ -93,7 +93,7 @@ public class CommandBuffer {
 			AbstractCorps corps = (AbstractCorps) object;
 			setCorps(corps, bufferMap);
 		}else if(SKILL.equals(item)){
-			ISkill skill = (ISkill) object;
+			AbstractSkill skill = (AbstractSkill) object;
 			setSkill(skill, bufferMap);
 		}else if(TRICK.equals(item)){
 			ITrick trick = (ITrick) object;
@@ -109,27 +109,27 @@ public class CommandBuffer {
 	 * 当前具有控制权的玩家
 	 * @return
 	 */
-	public IPlayer getPlayer(){
+	public AbstractPlayer getPlayer(){
 		if(null==element().get(PLAYER))
 			return player;
 		else
-			return (IPlayer) element().get(PLAYER);
+			return (AbstractPlayer) element().get(PLAYER);
 	}
 	
-	public IGround getGround(){
-		return (IGround) element().get(GROUND);
+	public AbstractGround getGround(){
+		return (AbstractGround) element().get(GROUND);
 	}
 	
 	public AbstractPlace getPlace(){
 		return (AbstractPlace) element().get(PLACE);
 	}
 	
-	public IBuilding getBuilding(){
-		return (IBuilding) element().get(BUILDING);
+	public AbstractBuilding getBuilding(){
+		return (AbstractBuilding) element().get(BUILDING);
 	}
 	
-	public IOption getOption(){
-		return (IOption) element().get(OPTION);
+	public AbstractOption getOption(){
+		return (AbstractOption) element().get(OPTION);
 	}
 	
 	public Cemetery getCemetery(){
@@ -144,8 +144,8 @@ public class CommandBuffer {
 		return (AbstractCorps) element().get(CORPS);
 	}
 	
-	public ISkill getSkill(){
-		return (ISkill) element().get(SKILL);
+	public AbstractSkill getSkill(){
+		return (AbstractSkill) element().get(SKILL);
 	}
 	
 	public ITrick getTrick(){
@@ -200,19 +200,19 @@ public class CommandBuffer {
 	 * @return
 	 */
 	public static String objectToItem(Object item){
-		if (item instanceof IPlayer) {
+		if (item instanceof AbstractPlayer) {
 			return PLAYER;
 		}
-		if (item instanceof IGround) {
+		if (item instanceof AbstractGround) {
 			return GROUND;
 		}
 		if (item instanceof AbstractPlace) {
 			return PLACE;
 		}
-		if (item instanceof IBuilding) {
+		if (item instanceof AbstractBuilding) {
 			return BUILDING;
 		}
-		if (item instanceof IOption) {
+		if (item instanceof AbstractOption) {
 			return OPTION;
 		}
 		if(item instanceof Cemetery){
@@ -224,7 +224,7 @@ public class CommandBuffer {
 		if (item instanceof AbstractCorps) {
 			return CORPS;
 		}
-		if (item instanceof ISkill) {
+		if (item instanceof AbstractSkill) {
 			return SKILL;
 		}
 		if (item instanceof ITrick) {
@@ -233,7 +233,7 @@ public class CommandBuffer {
 		return null;
 	}
 	
-	private void setPlayer(IPlayer player, Map<String, Object> bufferMap){
+	private void setPlayer(AbstractPlayer player, Map<String, Object> bufferMap){
 		if(null!=player){
 			bufferMap.remove(GROUND);
 			bufferMap.remove(PLACE);
@@ -249,7 +249,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setGround(IGround ground, Map<String, Object> bufferMap){
+	private void setGround(AbstractGround ground, Map<String, Object> bufferMap){
 		if(null!=ground){
 			player = getPlayer();
 			setPlayer(player, bufferMap);
@@ -266,7 +266,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setBuilding(IBuilding building, Map<String, Object> bufferMap){
+	private void setBuilding(AbstractBuilding building, Map<String, Object> bufferMap){
 		if(null!=building){
 			setPlace(building.getPlace(), bufferMap);
 			
@@ -274,7 +274,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setOption(IOption option, Map<String, Object> bufferMap){
+	private void setOption(AbstractOption option, Map<String, Object> bufferMap){
 		if(null!=option){
 			setBuilding(option.getOwner(), bufferMap);
 			
@@ -302,7 +302,7 @@ public class CommandBuffer {
 		if(null!=corps){
 			setGround(corps.getGround(), bufferMap);
 			
-			IGround ground = corps.getGround();
+			AbstractGround ground = corps.getGround();
 			
 			AbstractPlace place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place, bufferMap);
@@ -315,7 +315,7 @@ public class CommandBuffer {
 		}
 	}
 	
-	private void setSkill(ISkill skill, Map<String, Object> bufferMap){
+	private void setSkill(AbstractSkill skill, Map<String, Object> bufferMap){
 		if(null!=skill){
 			setCorps(skill.getOwner(), bufferMap);
 			

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.widget.treasure.IResource;
 import org.cx.game.widget.treasure.Resource;
 import org.cx.game.widget.treasure.ResourceFactory;
 
@@ -41,7 +40,7 @@ public class Upgrade extends AbstractAction implements IAction {
 		}
 	}
 	
-	public IResource getRequirement() {
+	public Resource getRequirement() {
 		// TODO Auto-generated method stub
 		String resString = this.requirement.get(Integer.valueOf(getLevel()+1));
 		if(null!=resString)

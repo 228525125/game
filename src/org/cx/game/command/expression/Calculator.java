@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cx.game.command.InteriorCommand;
-import org.cx.game.core.IPlayer;
+import org.cx.game.core.AbstractPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.XmlUtil;
@@ -37,7 +37,7 @@ public class Calculator {
 		return null;
 	}
 	
-	public InteriorCommand parseForCommand(IPlayer player, String cmd) throws SyntaxValidatorException {
+	public InteriorCommand parseForCommand(AbstractPlayer player, String cmd) throws SyntaxValidatorException {
 		Element root = getRoot();
 		InteriorCommand command = null;
 		
@@ -65,7 +65,7 @@ public class Calculator {
 	 * @return
 	 * @throws SyntaxValidatorException
 	
-	public List<InteriorCommand> parseForList(IPlayer player,String cmd) throws SyntaxValidatorException {			
+	public List<InteriorCommand> parseForList(AbstractPlayer player,String cmd) throws SyntaxValidatorException {			
 		intergrityValidate(cmd);      //完整性验证
 		
 		List<InteriorCommand> list = new ArrayList<InteriorCommand>();

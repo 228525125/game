@@ -5,8 +5,8 @@ import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.magic.trick.ITrick;
-import org.cx.game.widget.building.IBuilding;
-import org.cx.game.widget.treasure.ITreasure;
+import org.cx.game.widget.building.AbstractBuilding;
+import org.cx.game.widget.treasure.Treasure;
 
 public abstract class AbstractPlace {
 
@@ -44,20 +44,20 @@ public abstract class AbstractPlace {
 	private Cemetery cemetery = new Cemetery(this);
 	private AbstractCorps corps = null;
 	private Integer position = 0;
-	private IGround ground = null;
-	private IBuilding building  = null;
+	private AbstractGround ground = null;
+	private AbstractBuilding building  = null;
 	private Boolean disable = false;
 	private Boolean empty = true;
 	private Integer landform = AbstractPlace.Landform_Sward;
-	private ITreasure treasure = null;
+	private Treasure treasure = null;
 	
-	public AbstractPlace(IGround ground,Integer position) {
+	public AbstractPlace(AbstractGround ground,Integer position) {
 		// TODO Auto-generated constructor stub		
 		this.ground = ground;
 		this.position = position;
 	}
 	
-	public IGround getOwner(){
+	public AbstractGround getOwner(){
 		return ground;
 	}
 
@@ -113,7 +113,7 @@ public abstract class AbstractPlace {
 		// TODO Auto-generated method stub
 		AbstractCorps corps = getCorps();
 		setCorps(null);
-		setEmpty(true);
+		setIsEmpty(true);
 		corps.setPosition(null);
 		
 		return corps;
@@ -144,12 +144,12 @@ public abstract class AbstractPlace {
 	 * 位置上是否为空
 	 * @return
 	 */
-	public Boolean getEmpty() {
+	public Boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return this.empty;
 	}
 	
-	void setEmpty(Boolean empty) {
+	void setIsEmpty(Boolean empty) {
 		// TODO Auto-generated method stub
 		this.empty = empty;
 	}
@@ -173,18 +173,18 @@ public abstract class AbstractPlace {
 	 * 建筑物
 	 * @return 
 	 */
-	public IBuilding getBuilding() {
+	public AbstractBuilding getBuilding() {
 		// TODO Auto-generated method stub
 		return this.building;
 	}
 
-	void setBuilding(IBuilding building) {
+	void setBuilding(AbstractBuilding building) {
 		// TODO Auto-generated method stub
 		this.building = building;
 		building.setPlace(this);
 	}
 	
-	public ITreasure getTreasure() {
+	public Treasure getTreasure() {
 		// TODO Auto-generated method stub
 		return this.treasure;
 	}
@@ -192,7 +192,7 @@ public abstract class AbstractPlace {
 	/**
 	 * 放置物品
 	 */
-	void setTreasure(ITreasure treasure) {
+	void setTreasure(Treasure treasure) {
 		// TODO Auto-generated method stub
 		if(null!=treasure)
 			treasure.setPosition(position);

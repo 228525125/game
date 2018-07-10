@@ -4,20 +4,13 @@ import java.util.List;
 
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
-import org.cx.game.core.AbstractContext;
-import org.cx.game.core.IPlayer;
-import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.magic.IMagic;
-import org.cx.game.magic.buff.IBuff;
-import org.cx.game.magic.skill.ISkill;
+import org.cx.game.core.AbstractPlayer;
+import org.cx.game.magic.buff.AbstractBuff;
+import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.tag.ITag;
 import org.cx.game.tag.TagHelper;
-import org.cx.game.tools.I18n;
 import org.cx.game.tools.Util;
-import org.cx.game.widget.IGround;
-import org.cx.game.widget.AbstractPlace;
-import org.cx.game.widget.treasure.IResource;
-import org.cx.game.widget.treasure.ITreasure;
+import org.cx.game.widget.AbstractGround;
 import org.cx.game.widget.treasure.Resource;
 
 /**
@@ -33,8 +26,8 @@ public abstract class AbstractCorps implements ITag
 	private Integer id = null;
 	private Integer position = null;
 	
-	private IPlayer player = null;
-	private IGround ground = null;
+	private AbstractPlayer player = null;
+	private AbstractGround ground = null;
 	
 	public AbstractCorps(Integer type) {
 		// TODO Auto-generated constructor stub
@@ -54,12 +47,12 @@ public abstract class AbstractCorps implements ITag
 		return id;
 	}
 
-	public IPlayer getPlayer() {
+	public AbstractPlayer getPlayer() {
 		// TODO Auto-generated method stub
 		return player;
 	}
 	
-	public void setPlayer(IPlayer player) {
+	public void setPlayer(AbstractPlayer player) {
 		// TODO Auto-generated method stub
 		this.player = player;
 	}
@@ -74,11 +67,11 @@ public abstract class AbstractCorps implements ITag
 		this.position = position;
 	}
 	
-	public IGround getGround() {
+	public AbstractGround getGround() {
 		return ground;
 	}
 
-	public void setGround(IGround ground) {
+	public void setGround(AbstractGround ground) {
 		this.ground = ground;
 	}
 	
@@ -97,38 +90,38 @@ public abstract class AbstractCorps implements ITag
 	public abstract Integer getSpeed();
 	public abstract Integer getFleeChance();
 	public abstract Integer getLockChance();
-	public abstract Boolean getHero();	
+	public abstract Boolean isHero();
 	public abstract Integer getStar();	
-	public abstract IResource getConsume();
+	public abstract Resource getConsume();
 	public abstract Integer getLevel();	
 	
-	public abstract List<IBuff> getNexusBuffList();
+	public abstract List<AbstractBuff> getNexusBuffList();
 	/**
 	 * 发起方状态
 	 */
-	public abstract void addNexusBuff(IBuff buff);
-	public abstract void removeNexusBuff(IBuff buff);
-	public abstract List<IBuff> getNexusBuff(Class clazz);
+	public abstract void addNexusBuff(AbstractBuff buff);
+	public abstract void removeNexusBuff(AbstractBuff buff);
+	public abstract List<AbstractBuff> getNexusBuff(Class clazz);
 	public abstract void clearNexusBuff();
 	
 	/**
 	 * 自身Buff
 	 */
-	public abstract List<IBuff> getBuffList();	
+	public abstract List<AbstractBuff> getBuffList();	
 	public abstract IAction getAddBuffAction();
 	public abstract IAction getRemoveBuffAction();
-	public abstract List<IBuff> getBuff(Class clazz);
-	public abstract List<IBuff> getBuff(String className);
+	public abstract List<AbstractBuff> getBuff(Class clazz);
+	public abstract List<AbstractBuff> getBuff(String className);
 	public abstract void clearBuff();
 	public abstract Boolean containsBuff(Class clazz);
 	
-	public abstract List<ISkill> getSkillList();
-	public abstract void setSkillList(List<ISkill> skillList);
-	public abstract ISkill getSkill(Integer type);
+	public abstract List<AbstractSkill> getSkillList();
+	public abstract void setSkillList(List<AbstractSkill> skillList);
+	public abstract AbstractSkill getSkill(Integer type);
 	public abstract IAction getAddSkillAction();
 	public abstract Boolean containsSkill(Class clazz);
 
-	public abstract IAction getActivate();
+	/*public abstract IAction getActivate();
 	public abstract IAction getAttack();
 	public abstract IAction getAttacked();
 	public abstract IAction getConjure();
@@ -139,8 +132,10 @@ public abstract class AbstractCorps implements ITag
 	public abstract IAction getChuck();
 	public abstract IAction getUpgrade();
 	public abstract IAction getPick();
+	public abstract IAction getMerge();
+	public abstract IAction getLeave();*/
 	
-	public void addBuff(IBuff buff) {
+	public void addBuff(AbstractBuff buff) {
 		IAction action = new ActionProxyHelper(getAddBuffAction());
 		action.action(buff);
 	}
@@ -149,114 +144,14 @@ public abstract class AbstractCorps implements ITag
 	 * 该方法仅用于Buff.invalid
 	 * @param buff
 	 */
-	public void removeBuff(IBuff buff) {
+	public void removeBuff(AbstractBuff buff) {
 		IAction action = new ActionProxyHelper(getRemoveBuffAction());
 		action.action(buff);
 	}
 	
-	public void addSkill(ISkill skill) {
+	public void addSkill(AbstractSkill skill) {
 		IAction action = new ActionProxyHelper(getAddSkillAction());
 		action.action(skill);
-	}
-	
-	/**
-	 * 激活
-	 * @param activate
-	 * @throws RuleValidatorException
-	 */
-	public void activate(Boolean activate) {
-		IAction action = new ActionProxyHelper(getActivate());
-		action.action(activate);
-	}
-
-	/**
-	 * 攻击
-	 * @param attacked 被攻击的卡片
-	 */
-	public void attack(AbstractCorps attacked) {
-		IAction action = new ActionProxyHelper(getAttack());
-		action.action(attacked);
-	}
-	
-	/**
-	 * 受攻击
-	 * @param attack
-	 */
-	public void attacked(AbstractCorps corps, IAction attack) {
-		IAction action = new ActionProxyHelper(getAttacked());
-		action.action(corps,attack);
-	}
-	
-	/**
-	 * 受到法术影响
-	 * @param magic
-	 */
-	public void affected(IMagic magic) {
-		IAction action = new ActionProxyHelper(getAffected());
-		action.action(magic);
-	}
-	
-	/**
-	 * 施法
-	 * @param skill ActiveSkill
-	 * @param objects
-	 */
-	public void conjure(ISkill skill, Object...objects) {
-		IAction action = new ActionProxyHelper(getConjure());
-		action.action(skill,objects);
-	}
-	
-	/**
-	 * 移动到指定位置
-	 * @param position 指定位置
-	 */
-	public void move(AbstractPlace place) {
-		IAction action = new ActionProxyHelper(getMove());
-		action.action(place);
-	}
-	
-	/**
-	 * 召唤
-	 *
-	 */
-	public void call(AbstractPlace place, Integer nop) {
-		IAction action = new ActionProxyHelper(getCall());
-		action.action(place,nop);
-	}
-
-	/**
-	 * 死亡
-	 */
-	public void death() {
-		IAction action = new ActionProxyHelper(getDeath());
-		action.action();
-	}
-	
-	/**
-	 * 丢弃
-	 */
-	public void chuck() {
-		IAction action = new ActionProxyHelper(getChuck());
-		action.action();
-	}
-	
-	/**
-	 * 升级
-	 * @throws RuleValidatorException
-	 */
-	public void upgrade() {
-		IAction action = new ActionProxyHelper(getUpgrade());
-		action.action();
-	}
-	
-	/**
-	 * 拾取
-	 * @param treasure
-	 * @throws RuleValidatorException
-	 */
-	public void pick(ITreasure treasure) {
-		IAction action = new ActionProxyHelper(getPick());
-		action.action(treasure);
 	}
 	
 	@Override
@@ -325,9 +220,9 @@ public abstract class AbstractCorps implements ITag
 		
 		setHide(false);
 		
-		List<IBuff> buffs = new ArrayList<IBuff>();     //与自己相关的buff，不是自己发起的buff，例如AttackLockBuff
+		List<AbstractBuff> buffs = new ArrayList<AbstractBuff>();     //与自己相关的buff，不是自己发起的buff，例如AttackLockBuff
 		buffs.addAll(this.nexusBuffList);
-		for(IBuff buff : buffs){
+		for(AbstractBuff buff : buffs){
 			buff.invalid();
 		}
 	}*/
