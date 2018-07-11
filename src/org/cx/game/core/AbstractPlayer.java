@@ -16,7 +16,7 @@ import org.cx.game.out.ResponseFactory;
 import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.treasure.Resource;
 
-public abstract class AbstractPlayer extends java.util.Observable implements Observable{
+public abstract class AbstractPlayer {
 	
 	private Integer troop = 0;
 	private String name = null;
@@ -30,8 +30,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements Obs
 	
 	public AbstractPlayer(Integer id, String name) {
 		// TODO Auto-generated constructor stub
-		addObserver(ResponseFactory.getResponse());
-		
 		this.troop = id;
 		this.name = name;
 		
@@ -95,12 +93,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements Obs
 		// TODO Auto-generated method stub
 		if(!res.isEmpty()){
 			this.resource.add(res);
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", this);
-			map.put("resource", this.resource);
-			NotifyInfo info = new NotifyInfo(CommonIdentifier.Player_Resource,map);
-			notifyObservers(info);
 		}
 	}
 	
@@ -108,12 +100,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements Obs
 		// TODO Auto-generated method stub
 		if(0!=res){
 			this.resource.add(resType, res);
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", this);
-			map.put("resource", this.resource);
-			NotifyInfo info = new NotifyInfo(CommonIdentifier.Player_Resource,map);
-			notifyObservers(info);
 		}
 	}
 	
@@ -151,14 +137,7 @@ public abstract class AbstractPlayer extends java.util.Observable implements Obs
 		// TODO Auto-generated method stub
 		if(0<ration){
 			this.ration += ration;
-			this.ration = 0 > this.ration ? 0 : this.ration;			
-			
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("player", this);
-			map.put("ration", this.ration);
-			map.put("change", ration);
-			NotifyInfo info = new NotifyInfo(CommonIdentifier.Player_Ration,map);
-			notifyObservers(info);
+			this.ration = 0 > this.ration ? 0 : this.ration;
 		}
 	}
 	
@@ -178,13 +157,6 @@ public abstract class AbstractPlayer extends java.util.Observable implements Obs
 	 * 使用AI自动操作
 	 */
 	public abstract void automation();
-
-	@Override
-	public void notifyObservers(Object arg0) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg0);
-	}
 	
 	@Override
 	public boolean equals(Object arg0) {

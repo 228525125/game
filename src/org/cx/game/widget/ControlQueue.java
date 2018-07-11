@@ -6,12 +6,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
+import org.cx.game.action.AbstractAction;
+import org.cx.game.action.ActionProxyHelper;
+import org.cx.game.action.IAction;
 import org.cx.game.core.AbstractPlayer;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.ResponseFactory;
 import org.cx.game.tools.CommonIdentifier;
 
 /**
@@ -19,7 +20,7 @@ import org.cx.game.tools.CommonIdentifier;
  * @author chenxian
  *
  */
-public class ControlQueue extends Observable implements org.cx.game.observer.Observable {
+public class ControlQueue {
 
 	/**
 	 * 获取一次控制权需要消耗的能量
@@ -34,16 +35,25 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 	private List<Place> queue = null;        //当前队列
 	private Integer curQueue = 0;	
 	
+	private InsertAction insertAction = null;
+	private RefurbishAction refurbishAction = null;
+	private MoveToPriorAction moveToPriorAction = null;
+	private TakeOutAction takeOutAction = null;
+	private InsertOtherQueueAction insertOtherQueueAction = null;
+	
 	private List<Place> priorQueue = new ArrayList<Place>();     //这个队列的对象会优先出场，例如具有突袭效果的随从；
 	
 	public ControlQueue() {
 		// TODO Auto-generated constructor stub
-		addObserver(ResponseFactory.getResponse());
-		
 		map.put(1, queue1);
 		map.put(2, queue2);
 		this.queue = this.queue1;
 		this.curQueue = 1;
+	}
+	
+	public Integer getLength() {
+		// TODO Auto-generated method stub
+		return this.queueList.size();
 	}
 	
 	/**
@@ -117,7 +127,7 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 		if(consume<=place.getCount()){        //如果减去消耗后仍大于consume，则继续插入当前queue进行排序
 			insert(place);
 		}else{
-			insertOtherQueue(place); //如果小于额定消耗，则进入下一个queue
+			insertOtherQueue(place);          //如果小于额定消耗，则进入下一个queue
 		}
 		
 		return object;
@@ -128,17 +138,8 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 	 * @param place
 	 */
 	public void moveToPrior(Place place){
-		
-		if(!this.queue1.remove(place))
-			this.queue2.remove(place);
-		
-		this.priorQueue.add(place);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", place.getObject());
-		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Move,map);
-		notifyObservers(info);
+		IAction action = new ActionProxyHelper(getMoveToPriorAction());
+		action.action(place);
 	}
 	
 	/**
@@ -146,27 +147,162 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 	 */
 	public void refurbish() {
 		// TODO Auto-generated method stub
-		for(int i=0;i<queue.size();i++){
-			Place place = queue.get(i);
-			if(consume>place.getCount()){
-				takeOut(place);
-				insertOtherQueue(place);
-			}
-		}
-		Collections.sort(queue, new PlaceComparator());
-		
-		List<Place> other = otherQueue(queue);
-		Collections.sort(other, new PlaceComparator());
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Refurbish,map);
-		notifyObservers(info);
+		IAction action = new ActionProxyHelper(getRefurbishAction());
+		action.action();
 	}
 	
-	public Integer getLength() {
-		// TODO Auto-generated method stub
-		return this.queueList.size();
+	class MoveToPriorAction extends AbstractAction implements IAction {
+
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			Place place = (Place) objects[0];
+			
+			if(!queue1.remove(place))
+				queue2.remove(place);
+			
+			priorQueue.add(place);
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", place.getObject());
+			map.put("queue", getList());
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Move,map);
+			notifyObservers(info);
+		}
+		
+	}
+	
+	class RefurbishAction extends AbstractAction implements IAction {
+
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			for(int i=0;i<queue.size();i++){
+				Place place = queue.get(i);
+				if(consume>place.getCount()){
+					takeOut(place);
+					insertOtherQueue(place);
+				}
+			}
+			Collections.sort(queue, new PlaceComparator());
+			
+			List<Place> other = otherQueue(queue);
+			Collections.sort(other, new PlaceComparator());
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("queue", getList());
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Refurbish,map);
+			notifyObservers(info);
+		}
+		
+	}
+	
+	class InsertAction extends AbstractAction implements IAction {
+
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			Place place = (Place) objects[0];
+			
+			queue.add(place);
+			Collections.sort(queue, new PlaceComparator());
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", place.getObject());
+			map.put("queue", getList());
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Insert,map);
+			notifyObservers(info);
+		}
+		
+	}
+	
+	class InsertOtherQueueAction extends AbstractAction implements IAction {
+
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			Place place = (Place) objects[0];
+			
+			Integer count = place.getCount();
+			Integer consume = 100;
+			Integer speed = 0;
+			if (place.getObject() instanceof AbstractPlayer) {
+				speed = consume;
+			}
+			
+			place.setCount(count + speed);          //当加入下一个队列时，表示下一个回合，所以要增加一次活力
+			
+			List<Place> list = otherQueue(queue);
+			list.add(place);
+			Collections.sort(list, new PlaceComparator());   //插入增加活力的place，需要重新排序
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", place.getObject());
+			map.put("queue", getList());
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Insert,map);
+			notifyObservers(info);
+		}
+		
+	}
+	
+	class TakeOutAction extends AbstractAction implements IAction {
+
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			Place place = (Place) objects[0];
+			
+			if(!queue1.remove(place))
+				queue2.remove(place);
+			
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("player", place.getObject());
+			map.put("queue", getList());
+			NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Remove,map);
+			notifyObservers(info);
+		}
+		
+	}
+	
+	private IAction getMoveToPriorAction() {
+		if(null==this.refurbishAction){
+			this.refurbishAction = new RefurbishAction();
+			this.refurbishAction.setOwner(this);
+		}
+		return this.refurbishAction;
+	}
+	
+	private IAction getRefurbishAction() {
+		if(null==this.refurbishAction){
+			this.refurbishAction = new RefurbishAction();
+			this.refurbishAction.setOwner(this);
+		}
+		return this.refurbishAction;
+	}
+	
+	
+	private IAction getInsertAction() {
+		if(null==this.insertAction){
+			this.insertAction = new InsertAction();
+			this.insertAction.setOwner(this);
+		}
+		return this.insertAction;
+	}
+	
+	private IAction getInsertOtherQueue() {
+		if(null==this.insertOtherQueueAction){
+			this.insertOtherQueueAction = new InsertOtherQueueAction();
+			this.insertOtherQueueAction.setOwner(this);
+		}
+		return this.insertOtherQueueAction;
+	}
+	
+	private IAction getTakeOutAction() {
+		if(null==this.takeOutAction){
+			this.takeOutAction = new TakeOutAction();
+			this.takeOutAction.setOwner(this);
+		}
+		return this.takeOutAction;
 	}
 	
 	/**
@@ -175,14 +311,17 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 	 */
 	private void insert(Place place) {
 		// TODO Auto-generated method stub
-		queue.add(place);
-		Collections.sort(queue, new PlaceComparator());
-
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", place.getObject());
-		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Insert,map);
-		notifyObservers(info);
+		IAction action = new ActionProxyHelper(getInsertAction());
+		action.action(place);
+	}
+	
+	/**
+	 * 插入下一个队列
+	 * @param place
+	 */
+	private void insertOtherQueue(Place place){
+		IAction action = new ActionProxyHelper(getInsertOtherQueue());
+		action.action(place);
 	}
 	
 	/**
@@ -190,14 +329,8 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 	 * @param place
 	 */
 	private void takeOut(Place place){
-		if(!this.queue1.remove(place))
-			this.queue2.remove(place);
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", place.getObject());
-		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Remove,map);
-		notifyObservers(info);
+		IAction action = new ActionProxyHelper(getTakeOutAction());
+		action.action(place);
 	}
 	
 	private void swapQueue(){
@@ -218,27 +351,6 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 		
 		if(queue.isEmpty())       //递归，防止交换后queue中的place的count都不满足consume，应该不会有这种情况发生
 			swapQueue();
-	}
-	
-	private void insertOtherQueue(Place place){
-		Integer count = place.getCount();
-		Integer consume = 100;
-		Integer speed = 0;
-		if (place.getObject() instanceof AbstractPlayer) {
-			speed = consume;
-		}
-		
-		place.setCount(count + speed);          //当加入下一个队列时，表示下一个回合，所以要增加一次活力
-		
-		List<Place> list = otherQueue(queue);
-		list.add(place);
-		Collections.sort(list, new PlaceComparator());   //插入增加活力的place，需要重新排序
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", place.getObject());
-		map.put("queue", getList());
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_ControlQueue_Insert,map);
-		notifyObservers(info);
 	}
 	
 	private Integer indexOf(Place place){
@@ -301,13 +413,6 @@ public class ControlQueue extends Observable implements org.cx.game.observer.Obs
 			list.add(map);
 		}
 		return list;
-	}
-	
-	@Override
-	public void notifyObservers(Object arg) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg);
 	}
 	
 	public class Place {

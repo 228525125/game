@@ -16,8 +16,7 @@ import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.ControlQueue;
 import org.cx.game.widget.AbstractGround;
 
-public abstract class AbstractContext extends Observable implements org.cx.game.observer.Observable
-{	
+public abstract class AbstractContext {	
 	private String playNo = null;
 	private ControlQueue queue = new ControlQueue();
 	
@@ -33,8 +32,6 @@ public abstract class AbstractContext extends Observable implements org.cx.game.
 		playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
 		
 		this.ground = ground;
-		
-		addObserver(ResponseFactory.getResponse());
 	}
 	
 	/**
@@ -91,11 +88,6 @@ public abstract class AbstractContext extends Observable implements org.cx.game.
 
 	public void setControlPlayer(AbstractPlayer controlPlayer) {
 		this.controlPlayer = controlPlayer;
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("control", controlPlayer);
-		NotifyInfo info = new NotifyInfo(CommonIdentifier.Context_Control,map);
-		notifyObservers(info);
 	}
 	
 	//------------------ Player End --------------
@@ -208,12 +200,5 @@ public abstract class AbstractContext extends Observable implements org.cx.game.
 		setControlPlayer((AbstractPlayer) object);
 		
 		addBout();
-	}
-	
-	@Override
-	public void notifyObservers(Object arg0) {
-		// TODO Auto-generated method stub
-		super.setChanged();
-		super.notifyObservers(arg0);
 	}
 }

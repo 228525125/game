@@ -10,7 +10,7 @@ public class CommonIdentifier {
 	public final static String Building_Option_Execute = "Building_Option_Execute"; 	
 	public final static String Building_Upgrade = "Building_Upgrade";  
 	
-	public final static String Context_Control = "Context_Control";  
+	//public final static String Context_Control = "Context_Control";  
 	public final static String Context_ControlQueue_Remove = "Context_ControlQueue_Remove";  
 	public final static String Context_ControlQueue_Insert = "Context_ControlQueue_Insert";  
 	public final static String Context_ControlQueue_Refurbish = "Context_ControlQueue_Refurbish";  
