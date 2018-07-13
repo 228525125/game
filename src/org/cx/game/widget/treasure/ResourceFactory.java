@@ -4,14 +4,14 @@ public class ResourceFactory {
 
 	/**
 	 * 
-	 * @param resString 格式：r10,0,0,0 或 e-100
+	 * @param resString 格式：m10,0,0,0 或 e-100
 	 * @return
 	 */
 	public static Resource getInstance(String resString){
 		Resource resource = null;
 		String type = resString.substring(0, 1);
-		if("r".equals(type)){
-			resource = new Resource(resString.substring(1));
+		if("m".equals(type)){
+			resource = new Mineral(resString.substring(1));
 		}
 		
 		if("e".equals(type)){

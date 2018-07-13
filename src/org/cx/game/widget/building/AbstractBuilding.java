@@ -11,6 +11,7 @@ import org.cx.game.action.IAction;
 import org.cx.game.core.AbstractPlayer;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.AbstractPlace;
+import org.cx.game.widget.treasure.Mineral;
 import org.cx.game.widget.treasure.Resource;
 
 public abstract class AbstractBuilding {
@@ -28,7 +29,7 @@ public abstract class AbstractBuilding {
 	
 	private AbstractPlace place = null;
 	private AbstractPlayer player = null;
-	private Resource consume = new Resource();
+	private Mineral consume = new Mineral();
 	private AbstractBuilding owner = null;
 	private Upgrade upgrade = null;
 	
@@ -213,12 +214,12 @@ public abstract class AbstractBuilding {
 	 * 建造所需资源
 	 * @return
 	 */
-	public Resource getConsume() {
+	public Mineral getConsume() {
 		// TODO Auto-generated method stub
 		return consume;
 	}
 	
-	public void setConsume(Resource consume) {
+	public void setConsume(Mineral consume) {
 		// TODO Auto-generated method stub
 		this.consume = consume;
 	}

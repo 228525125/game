@@ -13,15 +13,7 @@ public class SkillCount extends Resource {
 		add(CommonIdentifier.SkillCount, count);
 	}
 	
-	public void add(Integer count){
-		add(CommonIdentifier.SkillCount, count);
-	}
-	
-	public Integer get(){
-		return get(CommonIdentifier.SkillCount);
-	}
-	
 	public Integer getCount(){
-		return get();
+		return get(CommonIdentifier.SkillCount);
 	}
 }

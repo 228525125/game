@@ -1,19 +1,10 @@
 package org.cx.game.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
-import org.cx.game.corps.AbstractCorps;
-import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.observer.NotifyInfo;
-import org.cx.game.observer.Observable;
-import org.cx.game.out.ResponseFactory;
-import org.cx.game.tools.CommonIdentifier;
+import org.cx.game.tools.Util;
+import org.cx.game.widget.treasure.Mineral;
 import org.cx.game.widget.treasure.Resource;
 
 public abstract class AbstractPlayer {
@@ -24,7 +15,7 @@ public abstract class AbstractPlayer {
 	private Integer rationLimit = 10;
 	private Integer ration = 0;
 	
-	private Resource resource = null;
+	private Mineral mineral = null;
 	private AbstractContext context = null;
 	private CommandBuffer commandBuffer = null;
 	
@@ -33,7 +24,7 @@ public abstract class AbstractPlayer {
 		this.troop = id;
 		this.name = name;
 		
-		this.resource = new Resource(0, 0, 0, 0);
+		this.mineral = new Mineral();
 		
 		commandBuffer = new CommandBuffer(this);
 	}
@@ -85,34 +76,24 @@ public abstract class AbstractPlayer {
 	 * 资源
 	 * @return
 	 */
-	public Resource getResource() {
-		return resource;
-	}
-	
-	public void addToResource(Resource res) {
-		// TODO Auto-generated method stub
-		if(!res.isEmpty()){
-			this.resource.add(res);
-		}
-	}
-	
-	public void addToResource(Integer resType, Integer res) {
-		// TODO Auto-generated method stub
-		if(0!=res){
-			this.resource.add(resType, res);
-		}
+	public Mineral getMineral() {
+		return this.mineral;
 	}
 	
 	/**
 	 * 用于xml配置
 	 * @param res
 	 */
-	public void setResource(Resource res){
-		this.resource = res;
+	public void setMineral(Mineral mineral) {
+		this.mineral = mineral;
+	}
+	
+	public void setMineral(Integer funType, Mineral mineral) {
+		this.mineral = (Mineral) Util.operating(funType, this.mineral, mineral);
 	}
 	
 	/**
-	 * 人口限制
+	 * 队伍总数限制
 	 * @return
 	 */
 	public Integer getRationLimit() {
@@ -125,7 +106,7 @@ public abstract class AbstractPlayer {
 	}
 	
 	/**
-	 * 人口总数
+	 * 队伍总数
 	 * @return
 	 */
 	public Integer getRation() {
@@ -133,12 +114,8 @@ public abstract class AbstractPlayer {
 		return ration;
 	}
 	
-	public void addToRation(Integer ration) {
-		// TODO Auto-generated method stub
-		if(0<ration){
-			this.ration += ration;
-			this.ration = 0 > this.ration ? 0 : this.ration;
-		}
+	public void setRation(Integer funType, Integer ration) {
+		this.ration = Util.operating(funType, this.ration, ration);
 	}
 	
 	/**
