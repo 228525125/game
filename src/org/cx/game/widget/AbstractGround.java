@@ -11,7 +11,6 @@ import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.building.AbstractBuilding;
-import org.cx.game.widget.building.AbstractOption;
 import org.cx.game.widget.treasure.Treasure;
 
 public abstract class AbstractGround {

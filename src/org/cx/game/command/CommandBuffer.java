@@ -11,11 +11,11 @@ import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.widget.AbstractGround;
+import org.cx.game.widget.AbstractOption;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.AbstractBuilding;
-import org.cx.game.widget.building.AbstractOption;
 
 /**
  * CommandBuffer是对命令中选择的对象进行缓存
@@ -276,7 +276,15 @@ public class CommandBuffer {
 	
 	private void setOption(AbstractOption option, Map<String, Object> bufferMap){
 		if(null!=option){
-			setBuilding(option.getOwner(), bufferMap);
+			if (option.getOwner() instanceof AbstractBuilding) {
+				AbstractBuilding building = (AbstractBuilding) option.getOwner();
+				setBuilding(building, bufferMap);
+			}
+			
+			if (option.getOwner() instanceof AbstractCorps) {
+				AbstractCorps corps = (AbstractCorps) option.getOwner();
+				setCorps(corps, bufferMap);
+			}
 			
 			bufferMap.put(OPTION, option);
 		}

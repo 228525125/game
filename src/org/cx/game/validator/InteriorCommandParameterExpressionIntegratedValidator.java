@@ -10,11 +10,11 @@ import org.cx.game.magic.trick.ITrick;
 import org.cx.game.tools.I18n;
 import org.cx.game.tools.Util;
 import org.cx.game.widget.AbstractGround;
+import org.cx.game.widget.AbstractOption;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.AbstractBuilding;
-import org.cx.game.widget.building.AbstractOption;
 
 /**
  * 验证参数是否能够通过buffer进行完整的解析
@@ -98,15 +98,20 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 				}
 				
 				if(CommandBuffer.OPTION.equals(item)){
-					if(null==getBuffer().getBuilding()){
-						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
-						ret = false;
-						break;
-					}else{
+					if(null!=getBuffer().getBuilding()){
 						AbstractBuilding building = getBuffer().getBuilding();
 						AbstractOption option = building.getOption(Integer.valueOf(position));
 						parameterObject = option;
 						getBuffer().setOption(option);
+					}else if(null!=getBuffer().getCorps()){
+						AbstractCorps corps = getBuffer().getCorps();
+						AbstractOption option = corps.getOption(Integer.valueOf(position));
+						parameterObject = option;
+						getBuffer().setOption(option);
+					}else{
+						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
+						ret = false;
+						break;
 					}
 				}
 				

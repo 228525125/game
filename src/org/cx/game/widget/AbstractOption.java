@@ -1,4 +1,4 @@
-package org.cx.game.widget.building;
+package org.cx.game.widget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,17 @@ import java.util.List;
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.Execute;
 import org.cx.game.action.IAction;
+import org.cx.game.core.AbstractPlayer;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
 import org.cx.game.validator.ParameterTypeValidator;
-import org.cx.game.widget.AbstractGround;
+import org.cx.game.widget.building.AbstractProcess;
+import org.cx.game.widget.building.OptionExecuteProcess;
+import org.cx.game.widget.building.OptionSpacingProcess;
 
 public abstract class AbstractOption implements IValidatable {
 
@@ -25,7 +29,7 @@ public abstract class AbstractOption implements IValidatable {
 	
 	private AbstractProcess spacingProcess = null;
 	private AbstractProcess executeProcess = null;
-	private AbstractBuilding owner = null;
+	private Object owner = null;
 	
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -34,12 +38,12 @@ public abstract class AbstractOption implements IValidatable {
 		return name;
 	}
 	
-	public AbstractBuilding getOwner() {
+	public Object getOwner() {
 		// TODO Auto-generated method stub
 		return this.owner;
 	}
 
-	public void setOwner(AbstractBuilding building) {
+	public void setOwner(Object building) {
 		// TODO Auto-generated method stub
 		this.owner = building;
 	}
@@ -127,7 +131,7 @@ public abstract class AbstractOption implements IValidatable {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
 			setAllow(false);
-			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, this);
+			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, getOwnerPlayer(), this);
 		}else
 			setAllow(true);
 	}
@@ -243,11 +247,13 @@ public abstract class AbstractOption implements IValidatable {
 	private void firing() {
 		if(!Integer.valueOf(0).equals(getExecuteWait())){
 			setAllow(false);
-			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), this);
+			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), getOwnerPlayer(), this);
 			
 			beforeExecute();
 		}else
 			setAllow(true);
 	}
+	
+	protected abstract AbstractPlayer getOwnerPlayer();
 
 }

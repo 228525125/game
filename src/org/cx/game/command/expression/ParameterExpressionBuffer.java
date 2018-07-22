@@ -8,12 +8,12 @@ import org.cx.game.core.AbstractPlayer;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.magic.trick.ITrick;
+import org.cx.game.widget.AbstractOption;
 import org.cx.game.widget.Cemetery;
 import org.cx.game.widget.AbstractGround;
 import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.TrickList;
 import org.cx.game.widget.building.AbstractBuilding;
-import org.cx.game.widget.building.AbstractOption;
 
 /**
  * 参数表达式缓存，与命令缓存（CommandBuffer）进行了区分
@@ -124,7 +124,15 @@ public class ParameterExpressionBuffer {
 	
 	public void setOption(AbstractOption option){
 		if(null!=option){
-			setBuilding(option.getOwner());
+			if (option.getOwner() instanceof AbstractBuilding) {
+				AbstractBuilding building = (AbstractBuilding) option.getOwner();
+				setBuilding(building);
+			}
+			
+			if (option.getOwner() instanceof AbstractCorps) {
+				AbstractCorps corps = (AbstractCorps) option.getOwner();
+				setCorps(corps);
+			}
 			
 			bufferMap.put(CommandBuffer.OPTION, option);
 		}

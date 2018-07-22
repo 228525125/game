@@ -10,6 +10,7 @@ import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.core.AbstractPlayer;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.AbstractOption;
 import org.cx.game.widget.AbstractPlace;
 import org.cx.game.widget.treasure.Mineral;
 import org.cx.game.widget.treasure.Resource;

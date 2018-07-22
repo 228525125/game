@@ -1,11 +1,14 @@
 package org.cx.game.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.command.CommandBuffer;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.tools.Util;
 import org.cx.game.widget.treasure.Mineral;
-import org.cx.game.widget.treasure.Resource;
 
 public abstract class AbstractPlayer {
 	
@@ -18,6 +21,8 @@ public abstract class AbstractPlayer {
 	private Mineral mineral = null;
 	private AbstractContext context = null;
 	private CommandBuffer commandBuffer = null;
+	
+	private List<AbstractCorps> corpsList = new ArrayList<AbstractCorps>();
 	
 	public AbstractPlayer(Integer id, String name) {
 		// TODO Auto-generated constructor stub
@@ -116,6 +121,14 @@ public abstract class AbstractPlayer {
 	
 	public void setRation(Integer funType, Integer ration) {
 		this.ration = Util.operating(funType, this.ration, ration);
+	}
+	
+	/**
+	 * player控制的corps
+	 * @return
+	 */
+	public List<AbstractCorps> getCorpsList() {
+		return corpsList;
 	}
 	
 	/**

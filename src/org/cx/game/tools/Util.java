@@ -32,6 +32,16 @@ public class Util {
 	public final static int Sub = 3;
 	
 	/**
+	 * 乘法
+	 */
+	public final static int Mul = 4;
+	
+	/**
+	 * 除法
+	 */
+	public final static int Div = 5;
+	
+	/**
 	 * 默认精度
 	 */
 	public final static int Precision = 2;
@@ -298,6 +308,25 @@ public class Util {
 		return ret;
 	}
 	
+	public static Resource operating(Integer funType, Resource r1, Integer number) {
+		Resource ret = null;
+		switch (funType) {
+		case Util.Mul:
+			try {
+				ret = multiplicative(r1, number);
+			} catch (OperatingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+			
+		default:
+			break;
+		}
+		
+		return ret;
+	}
+	
 	/**
 	 * 两种资源相加，这里要保证r1和r2同属一种类型
 	 * @param r1
@@ -355,6 +384,38 @@ public class Util {
 				Integer stone = r1.get(CommonIdentifier.Stone) - r2.get(CommonIdentifier.Stone);
 				Integer wood = r1.get(CommonIdentifier.Wood) - r2.get(CommonIdentifier.Wood);
 				Integer ore = r1.get(CommonIdentifier.Ore) - r2.get(CommonIdentifier.Ore);
+				ret = new Mineral(gold,stone,wood,ore);
+			}
+		}else{
+			throw new OperatingException();
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * 资源做乘法
+	 * @param r1 
+	 * @param number 倍数
+	 * @return
+	 * @throws OperatingException
+	 */
+	public static Resource multiplicative(Resource r1, Integer number) throws OperatingException {
+		Resource ret = null;
+		if(null!=r1 && null!=number){
+			if (r1 instanceof EmpiricValue) {
+				EmpiricValue ev1 = (EmpiricValue) r1;
+				Integer ev = ev1.getValue() * number;
+				ret = new EmpiricValue(ev);
+			}else if (r1 instanceof SkillCount) {
+				SkillCount sc1 = (SkillCount) r1;
+				Integer sc = sc1.getCount() * number;
+				ret = new SkillCount(sc);
+			}else{
+				Integer gold = r1.get(CommonIdentifier.Gold) * number;
+				Integer stone = r1.get(CommonIdentifier.Stone) * number;
+				Integer wood = r1.get(CommonIdentifier.Wood) * number;
+				Integer ore = r1.get(CommonIdentifier.Ore) * number;
 				ret = new Mineral(gold,stone,wood,ore);
 			}
 		}else{

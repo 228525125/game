@@ -30,4 +30,12 @@ public class CommonIdentifier {
 	public final static Integer Death_Status_Live = 0;         //战斗
 	public final static Integer Death_Status_Death = 1;        //死亡
 	public final static Integer Death_Status_Exist = 2;        //存在
+	
+	public static final Integer Move_Type_Walk = 141;          //步行
+	public static final Integer Move_Type_Equitation = 142;    //骑行
+	public static final Integer Move_Type_Drive = 143;         //驾驶
+	public static final Integer Move_Type_Fly = 144;           //飞行
+	
+	public final static Integer Attack_Mode_Near = 115;   //近战攻击
+	public final static Integer Attack_Mode_Far = 116;    //远程攻击
 }
