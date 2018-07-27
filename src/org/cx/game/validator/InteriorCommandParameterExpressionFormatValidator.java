@@ -40,12 +40,6 @@ public class InteriorCommandParameterExpressionFormatValidator extends Validator
 				break;
 			}
 			
-			/*if(CommandBuffer.GROUND.equals(type) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
-				ret = false;
-				break;
-			}*/
-			
 			if(CommandBuffer.PLACE.equals(type) && !Util.isInteger(position)){
 				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
@@ -58,19 +52,7 @@ public class InteriorCommandParameterExpressionFormatValidator extends Validator
 				break;
 			}
 			
-			/*if(CommandBuffer.CORPS.equals(type) && previou.equals(CommandBuffer.CEMETERY) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
-				ret = false;
-				break;
-			}*/
-			
 			if(CommandBuffer.SKILL.equals(type) && !Util.isInteger(position)){
-				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
-				ret = false;
-				break;
-			}
-			
-			if(CommandBuffer.TRICK.equals(type) && !Util.isInteger(position)){
 				addMessage(I18n.getMessage(InteriorCommandParameterExpressionFormatValidator.class.getName()));
 				ret = false;
 				break;

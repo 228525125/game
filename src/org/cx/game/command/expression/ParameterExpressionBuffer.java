@@ -58,24 +58,12 @@ public class ParameterExpressionBuffer {
 		return (AbstractOption) bufferMap.get(CommandBuffer.OPTION);
 	}
 	
-	public Cemetery getCemetery(){
-		return (Cemetery) bufferMap.get(CommandBuffer.CEMETERY);
-	}
-	
-	public TrickList getTrickList(){
-		return (TrickList) bufferMap.get(CommandBuffer.TRICKLIST);
-	}
-	
 	public AbstractCorps getCorps(){
 		return (AbstractCorps)bufferMap.get(CommandBuffer.CORPS);
 	}
 	
 	public AbstractSkill getSkill(){
 		return (AbstractSkill) bufferMap.get(CommandBuffer.SKILL);
-	}
-	
-	public ITrick getTrick(){
-		return (ITrick) bufferMap.get(CommandBuffer.TRICK);
 	}
 	
 	public void clear(){
@@ -86,11 +74,8 @@ public class ParameterExpressionBuffer {
 		if(null!=player){
 			bufferMap.remove(CommandBuffer.GROUND);
 			bufferMap.remove(CommandBuffer.PLACE);
-			bufferMap.remove(CommandBuffer.CEMETERY);
-			bufferMap.remove(CommandBuffer.TRICKLIST);
 			bufferMap.remove(CommandBuffer.CORPS);
 			bufferMap.remove(CommandBuffer.SKILL);
-			bufferMap.remove(CommandBuffer.TRICK);
 			
 			bufferMap.put(CommandBuffer.PLAYER, player);
 		}
@@ -138,23 +123,6 @@ public class ParameterExpressionBuffer {
 		}
 	}
 	
-	public void setCemetery(Cemetery cemetery){
-		if(null!=cemetery){
-			setPlace(cemetery.getOwner());
-			
-			bufferMap.put(CommandBuffer.CEMETERY, cemetery);
-		}
-	}
-	
-	public void setTrickList(TrickList tricklist){
-		if(null!=tricklist){
-			setPlace(tricklist.getOwner());
-			
-			bufferMap.put(CommandBuffer.TRICKLIST, tricklist);
-		}
-		
-	}
-	
 	public void setCorps(AbstractCorps corps){
 		if(null!=corps){
 			setGround(corps.getGround());
@@ -163,10 +131,6 @@ public class ParameterExpressionBuffer {
 			
 			AbstractPlace place = ground.getPlace(ground.getPosition(corps));
 			setPlace(place);
-			
-			/*if(IAction.Status_Death.equals(corps.getDeath().getStatus())){
-				setCemetery(place.getCemetery());
-			}*/
 			
 			bufferMap.put(CommandBuffer.CORPS, corps);
 		}		
@@ -177,14 +141,6 @@ public class ParameterExpressionBuffer {
 			setCorps(skill.getOwner());
 			
 			bufferMap.put(CommandBuffer.SKILL, skill);
-		}
-	}
-	
-	public void setTrick(ITrick trick){
-		if(null!=trick){
-			setTrickList(trick.getOwner());
-			
-			bufferMap.put(CommandBuffer.TRICK, trick);
 		}
 	}
 }

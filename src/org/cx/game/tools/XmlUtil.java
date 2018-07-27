@@ -69,6 +69,8 @@ public class XmlUtil {
 	public final static String Corps_Card = "card";
 	public final static String Corps_Card_Id = "id";
 	
+	public final static String Skill_Id = "id";
+	
 	public final static String Area_Area_Id = "id";
 	
 	public final static String Map_Map_Id = "id";

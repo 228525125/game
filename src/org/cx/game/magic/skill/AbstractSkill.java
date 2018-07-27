@@ -1,5 +1,6 @@
 package org.cx.game.magic.skill;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,11 @@ import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.magic.IMagic;
-import org.cx.game.core.AbstractContext;
-import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.tag.TagHelper;
 import org.cx.game.tools.I18n;
+import org.cx.game.widget.AbstractOption;
 
 public abstract class AbstractSkill extends Observable implements IMagic, org.cx.game.observer.Observable {
 
@@ -27,6 +27,8 @@ public abstract class AbstractSkill extends Observable implements IMagic, org.cx
 	
 	private AbstractCorps owner = null;
 	
+	private List<AbstractOption> optionList = new ArrayList<AbstractOption>();
+	
 	public AbstractSkill(Integer type) {
 		// TODO Auto-generated constructor stub
 		this.type = type;
@@ -35,6 +37,11 @@ public abstract class AbstractSkill extends Observable implements IMagic, org.cx
 		
 		setAction("Skill");
 	}
+	
+	/**
+	 * 该方法在对象被创建后调用
+	 */
+	public abstract void afterConstruct();
 	
 	public String getAction() {
 		return action;
@@ -70,6 +77,33 @@ public abstract class AbstractSkill extends Observable implements IMagic, org.cx
 	public void setOwner(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		this.owner = corps;		
+	}
+	
+	public void addOption(AbstractOption option) {
+		this.optionList.add(option);
+	}
+	
+	public Boolean removeOption(AbstractOption option) {
+		return this.optionList.remove(option);
+	}
+	
+	public List<AbstractOption> getOptionList() {
+		return this.optionList;
+	}
+	
+	public AbstractOption getOption(Integer index) {
+		return getOptionList().get(index);
+	}
+	
+	public AbstractOption getOption(Class clazz) {
+		AbstractOption ret = null;
+		for(AbstractOption option : getOptionList()){
+			if(option.getClass().equals(clazz)){
+				ret = option;
+				break;
+			}
+		}
+		return ret;
 	}
 	
 	public abstract IAction getUpgrade();

@@ -55,24 +55,12 @@ public class InteriorCommandParameterBufferExpression extends
 				ret = buffer.getOption();
 			}
 			
-			if(CommandBuffer.CEMETERY.equals(item)){
-				ret = buffer.getCemetery();
-			}
-			
-			if(CommandBuffer.TRICKLIST.equals(item)){
-				ret = buffer.getTrickList();
-			}
-			
 			if(CommandBuffer.CORPS.equals(item)){
 				ret = buffer.getCorps();
 			}			
 			
 			if(CommandBuffer.SKILL.equals(item)){
 				ret = buffer.getSkill();
-			}
-			
-			if(CommandBuffer.TRICK.equals(item)){
-				ret = buffer.getTrick();
 			}
 		}
 		

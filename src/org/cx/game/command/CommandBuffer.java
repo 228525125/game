@@ -30,10 +30,6 @@ public class CommandBuffer {
 	
 	public static final String PLAYER = "player";
 	
-	public static final String CEMETERY = "cemetery";
-	
-	public static final String TRICKLIST = "tricklist";
-	
 	public static final String GROUND = "ground";
 	
 	public static final String PLACE = "place"; 
@@ -45,8 +41,6 @@ public class CommandBuffer {
 	public static final String CORPS = "corps";
 	
 	public static final String SKILL = "skill";
-	
-	public static final String TRICK = "trick";
 	
 	private AbstractPlayer player;	
 	
@@ -83,21 +77,12 @@ public class CommandBuffer {
 		}else if(OPTION.equals(item)){
 			AbstractOption option = (AbstractOption) object;
 			setOption(option, bufferMap);
-		}else if(CEMETERY.equals(item)){
-			Cemetery cemetery = (Cemetery) object;
-			setCemetery(cemetery, bufferMap);
-		}else if(TRICKLIST.equals(item)){
-			TrickList trickList = (TrickList) object;
-			setTrickList(trickList, bufferMap);
 		}else if(CORPS.equals(item)){
 			AbstractCorps corps = (AbstractCorps) object;
 			setCorps(corps, bufferMap);
 		}else if(SKILL.equals(item)){
 			AbstractSkill skill = (AbstractSkill) object;
 			setSkill(skill, bufferMap);
-		}else if(TRICK.equals(item)){
-			ITrick trick = (ITrick) object;
-			setTrick(trick, bufferMap);
 		}		
 		
 		poll();
@@ -132,14 +117,6 @@ public class CommandBuffer {
 		return (AbstractOption) element().get(OPTION);
 	}
 	
-	public Cemetery getCemetery(){
-		return (Cemetery) element().get(CEMETERY);
-	}
-	
-	public TrickList getTrickList(){
-		return (TrickList) element().get(TRICKLIST);
-	}
-	
 	public AbstractCorps getCorps(){
 		return (AbstractCorps) element().get(CORPS);
 	}
@@ -147,11 +124,7 @@ public class CommandBuffer {
 	public AbstractSkill getSkill(){
 		return (AbstractSkill) element().get(SKILL);
 	}
-	
-	public ITrick getTrick(){
-		return (ITrick) element().get(TRICK);
-	}
-	
+
 	public void clear(){
 		element().clear();
 	}
@@ -176,20 +149,11 @@ public class CommandBuffer {
 		if (OPTION.equals(item)) {
 			return getOption();
 		}
-		if(CEMETERY.equals(item)){
-			return getCemetery();
-		}
-		if(TRICKLIST.equals(item)){
-			return getTrickList();
-		}
 		if (CORPS.equals(item)) {
 			return getCorps();
 		}
 		if (SKILL.equals(item)) {
 			return getSkill();
-		}
-		if (TRICK.equals(item)) {
-			return getTrick();
 		}
 		return null;
 	}
@@ -215,20 +179,11 @@ public class CommandBuffer {
 		if (item instanceof AbstractOption) {
 			return OPTION;
 		}
-		if(item instanceof Cemetery){
-			return CEMETERY;
-		}
-		if(item instanceof TrickList){
-			return TRICKLIST;
-		}
 		if (item instanceof AbstractCorps) {
 			return CORPS;
 		}
 		if (item instanceof AbstractSkill) {
 			return SKILL;
-		}
-		if (item instanceof ITrick) {
-			return TRICK;
 		}
 		return null;
 	}
@@ -239,11 +194,8 @@ public class CommandBuffer {
 			bufferMap.remove(PLACE);
 			bufferMap.remove(BUILDING);
 			bufferMap.remove(OPTION);
-			bufferMap.remove(CEMETERY);
-			bufferMap.remove(TRICKLIST);
 			bufferMap.remove(CORPS);
 			bufferMap.remove(SKILL);
-			bufferMap.remove(TRICK);
 			
 			bufferMap.put(PLAYER, player);
 		}
@@ -286,23 +238,12 @@ public class CommandBuffer {
 				setCorps(corps, bufferMap);
 			}
 			
+			if (option.getOwner() instanceof AbstractSkill) {
+				AbstractSkill skill = (AbstractSkill) option.getOwner();
+				setSkill(skill, bufferMap);
+			}
+			
 			bufferMap.put(OPTION, option);
-		}
-	}
-	
-	private void setCemetery(Cemetery cemetery, Map<String, Object> bufferMap){
-		if(null!=cemetery){
-			setPlace(cemetery.getOwner(), bufferMap);
-			
-			bufferMap.put(CEMETERY, cemetery);
-		}
-	}
-	
-	private void setTrickList(TrickList tricklist, Map<String, Object> bufferMap){
-		if(null!=tricklist){
-			setPlace(tricklist.getOwner(), bufferMap);
-			
-			bufferMap.put(TRICKLIST, tricklist);
 		}
 	}
 	
@@ -328,14 +269,6 @@ public class CommandBuffer {
 			setCorps(skill.getOwner(), bufferMap);
 			
 			bufferMap.put(SKILL, skill);
-		}
-	}
-	
-	private void setTrick(ITrick trick, Map<String, Object> bufferMap){
-		if(null!=trick){
-			setTrickList(trick.getOwner(), bufferMap);
-			
-			bufferMap.put(TRICK, trick);
 		}
 	}
 	

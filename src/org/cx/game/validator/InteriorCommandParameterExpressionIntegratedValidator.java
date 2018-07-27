@@ -103,6 +103,11 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						AbstractOption option = building.getOption(Integer.valueOf(position));
 						parameterObject = option;
 						getBuffer().setOption(option);
+					}else if(null!=getBuffer().getSkill()){
+						AbstractSkill skill = getBuffer().getSkill();
+						AbstractOption option = skill.getOption(Integer.valueOf(position));
+						parameterObject = option;
+						getBuffer().setOption(option);
 					}else if(null!=getBuffer().getCorps()){
 						AbstractCorps corps = getBuffer().getCorps();
 						AbstractOption option = corps.getOption(Integer.valueOf(position));
@@ -115,50 +120,21 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 					}
 				}
 				
-				if(CommandBuffer.CEMETERY.equals(item)){
-					if(null==getBuffer().getPlace()){
-						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
-						ret = false;
-						break;
-					}else{
-						Cemetery cemetery = getBuffer().getPlace().getCemetery();
-						parameterObject = cemetery;
-						getBuffer().setCemetery(cemetery);
-					}
-				}
-				
-				if(CommandBuffer.TRICKLIST.equals(item)){
-					if(null==getBuffer().getPlace()){
-						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
-						ret = false;
-						break;
-					}else{
-						TrickList trick = getBuffer().getPlace().getTrickList();
-						parameterObject = trick;
-						getBuffer().setTrickList(trick);
-					}
-				}
-				
 				if(CommandBuffer.CORPS.equals(item)){
 					if(null==getBuffer().getGround()){
 						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
 						ret = false;
 						break;
 					}else{
-						if(null!=getBuffer().getGround()){
-							AbstractPlace place = getBuffer().getPlace();
-							if(null==place){
-								addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
-								ret = false;
-								break;
-							}
+						AbstractPlace place = getBuffer().getPlace();
+						if(null==place){
+							addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
+							ret = false;
+							break;
+						}else{
 							AbstractCorps corps = null;
-							if(null!=place){
-								if(null!=getBuffer().getCemetery())
-									corps = getBuffer().getCemetery().getCorps(Integer.valueOf(position));
-								else
-									corps = place.getCorps();
-							}
+							corps = place.getCorps();
+							
 							parameterObject = corps;
 							getBuffer().setCorps(corps);
 						}
@@ -175,18 +151,6 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						AbstractSkill skill = corps.getSkill(Integer.valueOf(position));
 						parameterObject = skill;
 						getBuffer().setSkill(skill);
-					}
-				}
-				
-				if(CommandBuffer.TRICK.equals(item)){
-					if(null==getBuffer().getTrickList()){
-						addMessage(I18n.getMessage(InteriorCommandParameterExpressionIntegratedValidator.class.getName()));
-						ret = false;
-						break;
-					}else{
-						ITrick trick = getBuffer().getTrickList().getTrick(Integer.valueOf(position));
-						parameterObject = trick;
-						getBuffer().setTrick(trick);
 					}
 				}
 			}

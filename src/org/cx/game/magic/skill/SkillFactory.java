@@ -1,8 +1,7 @@
-package org.cx.game.widget.building;
+package org.cx.game.magic.skill;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -18,19 +17,15 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-public class BuildingFactory {
+public class SkillFactory {
 
 	private static Element getRoot() {
 		SAXReader saxReader = new SAXReader();
 		try {
-			InputStream is=new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("building.path"))); 
-		
+			InputStream is = new BufferedInputStream(new FileInputStream(PropertiesUtil.getConfigure("skill.path")));
 			Document document = saxReader.read(is);
 			return document.getRootElement();
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -40,23 +35,23 @@ public class BuildingFactory {
 		return null;
 	}
 	
-	public static AbstractBuilding getInstance(Integer typeID){
-		Element buildingEl = null;
+	public static AbstractSkill getInstance(Integer typeID){
+		Element skillEl = null;
 		for(Iterator it = getRoot().elementIterator();it.hasNext();){
 			Element el = (Element) it.next();
-			if(typeID.equals(Integer.valueOf(el.attribute(XmlUtil.Building_Building_Id).getText()))){
-				buildingEl = el;
+			if(typeID.equals(Integer.valueOf(el.attribute(XmlUtil.Skill_Id).getText()))){
+				skillEl = el;
 				break;
 			}
 		}
 		
-		if(null!=buildingEl){
+		if(null!=skillEl){
 			ObjectTypeBuilder otb = new ObjectTypeBuilder();
 			try {
-				new ObjectTypeParse(otb).parse(buildingEl);
-				AbstractBuilding building = (AbstractBuilding) otb.builder();
-				building.afterConstruct();
-				return building;
+				new ObjectTypeParse(otb).parse(skillEl);
+				AbstractSkill skill = (AbstractSkill) otb.builder();
+				skill.afterConstruct();
+				return skill;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -66,5 +61,9 @@ public class BuildingFactory {
 			}
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		getRoot();
 	}
 }

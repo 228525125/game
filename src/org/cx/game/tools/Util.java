@@ -453,11 +453,8 @@ public class Util {
 		peBuffer.setPlace(cBuffer.getPlace());
 		peBuffer.setBuilding(cBuffer.getBuilding());
 		peBuffer.setOption(cBuffer.getOption());
-		peBuffer.setCemetery(cBuffer.getCemetery());
-		peBuffer.setTrickList(cBuffer.getTrickList());
 		peBuffer.setCorps(cBuffer.getCorps());
 		peBuffer.setSkill(cBuffer.getSkill());
-		peBuffer.setTrick(cBuffer.getTrick());
 	}
 	
 	/**

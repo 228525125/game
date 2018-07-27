@@ -255,8 +255,8 @@ public abstract class AbstractGround {
 	 * @param skill
 	 * @param action
 	 * @return
-	 */
-	public abstract List<Integer> queryRange(AbstractSkill skill, String action);
+	 
+	public abstract List<Integer> queryRange(AbstractSkill skill, String action);*/
 	
 	/**
 	 * 移动到指定位置

@@ -43,9 +43,9 @@ public abstract class AbstractOption implements IValidatable {
 		return this.owner;
 	}
 
-	public void setOwner(Object building) {
+	public void setOwner(Object owner) {
 		// TODO Auto-generated method stub
-		this.owner = building;
+		this.owner = owner;
 	}
 	
 	/**

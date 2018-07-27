@@ -34,7 +34,7 @@ public abstract class AbstractBuilding {
 	private AbstractBuilding owner = null;
 	private Upgrade upgrade = null;
 	
-	private List<AbstractOption> options = new ArrayList<AbstractOption>();
+	private List<AbstractOption> optionList = new ArrayList<AbstractOption>();
 	private List<AbstractBuilding> buildings = new ArrayList<AbstractBuilding>();
 	private List<Integer> needBuilding = new ArrayList<Integer>();
 	private Map<Integer, String> upgradeRequirement = new HashMap<Integer, String>();
@@ -43,6 +43,11 @@ public abstract class AbstractBuilding {
 		// TODO Auto-generated constructor stub
 		this.type = type;
 	}
+	
+	/**
+	 * 该方法在对象被创建后调用
+	 */
+	public abstract void afterConstruct();
 	
 	/**
 	 * 唯一标识
@@ -158,12 +163,12 @@ public abstract class AbstractBuilding {
 	 * 选项
 	 * @return
 	 */
-	public List<AbstractOption> getOptions() {
+	public List<AbstractOption> getOptionList() {
 		// TODO Auto-generated method stub
-		return this.options;
+		return this.optionList;
 	}
 	
-	public void setOptions(List<AbstractOption> options) {
+	public void setOptionList(List<AbstractOption> options) {
 		// TODO Auto-generated method stub
 		for(AbstractOption option : options)
 			addOption(option);
@@ -176,13 +181,12 @@ public abstract class AbstractBuilding {
 	 */
 	public AbstractOption getOption(Integer index) {
 		// TODO Auto-generated method stub
-		return this.options.get(index);
+		return this.optionList.get(index);
 	}
 	
 	public void addOption(AbstractOption option) {
 		// TODO Auto-generated method stub
-		option.setOwner(this);
-		this.options.add(option);
+		this.optionList.add(option);
 	}
 	
 	public void setBuildWait(Integer bout) {
