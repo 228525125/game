@@ -43,10 +43,10 @@ public class CorpsFactory {
 		return null;
 	}
 
-	public static AbstractCorps getInstance(Integer cid, AbstractPlayer player){
+	public static AbstractCorps getInstance(Integer cid){
 		Element corpsEl = getElement(cid);
 		AbstractCorps corps = getInstance(corpsEl);
-		corps.setPlayer(player);
+		//corps.setPlayer(player);
 		return corps;
 	}
 	

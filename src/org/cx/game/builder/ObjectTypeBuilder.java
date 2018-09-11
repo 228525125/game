@@ -17,6 +17,8 @@ public class ObjectTypeBuilder implements IBuilder {
 	
 	private List<Map<String, Class>> propertyMethodList = new ArrayList<Map<String, Class>>();
 	private List propertyValueList = new ArrayList();
+	private List<Map<String, Class>> afterConstructMethodList = new ArrayList<Map<String, Class>>();
+	private List afterConstructValueList = new ArrayList();
 	private List<Class> constructParameterClassList = new ArrayList<Class>();
 	private List<Object> constructParameterList = new ArrayList<Object>();
 	private Class factoryClass = null;
@@ -104,6 +106,37 @@ public class ObjectTypeBuilder implements IBuilder {
 			}			
 		}
 		
+		/*
+		 * 处理延迟加载
+		 */
+		for(int i=0;i<afterConstructMethodList.size();i++){
+			Map<String, Class> map = afterConstructMethodList.get(i);
+			Entry<String, Class> entry = map.entrySet().iterator().next();
+			String methodName = entry.getKey();
+			Class clz = entry.getValue();
+			Object paramValue = afterConstructValueList.get(i);
+			Method method;
+			try {
+				method = result.getClass().getDeclaredMethod(methodName,clz);
+				method.invoke(result, paramValue);
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block				
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				throw new BuilderException("“"+className+"”对象,在对属性"+methodName+"赋值时异常！"+e.getMessage());
+			}
+		}
+		
 		return result;
 	}
 	
@@ -130,6 +163,13 @@ public class ObjectTypeBuilder implements IBuilder {
 	public void setFactoryParameter(Class clazz, Object parameter) {
 		factoryParameterClassList.add(clazz);
 		factoryParameterList.add(parameter);
+	}
+	
+	public void setAfterConstruct(String method, Class clazz, Object property){
+		Map<String, Class> map = new HashMap<String, Class>();
+		map.put(method, clazz);
+		afterConstructMethodList.add(map);
+		afterConstructValueList.add(property);
 	}
 	
 }

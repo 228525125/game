@@ -1,31 +1,26 @@
 package org.cx.game.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Observable;
 import java.util.UUID;
 
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
+import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.observer.NotifyInfo;
-import org.cx.game.out.ResponseFactory;
-import org.cx.game.tools.CommonIdentifier;
-import org.cx.game.widget.ControlQueue;
+import org.cx.game.widget.AbstractControlQueue;
 import org.cx.game.widget.AbstractGround;
 
 public abstract class AbstractContext {	
 	private String playNo = null;
-	private ControlQueue queue = new ControlQueue();
 	
 	private AbstractPlayState playState = null;
 	
-	private List<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>();
-	
-	private AbstractPlayer controlPlayer=null;
+	private AbstractPlayer controlPlayer = null;
+	private AbstractCorps controlCorps = null;
 	private AbstractGround ground = null;
+	
+	private List<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>();
 	
 	public AbstractContext(AbstractGround ground) {
 		// TODO Auto-generated constructor stub
@@ -56,7 +51,6 @@ public abstract class AbstractContext {
 	public void addPlayer(AbstractPlayer player) {
 		// TODO Auto-generated method stub
 		this.playerList.add(player);
-		this.queue.add(player);
 		player.setContext(this);
 	}
 	
@@ -67,7 +61,6 @@ public abstract class AbstractContext {
 	public void removePlayer(AbstractPlayer player) {
 		// TODO Auto-generated method stub
 		this.playerList.remove(player);
-		this.queue.remove(player);
 	}
 	
 	/**
@@ -90,7 +83,31 @@ public abstract class AbstractContext {
 		this.controlPlayer = controlPlayer;
 	}
 	
-	//------------------ Player End --------------
+	/**
+	 * 根据troop查找player
+	 */
+	public AbstractPlayer getPlayer(Integer troop) {
+		// TODO Auto-generated method stub
+		for(AbstractPlayer player : getPlayerList()){
+			if(troop.equals(player.getTroop()))
+				return player;
+		}
+		return null;
+	}
+	
+	//------------------ Corps ---------------
+	
+	public AbstractCorps getControlCorps() {
+		return controlCorps;
+	}
+	
+	public void setControlCorps(AbstractCorps controlCorps) {
+		this.controlCorps = controlCorps;
+		
+		setControlPlayer(controlCorps.getPlayer());
+	}
+	
+	//------------------ Ground --------------
 	
 	/**
 	 * 
@@ -121,7 +138,7 @@ public abstract class AbstractContext {
 	
 	/**
 	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
-	 */
+	
 	public abstract Integer getBout();
 	
 	public abstract IAction getAddBoutAction();
@@ -130,12 +147,12 @@ public abstract class AbstractContext {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddBoutAction());
 		action.action();
-	}
+	} */
 	
 	/**
 	 * 当前天数，从游戏开始算起
 	 * @return
-	 */
+	
 	public abstract Integer getDay();
 	
 	public abstract IAction getAddDayAction();
@@ -144,12 +161,12 @@ public abstract class AbstractContext {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddDayAction());
 		action.action();
-	}
+	} */
 	
 	/**
 	 * 周
 	 * @return
-	 */
+	
 	public abstract Integer getWeek();
 	
 	public abstract IAction getAddWeekAction();
@@ -158,7 +175,7 @@ public abstract class AbstractContext {
 		// TODO Auto-generated method stub
 		IAction action = new ActionProxyHelper(getAddWeekAction());
 		action.action();
-	}
+	} */
 	
 	//------------------- Bout End --------------------
 
@@ -195,10 +212,15 @@ public abstract class AbstractContext {
 	 * @throws RuleValidatorException 
 	 */
 	public void switchControl() {
-		Object object = queue.out();
 		
-		setControlPlayer((AbstractPlayer) object);
+		Object object = this.ground.getQueue().out();
 		
-		addBout();
+		if (object instanceof AbstractPlayer) {
+			AbstractPlayer player = (AbstractPlayer) object;
+			setControlPlayer(player);
+		}else{
+			AbstractCorps corps = (AbstractCorps) object;
+			setControlCorps(corps);
+		}
 	}
 }

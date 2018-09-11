@@ -24,9 +24,9 @@ public abstract class AbstractPlayer {
 	
 	private List<AbstractCorps> corpsList = new ArrayList<AbstractCorps>();
 	
-	public AbstractPlayer(Integer id, String name) {
+	public AbstractPlayer(Integer troop, String name) {
 		// TODO Auto-generated constructor stub
-		this.troop = id;
+		this.troop = troop;
 		this.name = name;
 		
 		this.mineral = new Mineral();
@@ -133,7 +133,7 @@ public abstract class AbstractPlayer {
 	
 	/**
 	 * 游戏分为公共回合和玩家回合，公共回合 = 玩家数 * 玩家回合
-	 */
+	
 	public abstract Integer getBout();
 	
 	public abstract IAction getAddBoutAction();
@@ -141,7 +141,7 @@ public abstract class AbstractPlayer {
 	public void addBout() {
 		IAction action = new ActionProxyHelper(getAddBoutAction());
 		action.action();
-	}
+	}*/
 	
 	/**
 	 * 使用AI自动操作

@@ -111,7 +111,11 @@ public class ObjectTypeParse implements IParse {
 				propertyValue = otb.builder();
 			}
 			
-			builder.set(method, cls, propertyValue);
+			Attribute afterConstruct = el.attribute(XmlUtil.Attribute_AfterConstruct);
+			if(null==afterConstruct)
+				builder.set(method, cls, propertyValue);
+			else
+				builder.setAfterConstruct(method, cls, propertyValue);
 		}
 	}
 	

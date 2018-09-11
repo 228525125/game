@@ -29,10 +29,10 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 		this.owner = owner;
 		this.player = player;
 		
-		this.beginBout = player.getBout();
-		this.curBout = player.getBout();
+		this.beginBout = player.getContext().getGround().getQueue().getBout();
+		this.curBout = player.getContext().getGround().getQueue().getBout();
 		
-		recordIntercepter(player.getAddBoutAction(), this);
+		recordIntercepter(player.getContext().getGround().getQueue().getAddBoutAction(), this);
 	}
 	
 	public Integer getRemainBout(){
@@ -54,7 +54,7 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		this.curBout = player.getBout();
+		this.curBout = player.getContext().getGround().getQueue().getBout();
 	}
 	
 	public Object getOwner(){

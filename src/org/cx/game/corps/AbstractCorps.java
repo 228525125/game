@@ -55,6 +55,7 @@ public abstract class AbstractCorps implements ITag
 	private Integer level = 1;
 	private Integer star = 1;
 	private Boolean hero = false;
+	private Integer troop = 0;
 	
 	private Mineral consume = new Mineral();
 	private AbstractPlayer player = null;
@@ -68,6 +69,7 @@ public abstract class AbstractCorps implements ITag
 	private List<AbstractBuff> buffList = new ArrayList<AbstractBuff>();
 	private List<AbstractSkill> skillList = new ArrayList<AbstractSkill>();
 	private List<AbstractOption> optionList = new ArrayList<AbstractOption>();
+	private List<AbstractCorps> teammateList = new ArrayList<AbstractCorps>();
 	
 	public AbstractCorps(Integer type) {
 		// TODO Auto-generated constructor stub
@@ -328,8 +330,35 @@ public abstract class AbstractCorps implements ITag
 		this.level = level;
 	}
 	
-	//---------------------- NexusBuff ----------------------
+	/**
+	 * 阵营
+	 * @return
+	 */
+	public Integer getTroop() {
+		return troop;
+	}
+
+	public void setTroop(Integer troop) {
+		this.troop = troop;
+	}
 	
+	public List<AbstractCorps> getTeammateList() {
+		return this.teammateList;
+	}
+	
+	public void addCorpsToTeammateList(AbstractCorps corps) {
+		this.teammateList.add(corps);
+		corps.setPosition(getPosition());
+	}
+	
+	public void removeCorpsFromTeammateList(AbstractCorps corps) {
+		this.teammateList.remove(corps);
+		AbstractOption option = getOption(corps);
+		removeOption(option);
+	}
+	
+	//---------------------- NexusBuff ----------------------
+
 	/**
 	 * Corps自己发起的buff
 	 * @return

@@ -89,9 +89,10 @@ public abstract class AbstractGround {
 	}
 	
 	/**
-	 * 该方法在对象被创建后调用
+	 * 控制列表，根据战场类型的不同，控制列表也不同；
+	 * @return
 	 */
-	public abstract void afterConstruct();
+	public abstract AbstractControlQueue getQueue();
 	
 	//-------------------- Corps ---------------------
 

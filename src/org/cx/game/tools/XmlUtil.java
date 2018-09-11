@@ -90,6 +90,7 @@ public class XmlUtil {
 	public final static String Attribute_Interface = "interface";
 	public final static String Attribute_Collection = "collection";
 	public final static String Attribute_Map = "map";
+	public final static String Attribute_AfterConstruct = "afterConstruct";
 	
 	public final static String Attribute_Value_Int = "int";
 	public final static String Attribute_Value_Str = "str";

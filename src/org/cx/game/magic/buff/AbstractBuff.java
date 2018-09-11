@@ -51,7 +51,7 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 		this.type = type;
 		this.owner = corps;
 		this.bout = bout;
-		recordIntercepter(corps.getPlayer().getAddBoutAction(), this);
+		recordIntercepter(corps.getGround().getQueue().getAddBoutAction(), this);
 		
 		addObserver(ResponseFactory.getResponse());
 	}
@@ -164,7 +164,7 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 		// TODO Auto-generated method stub
 		owner.addBuff(this);
 		
-		beginBout = getOwner().getPlayer().getBout();
+		beginBout = getOwner().getGround().getQueue().getBout();
 	}
 	
 	/**
@@ -235,7 +235,7 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 	@Override
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
-		Integer curBout = getOwner().getPlayer().getBout();
+		Integer curBout = getOwner().getGround().getQueue().getBout();
 		if((curBout-beginBout)>bout){
 			invalid();
 		}
