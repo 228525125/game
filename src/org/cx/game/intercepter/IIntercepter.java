@@ -60,7 +60,7 @@ public interface IIntercepter {
 	 */
 	public Integer getLevel();
 	
-	public void delete();
+	/*public void delete();
 	
-	public Boolean isDelete();
+	public Boolean isDelete();*/
 }

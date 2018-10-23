@@ -1,13 +1,13 @@
 package org.cx.game.widget.building;
 
-import org.cx.game.core.AbstractPlayer;
+import org.cx.game.widget.AbstractControlQueue;
 import org.cx.game.widget.AbstractOption;
 
 public class OptionSpacingProcess extends AbstractProcess {
 	
-	public OptionSpacingProcess(Integer waitBout, AbstractPlayer player, AbstractOption option) {
+	public OptionSpacingProcess(Integer waitBout, AbstractControlQueue queue, AbstractOption option) {
 		// TODO Auto-generated constructor stub
-		super(waitBout, player, option);
+		super(waitBout, queue, option);
 	}
 	
 	@Override

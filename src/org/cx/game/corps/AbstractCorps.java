@@ -353,8 +353,13 @@ public abstract class AbstractCorps implements ITag
 	
 	public void removeCorpsFromTeammateList(AbstractCorps corps) {
 		this.teammateList.remove(corps);
-		AbstractOption option = getOption(corps);
-		removeOption(option);
+		
+		for(AbstractOption option : getOptionList()){
+			if(corps.equals(option.getOwner())){
+				removeOption(option);
+				break;
+			}
+		}
 	}
 	
 	//---------------------- NexusBuff ----------------------
@@ -537,16 +542,14 @@ public abstract class AbstractCorps implements ITag
 		return this.optionList;
 	}
 	
-	public AbstractOption getOption(AbstractCorps corps) {
-		AbstractOption ret = null;
+	public List<AbstractOption> getOptionByClass(Class clazz) {
+		List<AbstractOption> retList = new ArrayList<AbstractOption>();
 		for(AbstractOption option : getOptionList()){
-			if(corps.equals(option.getOwner())){
-				ret = option;
-				break;
-			}
+			if(clazz.equals(option.getClass()))
+				retList.add(option);
 		}
 		
-		return ret;
+		return retList;
 	}
 	
 	public AbstractOption getOption(Integer index) {
@@ -568,9 +571,9 @@ public abstract class AbstractCorps implements ITag
 	
 	/**
 	 * 受攻击
-	 * @param attack
+	 * @param objects attack[corps], atk, dmg, isFightBack
 	 */
-	public abstract void attacked(AbstractCorps corps, IAction attack);
+	public abstract void defend(Object...objects);
 	
 	/**
 	 * 受到法术影响

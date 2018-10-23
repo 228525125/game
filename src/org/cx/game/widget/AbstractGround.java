@@ -103,7 +103,8 @@ public abstract class AbstractGround {
 	 */
 	public void placementCorps(Integer position, AbstractCorps corps) {
 		// TODO Auto-generated method stub
-		this.livingCorpsList.add(corps);
+		if(!this.livingCorpsList.contains(corps))
+			this.livingCorpsList.add(corps);
 		
 		AbstractPlace place = getPlace(position);
 		place.in(corps);
@@ -522,7 +523,7 @@ public abstract class AbstractGround {
 	//--------------------------- Treasure End ----------------------------
 
 	/**
-	 * 两个坐标之间的最短距离，不考虑地形
+	 * 两个坐标之间的最短距离，不考虑其它因素
 	 * @param start
 	 * @param stop
 	 * @return
@@ -531,16 +532,25 @@ public abstract class AbstractGround {
 	
 	/**
 	 * 两个坐标之间的最短距离，考虑地形
+	 * @param start
+	 * @param stop
+	 * @param moveType 移动类型
+	 * @return
+	 */
+	public abstract Integer distance(Integer start, Integer stop, Integer moveType);
+	
+	/**
+	 * 两个坐标之间的最短距离，考虑地形和敌军位置
 	 * @param start 必须为起点
 	 * @param stop 必须为需要测试的点
-	 * @param moveType
-	 * @param control 敌我状态
+	 * @param moveType 移动类型
+	 * @param control 当前玩家
 	 * @return 如果stop不可到达，即MAP中为-1，则返回9999
 	 */
 	public abstract Integer distance(Integer start, Integer stop, Integer moveType, AbstractPlayer control);
 	
 	/**
-	 * 获取指定距离的区域，不考虑障碍物
+	 * 获取指定距离的区域，不考虑其它因素
 	 * @param position
 	 * @param step
 	 * @param type
@@ -549,12 +559,22 @@ public abstract class AbstractGround {
 	public abstract List<Integer> areaForDistance(Integer position, Integer step, Integer type);
 	
 	/**
-	 * 获取指定距离的区域，考虑障碍物
+	 * 获取指定距离的区域，考虑障碍物，加载地形
 	 * @param position 指定坐标
 	 * @param step 距离，注意step必须大于0，否则无意义
 	 * @param type  0:刚好在边界上;1范围内;2范围外;
 	 * @param moveType  移动类型
-	 * @param control 敌我状态
+	 * @return
+	 */
+	public abstract List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType);
+	
+	/**
+	 * 获取指定距离的区域，考虑障碍物，加载地形和敌军位置
+	 * @param position 指定坐标
+	 * @param step 距离，注意step必须大于0，否则无意义
+	 * @param type  0:刚好在边界上;1范围内;2范围外;
+	 * @param moveType  移动类型
+	 * @param control 当前玩家
 	 * @return
 	 */
 	public abstract List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType, AbstractPlayer control);

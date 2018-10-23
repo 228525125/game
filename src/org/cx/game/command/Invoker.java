@@ -9,10 +9,12 @@ import org.cx.game.exception.ValidatorException;
 import org.cx.game.out.AbstractResponse;
 
 public class Invoker {
-
-	private Command command;
+	
 	private String response = "";
 	private String playNo = "";
+	
+	private Command command = null;
+	private AbstractPlayer player = null;
 	
 	public Invoker(String playNo) {
 		// TODO Auto-generated constructor stub
@@ -41,6 +43,9 @@ public class Invoker {
 		record();
 	}
 	
+	/**
+	 * 将观察结果记录下来
+	 */
 	private void record(){
 		Camera camera = Camera.getInstance();
 		
@@ -51,7 +56,8 @@ public class Invoker {
 			for(int i=0;i<resps.length;i++){
 				Record r = new Record();
 				r.setPlayNo(playNo);
-				r.setCommand(resps[i]);
+				r.setResponse(resps[i]);
+				r.setExecutor(player.getTroop());
 				r.setSequence(sequence+i);
 				String action = resps[i].split("\",")[0].substring(11);
 				r.setAction(action);
@@ -67,7 +73,8 @@ public class Invoker {
 			throw new SyntaxValidatorException("org.cx.game.command.Invoker.intergrityValidate");
 	}
 	
-	public void receiveCommand(AbstractPlayer player,String cmd) throws ValidatorException {
+	public synchronized void receiveCommand(AbstractPlayer player,String cmd) throws ValidatorException {
+		this.player = player;
 		try {
 			intergrityValidate(cmd);    //验证命令完整性
 			

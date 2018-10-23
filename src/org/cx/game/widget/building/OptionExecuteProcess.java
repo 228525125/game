@@ -5,14 +5,15 @@ import org.cx.game.action.IAction;
 import org.cx.game.core.AbstractPlayer;
 import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.intercepter.AbstractIntercepter;
+import org.cx.game.widget.AbstractControlQueue;
 import org.cx.game.widget.AbstractOption;
 
 public class OptionExecuteProcess extends AbstractProcess {
 
 	private Object[] parameter = null; 
 	
-	public OptionExecuteProcess(Integer waitBout, AbstractPlayer player, AbstractOption option) {
-		super(waitBout, player, option);
+	public OptionExecuteProcess(Integer waitBout, AbstractControlQueue queue, AbstractOption option) {
+		super(waitBout, queue, option);
 		// TODO Auto-generated constructor stub
 		
 		recordIntercepter(getOwner().getExecute(), new AbstractIntercepter() {

@@ -272,6 +272,10 @@ public class CommandBuffer {
 		}
 	}
 	
+	/**
+	 * 当前缓存的元素集合
+	 * @return
+	 */
 	private Map<String, Object> element(){
 		Object [] array = bufferQueue.toArray();
 		Object bufferMap = array[BufferQueue_Size-1];
@@ -286,6 +290,10 @@ public class CommandBuffer {
 		bufferQueue.offer(bufferMap);
 	}
 	
+	/**
+	 * 上一次缓存的元素集合
+	 * @return
+	 */
 	private Map<String, Object> last(){
 		Object [] array = bufferQueue.toArray();
 		Object bufferMap = array[BufferQueue_Size-2];

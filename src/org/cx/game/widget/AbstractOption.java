@@ -131,7 +131,7 @@ public abstract class AbstractOption implements IValidatable {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
 			setAllow(false);
-			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, getOwnerPlayer(), this);
+			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, getControlQueue(), this);
 		}else
 			setAllow(true);
 	}
@@ -247,13 +247,13 @@ public abstract class AbstractOption implements IValidatable {
 	private void firing() {
 		if(!Integer.valueOf(0).equals(getExecuteWait())){
 			setAllow(false);
-			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), getOwnerPlayer(), this);
+			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), getControlQueue(), this);
 			
 			beforeExecute();
 		}else
 			setAllow(true);
 	}
 	
-	protected abstract AbstractPlayer getOwnerPlayer();
+	protected abstract AbstractControlQueue getControlQueue();
 
 }

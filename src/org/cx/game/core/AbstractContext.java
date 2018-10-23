@@ -11,8 +11,13 @@ import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.widget.AbstractControlQueue;
 import org.cx.game.widget.AbstractGround;
 
-public abstract class AbstractContext {	
+public abstract class AbstractContext {
+	
+	public static final Integer Status_Prepare = 0;    //准备状态
+	public static final Integer Status_Start = 1;      //开始状态
+	
 	private String playNo = null;
+	private Integer status = Status_Start;
 	
 	private AbstractPlayState playState = null;
 	
@@ -22,9 +27,9 @@ public abstract class AbstractContext {
 	
 	private List<AbstractPlayer> playerList = new ArrayList<AbstractPlayer>();
 	
-	public AbstractContext(AbstractGround ground) {
+	public AbstractContext(String playNo, AbstractGround ground) {
 		// TODO Auto-generated constructor stub
-		playNo = UUID.randomUUID().toString() ;           //比赛唯一编号
+		this.playNo = playNo;           //比赛唯一编号
 		
 		this.ground = ground;
 	}
@@ -35,6 +40,19 @@ public abstract class AbstractContext {
 	 */
 	public String getPlayNo() {
 		return playNo;
+	}
+	
+	/**
+	 * 环境状态，当Context刚被创建时，处于Prepare状态，这时游戏规则不起作用，玩家做一些开战前的准备工作；
+	 * 当游戏开始后，处于Start状态，这时游戏规则起作用；
+	 * @return
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+	
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public void setPlayState(AbstractPlayState playState) {
@@ -102,6 +120,7 @@ public abstract class AbstractContext {
 	}
 	
 	public void setControlCorps(AbstractCorps controlCorps) {
+		controlCorps.activate(true);
 		this.controlCorps = controlCorps;
 		
 		setControlPlayer(controlCorps.getPlayer());

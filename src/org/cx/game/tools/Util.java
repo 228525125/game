@@ -3,8 +3,11 @@ package org.cx.game.tools;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import org.cx.game.command.CommandBuffer;
 import org.cx.game.command.expression.ParameterExpressionBuffer;
@@ -201,12 +204,6 @@ public class Util {
 	 */
 	public static Integer newCount(){
 		return count+=1;
-	}
-	
-	public static void main(String[] args) {
-			String str = "";
-			System.out.println(isInteger(str));
-		
 	}
 	
 	/**
@@ -455,6 +452,58 @@ public class Util {
 		peBuffer.setOption(cBuffer.getOption());
 		peBuffer.setCorps(cBuffer.getCorps());
 		peBuffer.setSkill(cBuffer.getSkill());
+	}
+	
+	/**
+	 * 生成一个不重复的随机数序列；例如 max=3；list = [1,0,3,2]
+	 * @param max
+	 * @return
+	 */
+	public static List<Integer> generateRandomNumber(Integer max) {
+		List<Integer> list = new ArrayList<Integer>();
+		Random r = new Random();
+		max += 1;
+		
+		while(list.size()<max){
+			Integer num = r.nextInt(max);
+			if(list.contains(num))
+				continue;
+			
+			list.add(num);
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 * 
+	 * @param chance 基数：100
+	 * @return
+	 */
+	public static Boolean isTrigger(Integer chance){
+		java.util.Random r = new java.util.Random();
+		Integer rand = r.nextInt(100);
+		if(rand<=--chance)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * 生成一个随机数
+	 * @param number 不能为0，例如number=2；只能输出0，1；
+	 * @return
+	 */
+	public static Integer nextInt(Integer number){
+		java.util.Random r = new java.util.Random();
+		return r.nextInt(number);
+	}
+	
+	public static void main(String[] args) {
+		List<Integer> list = generateRandomNumber(5);
+		for(Integer i : list)
+			System.out.println(i);
 	}
 	
 	/**

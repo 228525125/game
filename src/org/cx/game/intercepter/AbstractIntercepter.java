@@ -1,5 +1,11 @@
 package org.cx.game.intercepter;
 
+/**
+ * 拦截器，开发者请注意，在before、after、finish方法中，不可再对被拦截对象添加拦截器，
+ * 否则将抛出异常java.util.ConcurrentModificationException
+ * @author chenxian
+ *
+ */
 public abstract class AbstractIntercepter implements IIntercepter {
 
 	private String method = "";
@@ -56,20 +62,6 @@ public abstract class AbstractIntercepter implements IIntercepter {
 	public Integer getLevel() {
 		// TODO Auto-generated method stub
 		return IIntercepter.Level_Current;
-	}
-	
-	private Boolean isDelete = false;
-	
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		this.isDelete = true;
-	}
-	
-	@Override
-	public Boolean isDelete() {
-		// TODO Auto-generated method stub
-		return isDelete;
 	}
 
 }

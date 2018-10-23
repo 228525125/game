@@ -245,11 +245,11 @@ public class SpaceArithmetic {
 	}
 	
 	/**
-	 * 获得两点之间的最短路线，考虑障碍物，并且start<>stop
-	 * 注意，在调用该方法之前，必须调用updateMAP，之所以将两个方法分开，也是为了提高
-	 * 计算效率，例如在一次route方法调用，只更新一次MAP
-	 * @param start
-	 * @param stop
+	 * 获得两点之间的最短路线，并且start<>stop
+	 * @param start 起点
+	 * @param stop 终点
+	 * @param MAP 地形
+	 * @param hit 障碍物
 	 * @return LinkedList<Node> 包含启动和终点，如果stop不可到达则返回null
 	 */
 	public static List route(Integer start, Integer stop, int[][] MAP, int[] hit){

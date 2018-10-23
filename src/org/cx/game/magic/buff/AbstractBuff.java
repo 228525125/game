@@ -33,8 +33,7 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 	
 	private Integer type = 0;                         //buff的id 对应magic的id
 	private String name = null;
-	private String depiction = null;	
-	private Boolean isDelete = false;
+	private String depiction = null;
 	private String action = null;
 	private Integer bout = 0;
 	private Integer beginBout = 0;
@@ -245,18 +244,6 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 	public Integer getLevel() {
 		// TODO Auto-generated method stub
 		return IIntercepter.Level_Current;
-	}
-	
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		this.isDelete = true;
-	}
-	
-	@Override
-	public Boolean isDelete() {
-		// TODO Auto-generated method stub
-		return this.isDelete;
 	}
 	
 	@Override

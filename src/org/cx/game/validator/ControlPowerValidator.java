@@ -13,19 +13,19 @@ import org.cx.game.tools.I18n;
 public class ControlPowerValidator extends Validator {
 
 	private AbstractPlayer player = null;
-	private Command command = null;
 	
-	public ControlPowerValidator(AbstractPlayer player, Command command) {
+	public ControlPowerValidator(AbstractPlayer player) {
 		// TODO Auto-generated constructor stub
 		this.player = player;
-		this.command = command;
 	}
 	
 	@Override
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		AbstractContext context = player.getContext();
-		if(player.equals(context.getControlPlayer()))
+		if(AbstractContext.Status_Prepare.equals(context.getStatus()))
+			return true;
+		else if(AbstractContext.Status_Start.equals(context.getStatus()) && player.equals(context.getControlPlayer()))
 			return true;
 		else{
 			addMessage(I18n.getMessage(ControlPowerValidator.class.getName()));

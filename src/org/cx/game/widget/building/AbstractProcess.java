@@ -10,29 +10,29 @@ import org.cx.game.core.AbstractPlayer;
 import org.cx.game.intercepter.IInterceptable;
 import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.intercepter.IRecover;
+import org.cx.game.widget.AbstractControlQueue;
 
 public abstract class AbstractProcess implements IIntercepter, IRecover {
 
 	private Integer waitBout = 0;
 	private Integer beginBout = 0;
 	private Integer curBout = 0;
-	private Boolean isDelete = false;
 	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
 	private Object owner = null;
-	private AbstractPlayer player = null;
+	private AbstractControlQueue queue = null;
 	
-	public AbstractProcess(Integer waitBout, AbstractPlayer player, Object owner) {
+	public AbstractProcess(Integer waitBout, AbstractControlQueue queue, Object owner) {
 		// TODO Auto-generated constructor stub
 		this.waitBout = waitBout;
 		this.owner = owner;
-		this.player = player;
+		this.queue = queue;
 		
-		this.beginBout = player.getContext().getGround().getQueue().getBout();
-		this.curBout = player.getContext().getGround().getQueue().getBout();
+		this.beginBout = queue.getBout();
+		this.curBout = queue.getBout();
 		
-		recordIntercepter(player.getContext().getGround().getQueue().getAddBoutAction(), this);
+		recordIntercepter(queue.getAddBoutAction(), this);
 	}
 	
 	public Integer getRemainBout(){
@@ -54,7 +54,7 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 	@Override
 	public void after(Object[] args) {
 		// TODO Auto-generated method stub
-		this.curBout = player.getContext().getGround().getQueue().getBout();
+		this.curBout = queue.getBout();
 	}
 	
 	public Object getOwner(){
@@ -77,18 +77,6 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 	public Integer getLevel() {
 		// TODO Auto-generated method stub
 		return IIntercepter.Level_Current;
-	}
-
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-		this.isDelete = true;
-	}
-
-	@Override
-	public Boolean isDelete() {
-		// TODO Auto-generated method stub
-		return this.isDelete;
 	}
 	
 	public void invalid(){

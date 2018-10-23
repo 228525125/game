@@ -30,7 +30,7 @@ public class RuleGroup {
 				rule.setOwner(interceptable);
 			}
 		}
-		
+
 		this.ruleList.clear();          //清除多余规则，释放内存
 	}
 }

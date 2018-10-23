@@ -45,7 +45,7 @@ public class Camera {
 	
 	/**
 	 * 查询sequence大于greaterThan的记录
-	 * @param greaterThan 
+	 * @param greaterThan 基零
 	 * @return
 	 */
 	public List<Record> query(Integer greaterThan){
