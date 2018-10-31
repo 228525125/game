@@ -23,7 +23,7 @@ public class ControlPowerValidator extends Validator {
 	public Boolean validate() {
 		// TODO Auto-generated method stub
 		AbstractContext context = player.getContext();
-		if(AbstractContext.Status_Prepare.equals(context.getStatus()))
+		if(AbstractContext.Status_Prepare.equals(context.getStatus()) || AbstractContext.Status_Ready.equals(context.getStatus()))
 			return true;
 		else if(AbstractContext.Status_Start.equals(context.getStatus()) && player.equals(context.getControlPlayer()))
 			return true;

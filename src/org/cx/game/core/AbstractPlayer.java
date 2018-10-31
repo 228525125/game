@@ -124,7 +124,7 @@ public abstract class AbstractPlayer {
 	}
 	
 	/**
-	 * player控制的corps
+	 * player控制的live状态的corps
 	 * @return
 	 */
 	public List<AbstractCorps> getCorpsList() {

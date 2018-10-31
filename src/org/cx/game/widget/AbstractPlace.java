@@ -46,7 +46,6 @@ public abstract class AbstractPlace {
 	private Integer position = 0;
 	private AbstractGround ground = null;
 	private AbstractBuilding building  = null;
-	private Boolean disable = false;
 	private Boolean empty = true;
 	private Integer landform = AbstractPlace.Landform_Sward;
 	private Treasure treasure = null;
@@ -100,8 +99,6 @@ public abstract class AbstractPlace {
 	void inCemetery(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		getCemetery().add(corps);
-		
-		corps.setPosition(getPosition());
 	}
 	
 	void inTrickList(ITrick trick) {
@@ -114,7 +111,6 @@ public abstract class AbstractPlace {
 		AbstractCorps corps = getCorps();
 		setCorps(null);
 		setIsEmpty(true);
-		corps.setPosition(null);
 		
 		return corps;
 	}
@@ -122,23 +118,12 @@ public abstract class AbstractPlace {
 	void outCemetery(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		getCemetery().remove(corps);
-		
-		corps.setPosition(null);
 	}
 	
 	void outTrickList(ITrick trick) {
 		// TODO Auto-generated method stub
 		getTrickList().remove(trick);
 	}
-
-	/**
-	 * 是否可用，有一些因为地形原因而导致不可用(暂时没用)
-	 * @return
-	 
-	public Boolean getDisable() {
-		// TODO Auto-generated method stub
-		return this.disable;
-	}*/
 	
 	/**
 	 * 位置上是否为空
@@ -152,11 +137,6 @@ public abstract class AbstractPlace {
 	void setIsEmpty(Boolean empty) {
 		// TODO Auto-generated method stub
 		this.empty = empty;
-	}
-
-	void setDisable(Boolean disable) {
-		// TODO Auto-generated method stub
-		this.disable = disable;
 	}
 	
 	public Integer getLandform() {

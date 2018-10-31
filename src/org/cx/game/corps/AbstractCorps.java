@@ -45,7 +45,7 @@ public abstract class AbstractCorps implements ITag
 	private Boolean hide = false;
 	private Integer atk=0;
 	private Integer dmg = 180081;
-	private Integer attackRange = 0;
+	private Integer attackRange = 1;
 	private Integer attackMode = CommonIdentifier.Attack_Mode_Near;
 	private Boolean mobile = false;
 	private Integer def = 0;

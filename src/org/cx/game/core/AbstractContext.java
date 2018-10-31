@@ -14,7 +14,8 @@ import org.cx.game.widget.AbstractGround;
 public abstract class AbstractContext {
 	
 	public static final Integer Status_Prepare = 0;    //准备状态
-	public static final Integer Status_Start = 1;      //开始状态
+	public static final Integer Status_Ready = 1;    //准备就绪，等待开始
+	public static final Integer Status_Start = 2;      //开始状态
 	
 	private String playNo = null;
 	private Integer status = Status_Start;
@@ -202,6 +203,7 @@ public abstract class AbstractContext {
 	 * 比赛开始
 	 */
 	public void start(){
+		setStatus(Status_Start);
 		this.playState.start();
 	}
 	

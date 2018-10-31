@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 
 import org.cx.game.core.AbstractPlayer;
 import org.cx.game.corps.AbstractCorps;
-import org.cx.game.magic.skill.AbstractSkill;
 import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.widget.building.AbstractBuilding;
 import org.cx.game.widget.treasure.Treasure;
@@ -103,31 +102,31 @@ public abstract class AbstractGround {
 	 */
 	public void placementCorps(Integer position, AbstractCorps corps) {
 		// TODO Auto-generated method stub
-		if(!this.livingCorpsList.contains(corps))
-			this.livingCorpsList.add(corps);
+		this.livingCorpsList.add(corps);
 		
 		AbstractPlace place = getPlace(position);
 		place.in(corps);
 		
-		corps.setGround(this);
+		getQueue().add(corps);
 	}
 	
 	/**
-	 * 移除corps
+	 * 移除corps，从ground中彻底移除，包括从墓地移除
 	 * @param corps
 	 */
 	public Boolean removeCorps(AbstractCorps corps) {
 		// TODO Auto-generated method stub
-		Boolean ret = this.livingCorpsList.remove(corps);
+		Boolean ret1 = this.livingCorpsList.remove(corps);
+		Boolean ret2 = this.deadCorpsList.remove(corps);
 		
-		if(ret){
+		if(ret1 || ret2){
 			Integer position = corps.getPosition();
 			AbstractPlace place = getPlace(position);
 			place.out();
 			
-			//corps.setGround(null);  如果只是队伍合并merge，就有问题
+			getQueue().remove(corps);
 		}
-		return ret;
+		return ret1 || ret2;
 	}
 
 	public AbstractCorps getCorps(Integer position) {
@@ -277,6 +276,7 @@ public abstract class AbstractGround {
 		AbstractPlace place = getPlace(corps.getPosition());
 		place.out();
 		place.inCemetery(corps);
+		getQueue().remove(corps);
 		
 		this.livingCorpsList.remove(corps);
 		this.deadCorpsList.add(corps);
@@ -427,10 +427,11 @@ public abstract class AbstractGround {
 	//--------------------- Landform -------------------------
 	
 	/**
-	 * 查询Place.corps为null的position的集合
-	 * @return 
+	 * 根据条件，查询不同状态的Place
+	 * @param isEmpty 
+	 * @return position的集合
 	 */
-	public abstract List<Integer> queryEmptyList();
+	public abstract List<Integer> queryPositionList(Boolean isEmpty);
 	
 	/**
 	 * 将坐标转换为Place
@@ -540,16 +541,6 @@ public abstract class AbstractGround {
 	public abstract Integer distance(Integer start, Integer stop, Integer moveType);
 	
 	/**
-	 * 两个坐标之间的最短距离，考虑地形和敌军位置
-	 * @param start 必须为起点
-	 * @param stop 必须为需要测试的点
-	 * @param moveType 移动类型
-	 * @param control 当前玩家
-	 * @return 如果stop不可到达，即MAP中为-1，则返回9999
-	 */
-	public abstract Integer distance(Integer start, Integer stop, Integer moveType, AbstractPlayer control);
-	
-	/**
 	 * 获取指定距离的区域，不考虑其它因素
 	 * @param position
 	 * @param step
@@ -567,17 +558,6 @@ public abstract class AbstractGround {
 	 * @return
 	 */
 	public abstract List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType);
-	
-	/**
-	 * 获取指定距离的区域，考虑障碍物，加载地形和敌军位置
-	 * @param position 指定坐标
-	 * @param step 距离，注意step必须大于0，否则无意义
-	 * @param type  0:刚好在边界上;1范围内;2范围外;
-	 * @param moveType  移动类型
-	 * @param control 当前玩家
-	 * @return
-	 */
-	public abstract List<Integer> areaForDistance(Integer position, Integer step, Integer type, Integer moveType, AbstractPlayer control);
 	
 	/**
 	 * 相对与目标位置的方向，stand与target位置必须是相邻的
@@ -612,6 +592,6 @@ public abstract class AbstractGround {
 	 * @param control 敌我状态
 	 * @return
 	 */
-	public abstract Integer getPointByWay(Integer stand, Integer dest, Integer step, Integer moveType, AbstractPlayer control);
+	public abstract Integer getPointByWay(Integer stand, Integer dest, Integer step, Integer moveType);
 
 }
