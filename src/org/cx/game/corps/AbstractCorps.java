@@ -52,8 +52,9 @@ public abstract class AbstractCorps implements ITag
 	private Integer speed = 100;
 	private Integer fleeChance = 0;
 	private Integer lockChance = 0;
-	private Integer level = 1;
-	private Integer star = 1;
+	private Integer level = 1;            //通过获取经验来提升的等级
+	private Integer star = 1;             //稀有度
+	private Integer rank = 1;             //阶层
 	private Boolean hero = false;
 	private Integer troop = 0;
 	
@@ -294,7 +295,7 @@ public abstract class AbstractCorps implements ITag
 	}
 	
 	/**
-	 * 星，代表价值
+	 * 星，代表价值，稀有度
 	 * @return
 	 */
 	public Integer getStar() {
@@ -305,6 +306,18 @@ public abstract class AbstractCorps implements ITag
 		this.star = star;
 	}
 	
+	/**
+	 * 阶层，代表一个段位
+	 * @return
+	 */
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
 	/**
 	 * 消耗资源
 	 */
