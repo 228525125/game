@@ -9,7 +9,7 @@ public class Logger
 	public static org.apache.log4j.Logger logger;
 	
 	static {
-		PropertyConfigurator.configure("F:/workspace1/game/src/resource/log4j.lcf");
+		PropertyConfigurator.configure("E:/workspace1/game/src/resource/log4j.lcf");
 		logger = org.apache.log4j.Logger.getRootLogger();
 	}
 	

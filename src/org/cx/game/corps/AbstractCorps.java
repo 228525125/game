@@ -51,12 +51,13 @@ public abstract class AbstractCorps implements ITag
 	private Integer def = 0;
 	private Integer speed = 100;
 	private Integer fleeChance = 0;
-	private Integer lockChance = 0;
+	private Integer lockChance = 100;
 	private Integer level = 1;            //通过获取经验来提升的等级
 	private Integer star = 1;             //稀有度
 	private Integer rank = 1;             //阶层
 	private Boolean hero = false;
 	private Integer troop = 0;
+	private Integer empiricValue = 0;      //经验值
 	
 	private Mineral consume = new Mineral();
 	private AbstractPlayer player = null;
@@ -331,6 +332,18 @@ public abstract class AbstractCorps implements ITag
 		this.consume = consume;
 	}
 	
+	/**
+	 * 死亡后能提供的经验值
+	 * @return
+	 */
+	public Integer getEmpiricValue() {
+		return empiricValue;
+	}
+
+	public void setEmpiricValue(Integer empiricValue) {
+		this.empiricValue = empiricValue;
+	}
+
 	/**
 	 * 等级
 	 * @return

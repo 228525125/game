@@ -75,6 +75,8 @@ public class XmlUtil {
 	
 	public final static String Map_Map_Id = "id";
 	
+	public final static String Scene_Scene_Id = "id";
+	
 	public final static String Building_Building_Id = "id";
 	
 	public final static String Rule_RuleGroup_Id = "id";

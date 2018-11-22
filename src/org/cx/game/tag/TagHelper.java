@@ -84,7 +84,12 @@ public class TagHelper {
 	 * @return
 	 */
 	public static List<Integer> queryForObject(Integer object){
-		return Tag_1.get(object);
+		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> list = Tag_1.get(object);
+		if(null!=list){
+			result.addAll(list);
+		}
+		return result;
 	}
 	
 	/**
@@ -93,7 +98,11 @@ public class TagHelper {
 	 * @return
 	 */
 	public static List<Integer> queryForTag(Integer tag){
-		return Tag_2.get(tag);
+		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> list = Tag_2.get(tag);
+		if(null!=list)
+		result.addAll(list);
+		return result;
 	}
 	
 	/**
@@ -102,7 +111,11 @@ public class TagHelper {
 	 * @return
 	 */
 	public static List<Integer> queryForCategory(Integer category){
-		return TagCategory_2.get(category);
+		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> list = TagCategory_2.get(category);
+		if(null!=list)
+		result.addAll(list);
+		return result;
 	}
 	
 	/**
