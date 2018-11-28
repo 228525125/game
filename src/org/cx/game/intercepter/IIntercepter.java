@@ -43,7 +43,7 @@ public interface IIntercepter {
 	public static final Integer Order_Default = 100;
 	
 	/**
-	 * 拦截器执行的选后顺序，数值越小优先级越高
+	 * 拦截器执行的先后顺序，数值越小优先级越高
 	 * @return
 	 */
 	public Integer getOrder();
@@ -55,7 +55,7 @@ public interface IIntercepter {
 	public static final Integer Level_Current = 3;
 	
 	/**
-	 * 拦截器在系统中的级别
+	 * 拦截器在系统中的级别，用于拦截器回收机制
 	 * @return
 	 */
 	public Integer getLevel();

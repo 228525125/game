@@ -64,7 +64,7 @@ public abstract class AbstractContext {
 	//---------------- Player -----------------
 	
 	/**
-	 * 用于增加中立部队
+	 * 初始化game时，调用
 	 * @param player 
 	 */
 	public void addPlayer(AbstractPlayer player) {

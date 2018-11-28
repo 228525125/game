@@ -37,6 +37,8 @@ public class CommonIdentifier {
 	public static final Integer Move_Type_Fly = 144;           //飞行
 	public static final Integer Move_Type_Transmit = 145;           //传送
 	
-	public final static Integer Attack_Mode_Near = 115;   //近战攻击
-	public final static Integer Attack_Mode_Far = 116;    //远程攻击
+	public final static Integer Attack_Mode_Near = 115;   //近战肉搏
+	public final static Integer Attack_Mode_Far = 116;    //远程射击
+	public final static Integer Attack_Mode_EquitationFar = 117;  //骑射
+	
 }
