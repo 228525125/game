@@ -222,7 +222,7 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 	@Override
 	public String getIntercepterMethod() {
 		// TODO Auto-generated method stub
-		return "addBout";
+		return "action";
 	}
 
 	@Override

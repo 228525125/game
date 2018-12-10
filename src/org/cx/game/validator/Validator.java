@@ -1,5 +1,10 @@
 package org.cx.game.validator;
 
+/**
+ * 验证器，命名规则：（修饰语）主语 + 谓语 + Validator
+ * @author admin
+ *
+ */
 public abstract class Validator implements IValidator {
 
 	private String message = ErrorMessage_NULL;
