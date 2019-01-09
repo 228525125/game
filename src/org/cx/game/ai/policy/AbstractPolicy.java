@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.command.Command;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
@@ -109,10 +110,10 @@ public abstract class AbstractPolicy<T> implements IValidatable {
 	}
 	
 	@Override
-	public void doValidator(IValidator validator) {
+	public void doValidator(IValidator validator) throws ValidatorException {
 		// TODO Auto-generated method stub
 		if(!validator.validate())
-			errors.addError(validator);
+			throw new RuleValidatorException(validator.getErrorMessage());
 	}
 	
 	@Override

@@ -50,6 +50,12 @@ public class LandformEffect {
 		return null;
 	}
 	
+	/**
+	 * 地形对不同职业攻击力的影响
+	 * @param profession 职业
+	 * @param landform 地形
+	 * @return
+	 */
 	public static Integer getAttackAdvantage(Integer profession, Integer landform){
 		Map<Integer, String> profession_atkdef = landform_ProfessionType.get(landform);
 		String value = profession_atkdef.get(profession);
@@ -60,6 +66,12 @@ public class LandformEffect {
 		return Integer.valueOf(value.split(",")[0]); 
 	}
 	
+	/**
+	 * 地形对不同职业防御力的影响
+	 * @param profession 职业
+	 * @param landform 地形
+	 * @return
+	 */
 	public static Integer getDefendAdvantage(Integer profession, Integer landform){
 		Map<Integer, String> profession_atkdef = landform_ProfessionType.get(landform);
 		String value = profession_atkdef.get(profession);
@@ -70,6 +82,12 @@ public class LandformEffect {
 		return Integer.valueOf(value.split(",")[1]);
 	}
 	
+	/**
+	 * 移动类型在地形上的影响
+	 * @param moveType 移动类型
+	 * @param landform 地形
+	 * @return 移动一格的消耗，-1为不可到达
+	 */
 	public static Integer getConsume(Integer moveType, Integer landform){
 		Map<Integer, Integer> moveType_consume = landform_MoveType.get(landform);
 		Integer consume = moveType_consume.get(moveType);
@@ -80,7 +98,7 @@ public class LandformEffect {
 		return consume;
 	}
 	
-	public static List<Integer> getDisable(Integer moveType, Map<Integer, AbstractPlace> ground){
+	/*public static List<Integer> getDisable(Integer moveType, Map<Integer, AbstractPlace> ground){
 		List<Integer> list = new ArrayList<Integer>();
 		for(Integer pos : ground.keySet()){
 			Integer landform = ground.get(pos).getLandform();
@@ -89,7 +107,7 @@ public class LandformEffect {
 		}
 		
 		return list;
-	}
+	}*/
 	
 	static {
 		Element parameterEl = getRoot("gameparameter.path");

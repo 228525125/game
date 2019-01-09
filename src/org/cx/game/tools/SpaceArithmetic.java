@@ -10,6 +10,7 @@ import org.cx.game.widget.AbstractGround;
 
 /**
  * 空间算法，主要应用于战场；
+ * 注意：这里计算出的位置，都不判断是否越界，这个需要在应用这些数据时去判断；
  * @author chenxian
  *
  */
@@ -27,14 +28,14 @@ public class SpaceArithmetic {
 	
 	/**
 	 * 用于表示越界的点，isOver = true
-	 */
-	private static final Integer OverPoint = 110010;
+	
+	public static final Integer OverPoint = 110010; */
 	
 	public static Integer pointToInteger(Integer x,Integer y){
-		if(x<1 || y<1)
+		/*if(x<1 || y<1)
 			return OverPoint;
-		else
-			return Integer.valueOf(x+space+y);
+		else*/
+		return Integer.valueOf(x+space+y);
 	}
 
 	/**

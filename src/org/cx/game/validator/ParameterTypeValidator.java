@@ -28,12 +28,22 @@ public class ParameterTypeValidator extends Validator {
 	 * @param propertyName 参数属性
 	 * @param propertyValue 包含属性值的集合
 	 */
-	public ParameterTypeValidator(Object[] parameter, Class[] type, String[] propertyName, Object[] propertyValue){
+	public ParameterTypeValidator(Object[] parameter, Class[] type, String[] propertyName, Object[] propertyValue) {
 		this.parameter = parameter;
 		this.type = type;
 		this.propertyName = propertyName;
 		if(null!=propertyValue)
 			Collections.addAll(this.propertyValueList, propertyValue);
+	}
+	
+	/**
+	 * 
+	 * @param parameter 参数
+	 * @param type 参数类型
+	 */
+	public ParameterTypeValidator(Object[] parameter, Class[] type) {
+		this.parameter = parameter;
+		this.type = type;
 	}
 	
 	@Override

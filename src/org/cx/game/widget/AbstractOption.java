@@ -9,6 +9,7 @@ import org.cx.game.action.IAction;
 import org.cx.game.core.AbstractPlayer;
 import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
+import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
@@ -89,10 +90,9 @@ public abstract class AbstractOption implements IValidatable {
 	
 	/**
 	 * 查询执行范围
-	 * @param ground
 	 * @return
 	 */
-	public abstract List<Integer> getExecuteRange(AbstractGround ground);
+	public abstract List<Integer> getExecuteRange();
 	
 	/**
 	 * 间隔剩余回合数
@@ -158,14 +158,13 @@ public abstract class AbstractOption implements IValidatable {
 		/*
 		 * 因为Execute的参数范围太大，所以只能将参数验证交给Option的子类来完成
 		 */
-		deleteValidator(parameterValidator);
+		/*deleteValidator(parameterValidator);
 		this.parameterValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue);
-		addValidator(parameterValidator);
+		addValidator(parameterValidator);*/
 		
 		doValidator();
 		
-		if(hasError())
-			throw new RuleValidatorException(getErrors().getMessage());
+		if(hasError()) throw new RuleValidatorException(getErrors().getMessage());
 			
 		firing();
 		
@@ -176,26 +175,26 @@ public abstract class AbstractOption implements IValidatable {
 	private Errors errors = new Errors();	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	
-	private ParameterTypeValidator parameterValidator = null;
+	/*private ParameterTypeValidator parameterValidator = null;
 	private Class[] parameterType = new Class[]{};      //用于参数的验证
 	private String[] proertyName = null;
 	private Object[] validatorValue = null;
 
 	public void setParameterTypeValidator(Class[] parameterType) {
 		this.parameterType = parameterType;
-	}
+	}*/
 	
 	/**
 	 * 
 	 * @param parameterType 参数类型
 	 * @param proertyName 属性名称
 	 * @param validatorValue 属性值，但必须为基本类型
-	 */
+	 
 	public void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
 		this.parameterType = parameterType;
 		this.proertyName = proertyName;
 		this.validatorValue = validatorValue;
-	}
+	}*/
 	
 	public void addValidator(IValidator validator) {
 		// TODO Auto-generated method stub
@@ -223,10 +222,10 @@ public abstract class AbstractOption implements IValidatable {
 	}
 	
 	@Override
-	public void doValidator(IValidator validator) {
+	public void doValidator(IValidator validator) throws RuleValidatorException {
 		// TODO Auto-generated method stub
 		if(!validator.validate())
-			errors.addError(validator);
+			throw new RuleValidatorException(validator.getErrorMessage());
 	}
 	
 	@Override

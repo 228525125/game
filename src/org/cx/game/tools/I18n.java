@@ -52,27 +52,68 @@ public class I18n {
 		return ret;
 	}
 	
+	/**
+	 * 查找properties中key对应的字符串
+	 * @param key
+	 * @return
+	 */
 	public static String getMessage(String key) {
 		Locale locale = I18n.getLocale();
 		return getMessage(key, locale);
 	}
 	
+	/**
+	 * 相当于getMessage(object.class.name)
+	 * @param object
+	 * @return
+	 */
 	public static String getMessage(Object object){
 		String key = object.getClass().getName();
 		Locale locale = I18n.getLocale();
 		return getMessage(key, locale);
 	}
 	
+	/**
+	 * 相当于getMessage(object.class.name+'.'+property)
+	 * @param object
+	 * @param property
+	 * @return
+	 */
 	public static String getMessage(Object object, String property){
 		String key = object.getClass().getName()+"."+property;
 		return getMessage(key);
 	}
 	
+	/**
+	 * 相当于getMessage(object.class.name+'.'+id+'.'+property)
+	 * @param object
+	 * @param id
+	 * @param property
+	 * @return
+	 */
 	public static String getMessage(Object object, Object id, String property){
 		String key = object.getClass().getName()+"."+id+"."+property;
 		return getMessage(key);
 	}
 	
+	/**
+	 * 相当于getMessage(class.name+'.'+property)
+	 * @param clazz
+	 * @param property
+	 * @return
+	 */
+	public static String getMessage(Class clazz, String property){
+		String key = clazz.getName()+"."+property;
+		return getMessage(key);
+	}
+	
+	/**
+	 * 相当于getMessage(class.name+'.'+id+'.'+property)
+	 * @param clazz
+	 * @param id
+	 * @param property
+	 * @return
+	 */
 	public static String getMessage(Class clazz, Object id, String property){
 		String key = clazz.getName()+"."+id+"."+property;
 		return getMessage(key);

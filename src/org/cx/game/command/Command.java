@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Observable;
 
 import org.cx.game.exception.CommandValidatorException;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.ValidatorException;
 import org.cx.game.out.AbstractResponse;
 import org.cx.game.out.ResponseFactory;
@@ -71,10 +72,10 @@ public class Command extends Observable implements IValidatable{
 	}
 	
 	@Override
-	public void doValidator(IValidator validator) {
+	public void doValidator(IValidator validator) throws ValidatorException {
 		// TODO Auto-generated method stub
 		if(!validator.validate())
-			errors.addError(validator);
+			throw new RuleValidatorException(validator.getErrorMessage());
 	}
 	
 	@Override

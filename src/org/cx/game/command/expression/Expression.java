@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cx.game.exception.CommandValidatorException;
+import org.cx.game.exception.RuleValidatorException;
 import org.cx.game.exception.SyntaxValidatorException;
+import org.cx.game.exception.ValidatorException;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
@@ -77,7 +79,7 @@ public abstract class Expression implements IExpression, IValidatable {
 	@Override
 	public void doValidator(IValidator validator) {
 		// TODO Auto-generated method stub
-		if(validator.validate())
+		if(!validator.validate())
 			errors.addError(validator);
 	}
 	

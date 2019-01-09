@@ -11,6 +11,11 @@ import org.cx.game.intercepter.IIntercepter;
 import org.cx.game.magic.trick.ITrick;
 import org.cx.game.observer.NotifyInfo;
 
+/**
+ * 与Cemetery类似，每个格子都带一个TrickList，用于保存陷阱
+ * @author chenxian
+ *
+ */
 public class TrickList {
 
 	private List<ITrick> trickList = new ArrayList<ITrick>();
