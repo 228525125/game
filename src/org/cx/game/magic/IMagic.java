@@ -16,6 +16,12 @@ public interface IMagic extends ITag {
 	public Integer getType();
 	
 	/**
+	 * 法术名称
+	 * @return
+	 */
+	public String getName();
+	
+	/**
 	 * 所属对象
 	 * @return
 	 */

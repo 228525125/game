@@ -18,9 +18,7 @@ import org.cx.game.tag.TagHelper;
 import org.cx.game.tools.I18n;
 
 /**
- * buff持续回合数计算方式：1、buff第一次影响单位的回合开始计算；
- * 2、从添加buff的回合开始计算
- * 目前采用第2种
+ * buff持续回合数计算方式：从添加buff的回合开始计算，例如持续回合为1，下一回buff就将失效；
  * 添加Buff使用Corps addBuff，删除Buff使用buff invalid
  * 生命周期：effect -> affect -> invalid  = 生效 -> 产生影响 -> 失效
  * @author chenxian
@@ -235,7 +233,7 @@ public abstract class AbstractBuff extends Observable implements org.cx.game.obs
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
 		Integer curBout = getOwner().getGround().getQueue().getBout();
-		if((curBout-beginBout)>bout){
+		if((curBout-beginBout)>=bout){
 			invalid();
 		}
 	}

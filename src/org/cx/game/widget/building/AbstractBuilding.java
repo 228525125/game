@@ -17,9 +17,20 @@ import org.cx.game.widget.treasure.Resource;
 
 public abstract class AbstractBuilding {
 
-	static final Integer Building_Status_Nothingness = 0;        //不存在
-	static final Integer Building_Status_Build = 1;              //建造过程中
-	static final Integer Building_Status_Complete = 2;           //完工
+	/**
+	 * 不存在
+	 */
+	static final Integer Building_Status_Nothingness = 0;
+	
+	/**
+	 * 建造过程中
+	 */
+	static final Integer Building_Status_Build = 1;
+	
+	/**
+	 * 完工
+	 */
+	static final Integer Building_Status_Complete = 2;
 	
 	private String name = null;
 	private Integer type = 0;

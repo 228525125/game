@@ -31,8 +31,8 @@ import org.cx.game.widget.treasure.Treasure;
  */
 public abstract class AbstractCorps implements ITag
 {
-	private static final String Effect = "_Effect";
-	private static final String Invalid = "_Invalid";
+	//private static final String Effect = "_Effect";
+	//private static final String Invalid = "_Invalid";
 	
 	private Integer type = null;          //类型唯一标识
 	private Integer id = null;            //每场比赛动态生成的唯一标识

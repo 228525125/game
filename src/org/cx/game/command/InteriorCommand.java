@@ -17,7 +17,7 @@ public class InteriorCommand extends Command {
 		this.buffer = player.getCommandBuffer();
 		this.context = player.getContext();
 
-		addValidator(new ControlPowerValidator(player));        //判断是否有控制权
+		addValidator(new ControlPowerValidator(this, player));        //判断是否有控制权
 	}
 
 }

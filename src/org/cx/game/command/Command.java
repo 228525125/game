@@ -14,7 +14,7 @@ import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
 
 public class Command extends Observable implements IValidatable{
-		
+	
 	protected Object parameter = null;
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
 	private Errors errors = new Errors();
@@ -36,6 +36,14 @@ public class Command extends Observable implements IValidatable{
 
 	public void setParameter(Object parameter) {
 		this.parameter = parameter;
+	}
+	
+	/**
+	 * 是否需要控制权才能执行此命令
+	 * @return
+	 */
+	public Boolean isNeedControl() {
+		return true;
 	}
 	
 	@Override

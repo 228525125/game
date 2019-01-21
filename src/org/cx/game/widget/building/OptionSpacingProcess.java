@@ -5,9 +5,10 @@ import org.cx.game.widget.AbstractOption;
 
 public class OptionSpacingProcess extends AbstractProcess {
 	
-	public OptionSpacingProcess(Integer waitBout, AbstractControlQueue queue, AbstractOption option) {
+	public OptionSpacingProcess(AbstractControlQueue queue, AbstractOption option) {
 		// TODO Auto-generated constructor stub
-		super(waitBout, queue, option);
+		super(queue, option);
+		setWaitBout(option.getSpacingWait());
 	}
 	
 	@Override
@@ -20,7 +21,8 @@ public class OptionSpacingProcess extends AbstractProcess {
 	public void finish(Object[] args) {
 		// TODO Auto-generated method stub
 		if(Integer.valueOf(0).equals(getRemainBout())){
-			invalid();
+			getOwner().setStatus(AbstractOption.Status_Executable);
+			stop();
 		}
 	}
 

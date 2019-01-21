@@ -16,6 +16,11 @@ public class CommonIdentifier {
 	public final static String Context_ControlQueue_Refurbish = "Context_ControlQueue_Refurbish";  
 	public final static String Context_ControlQueue_Move = "Context_ControlQueue_Move";
 	
+	public final static String Command_Reload = "Command_Reload";
+	
+	public final static String Skill_Used = "Skill_Used";
+	public final static String Option_Executed = "Option_Executed";
+	
 	//------------------ Treasure ------------------//
 	
 	public final static Integer Gold = 701;                    //金币

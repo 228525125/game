@@ -17,26 +17,35 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 	private Integer waitBout = 0;
 	private Integer beginBout = 0;
 	private Integer curBout = 0;
+	private Boolean processing = false;
 	
 	private List<Map<IInterceptable, IIntercepter>> resetList = new ArrayList<Map<IInterceptable, IIntercepter>>();
 	
 	private Object owner = null;
 	private AbstractControlQueue queue = null;
 	
-	public AbstractProcess(Integer waitBout, AbstractControlQueue queue, Object owner) {
+	public AbstractProcess(AbstractControlQueue queue, Object owner) {
 		// TODO Auto-generated constructor stub
-		this.waitBout = waitBout;
 		this.owner = owner;
 		this.queue = queue;
-		
+	}
+	
+	public void begin() {
 		this.beginBout = queue.getBout();
 		this.curBout = queue.getBout();
-		
+		this.processing = true;
 		recordIntercepter(queue.getAddBoutAction(), this);
 	}
 	
-	public Integer getRemainBout(){
-		return this.waitBout-(this.curBout-this.beginBout);
+	public Integer getRemainBout() {
+		if(processing)
+			return this.waitBout-(this.curBout-this.beginBout);
+		else
+			return 0;
+	}
+	
+	public void setWaitBout(Integer waitBout) {
+		this.waitBout = waitBout;
 	}
 	
 	@Override
@@ -79,7 +88,8 @@ public abstract class AbstractProcess implements IIntercepter, IRecover {
 		return IIntercepter.Level_Current;
 	}
 	
-	public void invalid(){
+	public void stop(){
+		this.processing = false;
 		resetIntercepter();
 	}
 	

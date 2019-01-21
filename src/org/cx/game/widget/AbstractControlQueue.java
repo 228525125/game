@@ -104,6 +104,18 @@ public abstract class AbstractControlQueue<T> {
 		action.action();
 	}
 	
+	/**
+	 * 调整机动值
+	 * @param t
+	 * @param count
+	 */
+	public void setPlaceCount(T t, Integer count) {
+		Place<T> place = getPlace(t);
+		place.setCount(count);
+		
+		refurbish();
+	}
+	
 	protected IAction getRefurbishAction() {
 		if(null==this.refurbishAction){
 			this.refurbishAction = new RefurbishAction();
@@ -152,7 +164,7 @@ public abstract class AbstractControlQueue<T> {
 	 * @param object
 	 * @return
 	 */
-	public Place<T> getPlace(T t) {
+	private Place<T> getPlace(T t) {
 		for(Place<T> place : this.queue){
 			if(place.getObject().equals(t))
 				return place;

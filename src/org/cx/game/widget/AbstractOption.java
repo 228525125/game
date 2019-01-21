@@ -3,33 +3,44 @@ package org.cx.game.widget;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cx.game.action.AbstractAction;
 import org.cx.game.action.ActionProxyHelper;
-import org.cx.game.action.Execute;
 import org.cx.game.action.IAction;
-import org.cx.game.core.AbstractPlayer;
-import org.cx.game.corps.AbstractCorps;
 import org.cx.game.exception.RuleValidatorException;
-import org.cx.game.exception.ValidatorException;
 import org.cx.game.tools.I18n;
 import org.cx.game.validator.Errors;
 import org.cx.game.validator.IValidatable;
 import org.cx.game.validator.IValidator;
-import org.cx.game.validator.ParameterTypeValidator;
-import org.cx.game.widget.building.AbstractProcess;
 import org.cx.game.widget.building.OptionExecuteProcess;
 import org.cx.game.widget.building.OptionSpacingProcess;
 
 public abstract class AbstractOption implements IValidatable {
 
-	private Integer number = 1;                //选项参数
+	/**
+	 * 可执行状态
+	 */
+	public final static Integer Status_Executable = 1;
+	
+	/**
+	 * 不可执行状态
+	 */
+	public final static Integer Status_Unenforceable = 2;
+	
+	/**
+	 * 等待执行状态
+	 */
+	public final static Integer Status_WaitExecute = 3;
+	
+	private Integer number = 1;                        //参数
 	private Integer spacingWait = 0;                   //间隔等待
 	private Integer executeWait = 0;                   //执行等待
 	
 	private String name = null;
-	private Boolean allow = true;
 	
-	private AbstractProcess spacingProcess = null;
-	private AbstractProcess executeProcess = null;
+	private Integer status = Status_Executable;        //选项状态
+	
+	private OptionSpacingProcess spacingProcess = null;
+	private OptionExecuteProcess executeProcess = null;
 	private Object owner = null;
 	
 	public String getName() {
@@ -50,7 +61,7 @@ public abstract class AbstractOption implements IValidatable {
 	}
 	
 	/**
-	 * 选项参数
+	 * 选项参数，一个表示数字的参数
 	 * @return 执行数量
 	 */
 	public Integer getNumber() {
@@ -68,11 +79,21 @@ public abstract class AbstractOption implements IValidatable {
 	
 	/**
 	 * 选项被执行后，下一次可执行需间隔的回合数
+	 * 回合数从本回合开始计算，例如间隔回合数为1，则下回合结束间隔周期
 	 * @param spacingWait 间隔回合数
 	 */
 	public Integer getSpacingWait() {
 		// TODO Auto-generated method stub
 		return this.spacingWait;
+	}
+	
+	/**
+	 * 间隔剩余回合数
+	 * @return
+	 */
+	public Integer getSpacingRemainBout() {
+		// TODO Auto-generated method stub
+		return null!=this.spacingProcess ? this.spacingProcess.getRemainBout() : 0;
 	}
 	
 	public void setExecuteWait(Integer executeWait) {
@@ -81,6 +102,7 @@ public abstract class AbstractOption implements IValidatable {
 	
 	/**
 	 * 选项需要等待一定回合后才被执行
+	 * 回合数从本回合开始计算，例如等待回合数为1，则下回合执行
 	 * @param executeWait 等待回合数
 	 */
 	public Integer getExecuteWait() {
@@ -95,15 +117,6 @@ public abstract class AbstractOption implements IValidatable {
 	public abstract List<Integer> getExecuteRange();
 	
 	/**
-	 * 间隔剩余回合数
-	 * @return
-	 */
-	public Integer getSpacingRemainBout() {
-		// TODO Auto-generated method stub
-		return null!=this.spacingProcess ? this.spacingProcess.getRemainBout() : 0;
-	}
-	
-	/**
 	 * 距离执行完成还有多少回合
 	 * @return
 	 */
@@ -113,15 +126,39 @@ public abstract class AbstractOption implements IValidatable {
 	}
 	
 	/**
-	 * 是否可以执行，这里主要判断选项的执行周期是否结束
+	 * 选项状态，选项根据执行情况可分为3种状态，分别是：可执行、不可执行、等待执行
 	 * @return
 	 */
-	public Boolean getAllow() {
-		return allow;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setAllow(Boolean allow) {
-		this.allow = allow;
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	public void cancelExecuteWait() {
+		if(Status_WaitExecute.equals(getStatus()))
+			this.executeProcess.stop();
+	}
+	
+	/**
+	 * 开始Execute方法进度
+	 */
+	public void firing() {
+		
+		/*
+		 * 不管是否执行等待，这个方法都会被执行
+		
+		beforeExecute();*/
+		
+		if(!Integer.valueOf(0).equals(getExecuteWait())){
+			setStatus(Status_WaitExecute);
+			if(null==this.executeProcess)
+				this.executeProcess = new OptionExecuteProcess(getControlQueue(), this);
+			this.executeProcess.begin();
+		}else
+			setStatus(Status_Executable);
 	}
 	
 	/**
@@ -130,24 +167,47 @@ public abstract class AbstractOption implements IValidatable {
 	public void cooling() {
 		// TODO Auto-generated method stub		
 		if(!Integer.valueOf(0).equals(this.spacingWait)){
-			setAllow(false);
-			this.spacingProcess = new OptionSpacingProcess(this.spacingWait, getControlQueue(), this);
+			setStatus(Status_Unenforceable);
+			if(null==this.spacingProcess)
+				this.spacingProcess = new OptionSpacingProcess(getControlQueue(), this);
+			this.spacingProcess.begin();
 		}else
-			setAllow(true);
+			setStatus(Status_Executable);
 	}
 	
 	/**
 	 * 在选项被执行前必须做的事，例如建造之前要扣减费用
-	 */
-	protected void beforeExecute(){
+	 
+	protected void beforeExecute() {
 		
+	}*/
+	
+	private BeforeExecute beforeExecute = null;
+	private Execute execute = null;
+	
+	/**
+	 * 在子类中，定义不同的Execute
+	 * @return
+	 */
+	public BeforeExecute getBeforeExecute() {
+		if(null==this.beforeExecute){
+			this.beforeExecute = new BeforeExecute();
+			this.beforeExecute.setOwner(this);
+		}
+		return this.beforeExecute;
 	}
 	
 	/**
 	 * 在子类中，定义不同的Execute；
 	 * @return
 	 */
-	public abstract Execute getExecute();
+	public Execute getExecute() {
+		if(null==this.execute){
+			this.execute = new Execute();
+			this.execute.setOwner(this);
+		}
+		return this.execute;
+	}
 	
 	/**
 	 * 执行选项
@@ -155,46 +215,21 @@ public abstract class AbstractOption implements IValidatable {
 	 */
 	public void execute(Object...objects) throws RuleValidatorException {
 		// TODO Auto-generated method stub
-		/*
-		 * 因为Execute的参数范围太大，所以只能将参数验证交给Option的子类来完成
-		 */
-		/*deleteValidator(parameterValidator);
-		this.parameterValidator = new ParameterTypeValidator(objects,parameterType,proertyName,validatorValue);
-		addValidator(parameterValidator);*/
 		
 		doValidator();
 		
-		if(hasError()) throw new RuleValidatorException(getErrors().getMessage());
+		if(hasError())
+			throw new RuleValidatorException(getErrors().getMessage());
 			
-		firing();
+		IAction action = new ActionProxyHelper(getBeforeExecute());
+		action.action(objects);
 		
-		IAction action = new ActionProxyHelper(getExecute());
+		action = new ActionProxyHelper(getExecute());
 		action.action(objects);
 	}
 	
 	private Errors errors = new Errors();	
 	private List<IValidator> validatorList = new ArrayList<IValidator>();
-	
-	/*private ParameterTypeValidator parameterValidator = null;
-	private Class[] parameterType = new Class[]{};      //用于参数的验证
-	private String[] proertyName = null;
-	private Object[] validatorValue = null;
-
-	public void setParameterTypeValidator(Class[] parameterType) {
-		this.parameterType = parameterType;
-	}*/
-	
-	/**
-	 * 
-	 * @param parameterType 参数类型
-	 * @param proertyName 属性名称
-	 * @param validatorValue 属性值，但必须为基本类型
-	 
-	public void setParameterTypeValidator(Class[] parameterType, String[] proertyName, Object[] validatorValue) {
-		this.parameterType = parameterType;
-		this.proertyName = proertyName;
-		this.validatorValue = validatorValue;
-	}*/
 	
 	public void addValidator(IValidator validator) {
 		// TODO Auto-generated method stub
@@ -240,19 +275,37 @@ public abstract class AbstractOption implements IValidatable {
 		return errors.hasError();
 	}
 	
-	/**
-	 * 开始Execute方法进度
-	 */
-	private void firing() {
-		if(!Integer.valueOf(0).equals(getExecuteWait())){
-			setAllow(false);
-			this.executeProcess = new OptionExecuteProcess(getExecuteWait(), getControlQueue(), this);
-			
-			beforeExecute();
-		}else
-			setAllow(true);
-	}
-	
 	protected abstract AbstractControlQueue getControlQueue();
 
+	public class BeforeExecute extends AbstractAction implements IAction {
+		
+		public AbstractOption getOwner() {
+			// TODO Auto-generated method stub
+			return (AbstractOption) super.getOwner();
+		}
+		
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			super.action(objects);
+			
+			firing();
+		}
+	}
+	
+	public class Execute extends AbstractAction implements IAction {
+		
+		public AbstractOption getOwner() {
+			// TODO Auto-generated method stub
+			return (AbstractOption) super.getOwner();
+		}
+		
+		@Override
+		public void action(Object... objects) {
+			// TODO Auto-generated method stub
+			super.action(objects);
+			
+			cooling();
+		}
+	}
 }

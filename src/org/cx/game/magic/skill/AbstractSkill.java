@@ -13,12 +13,13 @@ import org.cx.game.magic.IMagic;
 import org.cx.game.observer.NotifyInfo;
 import org.cx.game.out.ResponseFactory;
 import org.cx.game.tag.TagHelper;
+import org.cx.game.tools.CommonIdentifier;
 import org.cx.game.tools.I18n;
 import org.cx.game.widget.AbstractOption;
 
 public abstract class AbstractSkill extends Observable implements IMagic, org.cx.game.observer.Observable {
 
-	protected final static String UseSkill = "_UseSkill";
+	protected final static String Used = "_Used";
 	
 	private Integer type;
 	private String name;
@@ -125,12 +126,10 @@ public abstract class AbstractSkill extends Observable implements IMagic, org.cx
 	public void affect(Object... objects) {
 		// TODO Auto-generated method stub
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("player", owner.getPlayer());
-		map.put("container", owner.getGround());
 		map.put("corps", owner);
 		map.put("skill", this);
 		map.put("position", owner.getPosition());
-		NotifyInfo info = new NotifyInfo(getAction()+UseSkill,map);
+		NotifyInfo info = new NotifyInfo(CommonIdentifier.Skill_Used,map);
 		notifyObservers(info);
 	}
 	

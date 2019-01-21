@@ -33,6 +33,15 @@ public class Camera {
 	}
 	
 	/**
+	 * 
+	 * 因为sequence是从1开始，sequence=List.size()
+	 * @return
+	 */
+	public Integer getLastSequence(){
+		return recordList.size();
+	}
+	
+	/**
 	 * 根据sequence获取记录，默认sequence=List.index+1，
 	 * @param sequence
 	 * @return
