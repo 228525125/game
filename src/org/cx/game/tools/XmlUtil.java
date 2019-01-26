@@ -82,6 +82,8 @@ public class XmlUtil {
 	public final static String GameConfig_ResponseFormat = "response-format";
 	public final static String GameConfig_FormatName = "format-name";
 	public final static String GameConfig_FormatClass = "format-class";
+	public final static String GameConfig_CommandsThatDoNotRequireControl = "commandsThatDoNotRequireControl";
+	public final static String GameConfig_CommandClass = "command-class";
 	
 	//----------------通用---------------
 	

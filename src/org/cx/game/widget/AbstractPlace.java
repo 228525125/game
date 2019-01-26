@@ -1,5 +1,8 @@
 package org.cx.game.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cx.game.action.ActionProxyHelper;
 import org.cx.game.action.IAction;
 import org.cx.game.corps.AbstractCorps;
@@ -42,11 +45,10 @@ public abstract class AbstractPlace {
 	
 	private TrickList trickList = new TrickList(this);
 	private Cemetery cemetery = new Cemetery(this);
-	private AbstractCorps corps = null;
 	private Integer position = 0;
 	private AbstractGround ground = null;
+	private List<AbstractCorps> corpsList = new ArrayList<AbstractCorps>();
 	private AbstractBuilding building  = null;
-	private Boolean empty = true;
 	private Integer landform = AbstractPlace.Landform_Sward;
 	private Treasure treasure = null;
 	
@@ -60,13 +62,24 @@ public abstract class AbstractPlace {
 		return ground;
 	}
 
-	public AbstractCorps getCorps() {
-		// TODO Auto-generated method stub
-		return corps;
+	/**
+	 * 非隐藏Corps
+	 * @return
+	 */
+	public abstract AbstractCorps getCorps();
+	
+	public List<AbstractCorps> getCorpsList() {
+		List<AbstractCorps> retList = new ArrayList<AbstractCorps>();
+		retList.addAll(this.corpsList);
+		return retList;
 	}
 	
-	protected void setCorps(AbstractCorps corps){
-		this.corps = corps;
+	public Boolean contains(AbstractCorps corps) {
+		return this.corpsList.contains(corps);
+	}
+	
+	protected void addCorps(AbstractCorps corps) {
+		this.corpsList.add(corps);
 	}
 
 	/**
@@ -98,31 +111,29 @@ public abstract class AbstractPlace {
 	
 	void inCemetery(AbstractCorps corps) {
 		// TODO Auto-generated method stub
-		getCemetery().add(corps);
+		this.cemetery.add(corps);
 	}
 	
 	void inTrickList(ITrick trick) {
 		// TODO Auto-generated method stub
-		getTrickList().add(trick);
+		this.trickList.add(trick);
 	}
 	
-	AbstractCorps out() {
+	Boolean out(AbstractCorps corps) {
 		// TODO Auto-generated method stub
-		AbstractCorps corps = getCorps();
-		setCorps(null);
-		setIsEmpty(true);
+		Boolean ret = this.corpsList.remove(corps);
 		
-		return corps;
+		return ret;
 	}
 	
 	void outCemetery(AbstractCorps corps) {
 		// TODO Auto-generated method stub
-		getCemetery().remove(corps);
+		this.cemetery.remove(corps);
 	}
 	
 	void outTrickList(ITrick trick) {
 		// TODO Auto-generated method stub
-		getTrickList().remove(trick);
+		this.trickList.remove(trick);
 	}
 	
 	/**
@@ -131,12 +142,7 @@ public abstract class AbstractPlace {
 	 */
 	public Boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return this.empty;
-	}
-	
-	void setIsEmpty(Boolean empty) {
-		// TODO Auto-generated method stub
-		this.empty = empty;
+		return null==getCorps();
 	}
 	
 	public Integer getLandform() {

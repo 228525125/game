@@ -40,7 +40,8 @@ public class CommonIdentifier {
 	public static final Integer Move_Type_Equitation = 142;    //骑行
 	public static final Integer Move_Type_Drive = 143;         //驾驶
 	public static final Integer Move_Type_Fly = 144;           //飞行
-	public static final Integer Move_Type_Transmit = 145;           //传送
+	public static final Integer Move_Type_Transmit = 145;      //传送
+	public static final Integer Move_Type_Sneak = 145;         //潜行
 	
 	public final static Integer Attack_Mode_Near = 115;   //近战肉搏
 	public final static Integer Attack_Mode_Far = 116;    //远程射击

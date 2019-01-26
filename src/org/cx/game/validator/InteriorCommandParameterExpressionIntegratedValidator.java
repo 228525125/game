@@ -134,6 +134,9 @@ public class InteriorCommandParameterExpressionIntegratedValidator extends Inter
 						}else{
 							AbstractCorps corps = null;
 							corps = place.getCorps();
+							if(null==corps){
+								corps = place.getCorpsList().isEmpty() ? null : place.getCorpsList().get(0);
+							}
 							
 							parameterObject = corps;
 							getBuffer().setCorps(corps);

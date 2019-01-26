@@ -102,6 +102,11 @@ public abstract class AbstractControlQueue<T> {
 	public void refurbish() {
 		IAction action = new ActionProxyHelper(getRefurbishAction());
 		action.action();
+		
+		for(int i=0;i<this.queue.size();i++){
+			Place<T> place = this.queue.get(i);
+			place.setIndex(i);
+		}
 	}
 	
 	/**
@@ -270,6 +275,9 @@ public abstract class AbstractControlQueue<T> {
 		private T obj = null;
 		private Integer count = 0;
 		private Integer speed = 0;
+		private Integer index = 0;
+		
+		private AbstractControlQueue<T> queue = null;
 		
 		public Place(T t) {
 			// TODO Auto-generated constructor stub
@@ -295,6 +303,14 @@ public abstract class AbstractControlQueue<T> {
 		
 		public T getObject(){
 			return obj;
+		}
+		
+		void setIndex(Integer index){
+			this.index = index;
+		}
+		
+		Integer getIndex() {
+			return this.index;
 		}
 		
 		/**
@@ -324,9 +340,14 @@ public abstract class AbstractControlQueue<T> {
 			// TODO Auto-generated method stub
 			if(p1.getCount()<p2.getCount())
 				return 1;
-			else if(p1.getCount()==p2.getCount())
-				return 0;
-			else
+			else if(p1.getCount().equals(p2.getCount())){
+				if(p1.getIndex()<p2.getIndex())
+					return 1;
+				else if(p1.getIndex().equals(p2.getIndex()))
+					return 0;
+				else
+					return -1;
+			}else
 				return -1;
 		}
 	}

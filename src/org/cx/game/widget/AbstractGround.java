@@ -127,7 +127,7 @@ public abstract class AbstractGround {
 		if(ret){
 			Integer position = corps.getPosition();
 			AbstractPlace place = getPlace(position);
-			place.out();
+			place.out(corps);
 		}
 		
 		return ret;
@@ -163,7 +163,7 @@ public abstract class AbstractGround {
 	public Integer getPosition(AbstractCorps corps) {
 		// TODO Auto-generated method stub
 		for(Entry<Integer, AbstractPlace> entry : ground.entrySet()){
-			if(corps.equals(entry.getValue().getCorps())){
+			if(entry.getValue().contains(corps)){
 				return entry.getKey();
 			}else if(entry.getValue().getCemetery().contains(corps)){
 				return entry.getKey();
