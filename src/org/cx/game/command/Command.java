@@ -75,7 +75,7 @@ public class Command extends Observable implements IValidatable{
 	public void doValidator(IValidator validator) throws ValidatorException {
 		// TODO Auto-generated method stub
 		if(!validator.validate())
-			throw new RuleValidatorException(validator.getErrorMessage());
+			throw new CommandValidatorException(validator.getErrorMessage());
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package org.cx.game.validator;
 
+import org.cx.game.tools.I18n;
+
 /**
  * 验证器，命名规则：（修饰语）主语 + 谓语 + Validator
  * @author admin
@@ -24,5 +26,4 @@ public abstract class Validator implements IValidator {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 }

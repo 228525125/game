@@ -4,12 +4,12 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import org.cx.game.command.InteriorCommand;
-import org.cx.game.core.AbstractPlayer;
+import org.cx.game.command.Command;
+import org.cx.game.command.CommandBuffer;
+import org.cx.game.command.WithCacheCommand;
+import org.cx.game.core.IPlayer;
 import org.cx.game.exception.SyntaxValidatorException;
 import org.cx.game.tools.PropertiesUtil;
 import org.cx.game.tools.XmlUtil;
@@ -37,15 +37,30 @@ public class Calculator {
 		return null;
 	}
 	
-	public InteriorCommand parseForCommand(AbstractPlayer player, String cmd) throws SyntaxValidatorException {
+	public Command parseForCommand(String cmd) throws SyntaxValidatorException {
 		Element root = getRoot();
-		InteriorCommand command = null;
+		Command command = null;
 		
-		InteriorCommandExpression commandExpriession = new InteriorCommandExpression(player, cmd, root);   //默认第一个字段为command
+		SimpleCommandExpression commandExpriession = new SimpleCommandExpression(cmd, root);   //默认第一个字段为command
 		command = commandExpriession.interpreter();
 
 		if(commandExpriession.getParamRequest()){
-			ParameterExpression parameterExpression = InteriorCommandParameterExpressionFactory.getInstance(player, cmd, commandExpriession.getElement()); //默认第二个字段为参数
+			ParameterExpression parameterExpression = ParameterExpressionFactory.getInstance(cmd, commandExpriession.getCommandElement()); //默认第二个字段为参数
+			Object parameter = parameterExpression.interpreter();
+			command.setParameter(parameter);
+		}
+		return command;
+	}
+	
+	public WithCacheCommand parseForCommand(String cmd, CommandBuffer buffer) throws SyntaxValidatorException {
+		Element root = getRoot();
+		WithCacheCommand command = null;
+		
+		WithCacheCommandExpression commandExpriession = new WithCacheCommandExpression(cmd, root, buffer);   //默认第一个字段为command
+		command = commandExpriession.interpreter();
+
+		if(commandExpriession.getParamRequest()){
+			ParameterExpression parameterExpression = ParameterExpressionFactory.getInstance(cmd, commandExpriession.getCommandElement(), buffer); //默认第二个字段为参数
 			Object parameter = parameterExpression.interpreter();
 			command.setParameter(parameter);
 		}

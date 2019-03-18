@@ -1,8 +1,9 @@
 package org.cx.game.command.expression;
 
+import org.cx.game.exception.SyntaxValidatorException;
 import org.dom4j.Element;
 
-public abstract class ParameterExpression extends Expression {
+public class ParameterExpression extends Expression {
 
 	private String cmd = null;
 	private String parameter = null;
@@ -17,5 +18,15 @@ public abstract class ParameterExpression extends Expression {
 
 	public String getParameter() {
 		return parameter;
+	}
+	
+	@Override
+	public Object interpreter() throws SyntaxValidatorException {
+		// TODO Auto-generated method stub
+		Object ret = super.interpreter();
+		
+		ret = getParameter();
+		
+		return ret;
 	}
 }

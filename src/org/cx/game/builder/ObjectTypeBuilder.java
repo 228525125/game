@@ -86,7 +86,7 @@ public class ObjectTypeBuilder implements IBuilder {
 			Object paramValue = propertyValueList.get(i);
 			Method method;
 			try {
-				method = result.getClass().getDeclaredMethod(methodName,clz);
+				method = result.getClass().getMethod(methodName,clz);
 				method.invoke(result, paramValue);
 			} catch (NoSuchMethodException e) {
 				// TODO Auto-generated catch block				
@@ -117,7 +117,7 @@ public class ObjectTypeBuilder implements IBuilder {
 			Object paramValue = afterConstructValueList.get(i);
 			Method method;
 			try {
-				method = result.getClass().getDeclaredMethod(methodName,clz);
+				method = result.getClass().getMethod(methodName,clz);
 				method.invoke(result, paramValue);
 			} catch (NoSuchMethodException e) {
 				// TODO Auto-generated catch block				

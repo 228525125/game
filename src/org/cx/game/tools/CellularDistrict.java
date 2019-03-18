@@ -3,7 +3,7 @@ package org.cx.game.tools;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cx.game.widget.AbstractGround;
+import org.cx.game.widget.IGround;
 
 /** 
  * 蜂窝小区，以1为中心，顺时针编号，编号最大限定为100000。 求任意两编号之间的最短距离。 两个相邻小区的距离为1 
@@ -123,43 +123,43 @@ public class CellularDistrict {
     	n += 1;
 		addCoordinateMap(n, starPoint);
     	
-    	starPoint = getPosition(starPoint, AbstractGround.Relative_Left);
+    	starPoint = getPosition(starPoint, IGround.Relative_Left);
 		n += 1;
 		addCoordinateMap(n, starPoint);
     	
     	for (int i = 1; i < circleNumber+1; i++) {
 			for (int j = 1; j < i; j++) {
-				starPoint = getPosition(starPoint, AbstractGround.Relative_LeftTop);
+				starPoint = getPosition(starPoint, IGround.Relative_LeftTop);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, AbstractGround.Relative_RightTop);
+				starPoint = getPosition(starPoint, IGround.Relative_RightTop);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, AbstractGround.Relative_Right);
+				starPoint = getPosition(starPoint, IGround.Relative_Right);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, AbstractGround.Relative_RightBottom);
+				starPoint = getPosition(starPoint, IGround.Relative_RightBottom);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i; j++) {
-				starPoint = getPosition(starPoint, AbstractGround.Relative_LeftBottom);
+				starPoint = getPosition(starPoint, IGround.Relative_LeftBottom);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
 			
 			for (int j = 0; j < i+1; j++) {
-				starPoint = getPosition(starPoint, AbstractGround.Relative_Left);
+				starPoint = getPosition(starPoint, IGround.Relative_Left);
 				n += 1;
 				addCoordinateMap(n, starPoint);
 			}
@@ -237,7 +237,7 @@ public class CellularDistrict {
     }
     
     public static Integer[] longToPoint(Long point){
-		String [] points = point.toString().split(SpaceArithmetic.space);
+		String [] points = point.toString().split(Util.space);
 		Integer x = Integer.valueOf(points[0]);
 		Integer y = Integer.valueOf(points[1]);
 
@@ -248,7 +248,7 @@ public class CellularDistrict {
 		if(x<1 || y<1)
 			return OverPoint;
 		else
-			return Long.valueOf(x+SpaceArithmetic.space+y);
+			return Long.valueOf(x+Util.space+y);
 	}
     
     private static Boolean isOver(Long point){
