@@ -1,6 +1,8 @@
 package org.cx.game.tools;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
 
@@ -9,7 +11,16 @@ public class Logger
 	public static org.apache.log4j.Logger logger;
 	
 	static {
-		PropertyConfigurator.configure("E:/workspace1/game/src/resource/log4j.lcf");
+		Properties prop = new Properties();
+		
+		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("resource/log4j.properties");
+		try {
+			prop.load(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PropertyConfigurator.configure(prop);
 		logger = org.apache.log4j.Logger.getRootLogger();
 	}
 	
@@ -31,11 +42,5 @@ public class Logger
 	
 	public static void error(String message) {
 		logger.error(message);
-	}
-	
-	public static void main(String[] args) {
-		File file = new File("src/resource/log4j.lcf");
-		System.out.println(file.getAbsolutePath());
-		Logger.debug("test");
 	}
 }
